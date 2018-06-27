@@ -1,0 +1,187 @@
+//Блок кода для добавления расценки::: по кнопке addpricing
+
+    <form id='price'>
+
+        <label for='byer'>Покупатель:</label> <input type="text" name="byer" id="byer" placeholder="Введите покупателя" /><br />
+        <label for='trade'>Товар</label> <input type="text" name="trade" id="trade" placeholder="Введите товар"/><br />
+        <label for='seller'>Поставщик:</label> <input type="text" name="seller" id="seller" placeholder="Введите поставщика"/><br />
+        <label for='zakup'>ЗАКУП ЗА 1 ШТ:</label> <input type="number" name="zak" id="zak" min="1" step="1"/> руб.<br />
+        <label for='kol'>Кол-во:</label> <input type="number" name="kol" id="kol"  min="1"/><br />
+        <label for='tzr'>ТЗР на ШТУКЕ:</label> <input type="number" name="tzr" id="tzr"  min="0" step="1"/> руб.<br /><br />
+            <div id="fcount">
+                <label for='op'>НАШ ПРОЦЕНТ:</label> <input type="number" size="2" name="op" id="op"  min="1" step="0.01"/>% / <p id="opr"></p> руб.<br />
+                <label for='tp'>ЕНОТ:</label> <input type="number" size="2" name="tp" id="tp"  min="0" step="0.01"/>% / <p id="tpr"></p> руб. НА РУКИ : <p id="firstoh"></p> руб. (<p id="clearp"></p>)<br/><br />
+                <label for='firstobp'>ОБНАЛ:</label> <input type="number" size="2" name="firstobp" id="firstobp"  min="0" step="0.1"/>% / <p id="firstobpr"></p> руб.<br />
+                <label for='wtime'>ОТСРОЧКА:</label> <input type="number" size="2" name="wtime" id="wtime"  min="0" step="0.03"/> мес. <p id="wtimeday"></p> дней.
+            </div>
+            <div id="margediv">
+                <br />
+                <label for='marge'>МАРЖА<br />ВСЕГО:</label> <p id="marge"></p> руб. / НА ШТУКЕ: <p id="margek"></p> руб.<br /><br />
+                СООТНОШЕНИЕ<br/>
+                НАШИМ:<br/><input id="rop" type="number" min="0" step="1"/><p id="realop"></p><br/>
+                НЕНАШИМ:<br/><input id="rtp" type="number" min="0" step="1"/><p id="realtp"></p><br/><br/>
+                <div id="obnal">
+                    <label for='obp'>Обнал:</label> <input type="number" size="2" name="obp" id="obp"  min="0" step="0.1"/>%,<br/><p id='onhands'>ИТОГО НА РУКИ:</p><p id="oh"></p>
+                </div><br />
+            </div>
+        <input type="submit" name="submit" value="Посчитать" id="go" />
+            <div id='result'>
+                <h2>Итоговая цена:</h2>
+                <input type="number" name="price" id="pr" value="0" min="0" step="0.01"/>
+                <input name='fixate' id='fixate' type='button' value='Закрепить'/>
+            </div>
+            <div id='rent'><h2>Рентабельность:</h2><h1>0</h1></div>
+            <div id="cases"></div>
+            <script src='js/price_mysql.js'></script>
+
+    </form>
+    <input type='button' value='X' class='closepricing'>
+
+
+////////////////////////////////////////////////////////////////////
+
+byer=%D0%A1%D0%9F%D0%97-4
+&trade=%D0%9B%D0%B8%D1%82%D0%BE%D0%BB-24+180%D0%BA%D0%B3
+&seller=%D0%9E%D0%B9%D0%BB-%D0%A1%D0%BD%D0%B0%D0%B1+%D0%A2%D0%BB%D1%82
+&zak=13
+&kol=1312
+&tzr=3131
+&op=2312
+&tp=312
+&firstobp=31
+&wtime=23123
+&obp=31
+&price=312433.11
+
+&rent=-10736.120369028642
+&tpr=236599.8336
+&opr=72689.28
+&fixed=0
+&firstobpr=73345.95
+&rop=undefined
+&rtp=undefined
+&realop=undefined
+&realtp=undefined
+&oh=undefined
+&marge=undefined
+&margek=undefined
+&clearp=52.25242552523087
+
+
+
+Array ( [name] => Валдай ) 111 Array ( [name] => Mobilgrease XHP 222 0,4 кг )
+
+Array ( [name] => Валдай ) 111 Array ( [name] => Mobilgrease XHP 222 0,4 кг )
+
+Array ( [name] => ОТК ) 111 Array ( [name] => Литол-24 50кг )
+
+
+
+                <script>
+                if (!($('#theinput')){
+                $('#theinput').blur(function () {
+                $(this).parent().html($(this).attr('placeholder'));
+                $('.savename').val('Переименовать');
+                $('.savename').removeClass('savename').addClass('edit')
+                })};
+
+                </script>");
+
+
+
+
+$('.edit').unbind().click(function () {
+
+        if($('#theinput').length == 0){
+
+            if($(this).hasClass('edit')){
+            var editid = $(this).attr("name");
+            console.log(editid);
+            var edittable = $(this).parents("div").attr("id").slice(0, -5);
+            var edittablenameid = edittable +'_nameid';
+            var edittableid = edittable +'_id';
+
+            var rtext = $(this).parent().prev().text();//берем нынешнее название
+            console.log(rtext);//показываем его в консоли
+            $(this).parent().prev().html("<input id='theinput' value='"+rtext+"' type='text' placeholder='"+rtext+"'><script>" +
+                "$('#theinput').blur(function () {" +
+                /*"$(this).parent().html($(this).attr('placeholder'));" +
+                "$('.savename').val('Переименовать');" +
+                "$('.savename').removeClass('savename').addClass('edit')" +*/
+                "})</script>");
+            $('#theinput').select();//выделяем содержимое
+            $(this).removeClass('edit');//убираем класс edit чтобы лишнего не происходило
+            $(this).val('Сохранить');
+            $(this).addClass('savename');
+        }} else {
+            $('#theinput').focus().select();
+            alert('Finish the renaming!')};
+
+    });
+
+
+    $('.savename').mouseover(function () {
+        console.log('into');
+        $('#theinput').stopImmediatePropagation();
+        $('#theinput').preventDefault();
+        $('#theinput').off('blur');
+
+        $(this).click(function () {
+
+        var newname = $('#theinput').val();
+
+            $.ajax({
+                url: 'mysql_rename.php',
+                method: 'POST',
+                data: {newname:newname, editid:editid, edittable:edittable, edittablenameid:edittablenameid, edittableid:edittableid},
+                success: function(){
+                    $('#editmsg').css("display", "block"). delay(100).slideUp(100).html("Запись "+ editid +" из таблицы " + edittable + "переименована.");
+                },
+                complete: function() {
+                    $("a[href = \"#" + edittable + "\"]").trigger("click");
+                }
+            });
+
+            return true;
+
+
+        });
+    });//Этот класс прибавляется после того как будет инпут и рентекст, чтобы уже отправить аякс
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

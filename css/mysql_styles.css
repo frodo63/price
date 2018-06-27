@@ -1,0 +1,335 @@
+.creates {
+    display: none;
+    width: 33vw;
+}
+
+input {
+    border-radius: 0.5vh;
+    background-color: white;
+}
+
+.add_ramk {
+    border: 1px solid black;
+    border-radius: 0.5vh;
+    padding: 1vh;
+}
+#db_status:hover {color: black}
+#db_status {color: white}
+
+#editmsg {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 20vh;
+    width: 25vw;
+    display: none;
+    background: green;
+    border-radius: 2vh;
+    color: white;
+    font-size: 2.5vh;
+    padding: 0.5vh;
+    z-index: 1000;
+}
+.contents, .pricings, .pricing_container  {
+    display: none;
+}
+
+.pricing_container {
+    height: 97vh;
+    width: 97vw;
+    position: absolute;
+    top: -8vh;
+    left: 0vw;
+
+}
+/*Выпадающий список*/
+
+/*Блок выпадающих элементов*/
+#thesearch {
+    text-align: -webkit-center;
+    width: 90vw;
+    margin-left: 4.5vw;
+    line-height: 5vh;
+    font-family: Arial;
+    font-size: 3vh;
+}
+#sres ul  {
+    margin:0;
+    padding:0;
+    width: 90vw;
+    margin-left: 4.5vw;
+}
+#byer+div ul, #trade+div ul, #seller+div ul {
+    margin: 0;
+    padding: 0;
+    width: 25vw;
+    margin-left: 5vw;
+}
+
+#sres ul li {
+    z-index: 100;
+    min-height: 3vh;
+    font-family: Arial;
+    font-size: 3vh;
+}
+
+/*при наведении цвет под тогглящийся класс*/
+#sres ul li:hover, #byer+div ul li:hover, #trade+div ul li:hover, #seller+div ul li:hover, #sres ul li.sreslihover {
+    background-color: green;
+    color: white;
+    border-color: grey;
+}
+
+
+/*точечки списковые убраны*/
+#sres ul, #byer+div ul, #trade+div ul, #seller+div ul {list-style: none}
+/*границы элементов*/
+#sres ul li, #byer+div ul li, #trade+div ul li, #seller+div ul li {border: 1px solid grey}
+#sres ul li, #byer+div ul li, #trade+div ul li, #seller+div ul li {border-bottom: none}
+#sres ul li:last-child, #byer+div ul li:last-child, #trade+div ul li:last-child, #seller+div ul li:last-child {border: 1px solid grey}
+
+/*Цветовая дифференциация выдачи*/
+li[category="byer"] {
+    background-color: lightyellow;
+}
+li[category="seller"] {
+    background-color: lightsalmon;
+}
+li[category="trade"] {
+    background-color: lightgreen;
+}
+li[category="request"] {
+    background-color: lightblue;
+}
+
+/*Маленькая пометочка в углу выдачи о категории*/
+.note {
+    position: absolute;
+    height: 2vh;
+    bottom: 0;
+    right: 0;
+    font-family: Arial;
+    font-size: 1.5vh;
+}
+/*Позиционирование лист итема*/
+#sres ul li, #byer+div ul li, #trade+div ul li, #seller+div ul li {position: relative}
+
+/*Абзац из выпадающего списка */
+#sres ul li span {
+    margin: 0;
+    padding: 0;
+}
+
+#byer+div ul li p, #trade+div ul li p, #seller+div ul li p {
+    z-index: 1;
+    line-height: 3vh;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+
+/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/*Инпуты поиска в прайсформе*/
+
+/*Позиционирование лист итема*/
+#byer div ul li, #trade div ul li, #seller div ul li {position: relative}
+
+#byer+.sres ul {
+    position: absolute;
+    top: 9.05vh;
+    left: 18.15vw;
+}
+
+
+/*Таблица расценок*/
+.pricings td {
+    border: 1px solid grey;
+    text-align: center;
+    vertical-align: middle;
+}
+/**/
+
+/*ОКНО РАСЦЕНОК ЕДИНОЕ ДЛЯ ВСЕХ ВВЕРХУ ЭКРАНА*/
+#pricingwindow {
+    display: none;
+    height:99vh;
+    width: 98vw;
+}
+/**/
+
+#pricingwindow .addpricing {
+    position: absolute;
+    top: 1vw;
+    right: 1vw;
+    height: 2vw;
+    width: 2vw;
+}
+
+.add-pos-inputs {
+    display: none;
+}
+
+
+/*Таблица заявок*/
+table, td, tr, thead, th {
+    border-collapse: collapse;
+    vertical-align: top;
+}
+table{
+    table-layout: fixed;
+    width: 100%;
+}
+
+
+/*Класс - таблица из результатов поиска. айдишник - таблица из табов*/
+/*Таблица первого уровня (заявки)*/
+.requests_list th:nth-child(1), #requests_list th:nth-child(1) {width: 6%}
+.requests_list th:nth-child(2), #requests_list th:nth-child(2) {width: 85%}
+.requests_list th:nth-child(3), #requests_list th:nth-child(3) {width: 5%}
+.requests_list th:nth-child(4), #requests_list th:nth-child(4) {width: 4%}
+.requests_list thead tr, #requests_list thead tr {border-bottom: 1px black solid;}
+
+/*Таблица второго уровня (позциии)*/
+.requests_list .positions th:nth-child(1), #requests_list .positions th:nth-child(1){width: 2%}
+.requests_list .positions th:nth-child(2), #requests_list .positions th:nth-child(2){width: 76%}
+.requests_list .positions th:nth-child(3), #requests_list .positions th:nth-child(3){width: 8%}
+.requests_list .positions th:nth-child(4), #requests_list .positions th:nth-child(4){width: 5%}
+.requests_list .positions th:nth-child(5), #requests_list .positions th:nth-child(5){width: 5%}
+
+/*Таблица  третьего уровня (расценки) */
+.requests_list .pricing-list th:nth-child(1), #requests_list .pricing-list th:nth-child(1){width: 20%}
+.requests_list .pricing-list th:nth-child(2), #requests_list .pricing-list th:nth-child(2){width: 20%}
+.requests_list .pricing-list th:nth-child(3), #requests_list .pricing-list th:nth-child(3){width: 7%}
+.requests_list .pricing-list th:nth-child(4), #requests_list .pricing-list th:nth-child(4){width: 5%}
+.requests_list .pricing-list th:nth-child(5), #requests_list .pricing-list th:nth-child(5){width: 5%}
+.requests_list .pricing-list th:nth-child(6), #requests_list .pricing-list th:nth-child(6){width: 5%}
+.requests_list .pricing-list th:nth-child(7), #requests_list .pricing-list th:nth-child(7){width: 4%}
+.requests_list .pricing-list th:nth-child(8), #requests_list .pricing-list th:nth-child(8){width: 10%}
+.requests_list .pricing-list th:nth-child(9), #requests_list .pricing-list th:nth-child(9){width: 5%}
+.requests_list .pricing-list th:nth-child(10), #requests_list .pricing-list th:nth-child(10){width: 14%}
+/*.requests_list .pricing-list th:nth-child(11), #requests_list .pricing-list th:nth-child(11){width: 14%}*/
+
+/*Горизонтальное позиционирование содержимого td:*/
+/*1й уровень (заявки)*/
+.requests_list td:nth-child(1), #requests_list td:nth-child(1) {text-align: center}
+.requests_list td:nth-child(2), #requests_list td:nth-child(2) {text-align: left}
+.requests_list td:nth-child(3), #requests_list td:nth-child(3) {text-align: center}
+.requests_list td:nth-child(4), #requests_list td:nth-child(4) {text-align: center; vertical-align: middle}
+/*2й уровень (позиции*/
+.requests_list .positions td:nth-child(1), #requests_list .positions td:nth-child(1){text-align: center}
+.requests_list .positions td:nth-child(2), #requests_list .positions td:nth-child(2){text-align: left}
+.requests_list .positions td:nth-child(3), #requests_list .positions td:nth-child(3){text-align: center; vertical-align: middle}
+.requests_list .positions td:nth-child(4), #requests_list .positions td:nth-child(4){text-align: center; vertical-align: middle}
+.requests_list .positions td:nth-child(5), #requests_list .positions td:nth-child(5){text-align: center}
+/*3й уровень (расцеки)*/
+.requests_list .pricing-list td:nth-child(1), #requests_list .pricing-list td:nth-child(1){text-align: center}
+.requests_list .pricing-list td:nth-child(2), #requests_list .pricing-list td:nth-child(2){text-align: center}
+.requests_list .pricing-list td:nth-child(3), #requests_list .pricing-list td:nth-child(3){text-align: center}
+.requests_list .pricing-list td:nth-child(4), #requests_list .pricing-list td:nth-child(4){text-align: center}
+.requests_list .pricing-list td:nth-child(5), #requests_list .pricing-list td:nth-child(5){text-align: center}
+.requests_list .pricing-list td:nth-child(6), #requests_list .pricing-list td:nth-child(6){text-align: center}
+.requests_list .pricing-list td:nth-child(7), #requests_list .pricing-list td:nth-child(7){text-align: center}
+.requests_list .pricing-list td:nth-child(8), #requests_list .pricing-list td:nth-child(8){text-align: center}
+.requests_list .pricing-list td:nth-child(9), #requests_list .pricing-list td:nth-child(9){text-align: center}
+.requests_list .pricing-list td:nth-child(10), #requests_list .pricing-list td:nth-child(10){text-align: center}
+.requests_list .pricing-list td:nth-child(11), #requests_list .pricing-list td:nth-child(11){text-align: center}
+
+
+/*граница верх-прав для Покупателя*/
+.requests_list tr td:nth-child(1), #requests_list tr td:nth-child(1) {
+    border-top: 1px black solid;
+    border-right: 1px black solid;
+}
+.requests_list tr:nth-child(1) td:nth-child(1), #requests_list tr:nth-child(1) td:nth-child(1){
+    border-top: none;
+}
+.requests_list tr td:nth-child(2), #requests_list tr td:nth-child(2) {
+    border-bottom: 1px black solid;
+}
+.requests_list tr td:nth-child(3), #requests_list tr td:nth-child(3), .requests_list tr td:nth-child(4), #requests_list tr td:nth-child(4) {
+    border-left: 1px black solid;
+    border-bottom: 1px black solid;
+    border-right: 1px black solid;
+}
+.requests_list tr:last-child td:nth-child(3),
+.requests_list tr:last-child td:nth-child(2),
+#requests_list tr:last-child td:nth-child(3),
+#requests_list tr:last-child td:nth-child(2),
+.requests_list tr:last-child td:nth-child(4),
+#requests_list tr:last-child td:nth-child(4) {
+    border-bottom: none;
+}
+
+.requests_list tr td:last-child,
+#requests_list tr td:last-child {
+    border-right: none;
+}
+
+
+/*Таблица второго уровня*/
+.requests_list tr td .contents .positions td, #requests_list tr td .contents .positions td {border: none}
+.requests_list tr td .contents .positions .pricings table.pricing-list tbody tr, #requests_list tr td .contents .positions .pricings table.pricing-list tbody tr {border-bottom: 1px solid black;}
+.requests_list tr td .contents .positions .pricings table.pricing-list tbody tr:nth-last-of-type(1), #requests_list tr td .contents .positions .pricings table.pricing-list tbody tr:nth-last-of-type(1) {border: none;}
+
+/*шрифты таблицы*/
+td[category="requests"], td[byerid], td[category="positions"], .pricings {
+    font-size: 2vh;
+    font-family: Arial;
+}
+tr[position]:hover {
+    border-bottom: 1px solid black;
+}
+
+.pricing-list th, .pricing-list td {font-weight: normal; font-size: 2vh}
+.pricing-list tbody tr:hover {background-color: white; font-weight: bold;}
+
+/*ПОБЕДИТЕЛИ*/
+tr.win[pricingid], tr.win[pricingid]:hover {
+    background-color: green;
+    color: white;
+}
+
+td.rent_whole{
+    text-align: center;
+    vertical-align: middle;
+    font-size: 1.7vw;
+
+}
+/*Резальтаты поиска при создании позиции(выпрыгивает список позиций*/
+.add-pos-inputs .sres ul{
+    list-style: none;
+    width: 40vw;
+}
+
+.add-pos-inputs .sres ul li {
+    z-index: 100;
+    min-height: 3vh;
+    font-family: Arial;
+    font-size: 3vh;
+    position: relative;
+}
+
+.add-pos-inputs .sres ul li {
+     border: 1px solid black;
+     border-bottom: none
+}
+
+.add-pos-inputs .sres ul li:last-child, .add-pos-inputs .sres ul li:last-child:hover  {
+    border: 1px solid black;
+}
+
+.add-pos-inputs .sres ul li:hover {
+background-color: green;
+color: white;
+border-color: white;
+}
+
+.add-pos-inputs .sres ul li span, .add-pos-inputs .sres ul li p {
+    margin: 0;
+    padding: 0;
+}
+#requests {padding: 0.5vw}
+tr[pricingid] td {border: 1px solid black}
+/**/
