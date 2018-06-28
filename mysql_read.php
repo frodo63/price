@@ -10,17 +10,18 @@ if(isset($_POST['table'])){
     if ($table == 'givaways') {
         try {
 
-            $statement = $pdo->prepare("SELECT req_name,b_name,firstoh,tp,realtp,oh,kol,price FROM ((SELECT a.name AS req_name,b.name AS b_name,requests_id FROM 
-               (SELECT requests.requests_id,requests.byersid,allnames.name FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid) AS a
-               LEFT JOIN
-               (SELECT byers.byers_id,allnames.name FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON a.byersid=b.byers_id) AS c
-               LEFT JOIN
-               (SELECT req_positions.requestid,pricings.firstoh,pricings.realtp,pricings.tp,pricings.oh,pricings.kol,pricings.price FROM req_positions LEFT JOIN pricings ON req_positions.winnerid=pricings.pricingid) AS f ON c.requests_id = f.requestid) WHERE tp > 0 AND realtp > 0");
+            $statement = $pdo->prepare("SELECT byers.byers_id AS b_id,byers.byers_nameid AS b_nid,allnames.name AS b_name FROM `byers` LEFT JOIN `allnames` ON byers.byers_nameid=allnames.nameid");
             $statement->execute();
-            $result = "<table><thead><tr><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Опции</th></tr></thead>";
+            $result = "<div class='byer_req_list'>";
+
+            foreach ($statement as $row) {
+                $result .= "<div byerid =" . $row['b_id'] . ">
+                                <input type='button' name =" . $row['b_nid'] . " byersid =" . $row['b_id'] . " value='W' class='collapse'>
+                                <span class='name'>" . $row['b_name'] . "</span>
+                            </div>";
+            }
+            $result .= "</div>";
             print $result;
-
-
         } catch (PDOExecption $e) {
         $pdo->rollback();
         print "Error!: " . $e->getMessage() . "</br>";

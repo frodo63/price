@@ -632,7 +632,7 @@ $(document).ready(function() {
             $('input.savename[type="button"][name="'+$('#theinput').attr('name')+'"][value="Save"]').val('R').removeClass('savename').addClass('edit');
         };
     });
-
+//Добавление ЛУЗЕРА И ВИННЕРА
     $(document).off('click.losewin').on('click.losewin', '.winner', function (event) {
         var winid = $(event.target).attr('pricing');
         var posid = $(event.target).parents('tr[position]').attr('position');

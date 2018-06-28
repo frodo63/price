@@ -40,11 +40,13 @@ CREATE TABLE IF NOT EXISTS `sellers` (
 );
 
 CREATE TABLE IF NOT EXISTS `requests` (
+`created` DATE NOT NULL,
 `requests_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 `requests_nameid` MEDIUMINT UNSIGNED NOT NULL,
 `req_comment` VARCHAR(255),
 `req_rent` FLOAT(3) UNSIGNED,
 `byersid` SMALLINT UNSIGNED NOT NULL,
+`payment` BOOLEAN NULL,
  PRIMARY KEY (`requests_id`),
  FOREIGN KEY (`requests_nameid`) REFERENCES `allnames`(`nameid`),
  FOREIGN KEY (`byersid`) REFERENCES `byers`(`byers_id`)
@@ -57,7 +59,21 @@ CREATE TABLE IF NOT EXISTS `req_positions` (
 `pos_name` VARCHAR(255) NOT NULL,
 `winnerid`  SMALLINT UNSIGNED NOT NULL,
 `requestid` MEDIUMINT UNSIGNED NOT NULL,
+`giveaway` BOOLEAN NULL,
  PRIMARY KEY (`req_positionid`),
+ FOREIGN KEY (`requestid`) REFERENCES `requests`(`requests_id`)
+ ON UPDATE CASCADE
+ ON DELETE RESTRICT
+);
+
+CREATE TABLE IF NOT EXISTS `payments` (
+`payed` DATE NOT NULL,
+`payment_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+`number` SMALLINT UNSIGNED NOT NULL,
+`comment` VARCHAR(255) NOT NULL,
+`amount` FLOAT(2) UNSIGNED NOT NULL,
+`requestid` MEDIUMINT UNSIGNED NOT NULL,
+ PRIMARY KEY (`payment_id`),
  FOREIGN KEY (`requestid`) REFERENCES `requests`(`requests_id`)
  ON UPDATE CASCADE
  ON DELETE RESTRICT
