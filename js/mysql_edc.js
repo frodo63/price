@@ -632,6 +632,7 @@ $(document).ready(function() {
             $('input.savename[type="button"][name="'+$('#theinput').attr('name')+'"][value="Save"]').val('R').removeClass('savename').addClass('edit');
         };
     });
+
 //Добавление ЛУЗЕРА И ВИННЕРА
     $(document).off('click.losewin').on('click.losewin', '.winner', function (event) {
         var winid = $(event.target).attr('pricing');
@@ -660,7 +661,7 @@ $(document).ready(function() {
                             $(event.target).val('*');
                         }
                     });
-                },
+                },/*Чтение*/
                 complete: function() {
                     $.ajax({
                         url: 'mysql_rent.php',
@@ -671,12 +672,12 @@ $(document).ready(function() {
                             $('tr[requestid='+reqid+'] td.rent_whole').text(data);
 
                             /*В самом конце, обновляем табличку полученными данными, чтобы не делать дополнительных запросов*/
-                            $('tr[position='+posid+'] > td.winname').text('');
-                            $('tr[position='+posid+'] > td.rent').text('');
+                            $('tr[position='+posid+'] > td.winname').text('');//Очищаем поле Победитель (Имя)
+                            $('tr[position='+posid+'] > td.rent').text('');//Очищаем поле Рентабельность (Число)
                         }
                     });
 
-                }
+                }//Вводим измененные данные в таблицу
             });
 
         }else{
@@ -724,7 +725,7 @@ $(document).ready(function() {
                 }
             });
 
-        };
+        };/*Сделали победителя и пересчитали рентабельность*/
 
 
     });

@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS `requests` (
 `req_rent` FLOAT(3) UNSIGNED,
 `byersid` SMALLINT UNSIGNED NOT NULL,
 `payment` BOOLEAN NULL,
+`req_sum` INT NOT NULL,
  PRIMARY KEY (`requests_id`),
  FOREIGN KEY (`requests_nameid`) REFERENCES `allnames`(`nameid`),
  FOREIGN KEY (`byersid`) REFERENCES `byers`(`byers_id`)

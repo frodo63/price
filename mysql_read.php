@@ -31,18 +31,24 @@ if(isset($_POST['table'])){
         try {
 
             $statement = $pdo->prepare("SELECT 
+                                        a.created AS req_date,
                                         a.requests_id AS req_id,
                                         a.requests_nameid AS req_nameid,
                                         a.name AS req_name,
                                         a.req_rent AS rent,
+                                        a.req_sum AS sum,
                                         b.byers_id AS b_id,
                                         b.byers_nameid AS b_nameid,
                                         b.name AS b_name
                                         FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
                                         ORDER BY `b`.`name` ASC");
             $statement->execute();
-            $result = "<table><thead><tr><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Опции</th></tr></thead>";
-            foreach ($statement as $row) {$result .= "<tr requestid =" . $row['req_id'] . "><td byerid=" . $row['b_id'] . " name=" . $row['b_nameid'] . "><span>". $row['b_name'] ."</span></td><td category='requests' name =" . $row['req_nameid'] . "><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='W' class='collapse'><span class='name'>" . $row['req_name'] . "</span>
+            $result = "<table><thead><tr><th>Дата</th><th>№ Заказа</th><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Сумма</th><th></th></tr></thead>";
+            foreach ($statement as $row) {$result .= "<tr requestid =" . $row['req_id'] . ">
+            <td class='req_date'><span>" . $row['req_date'] . "</span></td>
+            <td class='req_id'><span>" . $row['req_id'] . "</span></td>
+            <td byerid=" . $row['b_id'] . " name=" . $row['b_nameid'] . "><span>". $row['b_name'] ."</span></td>
+            <td category='requests' name =" . $row['req_nameid'] . "><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='W' class='collapse'><span class='name'>" . $row['req_name'] . "</span>
             
             
             
@@ -58,10 +64,11 @@ if(isset($_POST['table'])){
             
             </td>
                 <td class = 'rent_whole'>".number_format($row['rent'], 2, '.', ' ')."</td>
+                <td class = 'sum_whole'>" . $row['sum'] . "</td>
             <td class = 'req_buttons'><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='R' class='edit'>
          <input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='X' class='delete'></td></tr>";
             }
-            $result .= "<tfoot><tr><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Опции</th></tr></tfoot></table><!--<script src='js/mysql_edc.js'></script>-->";
+            $result .= "</table><!--<script src='js/mysql_edc.js'></script>-->";
             print $result;
 
 
