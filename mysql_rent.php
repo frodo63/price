@@ -57,7 +57,7 @@ if (isset($_POST['request']) && isset($_POST['poscount'])){
 SELECT `pricingid`,`price`,`rop`,`opr`,`fixed`,`kol`,`wtime` FROM 
 (SELECT `winnerid` FROM `req_positions` WHERE `requestid` = ?) AS a INNER JOIN 
 (SELECT `kol`,`price`,`rop`,`opr`,`fixed`,`wtime`,`pricingid` FROM `pricings`) AS b ON a.`winnerid` = b.`pricingid`");
-    //$stm = $pdo->prepare("UPDATE `requests` SET `req_rent`=? WHERE `requests_id`=?");
+    $stm = $pdo->prepare("UPDATE `requests` SET `req_rent`=? WHERE `requests_id`=?");
     try{
         $pdo->beginTransaction();
         $countrent->execute(array($reqid));
@@ -67,7 +67,6 @@ SELECT `pricingid`,`price`,`rop`,`opr`,`fixed`,`kol`,`wtime` FROM
 
         $result="
                 <table>
-                <tr>Рентабельность заказа</tr>
                 <thead>
                 <th>Номер расценки</th>
                 <th>Цена</th>
@@ -79,35 +78,57 @@ SELECT `pricingid`,`price`,`rop`,`opr`,`fixed`,`kol`,`wtime` FROM
         /*ФОРМУЛА РАСЧЕТА И ПЕРЕМЕННЫЕ К НЕЙ*/
         $form_top = [];
         $form_bot = [];
+
+
+        //Переменные для демонстрационной дроби
+        $dem_top;
+        $dem_bot;
         /*ФОРМУЛА РАСЧЕТА*/
 
         foreach ($c as $row){
             ++$wincount;//Увеличиваем на 1 счетчик виннеров
-            /*Делаем*/
+
+            /*Временные переменные для приведения к числу*/
+            $pricingid=intval($row['pricingid']);
+            $price=intval($row['price']);
+            $fixed=intval($row['fixed']);
+            $opr=intval($row['opr']);
+            $rop=intval($row['rop']);
+            $kol=intval($row['kol']);
+            $wtime=intval($row['wtime']);
+
+
+
+
             $result.="
                 <tr>
-                <td>" . $row['pricingid'] . "</td>
-                <td>" . $row['price'] . "</td>";
+                <td class ='pricingid'>" . $pricingid . "</td>
+                <td class ='price'>" . $price . "</td>";
 
-            switch ($row['fixed']) {
-                case '0':
-                    $nam = $row['opr'];
+            switch ($fixed) {
+                case 0:
+                    $nam = $opr;
                     break;
-                case '1':
-                    $nam = $row['rop'];
+                case 1:
+                    $nam = $rop;
                     break;
             };
 
-            $result .="<td>" . $nam . "</td>";
-            $result .="<td>" . $row['kol'] . "</td>
-                <td>" . $row['wtime'] . "</td>
+            /*Показательная дробь*/
+            $dem_top .=$nam . " * " . $kol . " * " . "(1 - (0.02 * " . $wtime . ")) + ";
+            $dem_bot .="(" . $row['price'] . " * " . $row['kol'].") + ";
+            /*Закончилась показательная дробь*/
+
+            $result .="<td class ='nam'>" . $nam . "</td>";
+            $result .="<td class ='kol'>" . $kol . "</td>
+                <td class ='wtime'>" . $wtime . "</td>
                 </tr>
                 ";
             /*Разметку*/
             /*формула расчета:*/
 
-            $form_top[] = $row['nam'] * $row['kol'] * (1 - 0.02 * $row['wtime']);
-            $form_bot[] = $row['price'] * $row['kol'];
+            $form_top[] = $nam * $kol * (1 - (0.02 * $wtime));
+            $form_bot[] = $price * $kol;
 
             /*закончилась формула*/
         };
@@ -118,36 +139,37 @@ SELECT `pricingid`,`price`,`rop`,`opr`,`fixed`,`kol`,`wtime` FROM
         $mm = $poscount-$wincount;
 
         if ($mm > 0){
-            print "<span>Расчет общей рентабельности невозможен.<br><br>a)выберите победителя в каждой из позиций<br>b)удалите ненужные позиции.</span><br><br>";
-            echo ("Разница: ". $mm . " Позиций: " . $poscount . ". Победителей: " . $wincount);
-        }else{
-            print (var_dump($form_top));
-            print (var_dump($form_bot));
+            /*Посылаем ноль в графу общей рентабельности*/
+            $pdo->beginTransaction();
+            $stm->execute(array(0, $reqid));
+            $pdo->commit();
 
-            print ($result);
-            print "<br><br>";
-            echo ("Разница: ". $mm . " Позиций: " . $poscount . ". Победителей: " . $wincount);
+            echo json_encode(array("data1"=>"<span>Расчет общей рентабельности невозможен.<br><br>a)выберите победителя в каждой из позиций<br>b)удалите ненужные позиции.</span>
+            <br><br><span>Разница: ". $mm . " Позиций: " . $poscount . ". Победителей: " . $wincount . "</span>","data2"=>"0.00"));
+
+        }else{
+            $top;
+            $bot;
+            foreach($form_top as $key=>$value){$top = $top + $value;}
+            foreach($form_bot as $key=>$value){$bot = $bot + $value;}
+
+            $dem_top = substr($dem_top, 0, -3);//Срезаем лишние плюсы с демонстрационных строк
+            $dem_bot = substr($dem_bot, 0, -3);
+
+            /*расчет рентабельности*/
+
+            $rent = number_format($top/$bot*100, 2);
+
+            $pdo->beginTransaction();
+            $stm->execute(array($rent, $reqid));
+            $pdo->commit();
+
+            echo json_encode(array("data1"=>"Расчет рентабельности: <br><br><table class ='demo'><tr><td>" . $dem_top . "</td></tr><tr><td>" . $dem_bot . "</td></tr></table><br><br>
+            <span> Общая рентабельность: " . $rent . "% </span> . $result . 
+            <br><br><span>Разница: ". $mm . " Позиций: " . $poscount . ". Победителей: " . $wincount . "</span>","data2"=>$rent));
         }
 
 
-        /**/
-
-
-
-        /*Если нет победителей*/
-        //if(count($result)==0){
-         //   $pdo->beginTransaction();
-         //   $stm->execute(array(0, $reqid));
-         //   $pdo->commit();
-            //echo "0.00";
-        //}else{/*Если они есть*/
-        //    $rent = array_sum($result)/count($result);
-        //    $pdo->beginTransaction();
-        //    $stm->execute(array($rent, $reqid));
-        //    $pdo->commit();
-
-            //echo number_format($rent, 2, '.', ' ');
-        //};
 
     } catch(PDOExecption $e) {
         $pdo->rollback();

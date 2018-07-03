@@ -687,9 +687,12 @@ $(document).ready(function() {
                     $.ajax({
                         url: 'mysql_rent.php',
                         method: 'POST',
+                        dataType: 'json',
+                        cache: false,
                         data: {poscount:poscount, request:reqid},
                         success: function (data) {
-                            $('tr[requestid='+reqid+'] .rentcount').html(data);
+                            $('tr[requestid='+reqid+'] .rentcount').html(data.data1);
+                            $('tr[requestid='+reqid+'] .rent_whole').html(data.data2);
 
                             /*В самом конце, обновляем табличку полученными данными, чтобы не делать дополнительных запросов*/
                             $('tr[position='+posid+'] > td.winname').text('');//Очищаем поле Победитель (Имя)
@@ -728,9 +731,12 @@ $(document).ready(function() {
                     $.ajax({
                         url: 'mysql_rent.php',
                         method: 'POST',
+                        dataType: 'json',
+                        cache: false,
                         data: {poscount:poscount, request:reqid},
                         success: function (data) {
-                            $('tr[requestid='+reqid+'] .rentcount').html(data);
+                            $('tr[requestid='+reqid+'] .rentcount').html(data.data1);
+                            $('tr[requestid='+reqid+'] .rent_whole').html(data.data2);
 
                             /*В самом конце, обновляем табличку полученными данными, чтобы не делать дополнительных запросов*/
                             $('tr[position='+posid+'] > td.winname').text('');//Очищаем поле Победитель (Имя)
