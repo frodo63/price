@@ -17,11 +17,11 @@ input {
 #db_status {color: white}
 
 #editmsg {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     right: 0;
-    height: 20vh;
-    width: 25vw;
+    height: 15vh;
+    width: 20vw;
     display: none;
     background: green;
     border-radius: 2vh;
@@ -159,7 +159,7 @@ li[category="request"] {
 }
 /**/
 
-#pricingwindow .addpricing {
+#pricingwindow .closepricing {
     position: absolute;
     top: 1vw;
     right: 1vw;
@@ -185,14 +185,14 @@ table{
 
 /*Класс - таблица из результатов поиска. айдишник - таблица из табов*/
 /*Таблица первого уровня (заявки)*/
-.requests_list th:nth-child(1), #requests_list th:nth-child(1) {width: 5%}
-.requests_list th:nth-child(2), #requests_list th:nth-child(2) {width: 5%}
-.requests_list th:nth-child(3), #requests_list th:nth-child(3) {width: 10%}
-.requests_list th:nth-child(4), #requests_list th:nth-child(4) {width: 70%}
-.requests_list th:nth-child(5), #requests_list th:nth-child(5) {width: 5%}
-.requests_list th:nth-child(6), #requests_list th:nth-child(6) {width: 5%}
-.requests_list th:nth-child(6), #requests_list th:nth-child(7) {width: 5%}
-.requests_list thead tr, #requests_list thead tr {border-bottom: 1px black solid;}
+.requests_list>table>thead>tr>th:nth-child(1), #requests_list>table>thead>tr>th:nth-child(1) {width: 5%}
+.requests_list>table>thead>tr>th:nth-child(2), #requests_list>table>thead>tr>th:nth-child(2) {width: 5%}
+.requests_list>table>thead>tr>th:nth-child(3), #requests_list>table>thead>tr>th:nth-child(3) {width: 10%}
+.requests_list>table>thead>tr>th:nth-child(4), #requests_list>table>thead>tr>th:nth-child(4) {width: 70%}
+.requests_list>table>thead>tr>th:nth-child(5), #requests_list>table>thead>tr>th:nth-child(5) {width: 5%}
+.requests_list>table>thead>tr>th:nth-child(6), #requests_list>table>thead>tr>th:nth-child(6) {width: 5%}
+.requests_list>table>thead>tr>th:nth-child(6), #requests_list>table>thead>tr>th:nth-child(7) {width: 5%}
+.requests_list>table>thead>tr, #requests_list>table>thead>tr {border-bottom: 1px black solid;}
 
 /*Таблица второго уровня (позциии)*/
 .requests_list .positions th:nth-child(1), #requests_list .positions th:nth-child(1){width: 2%}
@@ -331,3 +331,9 @@ border-color: white;
 #requests {padding: 0.5vw}
 tr[pricingid] td {border: 1px solid black}
 /**/
+
+/*Таблица расшифровки расчет рентабельности*/
+.rentcount {
+
+}
+/*Закончилась Таблица расшифровки расчет рентабельности*/

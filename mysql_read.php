@@ -52,7 +52,8 @@ if(isset($_POST['table'])){
             
             
             
-            <div id=" . $row['req_nameid'] . " class='contents'>            
+            <div id=" . $row['req_nameid'] . " class='contents'> 
+            <div class='rentcount'></div>           
             <div class='positions'></div>
             
             <input type='button' class='add_pos' value='+позиция'>
@@ -302,7 +303,7 @@ if (isset($_POST['positionid'])){
 
                 $result.="</div></td></tr>";
             }
-            $result.="<!--<script src='js/mysql_edc.js'></script>--></tbody></table><input class ='addpricing' positionid='".$pos_id."' value='Расценить новое' type ='button'>";
+            $result.="<!--<script src='js/mysql_edc.js'></script>--></tbody></table><input class ='addpricing' positionid='".$pos_id."' value='Расценить новое?' type ='button'>";
         };
 
         echo $result;
@@ -364,7 +365,8 @@ if (isset($_POST['category']) && isset($_POST['theid'])){
                 
                 
                 
-                <div id=" . $row['req_nameid'] . " class='contents'>            
+                <div id=" . $row['req_nameid'] . " class='contents'>
+                <div class='rentcount'></div>
                 <div class='positions'></div>
                 
                 <input type='button' class='add_pos' value='+позиция'>
@@ -411,7 +413,8 @@ if (isset($_POST['category']) && isset($_POST['theid'])){
             
             
             
-            <div id=" . $row['req_nameid'] . " class='contents'>            
+            <div id=" . $row['req_nameid'] . " class='contents'>    
+            <div class='rentcount'></div>        
             <div class='positions'></div>
             
             <input type='button' class='add_pos' value='+позиция'>
@@ -477,6 +480,7 @@ if (isset($_POST['category']) && isset($_POST['theid'])){
     
     
                 <div id=" . $row['req_nameid'] . " class='contents'>
+                <div class='rentcount'></div>
                 <div class='positions'></div>
                 <input type='button' class='add_pos' value='+позиция'>
                 <div class='add-pos-inputs'>
@@ -540,6 +544,7 @@ if (isset($_POST['category']) && isset($_POST['theid'])){
     
     
                 <div id=" . $row['req_nameid'] . " class='contents'>
+                <div class='rentcount'></div>
                 <div class='positions'></div>
                 <input type='button' class='add_pos' value='+позиция'>
                 <div class='add-pos-inputs'>

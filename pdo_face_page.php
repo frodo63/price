@@ -42,7 +42,7 @@ echo "
         <div id='rent'><h2>Рентабельность:</h2><h1>0</h1></div>
         <div id='cases'></div>
     </form>
-        <input type='button' value='X' class='addpricing'>
+        <input type='button' value='X' class='closepricing'>
                 
         <script src='js/price_mysql.js'></script>
         <script src='js/mysql_scripts.js'></script>
@@ -50,7 +50,7 @@ echo "
         
 </div>
 <div id='editmsg'></div>
-<input id='thesearch' type='text' placeholder='Введите что-то'category='' theID=''>
+<input id='thesearch' type='text' placeholder='Начните вводить наименование поставщика, покупателя, товара или название заявки'category='' theID=''>
 <div id='sres'></div>
 <br>
 <input type='button' id='readstoggle' value='Скрыть/Показать табы'>
