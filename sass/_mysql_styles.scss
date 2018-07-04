@@ -185,84 +185,83 @@ table{
 
 /*Класс - таблица из результатов поиска. айдишник - таблица из табов*/
 /*Таблица первого уровня (заявки)*/
-.requests_list>table>thead>tr>th:nth-child(1), #requests_list>table>thead>tr>th:nth-child(1) {width: 5%}
-.requests_list>table>thead>tr>th:nth-child(2), #requests_list>table>thead>tr>th:nth-child(2) {width: 5%}
-.requests_list>table>thead>tr>th:nth-child(3), #requests_list>table>thead>tr>th:nth-child(3) {width: 10%}
-.requests_list>table>thead>tr>th:nth-child(4), #requests_list>table>thead>tr>th:nth-child(4) {width: 70%}
-.requests_list>table>thead>tr>th:nth-child(5), #requests_list>table>thead>tr>th:nth-child(5) {width: 5%}
-.requests_list>table>thead>tr>th:nth-child(6), #requests_list>table>thead>tr>th:nth-child(6) {width: 5%}
-.requests_list>table>thead>tr>th:nth-child(6), #requests_list>table>thead>tr>th:nth-child(7) {width: 5%}
-.requests_list>table>thead>tr, #requests_list>table>thead>tr {border-bottom: 1px black solid;}
+.requests_list>table>thead>tr>th:nth-child(1){width: 5%}
+.requests_list>table>thead>tr>th:nth-child(2){width: 5%}
+.requests_list>table>thead>tr>th:nth-child(3){width: 10%}
+.requests_list>table>thead>tr>th:nth-child(4){width: 68%}
+.requests_list>table>thead>tr>th:nth-child(5){width: 5%}
+.requests_list>table>thead>tr>th:nth-child(6){width: 7%}
+.requests_list>table>thead>tr>th:nth-child(6){width: 5%}
+.requests_list>table>thead>tr{border-bottom: 1px black solid;}
 
 /*Таблица второго уровня (позциии)*/
-.requests_list .positions th:nth-child(1), #requests_list .positions th:nth-child(1){width: 2%}
-.requests_list .positions th:nth-child(2), #requests_list .positions th:nth-child(2){width: 76%}
-.requests_list .positions th:nth-child(3), #requests_list .positions th:nth-child(3){width: 8%}
-.requests_list .positions th:nth-child(4), #requests_list .positions th:nth-child(4){width: 5%}
-.requests_list .positions th:nth-child(5), #requests_list .positions th:nth-child(5){width: 5%}
+.requests_list .positions th:nth-child(1){width: 2%}
+.requests_list .positions th:nth-child(2){width: 76%}
+.requests_list .positions th:nth-child(3){width: 8%}
+.requests_list .positions th:nth-child(4){width: 5%}
+.requests_list .positions th:nth-child(5){width: 5%}
 
 /*Таблица  третьего уровня (расценки) */
-.requests_list .pricing-list th:nth-child(1), #requests_list .pricing-list th:nth-child(1){width: 20%}
-.requests_list .pricing-list th:nth-child(2), #requests_list .pricing-list th:nth-child(2){width: 20%}
-.requests_list .pricing-list th:nth-child(3), #requests_list .pricing-list th:nth-child(3){width: 7%}
-.requests_list .pricing-list th:nth-child(4), #requests_list .pricing-list th:nth-child(4){width: 5%}
-.requests_list .pricing-list th:nth-child(5), #requests_list .pricing-list th:nth-child(5){width: 5%}
-.requests_list .pricing-list th:nth-child(6), #requests_list .pricing-list th:nth-child(6){width: 5%}
-.requests_list .pricing-list th:nth-child(7), #requests_list .pricing-list th:nth-child(7){width: 4%}
-.requests_list .pricing-list th:nth-child(8), #requests_list .pricing-list th:nth-child(8){width: 10%}
-.requests_list .pricing-list th:nth-child(9), #requests_list .pricing-list th:nth-child(9){width: 5%}
-.requests_list .pricing-list th:nth-child(10), #requests_list .pricing-list th:nth-child(10){width: 14%}
+.requests_list .pricing-list th:nth-child(1){width: 20%}
+.requests_list .pricing-list th:nth-child(2){width: 20%}
+.requests_list .pricing-list th:nth-child(3){width: 7%}
+.requests_list .pricing-list th:nth-child(4){width: 5%}
+.requests_list .pricing-list th:nth-child(5){width: 5%}
+.requests_list .pricing-list th:nth-child(6){width: 5%}
+.requests_list .pricing-list th:nth-child(7){width: 4%}
+.requests_list .pricing-list th:nth-child(8){width: 10%}
+.requests_list .pricing-list th:nth-child(9){width: 5%}
+.requests_list .pricing-list th:nth-child(10){width: 14%}
 
 /*Горизонтальное позиционирование содержимого td:*/
 /*1й уровень (заявки)*/
-.requests_list td, #requests_list td{text-align: center}
-.requests_list td, #requests_list td:nth-child(4){text-align: left}
+.requests_list td{text-align: center}
+.requests_list td:nth-child(4){text-align: left}
 /*2й уровень (позиции*/
-.requests_list .positions td:nth-child(1), #requests_list .positions td:nth-child(1){text-align: center}
-.requests_list .positions td:nth-child(2), #requests_list .positions td:nth-child(2){text-align: left}
-.requests_list .positions td:nth-child(3), #requests_list .positions td:nth-child(3){text-align: center; vertical-align: middle}
-.requests_list .positions td:nth-child(4), #requests_list .positions td:nth-child(4){text-align: left; vertical-align: middle}
-.requests_list .positions td:nth-child(5), #requests_list .positions td:nth-child(5){text-align: center}
+.requests_list .positions td:nth-child(1){text-align: center}
+.requests_list .positions td:nth-child(2){text-align: left}
+.requests_list .positions td:nth-child(3){text-align: center; vertical-align: middle}
+.requests_list .positions td:nth-child(4){text-align: left; vertical-align: middle}
+.requests_list .positions td:nth-child(5){text-align: center}
 /*3й уровень (расцеки)*/
-.requests_list .pricing-list td:nth-child(1), #requests_list .pricing-list td:nth-child(1){text-align: center}
-.requests_list .pricing-list td:nth-child(2), #requests_list .pricing-list td:nth-child(2){text-align: center}
-.requests_list .pricing-list td:nth-child(3), #requests_list .pricing-list td:nth-child(3){text-align: center}
-.requests_list .pricing-list td:nth-child(4), #requests_list .pricing-list td:nth-child(4){text-align: center}
-.requests_list .pricing-list td:nth-child(5), #requests_list .pricing-list td:nth-child(5){text-align: center}
-.requests_list .pricing-list td:nth-child(6), #requests_list .pricing-list td:nth-child(6){text-align: center}
-.requests_list .pricing-list td:nth-child(7), #requests_list .pricing-list td:nth-child(7){text-align: center}
-.requests_list .pricing-list td:nth-child(8), #requests_list .pricing-list td:nth-child(8){text-align: center}
-.requests_list .pricing-list td:nth-child(9), #requests_list .pricing-list td:nth-child(9){text-align: center}
-.requests_list .pricing-list td:nth-child(10), #requests_list .pricing-list td:nth-child(10){text-align: center}
-.requests_list .pricing-list td:nth-child(11), #requests_list .pricing-list td:nth-child(11){text-align: center}
+.requests_list .pricing-list td:nth-child(1){text-align: center}
+.requests_list .pricing-list td:nth-child(2){text-align: center}
+.requests_list .pricing-list td:nth-child(3){text-align: center}
+.requests_list .pricing-list td:nth-child(4){text-align: center}
+.requests_list .pricing-list td:nth-child(5){text-align: center}
+.requests_list .pricing-list td:nth-child(6){text-align: center}
+.requests_list .pricing-list td:nth-child(7){text-align: center}
+.requests_list .pricing-list td:nth-child(8){text-align: center}
+.requests_list .pricing-list td:nth-child(9){text-align: center}
+.requests_list .pricing-list td:nth-child(10){text-align: center}
+.requests_list .pricing-list td:nth-child(11){text-align: center}
 
 
 /*граница низ-прав для Ряда заявки*/
-.requests_list tr, #requests_list tr {
+.requests_list tr{
     border-bottom: 1px black solid;
     border-right: 1px black solid;
 }
 
-.requests_list tr td:nth-child(2), #requests_list tr td:nth-child(2),
-.requests_list tr td:nth-child(3), #requests_list tr td:nth-child(3),
-.requests_list tr td:nth-child(4), #requests_list tr td:nth-child(4),
-.requests_list tr td:nth-child(5), #requests_list tr td:nth-child(5),
-.requests_list tr td:nth-child(6), #requests_list tr td:nth-child(6),
-.requests_list tr td:nth-child(7), #requests_list tr td:nth-child(7) {
+.requests_list tr td:nth-child(2),
+.requests_list tr td:nth-child(3),
+.requests_list tr td:nth-child(4),
+.requests_list tr td:nth-child(5),
+.requests_list tr td:nth-child(6),
+.requests_list tr td:nth-child(7){
     border-right: 1px black solid;
 }
 
 
-.requests_list tr td:last-child,
-#requests_list tr td:last-child {
+.requests_list tr td:last-child {
     border-right: none;
 }
 
 
 /*Таблица второго уровня*/
-.requests_list tr td .contents .positions td, #requests_list tr td .contents .positions td {border: none}
-.requests_list tr td .contents .positions .pricings table.pricing-list tbody tr, #requests_list tr td .contents .positions .pricings table.pricing-list tbody tr {border-bottom: 1px solid black;}
-.requests_list tr td .contents .positions .pricings table.pricing-list tbody tr:nth-last-of-type(1), #requests_list tr td .contents .positions .pricings table.pricing-list tbody tr:nth-last-of-type(1) {border: none;}
+.requests_list tr td .contents .positions td{border: none}
+.requests_list tr td .contents .positions .pricings table.pricing-list tbody tr {border-bottom: 1px solid black;}
+.requests_list tr td .contents .positions .pricings table.pricing-list tbody tr:nth-last-of-type(1) {border: none;}
 
 /*шрифты таблицы*/
 td[category="requests"], td[byerid], td[category="positions"], .pricings {
@@ -282,10 +281,10 @@ tr.win[pricingid], tr.win[pricingid]:hover {
     color: white;
 }
 
-td.rent_whole{
+td.rent_whole, td.sum_whole{
     text-align: center;
     vertical-align: middle;
-    font-size: 1.7vw;
+    font-size: 21px;
 
 }
 /*Резальтаты поиска при создании позиции(выпрыгивает список позиций*/
@@ -326,10 +325,8 @@ tr[pricingid] td {border: 1px solid black}
 /**/
 
 /*Таблица расшифровки расчет рентабельности*/
-#requests_list .demo, #requests_list .demo tr, #requests_list .demo td, .requests_list .demo tr td:nth-child(1) {border-bottom: none; border-right: none; border-left: none}
-#requests_list .demo tr:first-child td {
-    border-bottom: 1px solid black;
-}
+.requests_list .demo, .requests_list .demo tr, .requests_list .demo td, .requests_list .demo tr td:nth-child(1) {border-bottom: none; border-right: none; border-left: none}
+.requests_list .demo tr:first-child td { border-bottom: 1px solid black}
 /*Закончилась Таблица расшифровки расчет рентабельности*/
 
 

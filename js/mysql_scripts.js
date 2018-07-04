@@ -68,7 +68,7 @@ $(document).ready(function(){
                 method: 'POST',
                 data: {table:table},
                 success: function (data) {
-                   $('#' + table + '_list').html(data);
+                   $('.' + table + '_list').html(data);
                 },
                 complete: function(){
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Данные из таблицы " + table + " получены.");

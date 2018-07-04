@@ -340,13 +340,16 @@ if (isset($_POST['category']) && isset($_POST['theid'])){
         try {
 
             $statement = $pdo->prepare("SELECT 
+                                        a.created AS req_date,
                                         a.requests_id AS req_id,
                                         a.requests_nameid AS req_nameid,
                                         a.name AS req_name,
                                         a.req_rent AS rent,
                                         b.byers_id AS b_id,
                                         b.byers_nameid AS b_nameid,
-                                        b.name AS b_name
+                                        b.name AS b_name,
+                                        a.req_rent AS rent,
+                                        a.req_sum AS sum
                                         FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
                                         WHERE a.byersid = ? ORDER BY `b`.`byers_id` ASC");
             $pdo->beginTransaction();
@@ -357,29 +360,32 @@ if (isset($_POST['category']) && isset($_POST['theid'])){
             if($count==0){
                 echo ('<p>Заявок, в которых бы фигурировал этот покупатель, не обнаружено.</p>');
             }else{
-                $result = "<table><thead><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Опции</th></thead>";
 
-                foreach ($statement as $row) {$result .= "<tr requestid =" . $row['req_id'] . "><td byerid=" . $row['b_id'] . " name=" . $row['b_nameid'] . "><span>". $row['b_name'] ."</span></td><td category='requests' name =" . $row['req_nameid'] . "><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='W' class='collapse'><span class='name'>" . $row['req_name'] . "</span>
-                
-                
-                
-                <div id=" . $row['req_nameid'] . " class='contents'>
-                <div class='rentcount'></div>
-                <div class='positions'></div>
-                
-                <input type='button' class='add_pos' value='+позиция'>
-                <div class='add-pos-inputs'>
-                <input type='text' class='trade' name='new_req_name' placeholder='Название позиции' size='50'>
-                <div class='sres'></div>
-                <input type='button' name =" . $row['req_id'] . " value='Добавить' class='addpos'>
-                </div>
-                
-                </td>
-                    <td class = 'rent_whole'>".number_format($row['rent'], 2, '.', ' ')."</td>
-                <td class = 'req_buttons' ><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='R' class='edit'>
-             <input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='X' class='delete'></td></tr>";
+                $result = "<table><thead><tr><th>Дата</th><th>№ Заказа</th><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Сумма</th><th></th></tr></thead>";
+                foreach ($statement as $row) {$result .= "<tr requestid =" . $row['req_id'] . ">
+            <td class='req_date'><span>" . $row['req_date'] . "</span></td>
+            <td class='req_id'><span>" . $row['req_id'] . "</span></td>
+            <td byerid=" . $row['b_id'] . " name=" . $row['b_nameid'] . "><span>". $row['b_name'] ."</span></td>
+            <td category='requests' name =" . $row['req_nameid'] . "><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='W' class='collapse'>Наименование заказа: <span class='name'> \"" . $row['req_name'] . "\" </span>
+            
+            <div id=" . $row['req_nameid'] . " class='contents'> 
+            <div class='rentcount'></div>           
+            <div class='positions'></div>
+            
+            <input type='button' class='add_pos' value='+позиция'>
+            <div class='add-pos-inputs'>
+            <input type='text' class='trade' name='new_req_name' placeholder='Название позиции' size='50'>
+            <div class='sres'></div>
+            <input type='button' name =" . $row['req_id'] . " value='Добавить' class='addpos'>
+            </div>
+            
+            </td>
+                <td class = 'rent_whole'>".number_format($row['rent'], 2, '.', ' ')."</td>
+                <td class = 'sum_whole'>" .number_format($row['sum'], 2, '.', ' '). "</td>
+            <td class = 'req_buttons'><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='R' class='edit'>
+         <input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='X' class='delete'></td></tr>";
                 }
-                $result .= "</table>";
+                $result .= "</table><!--<script src='js/mysql_edc.js'></script>-->";
                 print $result;
             };
 
@@ -393,10 +399,12 @@ if (isset($_POST['category']) && isset($_POST['theid'])){
         try {
 
             $statement = $pdo->prepare("SELECT 
+                                        a.created AS req_date,
                                         a.requests_id AS req_id,
                                         a.requests_nameid AS req_nameid,
                                         a.name AS req_name,
                                         a.req_rent AS rent,
+                                        a.req_sum AS sum,
                                         b.byers_id AS b_id,
                                         b.byers_nameid AS b_nameid,
                                         b.name AS b_name
@@ -406,13 +414,15 @@ if (isset($_POST['category']) && isset($_POST['theid'])){
             $statement->execute(array($theid));
             $pdo->commit();
 
-            $result = "<table><thead><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Опции</th></thead>";
-            foreach ($statement as $row) {$result .= "<tr requestid =" . $row['req_id'] . "><td byerid=" . $row['b_id'] . " name=" . $row['b_nameid'] . "><span>". $row['b_name'] ."</span></td><td category='requests' name =" . $row['req_nameid'] . "><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='W' class='collapse'><span class='name'>" . $row['req_name'] . "</span>
+            $result = "<table><thead><tr><th>Дата</th><th>№ Заказа</th><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Сумма</th><th></th></tr></thead>";
+            foreach ($statement as $row) {$result .= "<tr requestid =" . $row['req_id'] . ">
+            <td class='req_date'><span>" . $row['req_date'] . "</span></td>
+            <td class='req_id'><span>" . $row['req_id'] . "</span></td>
+            <td byerid=" . $row['b_id'] . " name=" . $row['b_nameid'] . "><span>". $row['b_name'] ."</span></td>
+            <td category='requests' name =" . $row['req_nameid'] . "><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='W' class='collapse'>Наименование заказа: <span class='name'> \"" . $row['req_name'] . "\" </span>
             
-            
-            
-            <div id=" . $row['req_nameid'] . " class='contents'>    
-            <div class='rentcount'></div>        
+            <div id=" . $row['req_nameid'] . " class='contents'> 
+            <div class='rentcount'></div>           
             <div class='positions'></div>
             
             <input type='button' class='add_pos' value='+позиция'>
@@ -424,10 +434,11 @@ if (isset($_POST['category']) && isset($_POST['theid'])){
             
             </td>
                 <td class = 'rent_whole'>".number_format($row['rent'], 2, '.', ' ')."</td>
-            <td class = 'req_buttons' ><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='R' class='edit'>
+                <td class = 'sum_whole'>" .number_format($row['sum'], 2, '.', ' '). "</td>
+            <td class = 'req_buttons'><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='R' class='edit'>
          <input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='X' class='delete'></td></tr>";
             }
-            $result .= "</table>";
+            $result .= "</table><!--<script src='js/mysql_edc.js'></script>-->";
             print $result;
 
 
@@ -456,15 +467,17 @@ if (isset($_POST['category']) && isset($_POST['theid'])){
             if (count($ids) == 0){
                 echo ('<p>Заявок, в позициях которых были бы расценки, в которых бы фигурировал этот поставщик, не обнаружено.</p>');
             }else{
-                /*Айдишники из массива в троку с сепаратором запятая*/
+                /*Айдишники из массива в строку с сепаратором запятая*/
                 $ids=implode(",", array_unique($ids));
                 echo $ids;
                 /*Строка из значений передается напрямую в запрос, только после того, как переменная готова*/
                 $readids = $pdo->prepare("SELECT 
+                                            a.created AS req_date,
                                             a.requests_id AS req_id,
                                             a.requests_nameid AS req_nameid,
                                             a.name AS req_name,
                                             a.req_rent AS rent,
+                                            a.req_sum AS sum,
                                             b.byers_id AS b_id,
                                             b.byers_nameid AS b_nameid,
                                             b.name AS b_name
@@ -472,26 +485,33 @@ if (isset($_POST['category']) && isset($_POST['theid'])){
                                             WHERE `a`.`requests_id` IN (".$ids.") ORDER BY a.requests_id ASC");
                 $readids->execute();
                 $pdo->commit();
-                $result = "<table><thead><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Опции</th></thead>";
-                foreach ($readids as $row) {$result .= "<tr requestid =" . $row['req_id'] . "><td byerid=" . $row['b_id'] . " name=" . $row['b_nameid'] . "><span>". $row['b_name'] ."</span></td><td category='requests' name =" . $row['req_nameid'] . "><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='W' class='collapse'><span class='name'>" . $row['req_name'] . "</span>
-    
-    
-    
-                <div id=" . $row['req_nameid'] . " class='contents'>
-                <div class='rentcount'></div>
-                <div class='positions'></div>
-                <input type='button' class='add_pos' value='+позиция'>
-                <div class='add-pos-inputs'>
-                <input type='text' class='trade' name='new_req_name' placeholder='Название позиции' size='50'>
-                <div class='sres'></div>
-                <input type='button' name =" . $row['req_id'] . " value='Добавить' class='addpos'>
-                </div>
-                </td>
-                    <td class = 'rent_whole'>".number_format($row['rent'], 2, '.', ' ')."</td>
-                <td class = 'req_buttons' ><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='R' class='edit'>
-             <input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='X' class='delete'></td></tr>";
+                $result = "<table><thead><tr><th>Дата</th><th>№ Заказа</th><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Сумма</th><th></th></tr></thead>";
+                foreach ($readids as $row) {
+
+                    $result .= "<tr requestid =" . $row['req_id'] . ">
+            <td class='req_date'><span>" . $row['req_date'] . "</span></td>
+            <td class='req_id'><span>" . $row['req_id'] . "</span></td>
+            <td byerid=" . $row['b_id'] . " name=" . $row['b_nameid'] . "><span>". $row['b_name'] ."</span></td>
+            <td category='requests' name =" . $row['req_nameid'] . "><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='W' class='collapse'>Наименование заказа: <span class='name'> \"" . $row['req_name'] . "\" </span>
+            
+            <div id=" . $row['req_nameid'] . " class='contents'> 
+            <div class='rentcount'></div>           
+            <div class='positions'></div>
+            
+            <input type='button' class='add_pos' value='+позиция'>
+            <div class='add-pos-inputs'>
+            <input type='text' class='trade' name='new_req_name' placeholder='Название позиции' size='50'>
+            <div class='sres'></div>
+            <input type='button' name =" . $row['req_id'] . " value='Добавить' class='addpos'>
+            </div>
+            
+            </td>
+                <td class = 'rent_whole'>".number_format($row['rent'], 2, '.', ' ')."</td>
+                <td class = 'sum_whole'>" .number_format($row['sum'], 2, '.', ' '). "</td>
+            <td class = 'req_buttons'><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='R' class='edit'>
+         <input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='X' class='delete'></td></tr>";
                 }
-                $result .= "</table>";
+                $result .= "</table><!--<script src='js/mysql_edc.js'></script>-->";
                 print $result;
             };
         } catch (PDOExecption $e) {
@@ -525,9 +545,11 @@ if (isset($_POST['category']) && isset($_POST['theid'])){
                 /*Строка из значений передается напрямую в запрос, только после того, как переменная готова*/
                 $readids = $pdo->prepare("SELECT 
                                             a.requests_id AS req_id,
+                                            a.created AS req_date,
                                             a.requests_nameid AS req_nameid,
                                             a.name AS req_name,
                                             a.req_rent AS rent,
+                                            a.req_sum AS sum,
                                             b.byers_id AS b_id,
                                             b.byers_nameid AS b_nameid,
                                             b.name AS b_name
@@ -535,26 +557,33 @@ if (isset($_POST['category']) && isset($_POST['theid'])){
                                             WHERE a.requests_id IN (" . $ids . ") ORDER BY `b`.`byers_id` ASC");
                 $readids->execute();
                 $pdo->commit();
-                $result = "<table><thead><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Опции</th></thead>";
+                $result = "<table><thead><tr><th>Дата</th><th>№ Заказа</th><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Сумма</th><th></th></tr></thead>";
                 foreach ($readids as $row) {
-                    $result .= "<tr requestid =" . $row['req_id'] . "><td byerid=" . $row['b_id'] . " name=" . $row['b_nameid'] . "><span>" . $row['b_name'] . "</span></td><td category='requests' name =" . $row['req_nameid'] . "><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='W' class='collapse'><span class='name'>" . $row['req_name'] . "</span>
-    
-    
-    
-                <div id=" . $row['req_nameid'] . " class='contents'>
-                <div class='rentcount'></div>
-                <div class='positions'></div>
-                <input type='button' class='add_pos' value='+позиция'>
-                <div class='add-pos-inputs'>
-                <input type='text' class='trade' name='new_req_name' placeholder='Название позиции' size='20'>
-                <input type='button' name =" . $row['req_id'] . " value='Добавить' class='addpos'>
-                </div>
-                </td>
-                    <td class = 'rent_whole'>" . number_format($row['rent'], 2, '.', ' ') . "</td>
-                <td class = 'req_buttons' ><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='R' class='edit'>
-             <input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='X' class='delete'></td></tr>";
+
+                    $result .= "<tr requestid =" . $row['req_id'] . ">
+            <td class='req_date'><span>" . $row['req_date'] . "</span></td>
+            <td class='req_id'><span>" . $row['req_id'] . "</span></td>
+            <td byerid=" . $row['b_id'] . " name=" . $row['b_nameid'] . "><span>". $row['b_name'] ."</span></td>
+            <td category='requests' name =" . $row['req_nameid'] . "><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='W' class='collapse'>Наименование заказа: <span class='name'> \"" . $row['req_name'] . "\" </span>
+            
+            <div id=" . $row['req_nameid'] . " class='contents'> 
+            <div class='rentcount'></div>           
+            <div class='positions'></div>
+            
+            <input type='button' class='add_pos' value='+позиция'>
+            <div class='add-pos-inputs'>
+            <input type='text' class='trade' name='new_req_name' placeholder='Название позиции' size='50'>
+            <div class='sres'></div>
+            <input type='button' name =" . $row['req_id'] . " value='Добавить' class='addpos'>
+            </div>
+            
+            </td>
+                <td class = 'rent_whole'>".number_format($row['rent'], 2, '.', ' ')."</td>
+                <td class = 'sum_whole'>" .number_format($row['sum'], 2, '.', ' '). "</td>
+            <td class = 'req_buttons'><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='R' class='edit'>
+         <input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='X' class='delete'></td></tr>";
                 }
-                $result .= "</table>";
+                $result .= "</table><!--<script src='js/mysql_edc.js'></script>-->";
                 print $result;
             };
         } catch (PDOExecption $e) {

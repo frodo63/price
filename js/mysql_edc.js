@@ -158,11 +158,12 @@ $(document).ready(function() {
             if ($(event.target).val() == 'X'){//Закрываем открытое
                 $(event.target).val('W').css({'background' : 'white', 'color' : 'black'}).siblings('div div.positions').html('');
                 $(event.target).siblings('div.contents').slideUp(400);
-                $('#requests_list').removeClass('shrinken');
+                $('.requests_list').removeClass('shrinken');
                 $(event.target).parent().removeClass('widen');
+                $('tr[requestid='+rid+'] .rentcount').html('');//По закрытию чистим расчет рентабельности
 
                 /*Растуманивание всех заявок*/
-                $('#requests_list tr').css('opacity', 1);
+                $('.requests_list tr').css('opacity', 1);
                 /*закончилось Растуманивание*/
                 return false;
 
@@ -173,8 +174,9 @@ $(document).ready(function() {
             $('input.collapse[value = "X"] ~ div div.positions').html('');
             $('input.collapse[value = "X"]').siblings('div.contents').slideUp(400);
             $('input.collapse[value = "X"]').val('W');
-            $('#requests_list').removeClass('shrinken');
+            $('.requests_list').removeClass('shrinken');
             $(event.target).parent().removeClass('widen');
+            $('tr[requestid='+rid+'] .rentcount').html('');//По закрытию чистим расчет рентабельности
 
 
             //Открываем новое
@@ -182,7 +184,7 @@ $(document).ready(function() {
             $(event.target).css('background', 'red');
             $(event.target).css('color', 'white');
             $(event.target).siblings('div.contents').slideDown(400);
-            $('#requests_list').addClass('shrinken');//Сужаем другие столбцы
+            $('.requests_list').addClass('shrinken');//Сужаем другие столбцы
             $(event.target).parent().addClass('widen');//Расширяем окно заявки
 
             $.ajax({
@@ -195,8 +197,8 @@ $(document).ready(function() {
                 complete: function(){
                     $('#editmsg').css('display', 'block'). delay(2000).slideUp(300).html('Содержимое заявки ' + rid + ' получено.');
                     /*Затуманивание списка позиций открытой заявки*/
-                    $('#requests_list tr').css('opacity', 0);
-                    $('#requests_list tr[requestid="'+rid+'"], #requests_list tr[requestid="'+rid+'"] table tr').css('opacity', 1);
+                    $('.requests_list tr').css('opacity', 0);
+                    $('.requests_list tr[requestid="'+rid+'"], .requests_list tr[requestid="'+rid+'"] table tr').css('opacity', 1);
                     /*закончилось Затуманивание*/
                 }
             });
@@ -212,7 +214,7 @@ $(document).ready(function() {
             $(event.target).siblings('div').slideDown(400);
             $(event.target).css({'background' : 'red', 'color' : 'white'});
             $(event.target).val('X');
-            $('#requests_list').addClass('shrinken')//Сужаем другие столбцы
+            $('.requests_list').addClass('shrinken')//Сужаем другие столбцы
             $(event.target).parent().addClass('widen');//Расширяем окно заявки
 
             $.ajax({
@@ -225,8 +227,8 @@ $(document).ready(function() {
                 complete: function(){
                     $('#editmsg').css('display', 'block'). delay(2000).slideUp(300).html('Содержимое заявки ' + rid + ' получено.');
                     /*Затуманивание списка позиций открытой заявки*/
-                    $('#requests_list tr').css('opacity', 0);
-                    $('#requests_list tr[requestid="'+rid+'"], #requests_list tr[requestid="'+rid+'"] table tr').css('opacity', 1);
+                    $('.requests_list tr').css('opacity', 0);
+                    $('.requests_list tr[requestid="'+rid+'"], .requests_list tr[requestid="'+rid+'"] table tr').css('opacity', 1);
                     /*закончилось Затуманивание*/
                 }
             });
@@ -675,11 +677,9 @@ $(document).ready(function() {
 
 //Добавление ЛУЗЕРА И ВИННЕРА
     $(document).off('click.losewin').on('click.losewin', '.winner', function (event) {
-        var winid = $(event.target).attr('pricing'); // ID расценки-победителя
+        var winid = $(event.target).attr('pricing'); // ID расценки, где нажато было
         var posid = $(event.target).parents('tr[position]').attr('position'); // ID позиции, где выбирается победитель
         var reqid = $(event.target).parents('tr[requestid]').attr('requestid'); //ID заявки, где есть позиция, где выбирается победитель
-        var poscount = $('tr[requestid='+reqid+'] tr[position]').length; // Количество позиций в заявке.
-        console.log(poscount);
 
         //Если Победитель выбран, мы щелкаем по "П" и победитель убирается.
         if($('tr[pricingid='+winid+']').hasClass('win')){
@@ -714,7 +714,7 @@ $(document).ready(function() {
                         method: 'POST',
                         dataType: 'json',
                         cache: false,
-                        data: {poscount:poscount, request:reqid},
+                        data: {request:reqid},
                         success: function (data) {
                             $('tr[requestid='+reqid+'] .rentcount').html(data.data1);
                             $('tr[requestid='+reqid+'] .rent_whole').html(data.data2);
@@ -757,7 +757,7 @@ $(document).ready(function() {
                         method: 'POST',
                         dataType: 'json',
                         cache: false,
-                        data: {poscount:poscount, request:reqid},
+                        data: {request:reqid},
                         success: function (data) {
                             $('tr[requestid='+reqid+'] .rentcount').html(data.data1);
                             $('tr[requestid='+reqid+'] .rent_whole').html(data.data2);
@@ -777,17 +777,12 @@ $(document).ready(function() {
     /*РАСЧЕТ РЕНТАБЕЛЬНОСТИ по КНОПКЕ ВНУТРИ ЗАЯВКИ*/
     $(document).off('click.check_rent').on('click.check_rent', '.check_rent', function (event) {
         var reqid = $(event.target).attr('requestid'); //ID заявки, где есть позиция, где выбирается победитель
-        var poscount = $('tr[requestid='+reqid+'] tr[position]').length; // Количество позиций в заявке.
-
-        console.log("Заявка ID: "+reqid+". Позиций внутри: "+poscount);
-
-
         $.ajax({
             url: 'mysql_rent.php',
             method: 'POST',
             dataType: 'json',
             cache: false,
-            data: {poscount:poscount, request:reqid},
+            data: {request:reqid},
             success: function (data) {
                 $('tr[requestid='+reqid+'] .rentcount').html(data.data1);
                 $('tr[requestid='+reqid+'] .rent_whole').html(data.data2);

@@ -73,7 +73,7 @@ echo "
           <br>
           <br>
           </div>
-          <div id='requests_list'>
+          <div class='requests_list'>
           </div>                
       </div>     
       
