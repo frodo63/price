@@ -1,0 +1,912 @@
+@charset "UTF-8";
+/* line 1, ../sass/_mysql_styles.scss */
+.creates {
+  display: none;
+  width: 33vw;
+}
+
+/* line 6, ../sass/_mysql_styles.scss */
+input {
+  border-radius: 0.5vh;
+  background-color: white;
+}
+
+/* line 11, ../sass/_mysql_styles.scss */
+.add_ramk {
+  border: 1px solid black;
+  border-radius: 0.5vh;
+  padding: 1vh;
+}
+
+/* line 16, ../sass/_mysql_styles.scss */
+#db_status:hover {
+  color: black;
+}
+
+/* line 17, ../sass/_mysql_styles.scss */
+#db_status {
+  color: white;
+}
+
+/* line 19, ../sass/_mysql_styles.scss */
+#editmsg {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  height: 15vh;
+  width: 20vw;
+  display: none;
+  background: green;
+  border-radius: 2vh;
+  color: white;
+  font-size: 2.5vh;
+  padding: 0.5vh;
+  z-index: 1000;
+}
+
+/* line 33, ../sass/_mysql_styles.scss */
+.contents, .pricings, .pricing_container {
+  display: none;
+}
+
+/* line 37, ../sass/_mysql_styles.scss */
+.pricing_container {
+  height: 97vh;
+  width: 97vw;
+  position: absolute;
+  top: -8vh;
+  left: 0vw;
+}
+
+/*Выпадающий список*/
+/*Блок выпадающих элементов*/
+/* line 48, ../sass/_mysql_styles.scss */
+#thesearch {
+  text-align: -webkit-center;
+  width: 90vw;
+  margin-left: 4.5vw;
+  line-height: 5vh;
+  font-family: Arial;
+  font-size: 3vh;
+}
+
+/* line 56, ../sass/_mysql_styles.scss */
+#sres ul {
+  margin: 0;
+  padding: 0;
+  width: 90vw;
+  margin-left: 4.5vw;
+}
+
+/* line 62, ../sass/_mysql_styles.scss */
+#byer + div ul, #trade + div ul, #seller + div ul {
+  margin: 0;
+  padding: 0;
+  width: 25vw;
+  margin-left: 5vw;
+}
+
+/* line 69, ../sass/_mysql_styles.scss */
+#sres ul li {
+  z-index: 100;
+  min-height: 3vh;
+  font-family: Arial;
+  font-size: 3vh;
+}
+
+/*при наведении цвет под тогглящийся класс*/
+/* line 77, ../sass/_mysql_styles.scss */
+#sres ul li:hover, #byer + div ul li:hover, #trade + div ul li:hover, #seller + div ul li:hover, #sres ul li.sreslihover {
+  background-color: green;
+  color: white;
+  border-color: grey;
+}
+
+/*точечки списковые убраны*/
+/* line 85, ../sass/_mysql_styles.scss */
+#sres ul, #byer + div ul, #trade + div ul, #seller + div ul {
+  list-style: none;
+}
+
+/*границы элементов*/
+/* line 87, ../sass/_mysql_styles.scss */
+#sres ul li, #byer + div ul li, #trade + div ul li, #seller + div ul li {
+  border: 1px solid grey;
+}
+
+/* line 88, ../sass/_mysql_styles.scss */
+#sres ul li, #byer + div ul li, #trade + div ul li, #seller + div ul li {
+  border-bottom: none;
+}
+
+/* line 89, ../sass/_mysql_styles.scss */
+#sres ul li:last-child, #byer + div ul li:last-child, #trade + div ul li:last-child, #seller + div ul li:last-child {
+  border: 1px solid grey;
+}
+
+/*Цветовая дифференциация выдачи*/
+/* line 92, ../sass/_mysql_styles.scss */
+li[category="byer"] {
+  background-color: lightyellow;
+}
+
+/* line 95, ../sass/_mysql_styles.scss */
+li[category="seller"] {
+  background-color: lightsalmon;
+}
+
+/* line 98, ../sass/_mysql_styles.scss */
+li[category="trade"] {
+  background-color: lightgreen;
+}
+
+/* line 101, ../sass/_mysql_styles.scss */
+li[category="request"] {
+  background-color: lightblue;
+}
+
+/*Маленькая пометочка в углу выдачи о категории*/
+/* line 106, ../sass/_mysql_styles.scss */
+.note {
+  position: absolute;
+  height: 2vh;
+  bottom: 0;
+  right: 0;
+  font-family: Arial;
+  font-size: 1.5vh;
+}
+
+/*Позиционирование лист итема*/
+/* line 115, ../sass/_mysql_styles.scss */
+#sres ul li, #byer + div ul li, #trade + div ul li, #seller + div ul li {
+  position: relative;
+}
+
+/*Абзац из выпадающего списка */
+/* line 118, ../sass/_mysql_styles.scss */
+#sres ul li span {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 123, ../sass/_mysql_styles.scss */
+#byer + div ul li p, #trade + div ul li p, #seller + div ul li p {
+  z-index: 1;
+  line-height: 3vh;
+  margin: 0;
+  padding: 0;
+}
+
+/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/*Инпуты поиска в прайсформе*/
+/*Позиционирование лист итема*/
+/* line 137, ../sass/_mysql_styles.scss */
+#byer div ul li, #trade div ul li, #seller div ul li {
+  position: relative;
+}
+
+/* line 139, ../sass/_mysql_styles.scss */
+#byer + .sres ul {
+  position: absolute;
+  top: 9.05vh;
+  left: 18.15vw;
+}
+
+/*Таблица расценок*/
+/* line 147, ../sass/_mysql_styles.scss */
+.pricings td {
+  border: 1px solid grey;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/**/
+/*ОКНО РАСЦЕНОК ЕДИНОЕ ДЛЯ ВСЕХ ВВЕРХУ ЭКРАНА*/
+/* line 155, ../sass/_mysql_styles.scss */
+#pricingwindow {
+  display: none;
+  height: 99vh;
+  width: 98vw;
+}
+
+/**/
+/* line 162, ../sass/_mysql_styles.scss */
+#pricingwindow .closepricing {
+  position: absolute;
+  top: 1vw;
+  right: 1vw;
+  height: 2vw;
+  width: 2vw;
+}
+
+/* line 170, ../sass/_mysql_styles.scss */
+.add-pos-inputs {
+  display: none;
+}
+
+/*Таблица заявок*/
+/* line 176, ../sass/_mysql_styles.scss */
+table, td, tr, thead, th {
+  border-collapse: collapse;
+  vertical-align: top;
+}
+
+/* line 180, ../sass/_mysql_styles.scss */
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+/*Класс - таблица из результатов поиска. айдишник - таблица из табов*/
+/*Таблица первого уровня (заявки)*/
+/* line 188, ../sass/_mysql_styles.scss */
+.requests_list > table > thead > tr > th:nth-child(1), #requests_list > table > thead > tr > th:nth-child(1) {
+  width: 5%;
+}
+
+/* line 189, ../sass/_mysql_styles.scss */
+.requests_list > table > thead > tr > th:nth-child(2), #requests_list > table > thead > tr > th:nth-child(2) {
+  width: 5%;
+}
+
+/* line 190, ../sass/_mysql_styles.scss */
+.requests_list > table > thead > tr > th:nth-child(3), #requests_list > table > thead > tr > th:nth-child(3) {
+  width: 10%;
+}
+
+/* line 191, ../sass/_mysql_styles.scss */
+.requests_list > table > thead > tr > th:nth-child(4), #requests_list > table > thead > tr > th:nth-child(4) {
+  width: 70%;
+}
+
+/* line 192, ../sass/_mysql_styles.scss */
+.requests_list > table > thead > tr > th:nth-child(5), #requests_list > table > thead > tr > th:nth-child(5) {
+  width: 5%;
+}
+
+/* line 193, ../sass/_mysql_styles.scss */
+.requests_list > table > thead > tr > th:nth-child(6), #requests_list > table > thead > tr > th:nth-child(6) {
+  width: 5%;
+}
+
+/* line 194, ../sass/_mysql_styles.scss */
+.requests_list > table > thead > tr > th:nth-child(6), #requests_list > table > thead > tr > th:nth-child(7) {
+  width: 5%;
+}
+
+/* line 195, ../sass/_mysql_styles.scss */
+.requests_list > table > thead > tr, #requests_list > table > thead > tr {
+  border-bottom: 1px black solid;
+}
+
+/*Таблица второго уровня (позциии)*/
+/* line 198, ../sass/_mysql_styles.scss */
+.requests_list .positions th:nth-child(1), #requests_list .positions th:nth-child(1) {
+  width: 2%;
+}
+
+/* line 199, ../sass/_mysql_styles.scss */
+.requests_list .positions th:nth-child(2), #requests_list .positions th:nth-child(2) {
+  width: 76%;
+}
+
+/* line 200, ../sass/_mysql_styles.scss */
+.requests_list .positions th:nth-child(3), #requests_list .positions th:nth-child(3) {
+  width: 8%;
+}
+
+/* line 201, ../sass/_mysql_styles.scss */
+.requests_list .positions th:nth-child(4), #requests_list .positions th:nth-child(4) {
+  width: 5%;
+}
+
+/* line 202, ../sass/_mysql_styles.scss */
+.requests_list .positions th:nth-child(5), #requests_list .positions th:nth-child(5) {
+  width: 5%;
+}
+
+/*Таблица  третьего уровня (расценки) */
+/* line 205, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list th:nth-child(1), #requests_list .pricing-list th:nth-child(1) {
+  width: 20%;
+}
+
+/* line 206, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list th:nth-child(2), #requests_list .pricing-list th:nth-child(2) {
+  width: 20%;
+}
+
+/* line 207, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list th:nth-child(3), #requests_list .pricing-list th:nth-child(3) {
+  width: 7%;
+}
+
+/* line 208, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list th:nth-child(4), #requests_list .pricing-list th:nth-child(4) {
+  width: 5%;
+}
+
+/* line 209, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list th:nth-child(5), #requests_list .pricing-list th:nth-child(5) {
+  width: 5%;
+}
+
+/* line 210, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list th:nth-child(6), #requests_list .pricing-list th:nth-child(6) {
+  width: 5%;
+}
+
+/* line 211, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list th:nth-child(7), #requests_list .pricing-list th:nth-child(7) {
+  width: 4%;
+}
+
+/* line 212, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list th:nth-child(8), #requests_list .pricing-list th:nth-child(8) {
+  width: 10%;
+}
+
+/* line 213, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list th:nth-child(9), #requests_list .pricing-list th:nth-child(9) {
+  width: 5%;
+}
+
+/* line 214, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list th:nth-child(10), #requests_list .pricing-list th:nth-child(10) {
+  width: 14%;
+}
+
+/*Горизонтальное позиционирование содержимого td:*/
+/*1й уровень (заявки)*/
+/* line 218, ../sass/_mysql_styles.scss */
+.requests_list td, #requests_list td {
+  text-align: center;
+}
+
+/* line 219, ../sass/_mysql_styles.scss */
+.requests_list td, #requests_list td:nth-child(4) {
+  text-align: left;
+}
+
+/*2й уровень (позиции*/
+/* line 221, ../sass/_mysql_styles.scss */
+.requests_list .positions td:nth-child(1), #requests_list .positions td:nth-child(1) {
+  text-align: center;
+}
+
+/* line 222, ../sass/_mysql_styles.scss */
+.requests_list .positions td:nth-child(2), #requests_list .positions td:nth-child(2) {
+  text-align: left;
+}
+
+/* line 223, ../sass/_mysql_styles.scss */
+.requests_list .positions td:nth-child(3), #requests_list .positions td:nth-child(3) {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* line 224, ../sass/_mysql_styles.scss */
+.requests_list .positions td:nth-child(4), #requests_list .positions td:nth-child(4) {
+  text-align: left;
+  vertical-align: middle;
+}
+
+/* line 225, ../sass/_mysql_styles.scss */
+.requests_list .positions td:nth-child(5), #requests_list .positions td:nth-child(5) {
+  text-align: center;
+}
+
+/*3й уровень (расцеки)*/
+/* line 227, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list td:nth-child(1), #requests_list .pricing-list td:nth-child(1) {
+  text-align: center;
+}
+
+/* line 228, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list td:nth-child(2), #requests_list .pricing-list td:nth-child(2) {
+  text-align: center;
+}
+
+/* line 229, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list td:nth-child(3), #requests_list .pricing-list td:nth-child(3) {
+  text-align: center;
+}
+
+/* line 230, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list td:nth-child(4), #requests_list .pricing-list td:nth-child(4) {
+  text-align: center;
+}
+
+/* line 231, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list td:nth-child(5), #requests_list .pricing-list td:nth-child(5) {
+  text-align: center;
+}
+
+/* line 232, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list td:nth-child(6), #requests_list .pricing-list td:nth-child(6) {
+  text-align: center;
+}
+
+/* line 233, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list td:nth-child(7), #requests_list .pricing-list td:nth-child(7) {
+  text-align: center;
+}
+
+/* line 234, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list td:nth-child(8), #requests_list .pricing-list td:nth-child(8) {
+  text-align: center;
+}
+
+/* line 235, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list td:nth-child(9), #requests_list .pricing-list td:nth-child(9) {
+  text-align: center;
+}
+
+/* line 236, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list td:nth-child(10), #requests_list .pricing-list td:nth-child(10) {
+  text-align: center;
+}
+
+/* line 237, ../sass/_mysql_styles.scss */
+.requests_list .pricing-list td:nth-child(11), #requests_list .pricing-list td:nth-child(11) {
+  text-align: center;
+}
+
+/*граница низ-прав для Ряда заявки*/
+/* line 241, ../sass/_mysql_styles.scss */
+.requests_list tr, #requests_list tr {
+  border-bottom: 1px black solid;
+  border-right: 1px black solid;
+}
+
+/* line 246, ../sass/_mysql_styles.scss */
+.requests_list tr td:nth-child(2), #requests_list tr td:nth-child(2),
+.requests_list tr td:nth-child(3), #requests_list tr td:nth-child(3),
+.requests_list tr td:nth-child(4), #requests_list tr td:nth-child(4),
+.requests_list tr td:nth-child(5), #requests_list tr td:nth-child(5),
+.requests_list tr td:nth-child(6), #requests_list tr td:nth-child(6),
+.requests_list tr td:nth-child(7), #requests_list tr td:nth-child(7) {
+  border-right: 1px black solid;
+}
+
+/* line 256, ../sass/_mysql_styles.scss */
+.requests_list tr td:last-child,
+#requests_list tr td:last-child {
+  border-right: none;
+}
+
+/*Таблица второго уровня*/
+/* line 263, ../sass/_mysql_styles.scss */
+.requests_list tr td .contents .positions td, #requests_list tr td .contents .positions td {
+  border: none;
+}
+
+/* line 264, ../sass/_mysql_styles.scss */
+.requests_list tr td .contents .positions .pricings table.pricing-list tbody tr, #requests_list tr td .contents .positions .pricings table.pricing-list tbody tr {
+  border-bottom: 1px solid black;
+}
+
+/* line 265, ../sass/_mysql_styles.scss */
+.requests_list tr td .contents .positions .pricings table.pricing-list tbody tr:nth-last-of-type(1), #requests_list tr td .contents .positions .pricings table.pricing-list tbody tr:nth-last-of-type(1) {
+  border: none;
+}
+
+/*шрифты таблицы*/
+/* line 268, ../sass/_mysql_styles.scss */
+td[category="requests"], td[byerid], td[category="positions"], .pricings {
+  font-size: 2vh;
+  font-family: Arial;
+}
+
+/* line 272, ../sass/_mysql_styles.scss */
+tr[position]:hover {
+  border-bottom: 1px solid black;
+}
+
+/* line 276, ../sass/_mysql_styles.scss */
+.pricing-list th, .pricing-list td {
+  font-weight: normal;
+  font-size: 2vh;
+}
+
+/* line 277, ../sass/_mysql_styles.scss */
+.pricing-list tbody tr:hover {
+  background-color: white;
+  font-weight: bold;
+}
+
+/*ПОБЕДИТЕЛИ*/
+/* line 280, ../sass/_mysql_styles.scss */
+tr.win[pricingid], tr.win[pricingid]:hover {
+  background-color: green;
+  color: white;
+}
+
+/* line 285, ../sass/_mysql_styles.scss */
+td.rent_whole {
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.7vw;
+}
+
+/*Резальтаты поиска при создании позиции(выпрыгивает список позиций*/
+/* line 292, ../sass/_mysql_styles.scss */
+.add-pos-inputs .sres ul {
+  list-style: none;
+  width: 40vw;
+}
+
+/* line 297, ../sass/_mysql_styles.scss */
+.add-pos-inputs .sres ul li {
+  z-index: 100;
+  min-height: 3vh;
+  font-family: Arial;
+  font-size: 3vh;
+  position: relative;
+}
+
+/* line 305, ../sass/_mysql_styles.scss */
+.add-pos-inputs .sres ul li {
+  border: 1px solid black;
+  border-bottom: none;
+}
+
+/* line 310, ../sass/_mysql_styles.scss */
+.add-pos-inputs .sres ul li:last-child, .add-pos-inputs .sres ul li:last-child:hover {
+  border: 1px solid black;
+}
+
+/* line 314, ../sass/_mysql_styles.scss */
+.add-pos-inputs .sres ul li:hover {
+  background-color: green;
+  color: white;
+  border-color: white;
+}
+
+/* line 320, ../sass/_mysql_styles.scss */
+.add-pos-inputs .sres ul li span, .add-pos-inputs .sres ul li p {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 324, ../sass/_mysql_styles.scss */
+#requests {
+  padding: 0.5vw;
+}
+
+/* line 325, ../sass/_mysql_styles.scss */
+tr[pricingid] td {
+  border: 1px solid black;
+}
+
+/**/
+/*Таблица расшифровки расчет рентабельности*/
+/* line 329, ../sass/_mysql_styles.scss */
+#requests_list .demo, #requests_list .demo tr, #requests_list .demo td, .requests_list .demo tr td:nth-child(1) {
+  border-bottom: none;
+  border-right: none;
+  border-left: none;
+}
+
+/* line 330, ../sass/_mysql_styles.scss */
+#requests_list .demo tr:first-child td {
+  border-bottom: 1px solid black;
+}
+
+/*Закончилась Таблица расшифровки расчет рентабельности*/
+/*Класс для редактирования материала*/
+/* line 337, ../sass/_mysql_styles.scss */
+.widen {
+  height: 95vh;
+  width: 95vw;
+  background: #F5FFFA;
+}
+
+/* line 343, ../sass/_mysql_styles.scss */
+.shrinken > table > thead > tr > th:nth-child(1), .shrinken > table > tbody > tr > td:nth-child(1) {
+  display: none;
+}
+/* line 344, ../sass/_mysql_styles.scss */
+.shrinken > table > thead > tr > th:nth-child(2), .shrinken > table > tbody > tr > td:nth-child(2) {
+  display: none;
+}
+/* line 345, ../sass/_mysql_styles.scss */
+.shrinken > table > thead > tr > th:nth-child(3), .shrinken > table > tbody > tr > td:nth-child(3) {
+  display: none;
+}
+/* line 346, ../sass/_mysql_styles.scss */
+.shrinken > table > thead > tr > th:nth-child(4), .shrinken > table > tbody > tr > td:nth-child(4) {
+  width: 100%;
+}
+/* line 347, ../sass/_mysql_styles.scss */
+.shrinken > table > thead > tr > th:nth-child(5), .shrinken > table > tbody > tr > td:nth-child(5) {
+  display: none;
+}
+/* line 348, ../sass/_mysql_styles.scss */
+.shrinken > table > thead > tr > th:nth-child(6), .shrinken > table > tbody > tr > td:nth-child(6) {
+  display: none;
+}
+/* line 349, ../sass/_mysql_styles.scss */
+.shrinken > table > thead > tr > th:nth-child(7), .shrinken > table > tbody > tr > td:nth-child(7) {
+  display: none;
+}
+
+/* line 1, ../sass/_price.scss */
+h2 {
+  margin: 0;
+  padding: 0;
+  font-size: 3vh;
+}
+
+/* line 6, ../sass/_price.scss */
+p {
+  font-size: 3vh;
+}
+
+/*input {
+    border: 0.1vh solid white;
+    padding:0;
+    margin:0;
+}*/
+/* line 16, ../sass/_price.scss */
+#pr, #rent h1, #obpr {
+  font-size: 3vh;
+  width: 15vw;
+}
+
+/* line 20, ../sass/_price.scss */
+#clearp, #obtzr, #firstobp, #margek, #rop, #rtp {
+  color: red;
+}
+
+/* line 24, ../sass/_price.scss */
+#rent {
+  position: absolute;
+  top: 10vh;
+  left: 39vw;
+  width: 20vw;
+}
+
+/* line 31, ../sass/_price.scss */
+#result {
+  position: absolute;
+  top: 10vh;
+  left: 64vw;
+  width: 16vw;
+}
+
+/* line 39, ../sass/_price.scss */
+.active {
+  border: solid 5px white;
+  font-size: 20px;
+}
+
+/* line 46, ../sass/_price.scss */
+#fixate {
+  display: none;
+  line-height: 5vh;
+  font-size: 3vh;
+  width: 15.3vw;
+  font-weight: bold;
+}
+
+/* line 57, ../sass/_price.scss */
+#rent {
+  clear: left;
+}
+
+/* line 61, ../sass/_price.scss */
+#price {
+  margin: 0;
+}
+
+/* line 66, ../sass/_price.scss */
+.pricing_container {
+  border: 3px solid lightgray;
+}
+
+/* line 70, ../sass/_price.scss */
+#price,
+#price input,
+#save {
+  font-size: 3vh;
+  font-weight: bold;
+}
+
+/* line 77, ../sass/_price.scss */
+#zak, #kol, #tzr, #rop, #rtp {
+  width: 10vw;
+}
+
+/* line 82, ../sass/_price.scss */
+#op, #tp, #obp, #firstobp, #wtime {
+  width: 7vw;
+}
+
+/* line 87, ../sass/_price.scss */
+#obtzr, #op + p, #tp + p, #obp + p, #marge, #margek, #obpr, #firstobp + p, #id, p#byer, p#seller, p#trade, #onhands, #cases p, #realop, #realtp, #firstoh, #realop, #realtp, #wtimeday, #clearp, #oh {
+  display: inline;
+}
+
+/* line 92, ../sass/_price.scss */
+#obnal, #margediv {
+  display: none;
+  padding: 1vh;
+}
+
+/*#margediv
+{
+    border: solid 1px green;
+}*/
+/* line 103, ../sass/_price.scss */
+#go {
+  position: absolute;
+  top: 10vh;
+  right: 1vw;
+  font-size: 3vh;
+  font-weight: bold;
+  width: 15vw;
+}
+
+/* line 112, ../sass/_price.scss */
+#archive, #create {
+  position: absolute;
+  top: 1vh;
+  right: 1vh;
+  font-size: 4vh;
+}
+
+/* line 119, ../sass/_price.scss */
+#cases {
+  position: absolute;
+  width: 40vw;
+  height: 35vh;
+  top: 55vh;
+  right: 0;
+  font-size: 3vh;
+}
+
+/* line 128, ../sass/_price.scss */
+#cases input {
+  font-size: 3vh;
+}
+
+/*!*ОФОРМЛЕНИ ТАБЛИЦЫ*!
+#prlist{
+    min-height: 100vh;
+}
+
+table, th, td {
+    border: 1px solid white;
+    border-collapse: collapse;
+    font-size: 20px;
+}
+
+td, th {
+    text-align: center;
+    padding: 2px;
+}
+!*Выделение при наведении*!
+tbody tr:hover td, .hovered {
+    background-color: white;
+    color : black;
+    border: 1px solid black;
+}
+tbody tr:hover td input.delete{
+    background-color: red;
+    color : white;
+}
+tbody tr:hover td input.edit{
+    background-color: green;
+    color : white;
+}
+tbody tr:hover td input.copy{
+    background-color: skyblue;
+    color : white;
+}
+tbody input{
+    cursor : pointer;
+}
+tr td:first-child{
+    width: 2vw;
+}
+
+
+
+
+th {
+    background-color: green;
+    color: white;
+}*/
+/*РАЗМЕР САМОГО ОКНА*/
+/* line 185, ../sass/_price.scss */
+#editp, #copyp {
+  position: relative;
+  height: 0vh;
+  margin-top: 2vh;
+}
+
+/*Онформационное окошко*/
+/* line 192, ../sass/_price.scss */
+#msg {
+  position: fixed;
+  top: 85vh;
+  height: 10vh;
+  right: 0;
+  display: none;
+  background: green;
+  width: 15vw;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* line 202, ../sass/_price.scss */
+#msg p {
+  background: green;
+  color: white;
+}
+
+/* line 208, ../sass/_price.scss */
+#editmsg p, #copymsg p, #hide {
+  background-color: green;
+}
+
+/* line 211, ../sass/_price.scss */
+#editmsg, #copymsg, #hide {
+  background-color: green;
+}
+
+/* line 215, ../sass/_price.scss */
+#hide {
+  cursor: pointer;
+  position: absolute;
+  right: 0vw;
+  top: 4vh;
+  height: 4vh;
+  font-size: 3vh;
+  width: 12vh;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+/*Вещи, специфические для add_request*/
+/* line 240, ../sass/_price.scss */
+#go_request {
+  font-size: 10vh;
+}
+
+/* line 245, ../sass/_price.scss */
+tr[id^="inside"] {
+  display: none;
+}
+
+/* line 249, ../sass/_price.scss */
+tr[id^="inside"] td:hover {
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+}
+
+/* line 255, ../sass/_price.scss */
+tr[id^="inside"] td input {
+  display: inline;
+  vertical-align: top;
+}
+
+/* line 260, ../sass/_price.scss */
+tr[id^="inside"] td {
+  text-align: left;
+}
+
+/* line 264, ../sass/_price.scss */
+#creating {
+  display: none;
+}
+
+/* line 268, ../sass/_price.scss */
+.savename {
+  background-color: red;
+  color: white;
+}

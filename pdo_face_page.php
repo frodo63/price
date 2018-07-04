@@ -3,8 +3,7 @@ echo"
 <head>
         <link rel='stylesheet' href='js/jquery_ui/jquery-ui.css'>
         <link rel='stylesheet' href='css/jquery-ui.structure.min.css'>
-        <link rel='stylesheet' href='css/mysql_styles.css'>
-        <link rel='stylesheet' href='css/price.css'>
+        <link rel='stylesheet' href='css/styles.css'>
         <script src='js/jquery.js'></script>
 </head>
 ";

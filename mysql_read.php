@@ -6,7 +6,7 @@ include_once 'pdo_connect.php';
 if(isset($_POST['table'])){
     $table = $_POST['table'];
     $tablenid = $table . '_nameid';
-    /**//////////////////////////////////////////////////////////////ЧТЕНИЕ СПИСКА ЗАЯВОК
+
     if ($table == 'givaways') {
         try {
 
@@ -26,7 +26,7 @@ if(isset($_POST['table'])){
         $pdo->rollback();
         print "Error!: " . $e->getMessage() . "</br>";
     }
-
+        /**//////////////////////////////////////////////////////////////ЧТЕНИЕ СПИСКА ЗАЯВОК
     } else if ($table == 'requests') {
         try {
 
@@ -48,9 +48,7 @@ if(isset($_POST['table'])){
             <td class='req_date'><span>" . $row['req_date'] . "</span></td>
             <td class='req_id'><span>" . $row['req_id'] . "</span></td>
             <td byerid=" . $row['b_id'] . " name=" . $row['b_nameid'] . "><span>". $row['b_name'] ."</span></td>
-            <td category='requests' name =" . $row['req_nameid'] . "><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='W' class='collapse'><span class='name'>" . $row['req_name'] . "</span>
-            
-            
+            <td category='requests' name =" . $row['req_nameid'] . "><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='W' class='collapse'>Наименование заказа: <span class='name'> \"" . $row['req_name'] . "\" </span>
             
             <div id=" . $row['req_nameid'] . " class='contents'> 
             <div class='rentcount'></div>           
@@ -65,7 +63,7 @@ if(isset($_POST['table'])){
             
             </td>
                 <td class = 'rent_whole'>".number_format($row['rent'], 2, '.', ' ')."</td>
-                <td class = 'sum_whole'>" . $row['sum'] . "</td>
+                <td class = 'sum_whole'>" .number_format($row['sum'], 2, '.', ' '). "</td>
             <td class = 'req_buttons'><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='R' class='edit'>
          <input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='X' class='delete'></td></tr>";
             }
@@ -136,15 +134,15 @@ if(isset($_POST['table'])){
     /**//////////////////////////////////////////////////////////////
 };
 
-/*СОДЕРЖИМОЕ ЗАЯВКИ -СПИСОК ПОЗИЦИЙ///////////////////////////////////////////////////////////////////////////////////////////////////*/
+/*СОДЕРЖИМОЕ ЗАЯВКИ - СПИСОК ПОЗИЦИЙ///////////////////////////////////////////////////////////////////////////////////////////////////*/
 if (isset($_POST['requestid'])){
     $req_id=$_POST['requestid'];
 try{
     $nowinners = $pdo->prepare("SELECT `pos_name`, `req_positionid`, `winnerid` FROM `req_positions` WHERE `requestid`=?");
-    $winners = $pdo->prepare("SELECT `requestid`, `req_positionid`, `pos_name`, `name`, `rent`, `price`  FROM
-								(SELECT `rent`, `price`, `pricingid`, `name` FROM 
+    $winners = $pdo->prepare("SELECT `requestid`, `req_positionid`, `pos_name`, `name`, `rent`, `price`, `kol`   FROM
+								(SELECT `rent`, `price`,`kol`, `pricingid`, `name` FROM 
 																		(
-																			(SELECT `rent`, `price`, `pricingid`, `sellerid` FROM `pricings`) AS a
+																			(SELECT `rent`, `price`, `kol`, `pricingid`, `sellerid` FROM `pricings`) AS a
 																				LEFT JOIN 
 																			(SELECT a.`sellers_id`, b.`name` FROM(
 																													(SELECT * FROM `sellers`) AS a 
@@ -157,14 +155,14 @@ try{
 									LEFT JOIN
 								(SELECT * FROM `req_positions`) AS b ON a.`pricingid` = b.`winnerid` WHERE `req_positionid`=?");
     $nowinners->execute(array($req_id));
-    $result = "<table><thead><th>№</th><th>Название позиции</th><th>Цена</th><th>Поб</th><th>Рент</th><th>Опции</th></thead>";
+    $result = "<br><br><input type='button' requestid='" . $req_id . "' class = 'check_rent' value='Посчитать рентабельность'><br><br><table><thead><th>№</th><th>Название позиции</th><th>Сумма</th><th>Поб</th><th>Рент</th><th>Опции</th></thead>";
     $rownumber = 1;
     foreach ($nowinners as $row)
     {
         /*echo('<pre>');
         echo (print_r($row));
         echo('</pre>');*/
-        if ($row['winnerid']!=0){
+        if ($row['winnerid']!=0){//Если это виннер
             $winners->execute(array($row['req_positionid']));
             foreach ($winners as $row)
                 {
@@ -176,7 +174,7 @@ try{
                         <div class='pricings'>
                         </div>
                     </td>
-                    <td class='pr'>".$row['price']."</td>
+                    <td class='pr'>".intval($row['price'])*intval($row['kol'])."</td><!--Сумма-->
                     <td class='winname'>".$row['name']."</td>
                     <td class='rent'>".number_format($row['rent'], 2, '.', ' ')."</td>
                     <td class = 'pos_buttons'>
