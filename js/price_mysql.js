@@ -201,7 +201,7 @@ $(document).ready(function(){
             var wt = Number(Number($('#wtime').val()).toFixed(2));        //Отсрочка платежа, в месяцах, нужна при расчете рентабельности
             var clearp = ((oh/lprice)*100).toFixed(2);
             /*Расчет рентабельности*/
-            var lrentS = (rop * (1 - 0.02*wt))/lprice*100;
+            var lrentS = (rop * (1 - 0.015*wt))/lprice*100;
             $('#rent h1').text((lrentS).toFixed(3) + ' %');
 
             var pricetext = '<p>Цена: <b>' + (lprice).toFixed(2) + '</b> При расчете : ' +
@@ -238,7 +238,7 @@ $(document).ready(function(){
                 var opr = Number((Number($('#opr').text())).toFixed(2));
 
                 /*Расчет рентабельности*/
-                var lrentS = (opr*(1-0.02*wt))/lprice*100;
+                var lrentS = (opr*(1-0.015*wt))/lprice*100;
                 $('#rent h1').text((lrentS).toFixed(3) + ' %');
 
 

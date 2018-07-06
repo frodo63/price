@@ -696,18 +696,19 @@ $(document).ready(function() {
                         method: 'POST',
                         data: {positionid:posid},
                         success: function (data) {
-                            $('input[position='+posid+'] ~ div.pricings').html(data);
+                            $('input[position='+posid+']~div.pricings').html(data);
                         },
                         complete: function(){
                             $('#editmsg').css('display', 'block'). delay(2000).slideUp(300).html('Победитель отменен.');
                             $(event.target).val('*');
                             /*В самом конце, обновляем табличку полученными данными, чтобы не делать дополнительных запросов*/
-                            $('tr[position='+posid+'] > td.winname').text('');//Очищаем поле Победитель (Имя)
-                            $('tr[position='+posid+'] > td.rent').text('');//Очищаем поле Рентабельность (Число)
+                            $('tr[position='+posid+']>td.winname').text('');//Очищаем поле Победитель (Имя)
+                            $('tr[position='+posid+']>td.rent').text('');//Очищаем поле Рентабельность (Число)
+                            $('tr[position='+posid+']>td.pr').text('');//Очищаем поле Рентабельность (Число)
                         }
                     });
                 },
-                complete: function() {//И по комплиту происходит расчет рентабельности.
+                complete: function() {//И по комплиту происходит расчет общей рентабельности.
                     //На мускл_рент отправляется каунт и реквестайди
                     $.ajax({
                         url: 'mysql_rent.php',
@@ -732,9 +733,13 @@ $(document).ready(function() {
             $.ajax({
                 url: 'mysql_rent.php',
                 method: 'POST',
+                dataType: 'json',
+                cache: false,
                 data: {plus_winid:winid, posid:posid},
-                success: function(name){
-                    $('tr[position='+posid+'] > td.winname').text(name);//Вставить имя Победителя (Имя)
+                success: function(data){
+                    $('tr[position='+posid+']>td.winname').html(data.data1);//Вставить имя Победителя (Имя)
+                    $('tr[position='+posid+']>td.pr').html(data.data2);//Вставить имя Победителя (Имя)
+                    $('tr[position='+posid+']>td.rent').html(data.data3);//Вставить имя Победителя (Имя)
                     /*Чтение*/
                     $.ajax({
                         url: 'mysql_read.php',

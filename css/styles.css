@@ -592,40 +592,46 @@ tr[pricingid] td {
   border-bottom: 1px solid black;
 }
 
+/* line 330, ../sass/_mysql_styles.scss */
+.demo {
+  font-size: 20px;
+  font-weight: 600;
+}
+
 /*Закончилась Таблица расшифровки расчет рентабельности*/
 /*Класс для редактирования материала*/
-/* line 334, ../sass/_mysql_styles.scss */
+/* line 338, ../sass/_mysql_styles.scss */
 .widen {
   height: 95vh;
   width: 95vw;
   background: #F5FFFA;
 }
 
-/* line 340, ../sass/_mysql_styles.scss */
+/* line 344, ../sass/_mysql_styles.scss */
 .shrinken > table > thead > tr > th:nth-child(1), .shrinken > table > tbody > tr > td:nth-child(1) {
   display: none;
 }
-/* line 341, ../sass/_mysql_styles.scss */
+/* line 345, ../sass/_mysql_styles.scss */
 .shrinken > table > thead > tr > th:nth-child(2), .shrinken > table > tbody > tr > td:nth-child(2) {
   display: none;
 }
-/* line 342, ../sass/_mysql_styles.scss */
+/* line 346, ../sass/_mysql_styles.scss */
 .shrinken > table > thead > tr > th:nth-child(3), .shrinken > table > tbody > tr > td:nth-child(3) {
   display: none;
 }
-/* line 343, ../sass/_mysql_styles.scss */
+/* line 347, ../sass/_mysql_styles.scss */
 .shrinken > table > thead > tr > th:nth-child(4), .shrinken > table > tbody > tr > td:nth-child(4) {
   width: 100%;
 }
-/* line 344, ../sass/_mysql_styles.scss */
+/* line 348, ../sass/_mysql_styles.scss */
 .shrinken > table > thead > tr > th:nth-child(5), .shrinken > table > tbody > tr > td:nth-child(5) {
   display: none;
 }
-/* line 345, ../sass/_mysql_styles.scss */
+/* line 349, ../sass/_mysql_styles.scss */
 .shrinken > table > thead > tr > th:nth-child(6), .shrinken > table > tbody > tr > td:nth-child(6) {
   display: none;
 }
-/* line 346, ../sass/_mysql_styles.scss */
+/* line 350, ../sass/_mysql_styles.scss */
 .shrinken > table > thead > tr > th:nth-child(7), .shrinken > table > tbody > tr > td:nth-child(7) {
   display: none;
 }

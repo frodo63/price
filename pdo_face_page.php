@@ -86,7 +86,7 @@ echo "
           <br>
           <br>
               </div>
-          <div id='byers_list'>
+          <div class='byers_list'>
           </div>
       </div>      
       
@@ -99,7 +99,7 @@ echo "
           <br>
           <br>
           </div>
-          <div id='sellers_list'>
+          <div class='sellers_list'>
           </div>
       </div>
         
@@ -112,14 +112,14 @@ echo "
           <br>
           <br>
           </div>
-          <div id='trades_list'>
+          <div class='trades_list'>
           </div>
       </div>  
       
       <div id='givaways'>
       Тут указание на дату и наименование
       
-          <div id='givaways_list'>
+          <div class='givaways_list'>
           </div>      
       </div>    
   

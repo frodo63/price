@@ -327,6 +327,10 @@ tr[pricingid] td {border: 1px solid black}
 /*Таблица расшифровки расчет рентабельности*/
 .requests_list .demo, .requests_list .demo tr, .requests_list .demo td, .requests_list .demo tr td:nth-child(1) {border-bottom: none; border-right: none; border-left: none}
 .requests_list .demo tr:first-child td { border-bottom: 1px solid black}
+.demo {
+    font-size: 20px;
+    font-weight: 600;
+}
 /*Закончилась Таблица расшифровки расчет рентабельности*/
 
 

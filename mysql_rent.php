@@ -9,21 +9,25 @@ if(isset($_POST['plus_winid']) && isset($_POST['posid'])){
 
     //Задача - добыть имя Поставщика - победителя. Из расценки его вытащим
     //Запрос:
-    $winname = $pdo->prepare("SELECT `name` FROM (SELECT sellerid,pricingid FROM pricings WHERE pricingid = ?) AS a LEFT JOIN (SELECT sellers_id,name FROM sellers LEFT JOIN allnames ON sellers.sellers_nameid=allnames.nameid) AS b ON a.sellerid = b.sellers_id");
+    $getvars = $pdo->prepare("SELECT `name`,`price`,`kol`,`rent` FROM (SELECT sellerid,pricingid,price,kol,rent FROM pricings WHERE pricingid = ?) AS a LEFT JOIN (SELECT sellers_id,name FROM sellers LEFT JOIN allnames ON sellers.sellers_nameid=allnames.nameid) AS b ON a.sellerid = b.sellers_id");
     $changewinner = $pdo->prepare("UPDATE `req_positions` SET `winnerid` = ? WHERE `req_positionid` = ?");
     $makeequal = $pdo->prepare("UPDATE `pricings` SET `winner`=0 WHERE `positionid` = ? AND `winner` = 1");
     $makewinner = $pdo->prepare("UPDATE `pricings` SET `winner`=1 WHERE `pricingid` = ?");
 
     try{
-        $pdo->beginTransaction();
+        //$pdo->beginTransaction();
         $changewinner->execute(array($winid, $posid));
         $makeequal->execute(array($posid));
         $makewinner->execute(array($winid));
-        $winname->execute(array($winid));
-        $pdo->commit();
+        $getvars->execute(array($winid));
+        //$pdo->commit();
 
-        $w = $winname->fetch();
-        print ($w['name']);
+        $w = $getvars->fetchAll(PDO::FETCH_ASSOC);
+        print json_encode(array(
+            "data1"=>$w[0]['name'],
+            "data2"=>(int)$w[0]['price']*(int)$w[0]['kol'],
+            "data3"=>$w[0]['rent']
+            ));
 
     } catch(PDOExecption $e) {
         $pdo->rollback();
@@ -81,13 +85,12 @@ if (isset($_POST['request'])){
 
         $result="
                 <table>
-                <thead>
-                <th>Номер расценки</th>
+                <thead>                
                 <th>Номенклатура</th>
+                <th>Наши</th> 
                 <th>Количество</th>
+                <th>Отсрочка</th>
                 <th>Цена</th>
-                <th>Наши</th>                
-                <th>Отсрочка</th>                
                 </thead>";
 
         /*ФОРМУЛА РАСЧЕТА И ПЕРЕМЕННЫЕ К НЕЙ*/
@@ -110,38 +113,27 @@ if (isset($_POST['request'])){
             $kol=(int)$row['kol'];
             $wtime=(int)$row['wtime'];
 
-            $result.="
-                <tr>
-                <td class ='pricingid'>" . $pricingid . "</td>
-                <td class ='pricingid'>" . $row['name'] . "</td>
-                <td class ='kol'>" . $kol . "</td>
-                <td class ='price'>" . $price . "</td>";
-
             switch ($fixed) {
-                case 0:
-                    $nam = $opr;
-                    break;
-                case 1:
-                    $nam = $rop;
-                    break;
+                case 0:$nam = $opr;
+                break;
+                case 1:$nam = $rop;
+                break;
             };
+            $result.= "<tr><td class ='pricingid'>" . $row['name'] . "</td>";
+            $result .="<td class ='nam'>" . $nam . "</td>";
+            $result.= "<td class ='kol'>" . $kol . "</td>";
+            $result .="<td class ='wtime'>" . $wtime . "</td>";
+            $result.= "<td class ='price'>" . $price . "</td></tr>";
+
+            /*формула расчета:*/
+            $form_top[] = $nam * $kol * (1 - (0.015 * $wtime));
+            $form_bot[] = $price * $kol;
+            /*закончилась формула*/
 
             /*Показательная дробь*/
-            $dem_top .=$nam . " * " . $kol . " * " . "(1 - (0.02 * " . $wtime . ")) + ";
+            $dem_top .=$nam . " * " . $kol . " * " . "(1 - (0.015 * " . $wtime . ")) + ";
             $dem_bot .="(" . $row['price'] . " * " . $row['kol'].") + ";
             /*Закончилась показательная дробь*/
-
-            $result .="<td class ='nam'>" . $nam . "</td>";
-            $result .="<td class ='wtime'>" . $wtime . "</td>
-                </tr>
-                ";
-            /*Разметку*/
-            /*формула расчета:*/
-
-            $form_top[] = $nam * $kol * (1 - (0.02 * $wtime));
-            $form_bot[] = $price * $kol;
-
-            /*закончилась формула*/
         };
         $result .="</table><br>";
 
