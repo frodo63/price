@@ -17,7 +17,7 @@ $(document).ready(function() {
 //Имя талицы берется из атрибута id родителя нажатого инпута с тегом id//////////////////////////////////////////
     $(document).off('click.itemdel').on('click.itemdel', '.delete', function (event) {
         var delid = $(event.target).attr("name");
-        var deltable = $(event.target).parents("div").attr("id").slice(0, -5);
+        var deltable = $(event.target).parents("div").attr("class").slice(0, -5);
         var deltablenameid = deltable+'_nameid';
         if (confirm("Удалить саму запись из базы данных ? Может, вы хотите просто переименовать? Тогда кликайте \"Отмена\".")) {
             $.ajax({
