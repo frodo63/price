@@ -16,10 +16,10 @@ if(isset($_POST['table'])){
 
             foreach ($statement as $row) {
                 $result .= "<div byerid =" . $row['b_id'] . ">
-                                <input type='button' name =" . $row['b_nid'] . " byersid =" . $row['b_id'] . " value='W' class='collapsegiveaway'>
+                                <input type='button' name =" . $row['b_nid'] . " ga_byer =" . $row['b_id'] . " value='W' class='collapse_ga_byer'>
                                 <span class='name'>" . $row['b_name'] . "</span>
-                            </div>";
-            }
+                                <div class='ga_byer_requests' ga_byer ='" . $row['b_id'] . "'></div>
+                            </div>";            }
             $result .= "</div>";
             print $result;
         } catch (PDOExecption $e) {
