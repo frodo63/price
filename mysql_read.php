@@ -16,7 +16,7 @@ if(isset($_POST['table'])){
 
             foreach ($statement as $row) {
                 $result .= "<div byerid =" . $row['b_id'] . ">
-                                <input type='button' name =" . $row['b_nid'] . " byersid =" . $row['b_id'] . " value='W' class='collapse'>
+                                <input type='button' name =" . $row['b_nid'] . " byersid =" . $row['b_id'] . " value='W' class='collapsegiveaway'>
                                 <span class='name'>" . $row['b_name'] . "</span>
                             </div>";
             }

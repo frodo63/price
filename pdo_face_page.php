@@ -117,9 +117,32 @@ echo "
       </div>  
       
       <div id='givaways'>
-      Тут указание на дату и наименование
+      <input class='add_payment' type='button' value='Добавить платежку'>
+      <input class='add_giveaway' type='button' value='Добавить выдачу'>
+      <!--Добавить Платежку -->
+              <div id='add_payment'>
+                  <span>Вводим платежку</span>
+                  <br>
+                  <label for='1'><span>Дата платежа:</span></label><input id='add_payment_date' name='1' type='date' size='20'><br>
+                  <label for='2'><span>Номер п/п</span></label><input id='add_payment_1c_num' name='2' type='text' size='20'><br>
+                  <label for='3'><span>Комментарий</span></label><input id='add_payment_comment'name='3' type='text' size='20'><br>
+                  <label for='4'><span>Сумма, руб.</span></label><input id='add_payment_sum' name='4' type='text' size='20'><br>
+                  <input id='button_add_payment' type='button' name='add_payment' value='Добавить платежку'>
+                  <input class='close_add_p' type='button' value='X'>
+              </div>
+      <!--Добавить Выдачу -->
+              <div id='add_giveaway'>
+                  <span>Вводим выдачу</span>
+                  <br>
+                  <label for='1'><span>Дата выдачи:</span></label><input id='add_giveaway_date' type='date' name='1'size='20'><br>
+                  <label for='2'><span>Комментарий:</span></label><input id='add_giveaway_comment' type='text' name='2' size='20'><br>
+                  <label for='3'><span>Сумма, руб.:</span></label><input id='add_giveaway_sum' type='text' name='3' size='20'><br>
+                  <input id='button_add_giveaway' type='button' name='add_giveaway' value='Добавить выдачу'>
+                  <input class='close_add_g' type='button' value='X'>
+              </div>
       
           <div class='givaways_list'>
+          
           </div>      
       </div>    
   

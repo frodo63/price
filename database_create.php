@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `requests` (
 `req_rent` FLOAT(3) UNSIGNED,
 `byersid` SMALLINT UNSIGNED NOT NULL,
 `payment` BOOLEAN NULL,
-`req_sum` INT NOT NULL,
+`req_sum` INT NULL,
 `1c_num` TINYINT NULL
  PRIMARY KEY (`requests_id`),
  FOREIGN KEY (`requests_nameid`) REFERENCES `allnames`(`nameid`),
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `requests` (
 CREATE TABLE IF NOT EXISTS `req_positions` (
 `req_positionid` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
 `pos_name` VARCHAR(255) NOT NULL,
-`winnerid`  SMALLINT UNSIGNED NOT NULL,
+`winnerid`  SMALLINT UNSIGNED NULL,
 `requestid` MEDIUMINT UNSIGNED NOT NULL,
 `giveaway` BOOLEAN NULL,
  PRIMARY KEY (`req_positionid`),

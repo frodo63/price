@@ -636,6 +636,66 @@ tr[pricingid] td {
   display: none;
 }
 
+/* line 355, ../sass/_mysql_styles.scss */
+#add_giveaway {
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid white;
+  color: white;
+  position: fixed;
+  left: 770px;
+  bottom: -500px;
+  height: 200px;
+  width: 300px;
+}
+/* line 366, ../sass/_mysql_styles.scss */
+#add_giveaway.come_here {
+  top: 150px;
+}
+
+/* line 370, ../sass/_mysql_styles.scss */
+#add_payment {
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid white;
+  color: black;
+  position: fixed;
+  left: 450px;
+  top: -500px;
+  height: 200px;
+  width: 300px;
+}
+/* line 381, ../sass/_mysql_styles.scss */
+#add_payment.come_here {
+  top: 150px;
+}
+
+/* line 385, ../sass/_mysql_styles.scss */
+#button_add_giveaway, #button_add_payment {
+  position: absolute;
+  bottom: 0;
+  right: 0px;
+  width: 150px;
+}
+
+/* line 391, ../sass/_mysql_styles.scss */
+.close_add_g,
+.close_add_p {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* line 398, ../sass/_mysql_styles.scss */
+#add_payment {
+  background-color: lightgreen;
+}
+
+/* line 401, ../sass/_mysql_styles.scss */
+#add_giveaway {
+  background-color: lightsalmon;
+}
+
 /* line 1, ../sass/_price.scss */
 h2 {
   margin: 0;

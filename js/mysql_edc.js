@@ -798,6 +798,21 @@ $(document).ready(function() {
     });
     /**/
 
+    /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $(document).off('click.comepayment').on('click.comepayment', 'input.add_payment, .close_add_p', function () {
+        console.log('Платежку добавляем');
+        $('#add_payment').toggleClass('come_here', 1000);
+        console.log('оно нажимается вообще???');
+    });
+
+    $(document).off('click.comegiveaway').on('click.comegiveaway', 'input.add_giveaway, .close_add_g', function () {
+        console.log('Выдачу добавляем');
+        $('#add_giveaway').toggleClass('come_here', 1000);
+        console.log('оно нажимается вообще???');
+    });
+
+    /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //# sourceURL=mysql_edc.js
 });
 
