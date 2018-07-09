@@ -84,11 +84,21 @@ $(document).ready(function(){
 
         if ($('div.ga_byer_requests:visible').length > 0){
 
-            //ДОбавить красные крестики при открытии/закрытии, закончить с ервым уровнем.
+            if ($(event.target).val() == 'X'){//Закрываем открытое
+                $(event.target).css({'background': 'white', 'color': 'black'}).val('W');
+                $(event.target).siblings('div.ga_byer_requests').slideUp(400);
+                $(event.target).parent().removeClass('ga_widen');
 
-            $('div.ga_byer_requests:visible').slideUp(400);
-            //Закрываем открытое
+                /*Растуманивание всех заявок*/
+                $('.byer_req_list div[byerid]').css('opacity', 1);
+                /*закончилось Растуманивание*/
+                return false;
+
+            };
+
             //Закрываем старое
+            $('div.ga_byer_requests:visible').slideUp(400);
+            $('input.collapse_ga_byer[value = "X"]').css({'background': 'white', 'color': 'black'}).val('W');
             //Открываем новое
             $('.ga_byer_requests[ga_byer='+the_byer+']').slideDown(400);
             $.ajax({
@@ -97,11 +107,20 @@ $(document).ready(function(){
                 data: {the_byer:the_byer},
                 success: function (data) {
                     $('.ga_byer_requests[ga_byer='+the_byer+']').html(data);
+                },complete: function () {
+                    $(event.target).val('X').css({'background-color' : 'red','color' : 'white'});
+                    //Затуманиевание
+                    $('.byer_req_list div[byerid]').slideUp();
+                    $('.ga_byer_requests[ga_byer='+the_byer+']').css('opacity', 1).addClass('ga_widen');
                 }
             });
-            /*КНОПОЧКИ*/
-            $(event.target).val('W').css({'background-color' : 'white','color' : 'black'});
+
+            /*Скроллимся к только что открытой завяке*/
+            $('html, body').animate({
+                scrollTop: $('.byer_req_list div[byerid='+the_byer+']').offset().top
+            }, 1000);
             /**/
+
         }else{
 
             //Просто открываем новое
@@ -112,11 +131,20 @@ $(document).ready(function(){
                 data: {the_byer:the_byer},
                 success: function (data) {
                     $('.ga_byer_requests[ga_byer='+the_byer+']').html(data);
+                },complete: function () {
+                    $(event.target).val('X').css({'background-color' : 'red','color' : 'white'});
+                    //Затуманиевание
+                    $('.ga_byer_requests[ga_byer]').slideUp;
+                    $('.ga_byer_requests[ga_byer='+the_byer+']').css({'opacity': '1'}).addClass('ga_widen');
                 }
             });
-            /*КНОПОЧКИ*/
-            $(event.target).val('X').css({'background-color' : 'red','color' : 'white'});
+
+            /*Скроллимся к только что открытой завяке*/
+            $('html, body').animate({
+                scrollTop: $('.byer_req_list div[byerid='+the_byer+']').offset().top
+            }, 1000);
             /**/
+
         }
 
 
@@ -124,7 +152,7 @@ $(document).ready(function(){
     /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /*СПИСОК ЗАЯВОК В РАМКАХ ОДНОГО ПОКУПАТЕЛЯ////////////////////////////////////////////////////////////////////////*/
-    $(document).off('click.ga_contents').on('click.ga_contents', '.collapse_ga_request', function () {
+    $(document).off('click.ga_contents').on('click.ga_contents', '.collapse_ga_request', function (event) {
         var the_request = $(event.target).attr('ga_request');
         $.ajax({
             url: 'mysql_giveaways.php',

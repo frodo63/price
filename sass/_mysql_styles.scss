@@ -340,6 +340,11 @@ tr[pricingid] td {border: 1px solid black}
     width: 95vw;
     background: #F5FFFA;
 }
+
+.ga_widen {
+  height: 100vh;
+  margin-top: 5vh;
+}
 .shrinken {
     &>table>thead>tr>th:nth-child(1), &>table>tbody>tr>td:nth-child(1){display: none}
     &>table>thead>tr>th:nth-child(2), &>table>tbody>tr>td:nth-child(2){display: none}
