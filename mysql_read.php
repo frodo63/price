@@ -12,15 +12,15 @@ if(isset($_POST['table'])){
 
             $statement = $pdo->prepare("SELECT byers.byers_id AS b_id,byers.byers_nameid AS b_nid,allnames.name AS b_name FROM `byers` LEFT JOIN `allnames` ON byers.byers_nameid=allnames.nameid");
             $statement->execute();
-            $result = "<div class='byer_req_list'>";
+            $result = "<ul class='byer_req_list'>";
 
             foreach ($statement as $row) {
-                $result .= "<div byerid =" . $row['b_id'] . ">
+                $result .= "<li byerid =" . $row['b_id'] . ">
                                 <input type='button' name =" . $row['b_nid'] . " ga_byer =" . $row['b_id'] . " value='W' class='collapse_ga_byer'>
                                 <span class='name'>" . $row['b_name'] . "</span>
                                 <div class='ga_byer_requests' ga_byer ='" . $row['b_id'] . "'></div>
-                            </div>";            }
-            $result .= "</div>";
+                            </li>";            }
+            $result .= "</ul>";
             print $result;
         } catch (PDOExecption $e) {
         $pdo->rollback();

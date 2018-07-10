@@ -12,7 +12,7 @@ if (isset($_POST['the_byer'])){
         $result="<table><thead><tr><th>Дата</th><th>Номер заявки</th><th>Номер заказа в 1С</th><th>Название</th><th>Сумма заявки</th></tr></thead><tbody>";
 
         foreach ($statement as $row){
-            $result.="<tr>";
+            $result.="<tr ga_request='". $row['requests_id'] ."'>";
             $result.="<td>".$row['created']."</td>";
             $result.="<td>".$row['requests_id']."</td>";
             $result.="<td>".$row['1c_num']."</td>";
@@ -46,30 +46,42 @@ if (isset($_POST['the_request'])){
         $get_giveaways->execute(array($the_request));
         $pdo->commit();
 
-        $result1="<table><thead><tr><th>Дата</th><th>Номер п/п</th><th>Сумма платежки</th></tr></thead><tbody>";
-        foreach ($get_payments as $row){
-            $result1 .="<tr><td>".$row['payed']."</td><td>".$row['number']."</td><td>".$row['amount']."</td></tr>";
-        };
-        $result1 .="</tbody></table>";
-
-        $result2="<table><thead><tr><th>Товар</th><th>Кол-во</th><th>Начислено, на шт</th><th>Сумма к выдаче</th></tr></thead><tbody>";
-        foreach ($get_positions as $row){
-
-            if((int)$row['oh'] == 0){
-                $onhands = (int)$row['firstoh'];
-            }else{
-                $onhands = (int)$row['oh'];
+        $result1="<input class='add_payment' requestid='".$the_request."' type='button' value='Добавить платежку'><br>";
+        if($get_payments->rowCount() == 0) {$result1 .= "Ничего еще не оплачено.";
+        }else {
+            $result1.="<table><thead><tr><th>Дата</th><th>Номер п/п</th><th>Сумма платежки</th></tr></thead><tbody>";
+            foreach ($get_payments as $row) {
+                $result1 .= "<tr><td>" . $row['payed'] . "</td><td>" . $row['number'] . "</td><td>" . $row['amount'] . "</td></tr>";
             };
-
-            $result2 .="<tr><td>".$row['name']."</td><td>".$row['kol']."</td><td>".$onhands."</td><td>".(int)$row['kol']*(int)$onhands."</td></tr>";
+            $result1 .= "</tbody></table>";
         };
-        $result2 .="</tbody></table>";
 
-        $result3="<table><thead><tr><th>Дата</th><th>Комментарий</th><th>Сумма</th></tr></thead><tbody>";
-        foreach ($get_giveaways as $row){
-            $result3 .="<tr><td>".$row['given_away']."</td><td>".$row['comment']."</td><td>".$row['giveaway_sum']."</td></tr>";
+        $result2="<input type='button' value='Перейти к заявке'>";
+        if($get_positions->rowCount() == 0) {$result2 .= "Ничего не начислено. <input type='button' value='Перейти к заявке'>";
+        }else {
+            $result2="<table><thead><tr><th>Товар</th><th>Кол-во</th><th>Начислено, на шт</th><th>Сумма к выдаче</th></tr></thead><tbody>";
+            foreach ($get_positions as $row) {
+
+                if ((int)$row['oh'] == 0) {
+                    $onhands = (int)$row['firstoh'];
+                } else {
+                    $onhands = (int)$row['oh'];
+                };
+
+                $result2 .= "<tr><td>" . $row['name'] . "</td><td>" . $row['kol'] . "</td><td>" . $onhands . "</td><td>" . (int)$row['kol'] * (int)$onhands . "</td></tr>";
+            };
+            $result2 .= "</tbody></table>";
         };
-        $result3 .="</tbody></table>";
+
+        $result3="<input class='add_giveaway' requestid='".$the_request."' type='button' value='Добавить выдачу'><br>";
+        if($get_giveaways->rowCount() == 0) {$result3 .= "Ничего еще не выдано.";
+        }else {
+            $result3="<table><thead><tr><th>Дата</th><th>Комментарий</th><th>Сумма</th></tr></thead><tbody>";
+            foreach ($get_giveaways as $row) {
+                $result3 .= "<tr><td>" . $row['given_away'] . "</td><td>" . $row['comment'] . "</td><td>" . $row['giveaway_sum'] . "</td></tr>";
+            };
+            $result3 .= "</tbody></table>";
+        };
 
         print(json_encode(array('data1'=>$result1,'data2'=>$result2,'data3'=>$result3)));
 

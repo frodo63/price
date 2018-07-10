@@ -116,9 +116,7 @@ echo "
           </div>
       </div>  
       
-      <div id='givaways'>
-      <input class='add_payment' type='button' value='Добавить платежку'>
-      <input class='add_giveaway' type='button' value='Добавить выдачу'>
+      <div id='givaways'>      
       <!--Добавить Платежку -->
               <div id='add_payment'>
                   <span>Вводим платежку</span>

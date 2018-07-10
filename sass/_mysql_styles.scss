@@ -343,7 +343,14 @@ tr[pricingid] td {border: 1px solid black}
 
 .ga_widen {
   height: 100vh;
-  margin-top: 5vh;
+  width: 100vw;
+  & .ga_contents>div{
+    margin:5vh 0;
+    min-height: 20vh;
+  }
+  .ga_c_payments,.ga_c_positions,.ga_c_giveaways{
+    background-color: rgba(30, 197, 201, 0.15)
+  }
 }
 .shrinken {
     &>table>thead>tr>th:nth-child(1), &>table>tbody>tr>td:nth-child(1){display: none}
@@ -409,6 +416,18 @@ tr[pricingid] td {border: 1px solid black}
 
 .ga_byer_requests {
   display: none;
+}
+
+.byer_req_list{
+  list-style: none;
+  .collapse_ga_byer{
+    width: 2vw;
+  }
+  .ga_contents{
+    td{
+      text-align: center;
+    }
+  }
 }
 
 
