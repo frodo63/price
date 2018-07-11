@@ -656,7 +656,7 @@ tr[pricingid] td {
   padding: 10px;
   border-radius: 5px;
   border: 2px solid white;
-  color: white;
+  color: black;
   position: fixed;
   left: 770px;
   bottom: -500px;
@@ -702,31 +702,50 @@ tr[pricingid] td {
 }
 
 /* line 410, ../sass/_mysql_styles.scss */
-#add_payment {
-  background-color: lightgreen;
+#add_payment, #add_giveaway {
+  background-color: white;
 }
 
 /* line 413, ../sass/_mysql_styles.scss */
-#add_giveaway {
-  background-color: lightsalmon;
-}
-
-/* line 417, ../sass/_mysql_styles.scss */
 .ga_byer_requests {
   display: none;
 }
 
-/* line 421, ../sass/_mysql_styles.scss */
+/* line 417, ../sass/_mysql_styles.scss */
 .byer_req_list {
   list-style: none;
 }
-/* line 423, ../sass/_mysql_styles.scss */
+/* line 419, ../sass/_mysql_styles.scss */
 .byer_req_list .collapse_ga_byer {
-  width: 2vw;
+  width: 40px;
 }
-/* line 427, ../sass/_mysql_styles.scss */
+/* line 423, ../sass/_mysql_styles.scss */
 .byer_req_list .ga_contents td {
   text-align: center;
+}
+
+/* line 428, ../sass/_mysql_styles.scss */
+.not_ready {
+  border: 2px solid red;
+  background-color: pink;
+}
+
+/* line 432, ../sass/_mysql_styles.scss */
+.ready {
+  border: 2px solid green;
+  background-color: white;
+}
+
+/* line 436, ../sass/_mysql_styles.scss */
+.ok {
+  background-color: green;
+  color: white;
+}
+
+/* line 437, ../sass/_mysql_styles.scss */
+.not-ok {
+  background-color: red;
+  color: white;
 }
 
 /* line 1, ../sass/_price.scss */

@@ -368,7 +368,7 @@ tr[pricingid] td {border: 1px solid black}
   padding:10px;
   border-radius: 5px;
   border:2px solid white;
-  color: white;
+  color: black;
 
   position: fixed;
   left:770px;
@@ -407,13 +407,9 @@ tr[pricingid] td {border: 1px solid black}
   right: 0;
 }
 
-#add_payment{
-  background-color: lightgreen;
+#add_payment, #add_giveaway{
+  background-color: white;
 }
-#add_giveaway{
-  background-color: lightsalmon;
-}
-
 .ga_byer_requests {
   display: none;
 }
@@ -421,7 +417,7 @@ tr[pricingid] td {border: 1px solid black}
 .byer_req_list{
   list-style: none;
   .collapse_ga_byer{
-    width: 2vw;
+    width: 40px;
   }
   .ga_contents{
     td{
@@ -429,6 +425,17 @@ tr[pricingid] td {border: 1px solid black}
     }
   }
 }
+.not_ready {
+  border: 2px solid red;
+  background-color: pink;
+}
+.ready {
+  border: 2px solid green;
+  background-color: white;
+}
+.ok{background-color: green;color: white}
+.not-ok{background-color: red;color: white}
+
 
 
 
