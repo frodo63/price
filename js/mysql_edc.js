@@ -798,17 +798,6 @@ $(document).ready(function() {
     });
     /**/
 
-    /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    $(document).off('click.comepayment').on('click.comepayment', 'input.add_payment, .close_add_p', function () {
-        $('#add_payment').toggleClass('come_here', 1000);
-    });
-
-    $(document).off('click.comegiveaway').on('click.comegiveaway', 'input.add_giveaway, .close_add_g', function () {
-        $('#add_giveaway').toggleClass('come_here', 1000);
-    });
-
-    /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 });
 
 

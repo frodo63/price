@@ -87,7 +87,6 @@ $(document).ready(function(){
                 $(event.target).css({'background': 'white', 'color': 'black', 'font-size' : '1em'}).val('W');
                 $(event.target).next('span').css({'font-size' : '1em'});
                 $(event.target).siblings('.ga_byer_requests').slideUp();
-                //$(event.target).parent().removeClass('ga_widen');
                 return false;//На закрытии скрипт останавливается
             }else {
                 //Открываем новое
@@ -164,6 +163,123 @@ $(document).ready(function(){
             }
         });
     });
+    /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /*Подготовка формы добавления платежки*/////////////////////////////////////////////////////////////////////////////
+    $(document).off('click.add_payment_prep').on('click.add_payment_prep', '.add_payment', function(event){
+        var reqid = $(event.target).attr("requestid");
+        $('#button_add_payment').attr("requestid", reqid);
+    });
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //ДОБАВЛЕНИЕ ПЛАТЕЖКИ///////////////////////////////////////////////////////////////////////////////////////////////
+    $(document).off('click.add_payment').on('click.add_payment', '#button_add_payment', function(event){
+        var reqid = $(event.target).attr("requestid");
+        /*Данные для заполнения платежки*/
+        var date = $('#add_payment.come_here #add_payment_date').val();
+        var num = $('#add_payment.come_here #add_payment_1c_num').val();
+        var comment = $('#add_payment.come_here #add_payment_comment').val();
+        var sum = $('#add_payment.come_here #add_payment_sum').val();
+        console.log(date);
+        console.log(num);
+        console.log(comment);
+        console.log(sum);
+
+
+
+        /*//////////////////////////////*/
+
+           /* $.ajax({
+                url: 'mysql_insert.php',
+                method: 'POST',
+                data: {reqid:reqid, posname:posname},
+                success: function (data) {
+                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                    $('td input[type=\'text\']').val('');
+                }, complete: function () {
+                    $.ajax({
+                        url: 'mysql_read.php',
+                        method: 'POST',
+                        data: {requestid:reqid},
+                        success: function (data) {
+                            $('input[requestid='+reqid+'] ~ div div.positions').html(data);
+                            $(event.target).siblings('input[type="text"]').focus();
+                        }
+                    });
+                }
+            });
+        } else {alert("Введите имя позиции")};*/
+    });
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    /*Подготовка формы добавления выдачи*///////////////////////////////////////////////////////////////////////////////
+    $(document).off('click.add_giveaway_prep').on('click.add_giveaway_prep', '.add_giveaway', function(event){
+        var reqid = $(event.target).attr("requestid");
+        $('#button_add_giveaway').attr("requestid", reqid);
+    });
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //ДОБАВЛЕНИЕ ВЫДАЧИ/////////////////////////////////////////////////////////////////////////////////////////////////
+    $(document).off('click.add_giveaway').on('click.add_giveaway', '#button_add_giveaway', function(event){
+        var reqid = $(event.target).attr("requestid");
+        /*Данные для заполнения выдачи*/
+        var date = $('#add_giveaway.come_here #add_giveaway_date').val();
+        var comment = $('#add_giveaway.come_here #add_giveaway_comment').val();
+        var sum = $('#add_giveaway.come_here #add_giveaway_sum').val();
+        console.log(date);
+        console.log(comment);
+        console.log(sum);
+
+
+
+        /*//////////////////////////////*/
+
+        /* $.ajax({
+             url: 'mysql_insert.php',
+             method: 'POST',
+             data: {reqid:reqid, posname:posname},
+             success: function (data) {
+                 $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                 $('td input[type=\'text\']').val('');
+             }, complete: function () {
+                 $.ajax({
+                     url: 'mysql_read.php',
+                     method: 'POST',
+                     data: {requestid:reqid},
+                     success: function (data) {
+                         $('input[requestid='+reqid+'] ~ div div.positions').html(data);
+                         $(event.target).siblings('input[type="text"]').focus();
+                     }
+                 });
+             }
+         });
+     } else {alert("Введите имя позиции")};*/
+    });
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $(document).off('click.comepayment').on('click.comepayment', 'input.add_payment, .close_add_p', function () {
+        $('#add_payment').toggleClass('come_here', 1000);
+        $('#add_payment>input[name=1]').val('-');//Стираем все данные
+        console.log('первый');
+        $('#add_payment>input[name=2]').val('-');//Стираем все данные
+        console.log('второй');
+        $('#add_payment>input[name=3]').val('-');//Стираем все данные
+        console.log('третий');
+        $('#add_payment>input[name=4]').val('-');//Стираем все данные
+        console.log('четвертый');
+        $('#button_add_payment').attr('requestid','');//Стираем номер заявки из кнопки добавления
+
+    });
+
+    $(document).off('click.comegiveaway').on('click.comegiveaway', 'input.add_giveaway, .close_add_g', function () {
+        $('#add_giveaway').toggleClass('come_here', 1000);
+        $('#add_giveaway>input[name=1]').val('');//Стираем все данные
+        $('#add_giveaway>input[name=2]').val('');//Стираем все данные
+        $('#add_giveaway>input[name=3]').val('');//Стираем все данные
+        $('#button_add_giveaway').attr('requestid','');//Стираем номер заявки из кнопки добавления
+    });
+
     /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
