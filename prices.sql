@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Июл 09 2018 г., 17:34
+-- Время создания: Июл 11 2018 г., 21:32
 -- Версия сервера: 5.7.22-0ubuntu0.16.04.1
 -- Версия PHP: 7.0.30-0ubuntu0.16.04.1
 
@@ -449,7 +449,6 @@ INSERT INTO `allnames` (`nameid`, `name`) VALUES
 (573, 'СМОЛА'),
 (574, 'ВД 3 по 400мл'),
 (575, 'И-12 3 бочки'),
-(576, 'Пробная заявка'),
 (577, 'КОмплексная '),
 (578, 'Масло моторное Роснефть Maximum Diesel 10w40 (20л)'),
 (579, 'Тосол Top40 (10кг)'),
@@ -517,12 +516,22 @@ INSERT INTO `byers` (`byers_id`, `byers_nameid`, `clearp`, `obnal`, `wtime`) VAL
 --
 
 CREATE TABLE `giveaways` (
-  `given_away` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `given_away` date NOT NULL,
   `giveaways_id` smallint(5) UNSIGNED NOT NULL,
   `comment` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `giveaway_sum` float UNSIGNED NOT NULL,
   `requestid` mediumint(8) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп данных таблицы `giveaways`
+--
+
+INSERT INTO `giveaways` (`given_away`, `giveaways_id`, `comment`, `giveaway_sum`, `requestid`) VALUES
+('2018-07-03', 1, '12', 12, 48),
+('2018-07-03', 2, '12', 12, 48),
+('2018-07-03', 3, '12', 12, 101),
+('2018-07-03', 4, '1212', 12, 48);
 
 -- --------------------------------------------------------
 
@@ -531,13 +540,24 @@ CREATE TABLE `giveaways` (
 --
 
 CREATE TABLE `payments` (
-  `payed` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `payed` date NOT NULL,
   `payments_id` smallint(5) UNSIGNED NOT NULL,
   `number` smallint(5) UNSIGNED NOT NULL,
   `comment` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `amount` float UNSIGNED NOT NULL,
+  `sum` float UNSIGNED NOT NULL,
   `requestid` mediumint(8) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп данных таблицы `payments`
+--
+
+INSERT INTO `payments` (`payed`, `payments_id`, `number`, `comment`, `sum`, `requestid`) VALUES
+('2018-07-04', 2, 12, '12', 12, 48),
+('2018-07-02', 3, 12, '12', 12, 48),
+('2018-07-02', 4, 12, '12', 12, 48),
+('2018-07-03', 5, 12, '12', 12, 101),
+('2018-07-03', 6, 12, '12', 12, 48);
 
 -- --------------------------------------------------------
 
@@ -1090,7 +1110,6 @@ INSERT INTO `requests` (`created`, `requests_id`, `req_comment`, `requests_namei
 ('0000-00-00 00:00:00', 109, NULL, 573, 0, 46, NULL, 0, NULL),
 ('2018-07-05 10:34:47', 110, NULL, 574, 38.65, 42, NULL, 15795, NULL),
 ('2018-07-05 10:34:47', 111, NULL, 575, 17.61, 42, NULL, 40350, NULL),
-('2018-07-05 10:34:47', 112, NULL, 576, 0, 42, NULL, 0, NULL),
 ('2018-07-05 10:43:17', 113, NULL, 577, 12.93, 46, NULL, 35275, NULL),
 ('2018-07-05 12:42:22', 114, NULL, 581, 15.09, 52, NULL, 15200, 228);
 
@@ -1768,12 +1787,12 @@ ALTER TABLE `byers`
 -- AUTO_INCREMENT для таблицы `giveaways`
 --
 ALTER TABLE `giveaways`
-  MODIFY `giveaways_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `giveaways_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT для таблицы `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payments_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `payments_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT для таблицы `pricings`
 --
