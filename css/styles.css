@@ -655,7 +655,7 @@ tr[pricingid] td {
 #add_giveaway {
   padding: 10px;
   border-radius: 5px;
-  border: 2px solid white;
+  border: 2px solid black;
   color: black;
   position: fixed;
   left: 770px;
@@ -672,7 +672,7 @@ tr[pricingid] td {
 #add_payment {
   padding: 10px;
   border-radius: 5px;
-  border: 2px solid white;
+  border: 2px solid black;
   color: black;
   position: fixed;
   left: 450px;
@@ -688,8 +688,8 @@ tr[pricingid] td {
 /* line 397, ../sass/_mysql_styles.scss */
 #button_add_giveaway, #button_add_payment {
   position: absolute;
-  bottom: 0;
-  right: 0px;
+  bottom: 10px;
+  right: 10px;
   width: 150px;
 }
 
@@ -697,8 +697,8 @@ tr[pricingid] td {
 .close_add_g,
 .close_add_p {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 10px;
+  right: 10px;
 }
 
 /* line 410, ../sass/_mysql_styles.scss */

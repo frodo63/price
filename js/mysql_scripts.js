@@ -129,7 +129,7 @@ $(document).ready(function(){
     });
     /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /*СПИСОК ЗАЯВОК В РАМКАХ ОДНОГО ПОКУПАТЕЛЯ////////////////////////////////////////////////////////////////////////*/
+    /*СПИСОК ПЛАТЕЖЕЙ, НАЧИСЛЕНИЙ И ВЫДАЧ В РАМКАХ ОДНОЙ ЗАЯВКИ///////////////////////////////////////////////////////*/
     $(document).off('click.ga_contents').on('click.ga_contents', '.collapse_ga_request', function (event) {
         var the_request = $(event.target).attr('ga_request');
 
@@ -258,15 +258,18 @@ $(document).ready(function(){
                  $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                  console.log(data);
              }, complete: function () {
-                 /*$.ajax({
-                     url: 'mysql_read.php',
+                 $.ajax({
+                     url: 'mysql_giveaways.php',
                      method: 'POST',
-                     data: {requestid:reqid},
+                     dataType: 'json',
+                     cache: false,
+                     data: {the_request:reqid},
                      success: function (data) {
-                         $('input[requestid='+reqid+'] ~ div div.positions').html(data);
-                         $(event.target).siblings('input[type="text"]').focus();
+                         $('.ga_contents[ga_request='+reqid+'] .ga_c_payments').html(data.data1);
+                         $('.ga_contents[ga_request='+reqid+'] .ga_c_positions').html(data.data2);
+                         $('.ga_contents[ga_request='+reqid+'] .ga_c_giveaways').html(data.data3);
                      }
-                 });*/
+                 });
              }
          });
     });
@@ -290,19 +293,22 @@ $(document).ready(function(){
          $.ajax({
              url: 'mysql_insert.php',
              method: 'POST',
-             data: {reqid:reqid, giveaway_date:giveaway_date, num:num, comment:comment, sum:sum},
+             data: {reqid:reqid, giveaway_date:giveaway_date, comment:comment, sum:sum},
              success: function (data) {
                  $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
              }, complete: function () {
-                /* $.ajax({
-                     url: 'mysql_read.php',
+                 $.ajax({
+                     url: 'mysql_giveaways.php',
                      method: 'POST',
-                     data: {requestid:reqid},
+                     dataType: 'json',
+                     cache: false,
+                     data: {the_request:reqid},
                      success: function (data) {
-                         $('input[requestid='+reqid+'] ~ div div.positions').html(data);
-                         $(event.target).siblings('input[type="text"]').focus();
+                         $('.ga_contents[ga_request='+reqid+'] .ga_c_payments').html(data.data1);
+                         $('.ga_contents[ga_request='+reqid+'] .ga_c_positions').html(data.data2);
+                         $('.ga_contents[ga_request='+reqid+'] .ga_c_giveaways').html(data.data3);
                      }
-                 });*/
+                 });
              }
          });
     });

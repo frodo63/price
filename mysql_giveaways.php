@@ -36,7 +36,7 @@ if (isset($_POST['the_request'])){
         $the_request = $_POST['the_request'];
         $onhands;
 
-        $get_payments = $pdo->prepare("SELECT payed,payments_id,number,amount,requestid FROM `payments` WHERE requestid=?");
+        $get_payments = $pdo->prepare("SELECT payed,payments_id,number,sum,requestid FROM `payments` WHERE requestid=?");
         $get_positions = $pdo->prepare("SELECT name, kol, oh, firstoh FROM (SELECT * FROM (SELECT trades_id,name FROM trades LEFT JOIN allnames ON trades_nameid=nameid) AS a LEFT JOIN pricings ON a.trades_id=tradeid) AS b left join req_positions on b.pricingid=req_positions.winnerid WHERE req_positions.requestid=?");
         $get_giveaways = $pdo->prepare("SELECT given_away,comment,giveaway_sum FROM `giveaways` WHERE requestid=?");
 
@@ -49,9 +49,9 @@ if (isset($_POST['the_request'])){
         $result1="<input class='add_payment' requestid='".$the_request."' type='button' value='Добавить платежку'><br>";
         if($get_payments->rowCount() == 0) {$result1 .= "Ничего еще не оплачено.";
         }else {
-            $result1.="<table><thead><tr><th>Дата</th><th>Номер п/п</th><th>Сумма платежки</th></tr></thead><tbody>";
+            $result1.="<h2>Платежи</h2><table><thead><tr><th>Дата</th><th>Номер п/п</th><th>Сумма платежки</th></tr></thead><tbody>";
             foreach ($get_payments as $row) {
-                $result1 .= "<tr><td>" . $row['payed'] . "</td><td>" . $row['number'] . "</td><td>" . $row['amount'] . "</td></tr>";
+                $result1 .= "<tr><td>" . $row['payed'] . "</td><td>" . $row['number'] . "</td><td>" . $row['sum'] . "</td></tr>";
             };
             $result1 .= "</tbody></table>";
         };
@@ -59,7 +59,7 @@ if (isset($_POST['the_request'])){
         $result2="<input type='button' value='Перейти к заявке'>";
         if($get_positions->rowCount() == 0) {$result2 .= "Ничего не начислено. <input type='button' value='Перейти к заявке'>";
         }else {
-            $result2="<table><thead><tr><th>Товар</th><th>Кол-во</th><th>Начислено, на шт</th><th>Сумма к выдаче</th></tr></thead><tbody>";
+            $result2.="<h2>Начисления</h2><table><thead><tr><th>Товар</th><th>Кол-во</th><th>Начислено, на шт</th><th>Сумма к выдаче</th></tr></thead><tbody>";
             foreach ($get_positions as $row) {
 
                 if ((int)$row['oh'] == 0) {
@@ -76,7 +76,7 @@ if (isset($_POST['the_request'])){
         $result3="<input class='add_giveaway' requestid='".$the_request."' type='button' value='Добавить выдачу'><br>";
         if($get_giveaways->rowCount() == 0) {$result3 .= "Ничего еще не выдано.";
         }else {
-            $result3="<table><thead><tr><th>Дата</th><th>Комментарий</th><th>Сумма</th></tr></thead><tbody>";
+            $result3.="<h2>Выдачи</h2><table><thead><tr><th>Дата</th><th>Комментарий</th><th>Сумма</th></tr></thead><tbody>";
             foreach ($get_giveaways as $row) {
                 $result3 .= "<tr><td>" . $row['given_away'] . "</td><td>" . $row['comment'] . "</td><td>" . $row['giveaway_sum'] . "</td></tr>";
             };

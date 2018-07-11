@@ -87,12 +87,7 @@ if(isset($_POST['reqid']) && isset($_POST['posname'])){
 //////////////////////////////////////////////////////////////////////
 
 //ДОБАВЛЕНИЕ ПЛАТЕЖКИ/////////////////////////////////////////////////
-if(isset($_POST['reqid']) &&
-    isset($_POST['payment_date']) &&
-    isset($_POST['num']) &&
-    isset($_POST['comment']) &&
-    isset($_POST['sum'])
-){
+if(isset($_POST['reqid']) && isset($_POST['payment_date']) && isset($_POST['num']) && isset($_POST['comment']) && isset($_POST['sum'])){
 
     $reqid = $_POST['reqid'];
     $payment_date = $_POST['payment_date'];
@@ -106,7 +101,7 @@ if(isset($_POST['reqid']) &&
         $statement = $pdo->prepare("INSERT INTO `payments`(`requestid`,`payed`,`number`,`comment`,`sum`) VALUES(?,?,?,?,?)");
 
         $statement->bindParam(1, $reqid);
-        $statement->bindParam(2, $pament_date);
+        $statement->bindParam(2, $payment_date);
         $statement->bindParam(3, $num);
         $statement->bindParam(4, $comment);
         $statement->bindParam(5, $sum);
@@ -128,4 +123,34 @@ if(isset($_POST['reqid']) &&
 
 
 //ДОБАВЛЕНИЕ ВЫДАЧИ///////////////////////////////////////////////////
+if(isset($_POST['reqid']) && isset($_POST['giveaway_date']) && isset($_POST['comment']) && isset($_POST['sum'])){
+
+    $reqid = $_POST['reqid'];
+    $giveaway_date = $_POST['giveaway_date'];
+    $comment = $_POST['comment'];
+    $sum = $_POST['sum'];
+
+    /**//////////////////////////////////////////////////////////////
+
+    try {
+        $statement = $pdo->prepare("INSERT INTO `giveaways`(`requestid`,`given_away`,`comment`,`giveaway_sum`) VALUES(?,?,?,?)");
+
+        $statement->bindParam(1, $reqid);
+        $statement->bindParam(2, $giveaway_date);
+        $statement->bindParam(3, $comment);
+        $statement->bindParam(4, $sum);
+
+        $pdo->beginTransaction();
+        $statement->execute();
+        $pdo->commit();
+
+    } catch(PDOExecption $e) {
+        $pdo->rollback();
+        echo "Error!: " . $e->getMessage() . "</br>";
+    }
+    /**//////////////////////////////////////////////////////////////
+
+    echo "Получилось! Добавлена выдача на сумму $sum в заявку $reqid.";
+
+};
 //////////////////////////////////////////////////////////////////////
