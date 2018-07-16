@@ -118,6 +118,15 @@ echo "
       
       <div id='givaways'>      
       <!--Добавить Платежку -->
+      
+      
+              <div id='edit_1c_num'>
+                  <span>Изменить номер закзаа в 1С</span>
+                  <br>
+                  <label for='1'><span>Введите новый номер:</span></label><input id='add_1c_num' name='1' type='text' size='20'><br>
+                  <input id='button_edit_1c_num' type='button' name='edit_1c_num' requestid='' value='Изменить номер'>
+                  <input class='close_edit_1c_num' type='button' value='X'>
+              </div>  
               <div id='add_payment'>
                   <span>Вводим платежку</span>
                   <br>

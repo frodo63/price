@@ -19,6 +19,7 @@ $(document).ready(function(){
         if($(event.target).attr('name') == 'requests'){//Добавляем заявку?
             var byer = $('#byer').attr("byer_id");
             var thename = $('#req_name').val();
+            console.log("Добавляем заявку");
             console.log(byer);
             console.log(thename);
 
@@ -28,6 +29,7 @@ $(document).ready(function(){
                     method: 'POST',
                     data: {byer:byer, thename:thename},
                     success: function (data) {
+                        console.log("Добавлена заявка");
                         $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                         $('#creates input[type=\'text\']').val('');
                     },
@@ -160,6 +162,7 @@ $(document).ready(function(){
                 $('.ga_contents[ga_request='+the_request+'] .ga_c_payments').html(data.data1);
                 $('.ga_contents[ga_request='+the_request+'] .ga_c_positions').html(data.data2);
                 $('.ga_contents[ga_request='+the_request+'] .ga_c_giveaways').html(data.data3);
+                $('.ga_contents[ga_request='+the_request+'] .ga_options').html(data.data4);
             }
         });
     });
@@ -186,6 +189,12 @@ $(document).ready(function(){
         $('#button_add_giveaway').attr('requestid',''+$(event.target).attr('requestid')+'');//Добавляем в кнопку
     });
 
+    $(document).off('click.come1cnum').on('click.come1cnum', '.edit_1c_num', function () {
+        $('#edit_1c_num').toggleClass('come_here', 1000);
+        $('#edit_1c_num>input[name=1]').val('');//Стираем все данные
+        $('#button_edit_1c_num').attr('requestid',''+$(event.target).attr('requestid')+'');//Добавляем в кнопку
+    });
+
     /*ЗАКРЫТИЕ ОКНА ДОБАВЛЕНИЯ*/////////////////////////////////////////////////////////////////////////////////////////
     $(document).off('click.gopayment').on('click.gopayment', '.close_add_p', function (event) {
         $('#add_payment').toggleClass('come_here', 1000);
@@ -202,6 +211,12 @@ $(document).ready(function(){
         $('#add_giveaway>input[name=2]').val('');//Стираем все данные
         $('#add_giveaway>input[name=3]').val('');//Стираем все данные
         $('#button_add_giveaway').attr('requestid','xxx');//Стираем номер заявки из кнопки добавления
+    });
+
+    $(document).off('click.go1cnum').on('click.go1cnum', '.close_edit_1c_num', function () {
+        $('#edit_1c_num').toggleClass('come_here', 1000);
+        $('#add_giveaway>input[name=1]').val('');//Стираем все данные
+        $('#button_edit_1c_num').attr('requestid','xxx');//Стираем номер заявки из кнопки добавления
     });
 
     /*Проверка числовых значений*//////////////////////////////////////////////////////////////////////////////////////////////////
@@ -239,17 +254,7 @@ $(document).ready(function(){
         var num = $('#add_payment.come_here #add_payment_1c_num').val();
         var comment = $('#add_payment.come_here #add_payment_comment').val();
         var sum = Number(Number($('#add_payment.come_here #add_payment_sum').val()).toFixed(2));
-
-        console.log(reqid);
-        console.log(payment_date+"   "+typeof payment_date);
-        console.log(num+"   "+typeof num);
-        console.log(comment+"   "+typeof comment);
-        console.log(sum+"   "+typeof sum);
-
-
-
         /*//////////////////////////////*/
-
          $.ajax({
              url: 'mysql_insert.php',
              method: 'POST',
@@ -268,6 +273,8 @@ $(document).ready(function(){
                          $('.ga_contents[ga_request='+reqid+'] .ga_c_payments').html(data.data1);
                          $('.ga_contents[ga_request='+reqid+'] .ga_c_positions').html(data.data2);
                          $('.ga_contents[ga_request='+reqid+'] .ga_c_giveaways').html(data.data3);
+                         $('.ga_contents[ga_request='+reqid+'] .ga_options').html(data.data4);
+                         $('#add_payment').toggleClass('come_here');
                      }
                  });
              }
@@ -281,15 +288,7 @@ $(document).ready(function(){
         var giveaway_date = $('#add_giveaway.come_here #add_giveaway_date').val();
         var comment = $('#add_giveaway.come_here #add_giveaway_comment').val();
         var sum = Number(Number($('#add_giveaway.come_here #add_giveaway_sum').val()).toFixed(2));
-        console.log(reqid);
-        console.log(giveaway_date+"   "+typeof giveaway_date);
-        console.log(comment+"   "+typeof comment);
-        console.log(sum+"   "+typeof sum);
-
-
-
         /*//////////////////////////////*/
-
          $.ajax({
              url: 'mysql_insert.php',
              method: 'POST',
@@ -307,6 +306,8 @@ $(document).ready(function(){
                          $('.ga_contents[ga_request='+reqid+'] .ga_c_payments').html(data.data1);
                          $('.ga_contents[ga_request='+reqid+'] .ga_c_positions').html(data.data2);
                          $('.ga_contents[ga_request='+reqid+'] .ga_c_giveaways').html(data.data3);
+                         $('.ga_contents[ga_request='+reqid+'] .ga_options').html(data.data4);
+                         $('#add_giveaway').toggleClass('come_here');
                      }
                  });
              }
@@ -314,6 +315,41 @@ $(document).ready(function(){
     });
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //ИЗМЕНЕНИЕ НОМЕРА ЗАКАЗА В 1С//////////////////////////////////////////////////////////////////////////////////////
+    $(document).off('click.edit_1c_num').on('click.edit_1c_num', '#button_edit_1c_num', function(event){
+        var reqid = $(event.target).attr("requestid");
+        /*Данные для заполнения выдачи*/
+        var new1cnum = $('#add_1c_num').val();
+        console.log(new1cnum);
+        /*//////////////////////////////*/
+        $.ajax({
+            url: 'mysql_save.php',
+            method: 'POST',
+            data: {reqid:reqid, new_1c_num:new1cnum},
+            success: function (data) {
+                $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+            }, complete: function () {
+                $.ajax({
+                    url: 'mysql_giveaways.php',
+                    method: 'POST',
+                    dataType: 'json',
+                    cache: false,
+                    data: {the_request:reqid},
+                    success: function (data) {
+                        $('.ga_contents[ga_request='+reqid+'] .ga_c_payments').html(data.data1);
+                        $('.ga_contents[ga_request='+reqid+'] .ga_c_positions').html(data.data2);
+                        $('.ga_contents[ga_request='+reqid+'] .ga_c_giveaways').html(data.data3);
+                        $('.ga_contents[ga_request='+reqid+'] .ga_options').html(data.data4);
+                        $('#edit_1c_num').toggleClass('come_here');
+                    }
+                });
+            }
+        });
+    });
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////

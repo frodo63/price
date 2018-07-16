@@ -30,7 +30,7 @@ if (isset($_POST['the_byer'])){
             $result.="<td>".$row['requests_id']."</td>";
             $result.="<td>".$row['1c_num']."</td>";
             $result.="<td><input class='collapse_ga_request' ga_request='". $row['requests_id'] ."' type='button' value='W'><span>".$row['name']."</span>
-<div class='ga_contents' ga_request='". $row['requests_id'] ."'><div class='ga_c_payments'></div><div class='ga_c_positions'></div><div class='ga_c_giveaways'></div></div></td>";
+<div class='ga_contents' ga_request='". $row['requests_id'] ."'><div class='ga_options'></div><div class='ga_c_payments'></div><div class='ga_c_positions'></div><div class='ga_c_giveaways'></div></div></td>";
             $result.="<td>".$row['req_sum']."</td>";
 
             /*ПЕРЕМЕННЫЕ НА СТАТУС ЗАКАЗА*/
@@ -99,17 +99,19 @@ if (isset($_POST['the_request'])){
         $the_request = $_POST['the_request'];
         $onhands;
 
+        $get_req_info = $pdo->prepare("SELECT created,req_sum,1c_num FROM `requests` WHERE requests_id=?");
         $get_payments = $pdo->prepare("SELECT payed,payments_id,number,sum,requestid FROM `payments` WHERE requestid=?");
         $get_positions = $pdo->prepare("SELECT name, kol, oh, firstoh FROM (SELECT * FROM (SELECT trades_id,name FROM trades LEFT JOIN allnames ON trades_nameid=nameid) AS a LEFT JOIN pricings ON a.trades_id=tradeid) AS b left join req_positions on b.pricingid=req_positions.winnerid WHERE req_positions.requestid=?");
         $get_giveaways = $pdo->prepare("SELECT giveaways_id,requestid,given_away,comment,giveaway_sum FROM `giveaways` WHERE requestid=?");
 
         $pdo->beginTransaction();
+        $get_req_info->execute(array($the_request));
         $get_payments->execute(array($the_request));
         $get_positions->execute(array($the_request));
         $get_giveaways->execute(array($the_request));
         $pdo->commit();
 
-        $result1="<input class='add_payment' requestid='".$the_request."' type='button' value='Добавить платежку'><br>";
+        $result1="<input class='add_payment' requestid='".$the_request."' type='button' value='+платеж'><br>";
         if($get_payments->rowCount() == 0) {$result1 .= "Ничего еще не оплачено.";
         }else {
             $result1.="<h2>Платежи</h2><table><thead><tr><th>Дата</th><th>Номер п/п</th><th>Сумма платежки</th><th></th></tr></thead><tbody>";
@@ -136,7 +138,7 @@ if (isset($_POST['the_request'])){
             $result2 .= "</tbody></table>";
         };
 
-        $result3="<input class='add_giveaway' requestid='".$the_request."' type='button' value='Добавить выдачу'><br>";
+        $result3="<input class='add_giveaway' requestid='".$the_request."' type='button' value='+выдача'><br>";
         if($get_giveaways->rowCount() == 0) {$result3 .= "Ничего еще не выдано.";
         }else {
             $result3.="<h2>Выдачи</h2><table><thead><tr><th>Дата</th><th>Комментарий</th><th>Сумма</th><th></th></tr></thead><tbody>";
@@ -146,7 +148,13 @@ if (isset($_POST['the_request'])){
             $result3 .= "</tbody></table>";
         };
 
-        print(json_encode(array('data1'=>$result1,'data2'=>$result2,'data3'=>$result3)));
+        $result4="<input type='button' class='edit_1c_num' requestid='".$the_request."' value='Номер в 1C'><br>";
+        foreach($get_req_info as $row){
+            $result4 .= "<h2>Заказ от ".$row['created']." на сумму ".$row['req_sum'].". Номер в 1С: ".$row['1c_num']." </h2>";
+        }
+
+
+        print(json_encode(array('data1'=>$result1,'data2'=>$result2,'data3'=>$result3,'data4'=>$result4)));
 
     }catch(PDOExecption $e) {
         $pdo->rollback();

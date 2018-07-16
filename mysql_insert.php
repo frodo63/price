@@ -34,16 +34,16 @@ if(isset($_POST['byer']) && isset($_POST['thename'])){
 
     $byer = $_POST['byer'];
     $thename = $_POST['thename'];
+    $created = date("Y-m-d");
 
     /**//////////////////////////////////////////////////////////////
     $statement = $pdo->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
-    $stmt = $pdo->prepare("INSERT INTO `requests`(`requests_nameid`,`byersid`) VALUES(?, ?)");
-
+    $stmt = $pdo->prepare("INSERT INTO `requests`(`created`,`requests_nameid`,`byersid`) VALUES(?,?,?)");
     try {
         $pdo->beginTransaction();
         $statement->execute(array($thename));
         $theID = $pdo->lastInsertId();
-        $stmt->execute(array($theID, $byer));
+        $stmt->execute(array($created, $theID, $byer));
         $pdo->commit();
 
     } catch(PDOExecption $e) {

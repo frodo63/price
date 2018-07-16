@@ -348,6 +348,11 @@ tr[pricingid] td {border: 1px solid black}
     margin:5vh 0;
     min-height: 20vh;
   }
+  & .ga_contents>.ga_options{
+    margin:0;
+    height: 3vh;
+    min-height: 3vh;
+  }
   .ga_c_payments,.ga_c_positions,.ga_c_giveaways{
     background-color: rgba(30, 197, 201, 0.15)
   }
@@ -394,20 +399,35 @@ tr[pricingid] td {border: 1px solid black}
     top:150px;
   }
 }
-#button_add_giveaway,#button_add_payment {
+#edit_1c_num{
+  padding:10px;
+  border-radius: 5px;
+  border:2px solid black;
+  color: black;
+
+  position: fixed;
+  left:150px;
+  top:-500px;
+  height: 200px;
+  width: 250px;
+  &.come_here {
+    top:150px;
+  }
+}
+#button_add_giveaway,#button_add_payment,#button_edit_1c_num {
   position: absolute;
   bottom: 10px;
   right: 10px;
   width: 150px;
 }
 .close_add_g,
-.close_add_p{
+.close_add_p,.close_edit_1c_num{
   position: absolute;
   top: 10px;
   right: 10px;
 }
 
-#add_payment, #add_giveaway{
+#add_payment, #add_giveaway, #edit_1c_num{
   background-color: white;
 }
 .ga_byer_requests {

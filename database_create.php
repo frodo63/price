@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `sellers` (
 );
 
 CREATE TABLE IF NOT EXISTS `requests` (
-`created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+`created` DATE NOT NULL,
 `requests_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 `requests_nameid` MEDIUMINT UNSIGNED NOT NULL,
 `req_comment` VARCHAR(255),
@@ -122,7 +122,6 @@ CREATE TABLE IF NOT EXISTS `pricings` (
     `price` FLOAT(2) UNSIGNED NOT NULL,
     `rent` FLOAT(3) UNSIGNED NOT NULL,
     `winner` SMALLINT UNSIGNED,
-    `datetime` TIMESTAMP(6),
      PRIMARY KEY (`pricingid`),
      FOREIGN KEY (`sellerid`) REFERENCES `sellers`(`sellers_id`)
 )

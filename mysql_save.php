@@ -230,3 +230,32 @@ if(
     }
 };
 
+/*РЕДАКТИРОВАНИЕ НОМЕРА ЗАКАЗА В 1С*/
+
+if(
+
+    isset($_POST["reqid"]) && isset($_POST["new_1c_num"])
+)
+{
+    $reqid = ($_POST["reqid"]);
+    $new_1c_num = ($_POST["new_1c_num"]);
+
+    try{
+
+        $sql = "UPDATE requests SET 1c_num = :new_1c_num WHERE requests_id = :reqid";
+        $statement = $pdo->prepare($sql);
+
+        $statement->bindValue(':reqid', $reqid);
+        $statement->bindValue(':new_1c_num', $new_1c_num);
+
+        $pdo->beginTransaction();
+        $statement->execute();
+        $pdo->commit();
+
+        echo "<p>Номер заказа в 1С обновлен</p>";
+    } catch(PDOExecption $e) {
+        $pdo->rollback();
+        print "Error!: " . $e->getMessage() . "</br>";
+    }
+};
+/**/
