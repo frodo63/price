@@ -14,7 +14,9 @@ if (isset($_POST['the_byer'])){
         $reqlist->execute(array($the_byer));
         $pdo->commit();
 
-        $result="<table><thead><tr><th>Дата</th><th>Номер заявки</th><th>Номер заказа в 1С</th><th>Название</th><th>Сумма заявки</th><th>Статус заявки</th></tr></thead><tbody>";
+        $result="<div id='ga_requests_date_range'><span>Выберите временной интервал</span><br><input class='from' type='date'><input class='to' type='date'>
+<input class='filter_date' type='button' value='Отобразить'></div>";
+        $result.="<table><thead><tr><th>Дата</th><th>Номер заявки</th><th>Номер заказа в 1С</th><th>Название</th><th>Сумма заявки</th><th>Статус заявки</th></tr></thead><tbody>";
 
         foreach ($reqlist as $row){
 

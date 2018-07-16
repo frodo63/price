@@ -78,6 +78,29 @@ $(document).ready(function(){
             });
     });
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //Чтение списка заявок из фильтра по дате.//////////////////////////////////////////////////////////////////////////
+    $(document).off('click.filter_date').on('click.filter_date', '#requests_date_range .filter_date', function(){
+        var from =$('#requests_date_range .from').val();
+        var to =$('#requests_date_range .to').val();
+        if(from && to){
+            $.ajax({
+                url: 'mysql_read.php',
+                method: 'POST',
+                data: {from:from, to:to},
+                success: function (data) {
+                    $('.requests_list').html(data);
+                },
+                complete: function(){
+                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Показаны заявки с "+from+" до " +to+ ".");
+                    $('.creates input[type=\'text\']').val('');
+                }
+            });
+        }else{
+            alert("Введите обе точки временного диапазона.");
+        };
+    });
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
     /*СПИСОК ЗАЯВОК В РАМКАХ ОДНОГО ПОКУПАТЕЛЯ////////////////////////////////////////////////////////////////////////*/

@@ -493,7 +493,7 @@ table {
 /*шрифты таблицы*/
 /* line 267, ../sass/_mysql_styles.scss */
 td[category="requests"], td[byerid], td[category="positions"], .pricings {
-  font-size: 2vh;
+  font-size: 21px;
   font-family: Arial;
 }
 
@@ -781,6 +781,12 @@ tr[pricingid] td {
 .not-ok {
   background-color: red;
   color: white;
+}
+
+/* line 464, ../sass/_mysql_styles.scss */
+#ga_requests_date_range {
+  margin: 5vh 0;
+  border-bottom: 1px solid black;
 }
 
 /* line 1, ../sass/_price.scss */

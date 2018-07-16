@@ -65,13 +65,20 @@ echo "
       <div id='requests'>
       <input type='button' class='addnew' value='+'> Добавить заявку
           <div class='creates add_ramk'>
-          <br>
-                <input type='text' placeholder='Выберите Покупателя' size='20' id ='byer' autocomplete='off'>
-                <div class='sres'></div>
-                <input type='text' id='req_name' placeholder='Введите название для Заявки' size='70'>                
-                <input type='button' name='requests' value='Добавить заявку'>
-          <br>
-          <br>
+              <br>
+                    <input type='text' placeholder='Выберите Покупателя' size='20' id ='byer' autocomplete='off'>
+                    <div class='sres'></div>
+                    <input type='text' id='req_name' placeholder='Введите название для Заявки' size='70'>                
+                    <input type='button' name='requests' value='Добавить заявку'>
+              <br>
+              <br>
+          </div>
+          <div id='requests_date_range'>
+              <span>Выберите временной интервал</span><br>
+              <input class='from' type='date'>
+              <input class='to' type='date'>
+
+              <input class='filter_date' type='button' value='Отобразить'>
           </div>
           <div class='requests_list'>
           </div>                
@@ -117,11 +124,9 @@ echo "
       </div>  
       
       <div id='givaways'>      
-      <!--Добавить Платежку -->
-      
-      
+      <!--Добавить Платежку -->    
               <div id='edit_1c_num'>
-                  <span>Изменить номер закзаа в 1С</span>
+                  <span>Изменить номер заказа в 1С</span>
                   <br>
                   <label for='1'><span>Введите новый номер:</span></label><input id='add_1c_num' name='1' type='text' size='20'><br>
                   <input id='button_edit_1c_num' type='button' name='edit_1c_num' requestid='' value='Изменить номер'>
