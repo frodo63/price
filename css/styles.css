@@ -784,9 +784,10 @@ tr[pricingid] td {
 }
 
 /* line 464, ../sass/_mysql_styles.scss */
-#ga_requests_date_range {
-  margin: 5vh 0;
+.ga_requests_date_range {
+  margin: 3vh 0;
   border-bottom: 1px solid black;
+  padding-bottom: 3vh;
 }
 
 /* line 1, ../sass/_price.scss */

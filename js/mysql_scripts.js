@@ -69,11 +69,12 @@ $(document).ready(function(){
                 method: 'POST',
                 data: {table:table},
                 success: function (data) {
-                   $('.' + table + '_list').html(data);
+                   $('#reads .' + table + '_list').html(data);
                 },
                 complete: function(){
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Данные из таблицы " + table + " получены.");
                     $('.creates input[type=\'text\']').val('');
+                    $('.from,.to').val('');
                 }
             });
     });
@@ -81,19 +82,67 @@ $(document).ready(function(){
 
     //Чтение списка заявок из фильтра по дате.//////////////////////////////////////////////////////////////////////////
     $(document).off('click.filter_date').on('click.filter_date', '#requests_date_range .filter_date', function(){
-        var from =$('#requests_date_range .from').val();
-        var to =$('#requests_date_range .to').val();
-        if(from && to){
+        var from = $('#requests_date_range .from').val();
+        console.log(from);
+        from = from.slice(6,10)+'-'+from.slice(3,5)+'-'+from.slice(0,2);
+        console.log(from);
+
+        var to = $('#requests_date_range .to').val();
+        console.log(to);
+        to = to.slice(6,10)+'-'+to.slice(3,5)+'-'+to.slice(0,2);
+        console.log(to);
+
+        if(from!='--' && to!='--'){
             $.ajax({
                 url: 'mysql_read.php',
                 method: 'POST',
                 data: {from:from, to:to},
                 success: function (data) {
-                    $('.requests_list').html(data);
+                    $('#reads .requests_list').html(data);
                 },
                 complete: function(){
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Показаны заявки с "+from+" до " +to+ ".");
                     $('.creates input[type=\'text\']').val('');
+                }
+            });
+        }else{
+            alert("Введите обе точки временного диапазона.");
+        };
+    });
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //Чтение списка заявок из фильтра по дате ВО ВКЛАДКЕ ВЫДАЧ И РАСЧЕТОВ///////////////////////////////////////////////
+    $(document).off('click.ga_filter_date').on('click.ga_filter_date', '.ga_requests_date_range .filter_date', function(event){
+        var the_byer = $(event.target).parents('.ga_byer_requests').attr('ga_byer');
+        var from = $(event.target).siblings('.from').val();
+        from = from.slice(6,10)+'-'+from.slice(3,5)+'-'+from.slice(0,2);
+
+        var to = $(event.target).siblings('.to').val();
+        to = to.slice(6,10)+'-'+to.slice(3,5)+'-'+to.slice(0,2);
+
+        console.log(the_byer);
+        console.log(from);
+        console.log(to);
+
+        if(from!='--' && to!='--'){
+            $.ajax({
+                url: 'mysql_giveaways.php',
+                method: 'POST',
+                data: {from:from, to:to, the_byer:the_byer},
+                success: function (data) {
+                    $('.ga_byer_requests[ga_byer='+the_byer+']').html(data);
+                },
+                complete: function(){
+                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Показаны заявки с "+from+" до " +to+ ".");
+                    $('.from,.to').datepicker({
+                        dateFormat: "dd-mm-yy",
+                        showButtonPanel: true,
+                        dayNames: [ "Воскресение", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота" ],
+                        dayNamesMin: [ "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб" ],
+                        dayNamesShort: [ "Вос", "Пон", "Втр", "Срд", "Чтв", "Пят", "Суб" ],
+                        monthNames: [ "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" ],
+                        monthNamesShort: [ "Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Нов", "Дек" ]
+                    });
                 }
             });
         }else{
@@ -129,6 +178,17 @@ $(document).ready(function(){
                         $('input.collapse_ga_byer[value = "X"]').css({'background': 'white', 'color': 'black','font-size' : '1em'}).val('W');
                         $(event.target).val('X').css({'background-color' : 'green','color' : 'white','font-size' : 30});
                         $(event.target).next('span').css({'font-size' : 30});
+                    },complete:function () {//Подключение дейтпикера
+                        $('.from,.to').datepicker({
+                            dateFormat: "dd-mm-yy",
+                            showButtonPanel: true,
+                            dayNames: [ "Воскресение", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота" ],
+                            dayNamesMin: [ "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб" ],
+                            dayNamesShort: [ "Вос", "Пон", "Втр", "Срд", "Чтв", "Пят", "Суб" ],
+                            monthNames: [ "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" ],
+                            monthNamesShort: [ "Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Нов", "Дек" ]
+                        });
+                        $('.from,.to').val('');
                     }
                 });
             }
@@ -148,6 +208,17 @@ $(document).ready(function(){
                     $('.ga_byer_requests[ga_byer='+the_byer+']').slideDown()/*.addClass('ga_widen')*/;
                     $(event.target).val('X').css({'background-color' : 'green','color' : 'white','font-size' : 30});
                     $(event.target).next('span').css({'font-size' : 30});
+                },complete:function () {//Подключение дейтпикера
+                    $('.from,.to').datepicker({
+                        dateFormat: "dd-mm-yy",
+                        showButtonPanel: true,
+                        dayNames: [ "Воскресение", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота" ],
+                        dayNamesMin: [ "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб" ],
+                        dayNamesShort: [ "Вос", "Пон", "Втр", "Срд", "Чтв", "Пят", "Суб" ],
+                        monthNames: [ "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" ],
+                        monthNamesShort: [ "Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Нов", "Дек" ]
+                    });
+                    $('.from,.to').val('');
                 }
             });
         }
@@ -186,6 +257,7 @@ $(document).ready(function(){
                 $('.ga_contents[ga_request='+the_request+'] .ga_c_positions').html(data.data2);
                 $('.ga_contents[ga_request='+the_request+'] .ga_c_giveaways').html(data.data3);
                 $('.ga_contents[ga_request='+the_request+'] .ga_options').html(data.data4);
+
             }
         });
     });
@@ -372,6 +444,15 @@ $(document).ready(function(){
     });
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $('.from,.to').datepicker({
+        dateFormat: "dd-mm-yy",
+        showButtonPanel: true,
+        dayNames: [ "Воскресение", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота" ],
+        dayNamesMin: [ "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб" ],
+        dayNamesShort: [ "Вос", "Пон", "Втр", "Срд", "Чтв", "Пят", "Суб" ],
+        monthNames: [ "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" ],
+        monthNamesShort: [ "Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Нов", "Дек" ]
+    });
 
     /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////

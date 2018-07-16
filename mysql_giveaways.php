@@ -6,16 +6,30 @@ include_once 'pdo_connect.php';
 if (isset($_POST['the_byer'])){
     try {
         $the_byer = $_POST['the_byer'];
-        $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE requests.byersid = ?");
+        if(isset($_POST['from']) && isset($_POST['to'])){
+            $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE requests.byersid = ? AND requests.created BETWEEN ? AND ?");
+            $from = $_POST['from'];
+            $to = $_POST['to'];
+
+            $from_norm = substr($from,8,2).'-'.substr($from,5,2).'-'.substr($from,0,4);
+            $to_norm = substr($to,8,2).'-'.substr($to,5,2).'-'.substr($to,0,4);
+        }else{
+            $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE requests.byersid = ?");
+        }
         $req_payments = $pdo->prepare("SELECT requests_id,payments_id,number,payed,sum,req_sum FROM requests LEFT JOIN payments ON requests.requests_id=payments.requestid WHERE requests_id = ? ORDER BY payed");
         $req_giveaways = $pdo->prepare("SELECT requests_id,given_away,giveaways_id,giveaway_sum FROM requests LEFT JOIN giveaways ON requests.requests_id=giveaways.requestid WHERE requests_id=? ORDER BY given_away");
         $req_countings = $pdo->prepare("SELECT requestid,req_positionid,winnerid,oh,firstoh,kol FROM req_positions LEFT JOIN pricings on winnerid=pricings.pricingid WHERE requestid=?");
         $pdo->beginTransaction();
-        $reqlist->execute(array($the_byer));
+        if(isset($_POST['from']) && isset($_POST['to'])){
+            $reqlist->execute(array($the_byer,$from,$to));
+        }else{
+            $reqlist->execute(array($the_byer));
+        }
         $pdo->commit();
 
-        $result="<div id='ga_requests_date_range'><span>Выберите временной интервал</span><br><input class='from' type='date'><input class='to' type='date'>
+        $result="<div class='ga_requests_date_range'><input class='from' size='10' placeholder='От'><input class='to' size='10' placeholder='До'>
 <input class='filter_date' type='button' value='Отобразить'></div>";
+        if(isset($_POST['from']) && isset($_POST['to'])){$result.="<span>Заявки за период c <b>".$from_norm."</b> по <b>".$to_norm."</b></span>.<br><br>";}
         $result.="<table><thead><tr><th>Дата</th><th>Номер заявки</th><th>Номер заказа в 1С</th><th>Название</th><th>Сумма заявки</th><th>Статус заявки</th></tr></thead><tbody>";
 
         foreach ($reqlist as $row){

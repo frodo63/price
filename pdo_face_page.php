@@ -75,8 +75,8 @@ echo "
           </div>
           <div id='requests_date_range'>
               <span>Выберите временной интервал</span><br>
-              <input class='from' type='date'>
-              <input class='to' type='date'>
+              <!--<input class='from' type='date'><input class='to' type='date'>-->
+              <input class='from' size='10' placeholder='От'><input class='to' size='10' placeholder='До'>
 
               <input class='filter_date' type='button' value='Отобразить'>
           </div>
