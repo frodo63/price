@@ -116,6 +116,73 @@ $(document).ready(function() {
     });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    //Удаление платежки из позиции. id берется из атрибута таргета.
+    $(document).off('click.paydel').on('click.paydel', '.delpayment', function (event) {
+        var delpaymentid = $(event.target).attr("pay_id"); //id расценки
+        var delpaymentrequest = $(event.target).attr("req_id"); //id расценки
+        console.log(delpaymentid+" "+delpaymentrequest);
+        if (confirm("Удалить платежку ?")) {
+            $.ajax({
+                url: 'mysql_delete.php',
+                method: 'POST',
+                data: {delpaymentid:delpaymentid},
+                success: function(){
+                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Платежка "+ delpaymentid +" удалена.");
+                },
+                complete: function() {
+                    $.ajax({
+                        url: 'mysql_giveaways.php',
+                        method: 'POST',
+                        dataType: 'json',
+                        cache: false,
+                        data: {the_request:delpaymentrequest},
+                        success: function (data) {
+                            $('.ga_contents[ga_request='+delpaymentrequest+'] .ga_c_payments').html(data.data1);
+                            $('.ga_contents[ga_request='+delpaymentrequest+'] .ga_c_positions').html(data.data2);
+                            $('.ga_contents[ga_request='+delpaymentrequest+'] .ga_c_giveaways').html(data.data3);
+                        }
+                    });
+                }
+            });
+        } else { alert("Фух... Понадобится еще.") }
+        return true;
+    });
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    //Удаление выдачи из позиции. id берется из атрибута таргета.
+    $(document).off('click.givedel').on('click.givedel', '.delgiveaway', function (event) {
+        var delgiveawayid = $(event.target).attr("give_id"); //id расценки
+        var delgiveawayrequest = $(event.target).attr("req_id"); //id расценки
+        if (confirm("Удалить выдачу ?")) {
+            $.ajax({
+                url: 'mysql_delete.php',
+                method: 'POST',
+                data: {delgiveawayid:delgiveawayid},
+                success: function(){
+                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Выдача "+ delgiveawayrequest +" удалена.");
+                },
+                complete: function() {
+                    $.ajax({
+                        url: 'mysql_giveaways.php',
+                        method: 'POST',
+                        dataType: 'json',
+                        cache: false,
+                        data: {the_request:delgiveawayrequest},
+                        success: function (data) {
+                            $('.ga_contents[ga_request='+delgiveawayrequest+'] .ga_c_payments').html(data.data1);
+                            $('.ga_contents[ga_request='+delgiveawayrequest+'] .ga_c_positions').html(data.data2);
+                            $('.ga_contents[ga_request='+delgiveawayrequest+'] .ga_c_giveaways').html(data.data3);
+                        }
+                    });
+                }
+            });
+        } else { alert("Фух... Понадобится еще.") }
+        return true;
+    });
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 //Добавление позиции в таблицу positions
     $(document).off('click.ap').on('click.ap', 'input.addpos', function(event){
         var reqid = $(event.target).attr("name");

@@ -412,6 +412,11 @@ tr[pricingid] td {border: 1px solid black}
 }
 .ga_byer_requests {
   display: none;
+  table{
+    text-align: center;
+    th:nth-child(4),td:nth-child(4){text-align: left}
+    th:nth-child(4){width: 25%}
+  }
 }
 
 .byer_req_list{

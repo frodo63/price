@@ -1,17 +1,30 @@
 <?php
 include_once 'pdo_connect.php';
 
+/*СПИСОК ЗАЯВОК В РАМКАХ ОДНОГО ПОКУПАТЕЛЯ///////////////////////////////////////////////////////*/
+
 if (isset($_POST['the_byer'])){
     try {
         $the_byer = $_POST['the_byer'];
-        $statement = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE requests.byersid = ?");
+        $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE requests.byersid = ?");
+        $req_payments = $pdo->prepare("SELECT requests_id,payments_id,number,payed,sum,req_sum FROM requests LEFT JOIN payments ON requests.requests_id=payments.requestid WHERE requests_id = ? ORDER BY payed");
+        $req_giveaways = $pdo->prepare("SELECT requests_id,given_away,giveaways_id,giveaway_sum FROM requests LEFT JOIN giveaways ON requests.requests_id=giveaways.requestid WHERE requests_id=? ORDER BY given_away");
+        $req_countings = $pdo->prepare("SELECT requestid,req_positionid,winnerid,oh,firstoh,kol FROM req_positions LEFT JOIN pricings on winnerid=pricings.pricingid WHERE requestid=?");
         $pdo->beginTransaction();
-        $statement->execute(array($the_byer));
+        $reqlist->execute(array($the_byer));
         $pdo->commit();
 
-        $result="<table><thead><tr><th>Дата</th><th>Номер заявки</th><th>Номер заказа в 1С</th><th>Название</th><th>Сумма заявки</th></tr></thead><tbody>";
+        $result="<table><thead><tr><th>Дата</th><th>Номер заявки</th><th>Номер заказа в 1С</th><th>Название</th><th>Сумма заявки</th><th>Статус заявки</th></tr></thead><tbody>";
 
-        foreach ($statement as $row){
+        foreach ($reqlist as $row){
+
+            /*Выполняем запросы*/
+            $pdo->beginTransaction();
+            $req_countings->execute(array($row['requests_id']));
+            $req_payments->execute(array($row['requests_id']));
+            $req_giveaways->execute(array($row['requests_id']));
+            $pdo->commit();
+
             $result.="<tr ga_request='". $row['requests_id'] ."'>";
             $result.="<td>".$row['created']."</td>";
             $result.="<td>".$row['requests_id']."</td>";
@@ -19,6 +32,52 @@ if (isset($_POST['the_byer'])){
             $result.="<td><input class='collapse_ga_request' ga_request='". $row['requests_id'] ."' type='button' value='W'><span>".$row['name']."</span>
 <div class='ga_contents' ga_request='". $row['requests_id'] ."'><div class='ga_c_payments'></div><div class='ga_c_positions'></div><div class='ga_c_giveaways'></div></div></td>";
             $result.="<td>".$row['req_sum']."</td>";
+
+            /*ПЕРЕМЕННЫЕ НА СТАТУС ЗАКАЗА*/
+            /*НА КАЖДЫЙ ЗАКАЗ У НА 4 ПЕРЕМЕННЫЕ*/
+            $req_sum=(int)$row['req_sum'];//Сумма заказа строку приводим к числу
+            $req_count = 0;//Начислено
+            $req_pay = 0;//Оплачено
+            $req_give = 0;//Отдано
+            /*Расчет общего количества начислений*/
+            foreach ($req_countings as $rc){
+                if ((int)$rc['oh'] == 0) {
+                    $onhands = (int)$rc['firstoh'];
+                } else {
+                    $onhands = (int)$rc['oh'];
+                };
+                $req_count+=(int)$onhands * (int)$rc['kol'];
+            }
+            /**/
+            /*Расчет общего количества оплат*/
+            foreach ($req_payments as $rp){
+                $req_pay+=(int)$rp['sum'];
+            }
+            /**/
+            /*Расчет общего количества выдач*/
+            foreach ($req_giveaways as $rg){
+                $req_give+=(int)$rg['giveaway_sum'];
+            }
+            /**/
+
+            /*Подготовка переходных переменных*/
+            $req_pay_ostatok = (int)$req_sum - (int)$req_pay;//Остаток к оплате
+            $req_give_ostatok = (int)$req_count - (int)$req_give;
+
+            /**/
+
+            /*УСЛОВИЯ ПО СТАТУСУ ЗАКАЗА*/
+            if((int)$req_sum == (int)$req_pay && (int)$req_sum !=0 && (int)$req_pay !=0){
+                $result .="<td>Заказ оплачен полностью. К выдаче: ".$req_give_ostatok.".</td>";
+            }elseif ((int)$req_sum == 0){
+                $result .="<td>Сумма заказа не определена. Назначьте победителя.</td>";
+            }elseif ((int)$req_pay == 0){
+                $result .="<td>Оплат еще не поступало.</td>";
+            }else{
+                $result .="<td>Заказ оплачен не полностью. К оплате :".$req_pay_ostatok."</td>";
+                }
+            //$result .="<td>Сумма заказа : ".$req_sum.". Оплата : ".$req_pay.". Начислено : ".$req_count.". Выдано : ".$req_give.".</td>";
+            /**/
         };
 
         $result.="</tr></tbody></table>";
@@ -31,6 +90,10 @@ if (isset($_POST['the_byer'])){
 
 };
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*СПИСОК ПЛАТЕЖЕЙ, НАЧИСЛЕНИЙ И ВЫДАЧ В РАМКАХ ОДНОЙ ЗАЯВКИ///////////////////////////////////////////////////////*/
+
 if (isset($_POST['the_request'])){
     try {
         $the_request = $_POST['the_request'];
@@ -38,7 +101,7 @@ if (isset($_POST['the_request'])){
 
         $get_payments = $pdo->prepare("SELECT payed,payments_id,number,sum,requestid FROM `payments` WHERE requestid=?");
         $get_positions = $pdo->prepare("SELECT name, kol, oh, firstoh FROM (SELECT * FROM (SELECT trades_id,name FROM trades LEFT JOIN allnames ON trades_nameid=nameid) AS a LEFT JOIN pricings ON a.trades_id=tradeid) AS b left join req_positions on b.pricingid=req_positions.winnerid WHERE req_positions.requestid=?");
-        $get_giveaways = $pdo->prepare("SELECT given_away,comment,giveaway_sum FROM `giveaways` WHERE requestid=?");
+        $get_giveaways = $pdo->prepare("SELECT giveaways_id,requestid,given_away,comment,giveaway_sum FROM `giveaways` WHERE requestid=?");
 
         $pdo->beginTransaction();
         $get_payments->execute(array($the_request));
@@ -49,9 +112,9 @@ if (isset($_POST['the_request'])){
         $result1="<input class='add_payment' requestid='".$the_request."' type='button' value='Добавить платежку'><br>";
         if($get_payments->rowCount() == 0) {$result1 .= "Ничего еще не оплачено.";
         }else {
-            $result1.="<h2>Платежи</h2><table><thead><tr><th>Дата</th><th>Номер п/п</th><th>Сумма платежки</th></tr></thead><tbody>";
+            $result1.="<h2>Платежи</h2><table><thead><tr><th>Дата</th><th>Номер п/п</th><th>Сумма платежки</th><th></th></tr></thead><tbody>";
             foreach ($get_payments as $row) {
-                $result1 .= "<tr><td>" . $row['payed'] . "</td><td>" . $row['number'] . "</td><td>" . $row['sum'] . "</td></tr>";
+                $result1 .= "<tr><td>" . $row['payed'] . "</td><td>" . $row['number'] . "</td><td>" . $row['sum'] . "</td><td><input class='delpayment' type='button' value='X' pay_id='".$row['payments_id']."' req_id='".$row['requestid']."'></td></tr>";
             };
             $result1 .= "</tbody></table>";
         };
@@ -76,9 +139,9 @@ if (isset($_POST['the_request'])){
         $result3="<input class='add_giveaway' requestid='".$the_request."' type='button' value='Добавить выдачу'><br>";
         if($get_giveaways->rowCount() == 0) {$result3 .= "Ничего еще не выдано.";
         }else {
-            $result3.="<h2>Выдачи</h2><table><thead><tr><th>Дата</th><th>Комментарий</th><th>Сумма</th></tr></thead><tbody>";
+            $result3.="<h2>Выдачи</h2><table><thead><tr><th>Дата</th><th>Комментарий</th><th>Сумма</th><th></th></tr></thead><tbody>";
             foreach ($get_giveaways as $row) {
-                $result3 .= "<tr><td>" . $row['given_away'] . "</td><td>" . $row['comment'] . "</td><td>" . $row['giveaway_sum'] . "</td></tr>";
+                $result3 .= "<tr><td>" . $row['given_away'] . "</td><td>" . $row['comment'] . "</td><td>" . $row['giveaway_sum'] . "</td><td><input class='delgiveaway' type='button' value='X' give_id='".$row['giveaways_id']."' req_id='".$row['requestid']."'></td></tr>";
             };
             $result3 .= "</tbody></table>";
         };
@@ -91,3 +154,5 @@ if (isset($_POST['the_request'])){
     };
 
 };
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

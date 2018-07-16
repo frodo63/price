@@ -110,7 +110,47 @@ function deletepricing($pdo,$delpricingid)
         }
 };
 
+/*///УДАЛЕНИЕ РАСЦЕНКИ*/
 
 
+/*УДАЛЕНИЕ ПЛАТЕЖКИ*/
+if(isset($_POST['delpaymentid']))
+{
+    $delpaymentid = $_POST['delpaymentid'];
+    deletepayment($pdo, $delpaymentid);
+};
+function deletepayment($pdo,$delpaymentid)
+{
+    $statement = $pdo->prepare("DELETE FROM `payments` WHERE `payments_id` = ?");
+    try{
+        $pdo->beginTransaction();
+        $statement->execute(array($delpaymentid));
+        $pdo->commit();
+    } catch(PDOExecption $e) {
+        $pdo->rollback();
+        print "Error!: " . $e->getMessage() . "</br>";
+    }
+};
 
-/*///УДАЛАНИЕ РАСЦЕНКИ*/
+/*///УДАЛЕНИЕ ПЛАТЕЖКИ*/
+
+/*УДАЛЕНИЕ ВЫДАЧИ*/
+if(isset($_POST['delgiveawayid']))
+{
+    $delgiveawayid = $_POST['delgiveawayid'];
+    deletegiveaway($pdo, $delgiveawayid);
+};
+function deletegiveaway($pdo,$delgiveawayid)
+{
+    $statement = $pdo->prepare("DELETE FROM `giveaways` WHERE `giveaways_id` = ?");
+    try{
+        $pdo->beginTransaction();
+        $statement->execute(array($delgiveawayid));
+        $pdo->commit();
+    } catch(PDOExecption $e) {
+        $pdo->rollback();
+        print "Error!: " . $e->getMessage() . "</br>";
+    }
+};
+
+/*///УДАЛЕНИЕ ВЫДАЧИ*/
