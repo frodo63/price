@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Июл 16 2018 г., 20:30
+-- Время создания: Июл 16 2018 г., 21:25
 -- Версия сервера: 5.7.22-0ubuntu0.16.04.1
 -- Версия PHP: 7.0.30-0ubuntu0.16.04.1
 
@@ -455,7 +455,9 @@ INSERT INTO `allnames` (`nameid`, `name`) VALUES
 (580, 'Антифриз G-12 красный МиГ (10кг)'),
 (581, 'АТФ'),
 (582, 'Mobil ATF 220 Dexron II (20л)'),
-(583, 'Развитие');
+(583, 'Развитие'),
+(600, '123123213'),
+(601, '31231');
 
 -- --------------------------------------------------------
 
@@ -690,7 +692,7 @@ INSERT INTO `pricings` (`pricingid`, `positionid`, `byerid`, `tradeid`, `selleri
 (192, 200, 0, 39, 47, 95, 2000, 8, 1.5, 0, 19.58, 5.89, 20.1674, 7.25456, 10, 0.72, 6.53, 0, 0, 0, 0, 0, 0, 5.00683, 0, 0, 130.422, 15.0012, 1),
 (194, 218, 0, 73, 49, 1193, 20, 275, 1.5, 0, 19.58, 5.89, 287.434, 103.395, 10, 10.34, 93.06, 0, 0, 0, 0, 0, 0, 5.00638, 0, 0, 1858.83, 14.9991, 1),
 (195, 199, 0, 38, 50, 69, 500, 8, 1.5, 0, 19.58, 5.89, 15.0766, 5.42331, 10, 0.54, 4.88, 0, 0, 0, 0, 0, 0, 5.00513, 0, 0, 97.4999, 15.0027, 1),
-(196, 241, 0, 74, 51, 7500, 3, 1725, 0.99, 1, 21.12, 5, 0, 0, 10, 55.87, 0, 7500, 2500, 1917, 77, 583, 23, 4.48, 10, 525, 11725, 16.026, 0),
+(196, 241, 0, 74, 51, 7500, 3, 1725, 0.99, 1, 21.12, 5, 0, 0, 10, 55.87, 0, 7500, 2500, 1917, 77, 583, 23, 4.48, 10, 525, 11725, 16.026, 1),
 (197, 218, 0, 50, 52, 2600, 20, 200, 2, 0, 25, 5.89, 700, 206.15, 10, 10.91, 185.53, 0, 0, 0, 0, 0, 0, 5.006, 0, 0, 3706.15, 18.132, 0),
 (198, 220, 0, 52, 52, 7800, 10, 200, 2, 0, 25, 5.89, 2000, 589, 10, 58.9, 530.1, 0, 0, 0, 0, 0, 0, 5.00614, 10, 0, 10589, 18.132, 0),
 (199, 198, 0, 37, 53, 44500, 3, 800, 1.5, 0, 26.17, 5.89, 11855, 3366.43, 10, 336.64, 3029.79, 0, 0, 0, 0, 0, 0, 5.00614, 0, 0, 60521.4, 19.0005, 0),
@@ -1028,14 +1030,14 @@ INSERT INTO `pricings` (`pricingid`, `positionid`, `byerid`, `tradeid`, `selleri
 --
 
 CREATE TABLE `requests` (
-  `created` date DEFAULT NULL,
+  `created` date NOT NULL,
   `requests_id` mediumint(5) UNSIGNED NOT NULL,
   `req_comment` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `requests_nameid` mediumint(8) UNSIGNED NOT NULL,
-  `req_rent` float UNSIGNED NOT NULL DEFAULT '0',
+  `req_rent` float UNSIGNED DEFAULT '0',
   `byersid` smallint(5) UNSIGNED NOT NULL,
   `payment` tinyint(1) DEFAULT NULL,
-  `req_sum` int(11) NOT NULL,
+  `req_sum` int(11) DEFAULT NULL,
   `1c_num` int(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1044,14 +1046,14 @@ CREATE TABLE `requests` (
 --
 
 INSERT INTO `requests` (`created`, `requests_id`, `req_comment`, `requests_nameid`, `req_rent`, `byersid`, `payment`, `req_sum`, `1c_num`) VALUES
-('2018-01-01', 25, NULL, 168, 18.36, 46, NULL, 4402, NULL),
+('2018-01-02', 25, NULL, 168, 18.36, 46, NULL, 4402, NULL),
 ('2018-01-01', 26, NULL, 171, 20.08, 51, NULL, 1301050, NULL),
 ('2018-01-01', 27, NULL, 185, 23.0769, 52, NULL, 0, NULL),
 ('2018-01-01', 45, NULL, 208, 19.35, 45, NULL, 31620, NULL),
 ('2018-01-01', 47, NULL, 245, 18.0843, 53, NULL, 0, NULL),
 ('2018-01-01', 48, NULL, 251, 20.34, 42, NULL, 35250, 123),
 ('2018-01-01', 49, NULL, 255, 4.11358, 43, NULL, 0, NULL),
-('2018-01-01', 50, NULL, 274, 0, 54, NULL, 0, NULL),
+('2018-01-01', 50, NULL, 274, 16.35, 54, NULL, 35175, NULL),
 ('2018-01-01', 51, NULL, 293, 11.82, 46, NULL, 16127, NULL),
 ('2018-01-01', 52, NULL, 298, 0, 55, NULL, 0, NULL),
 ('2018-01-01', 53, NULL, 306, 0, 57, NULL, 0, NULL),
@@ -1111,7 +1113,9 @@ INSERT INTO `requests` (`created`, `requests_id`, `req_comment`, `requests_namei
 ('2018-01-01', 110, NULL, 574, 38.65, 42, NULL, 15795, NULL),
 ('2018-01-01', 111, NULL, 575, 17.61, 42, NULL, 40350, NULL),
 ('2018-01-01', 113, NULL, 577, 12.93, 46, NULL, 35275, NULL),
-('2018-01-01', 114, NULL, 581, 15.09, 52, NULL, 15200, 228);
+('2018-01-01', 114, NULL, 581, 15.09, 52, NULL, 15200, 228),
+('2018-07-16', 117, NULL, 600, 0, 45, NULL, NULL, NULL),
+('2018-07-16', 118, NULL, 601, 0, 53, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1174,7 +1178,7 @@ INSERT INTO `req_positions` (`req_positionid`, `pos_name`, `winnerid`, `requesti
 (238, '100 шт - Смазка ОКБ-122-7 (0,75 кг) ', 203, 47, NULL),
 (239, 'Масло индустриальное И-12 (бочка) - 3шт', 156, 48, NULL),
 (240, '2 бочки И-20', 160, 49, NULL),
-(241, 'Масло индустриальное ИГП-49', 0, 50, NULL),
+(241, 'Масло индустриальное ИГП-49', 196, 50, NULL),
 (242, 'Mobilgear 600 XP 460 (20л)', 279, 51, NULL),
 (243, 'Bechem Berulub FB 34 (0,4 кг)', 0, 52, NULL),
 (244, 'Bechem Berulub W+B Spray (0,4 кг)', 0, 52, NULL),
@@ -1777,7 +1781,7 @@ ALTER TABLE `trades`
 -- AUTO_INCREMENT для таблицы `allnames`
 --
 ALTER TABLE `allnames`
-  MODIFY `nameid` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=584;
+  MODIFY `nameid` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=602;
 --
 -- AUTO_INCREMENT для таблицы `byers`
 --
@@ -1802,7 +1806,7 @@ ALTER TABLE `pricings`
 -- AUTO_INCREMENT для таблицы `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `requests_id` mediumint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `requests_id` mediumint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 --
 -- AUTO_INCREMENT для таблицы `req_positions`
 --
