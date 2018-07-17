@@ -259,3 +259,34 @@ if(
     }
 };
 /**/
+
+
+/*РЕДАКТИРОВАНИЕ Даты заявки*/
+
+if(
+
+    isset($_POST["reqid"]) && isset($_POST["newdate"])
+)
+{
+    $reqid = ($_POST["reqid"]);
+    $newdate = ($_POST["newdate"]);
+
+    try{
+
+        $sql = "UPDATE requests SET created = :created WHERE requests_id = :reqid";
+        $statement = $pdo->prepare($sql);
+
+        $statement->bindValue(':reqid', $reqid);
+        $statement->bindValue(':created', $newdate);
+
+        $pdo->beginTransaction();
+        $statement->execute();
+        $pdo->commit();
+
+        echo "<p>Дата заявки обновлена</p>";
+    } catch(PDOExecption $e) {
+        $pdo->rollback();
+        print "Error!: " . $e->getMessage() . "</br>";
+    }
+};
+/**/

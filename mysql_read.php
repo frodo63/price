@@ -79,16 +79,17 @@ if(isset($_POST['table'])){
     /**//////////////////////////////////////////////////////////////ЧТЕНИЕ ПОКУПАТЕЛИ/ПОСТАВЩИКИ/ТОВАРЫ
         try {
 
-            $statement = $pdo->prepare("SELECT name, nameid, clearp, obnal, wtime  FROM $table  LEFT JOIN `allnames` ON allnames.nameid=$table.$tablenid GROUP BY name");
+            $statement = $pdo->prepare("SELECT name, byers_id, nameid, clearp, obnal, wtime, comment  FROM $table  LEFT JOIN `allnames` ON allnames.nameid=$table.$tablenid GROUP BY name");
             $statement->execute();
-            $result = "<table><thead><tr><th>Покупатель</th><th>%</th><th>Обн</th><th>Отсрочка</th><th>Опции</th></tr></thead>";
+            $result = "<table><thead><tr><th>Покупатель</th><th>%</th><th>Обн</th><th>Отсрочка</th><th>Коммент</th><th>Опции</th></tr></thead>";
             foreach ($statement as $row)
             {
                 $result .= "<tr><td category='" . $table . "' name =" . $row['nameid'] . ">";
-                $result .= "<span class='name' name =" . $row['nameid'] . ">" . $row['name'] . "</span></td>
-                                <td class='clearp'><span contenteditable='false'>" . $row['clearp'] . "<span/></td>
-                                <td class='obnal'><span contenteditable='false'>" . $row['obnal'] . "<span/></td>
-                                <td class='wtime'><span contenteditable='false'>" . $row['wtime'] . "<span/></td>
+                $result .= "<span class='name' byerid=" . $row['byers_id'] . " name =" . $row['nameid'] . ">" . $row['name'] . "</span></td>
+                                <td class='clearp'><span>" . $row['clearp'] . "<span/></td>
+                                <td class='obnal'><span>" . $row['obnal'] . "<span/></td>
+                                <td class='wtime'><span>" . $row['wtime'] . "<span/></td>
+                                <td class='comment'><span>" . $row['comment'] . "<span/></td>
                 <td class = 'item_buttons'>
          <input type='button' name =" . $row['nameid'] . " value='R' class='edit'>
          <input type='button' name =" . $row['nameid'] . " value='X' class='delete'></td></tr>";

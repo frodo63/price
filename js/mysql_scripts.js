@@ -288,6 +288,7 @@ $(document).ready(function(){
         $('#edit_1c_num').toggleClass('come_here', 1000);
         $('#edit_1c_num>input[name=1]').val('');//Стираем все данные
         $('#button_edit_1c_num').attr('requestid',''+$(event.target).attr('requestid')+'');//Добавляем в кнопку
+        $('#button_edit_created').attr('requestid',''+$(event.target).attr('requestid')+'');//Добавляем в кнопку
     });
 
     /*ЗАКРЫТИЕ ОКНА ДОБАВЛЕНИЯ*/////////////////////////////////////////////////////////////////////////////////////////
@@ -312,6 +313,7 @@ $(document).ready(function(){
         $('#edit_1c_num').toggleClass('come_here', 1000);
         $('#add_giveaway>input[name=1]').val('');//Стираем все данные
         $('#button_edit_1c_num').attr('requestid','xxx');//Стираем номер заявки из кнопки добавления
+        $('#button_edit_created').attr('requestid','xxx');//Стираем номер заявки из кнопки добавления
     });
 
     /*Проверка числовых значений*//////////////////////////////////////////////////////////////////////////////////////////////////
@@ -444,7 +446,45 @@ $(document).ready(function(){
     });
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    $('.from,.to').datepicker({
+
+    //ИЗМЕНЕНИЕ ДАТЫ ЗАЯВКИ/////////////////////////////////////////////////////////////////////////////////////////////
+    $(document).off('click.edit_created').on('click.edit_created', '#button_edit_created', function(event){
+        var reqid = $(event.target).attr("requestid");
+        /*Данные для заполнения выдачи*/
+        var newdate = $('#add_created').val();
+        console.log(newdate);
+        newdate = newdate.slice(6,10)+'-'+newdate.slice(3,5)+'-'+newdate.slice(0,2);
+        console.log(newdate);
+        /*//////////////////////////////*/
+        $.ajax({
+            url: 'mysql_save.php',
+            method: 'POST',
+            data: {reqid:reqid, newdate:newdate},
+            success: function (data) {
+                $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+            }, complete: function () {
+                $.ajax({
+                    url: 'mysql_giveaways.php',
+                    method: 'POST',
+                    dataType: 'json',
+                    cache: false,
+                    data: {the_request:reqid},
+                    success: function (data) {
+                        $('.ga_contents[ga_request='+reqid+'] .ga_c_payments').html(data.data1);
+                        $('.ga_contents[ga_request='+reqid+'] .ga_c_positions').html(data.data2);
+                        $('.ga_contents[ga_request='+reqid+'] .ga_c_giveaways').html(data.data3);
+                        $('.ga_contents[ga_request='+reqid+'] .ga_options').html(data.data4);
+                        //$('#edit_1c_num').toggleClass('come_here');
+                    }
+                });
+            }
+        });
+    });
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /////////////////
+    $('.from,.to,#add_created').datepicker({
         dateFormat: "dd-mm-yy",
         showButtonPanel: true,
         dayNames: [ "Воскресение", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота" ],

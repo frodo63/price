@@ -709,7 +709,7 @@ tr[pricingid] td {
 }
 
 /* line 417, ../sass/_mysql_styles.scss */
-#button_add_giveaway, #button_add_payment, #button_edit_1c_num {
+#button_add_giveaway, #button_add_payment {
   position: absolute;
   bottom: 10px;
   right: 10px;
@@ -788,6 +788,12 @@ tr[pricingid] td {
   margin: 3vh 0;
   border-bottom: 1px solid black;
   padding-bottom: 3vh;
+}
+
+/*Список покупателей*/
+/* line 474, ../sass/_mysql_styles.scss */
+.byers_list table {
+  text-align: center;
 }
 
 /* line 1, ../sass/_price.scss */

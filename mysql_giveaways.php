@@ -164,9 +164,11 @@ if (isset($_POST['the_request'])){
             $result3 .= "</tbody></table>";
         };
 
-        $result4="<input type='button' class='edit_1c_num' requestid='".$the_request."' value='Номер в 1C'><br>";
+        $result4="<input type='button' class='edit_1c_num' requestid='".$the_request."' value='Номер в 1C и Дата'><br>";
         foreach($get_req_info as $row){
-            $result4 .= "<h2>Заказ от ".$row['created']." на сумму ".$row['req_sum'].". Номер в 1С: ".$row['1c_num']." </h2>";
+            $phpdate = strtotime( $row['created'] );
+            $mysqldate = date( 'd.m.y', $phpdate );
+            $result4 .= "<h2>Заказ от ".$mysqldate." на сумму ".$row['req_sum'].". Номер в 1С: ".$row['1c_num']." </h2>";
         }
 
 
