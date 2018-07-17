@@ -31,42 +31,38 @@ if(
     isset($_POST["positionid"])
 )
 {
-    $positionid = ($_POST["positionid"]);
-    $trade = ($_POST["trade"]);
-    $seller = ($_POST["seller"]);
-    $zak = ($_POST["zak"]);
-    $kol = ($_POST["kol"]);
-    $tzr = ($_POST["tzr"]);
-    $wtime = ($_POST["wtime"]);
-    $fixed = ($_POST["fixed"]);
-    $op = ($_POST["op"]);
-    $tp = ($_POST["tp"]);
-    $opr = ($_POST["opr"]);
-    $tpr = ($_POST["tpr"]);
-    $firstobp = ($_POST["firstobp"]);
-    $firstoh = ($_POST["firstoh"]);
-    $firstobpr = ($_POST["firstobpr"]);
-    $marge = ($_POST["marge"]);
-    $margek = ($_POST["margek"]);
-    $rop = ($_POST["rop"]);
-    $realop = ($_POST["realop"]);
-    $rtp = ($_POST["rtp"]);
-    $realtp = ($_POST["realtp"]);
-    $clearp = ($_POST["clearp"]);
-    $obp = ($_POST["obp"]);
-    $oh = ($_POST["oh"]);
-    $price = ($_POST["price"]);
-    $rent = ($_POST["rent"]);
+    $positionid = (int)($_POST["positionid"]);
+    $trade = (int)($_POST["trade"]);
+    $seller = (int)($_POST["seller"]);
+    $zak = (int)($_POST["zak"]);
+    $kol = (int)($_POST["kol"]);
+    $tzr = (int)($_POST["tzr"]);
+    $wtime = (int)($_POST["wtime"]);
+    $fixed = (int)($_POST["fixed"]);
+    $op = (int)($_POST["op"]);
+    $tp = (int)($_POST["tp"]);
+    $opr = (int)($_POST["opr"]);
+    $tpr = (int)($_POST["tpr"]);
+    $firstobp = (int)($_POST["firstobp"]);
+    $firstoh = (int)($_POST["firstoh"]);
+    $firstobpr = (int)($_POST["firstobpr"]);
+    $marge = (int)($_POST["marge"]);
+    $margek = (int)($_POST["margek"]);
+    $rop = (int)($_POST["rop"]);
+    $realop = (int)($_POST["realop"]);
+    $rtp = (int)($_POST["rtp"]);
+    $realtp = (int)($_POST["realtp"]);
+    $clearp = (int)($_POST["clearp"]);
+    $obp = (int)($_POST["obp"]);
+    $oh = (int)($_POST["oh"]);
+    $price = (int)($_POST["price"]);
+    $rent = (int)($_POST["rent"]);
 
     try{
-
         $sql = "INSERT INTO pricings(
-        positionid, tradeid,sellerid,zak,kol,tzr,wtime,fixed,op,tp,opr,tpr,firstobp,firstobpr,firstoh,marge,margek,rop,realop,rtp,realtp,clearp,obp,oh,price,rent)
-        VALUES(
-        :positionid,:trade,:seller,:zak,:kol,:tzr,:wtime,:fixed,:op,:tp,:opr,:tpr,:firstobp,:firstobpr,:firstoh,:marge,:margek,:rop,:realop,:rtp,:realtp,:clearp,:obp,:oh,:price,:rent
-        )";
+        positionid,tradeid,sellerid,zak,kol,tzr,wtime,fixed,op,tp,opr,tpr,firstobp,firstobpr,firstoh,marge,margek,rop,realop,rtp,realtp,clearp,obp,oh,price,rent)
+        VALUES(:positionid,:trade,:seller,:zak,:kol,:tzr,:wtime,:fixed,:op,:tp,:opr,:tpr,:firstobp,:firstobpr,:firstoh,:marge,:margek,:rop,:realop,:rtp,:realtp,:clearp,:obp,:oh,:price,:rent)";
         $statement = $pdo->prepare($sql);
-
         $statement->bindValue(':positionid', $positionid);
         $statement->bindValue(':trade', $trade);
         $statement->bindValue(':seller', $seller);
@@ -97,10 +93,10 @@ if(
         $statement->execute();
         $pdo->commit();
 
-        echo "<p>Расценка добавлена</p>";
-    } catch(PDOExecption $e) {
-        $pdo->rollback();
-        print "Error!: " . $e->getMessage() . "</br>";
+       echo "<p>Расценка добавлена</p>";
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
 };
 
@@ -136,32 +132,32 @@ if(
     isset($_POST["pricingid"])
 )
 {
-    $pricingid = ($_POST["pricingid"]);
-    $trade = ($_POST["trade"]);
-    $seller = ($_POST["seller"]);
-    $zak = ($_POST["zak"]);
-    $kol = ($_POST["kol"]);
-    $tzr = ($_POST["tzr"]);
-    $wtime = ($_POST["wtime"]);
-    $fixed = ($_POST["fixed"]);
-    $op = ($_POST["op"]);
-    $tp = ($_POST["tp"]);
-    $opr = ($_POST["opr"]);
-    $tpr = ($_POST["tpr"]);
-    $firstobp = ($_POST["firstobp"]);
-    $firstoh = ($_POST["firstoh"]);
-    $firstobpr = ($_POST["firstobpr"]);
-    $marge = ($_POST["marge"]);
-    $margek = ($_POST["margek"]);
-    $rop = ($_POST["rop"]);
-    $realop = ($_POST["realop"]);
-    $rtp = ($_POST["rtp"]);
-    $realtp = ($_POST["realtp"]);
-    $clearp = ($_POST["clearp"]);
-    $obp = ($_POST["obp"]);
-    $oh = ($_POST["oh"]);
-    $price = ($_POST["price"]);
-    $rent = ($_POST["rent"]);
+    $pricingid = (int)($_POST["pricingid"]);
+    $trade = (int)($_POST["trade"]);
+    $seller = (int)($_POST["seller"]);
+    $zak = (int)($_POST["zak"]);
+    $kol = (int)($_POST["kol"]);
+    $tzr = (int)($_POST["tzr"]);
+    $wtime = (int)($_POST["wtime"]);
+    $fixed = (int)($_POST["fixed"]);
+    $op = (int)($_POST["op"]);
+    $tp = (int)($_POST["tp"]);
+    $opr = (int)($_POST["opr"]);
+    $tpr = (int)($_POST["tpr"]);
+    $firstobp = (int)($_POST["firstobp"]);
+    $firstoh = (int)($_POST["firstoh"]);
+    $firstobpr = (int)($_POST["firstobpr"]);
+    $marge = (int)($_POST["marge"]);
+    $margek = (int)($_POST["margek"]);
+    $rop = (int)($_POST["rop"]);
+    $realop = (int)($_POST["realop"]);
+    $rtp = (int)($_POST["rtp"]);
+    $realtp = (int)($_POST["realtp"]);
+    $clearp = (int)($_POST["clearp"]);
+    $obp = (int)($_POST["obp"]);
+    $oh = (int)($_POST["oh"]);
+    $price = (int)($_POST["price"]);
+    $rent = (int)($_POST["rent"]);
 
     try{
 
@@ -224,9 +220,9 @@ if(
         $pdo->commit();
 
         echo "<p>Расценка " . $pricingid . " обновлена</p>";
-    } catch(PDOExecption $e) {
-        $pdo->rollback();
-        print "Error!: " . $e->getMessage() . "</br>";
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
 };
 
@@ -253,9 +249,9 @@ if(
         $pdo->commit();
 
         echo "<p>Номер заказа в 1С обновлен</p>";
-    } catch(PDOExecption $e) {
-        $pdo->rollback();
-        print "Error!: " . $e->getMessage() . "</br>";
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
 };
 /**/
@@ -284,9 +280,9 @@ if(
         $pdo->commit();
 
         echo "<p>Дата заявки обновлена</p>";
-    } catch(PDOExecption $e) {
-        $pdo->rollback();
-        print "Error!: " . $e->getMessage() . "</br>";
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
 };
 /**/

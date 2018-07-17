@@ -193,8 +193,8 @@ $(document).ready(function(){
             var rop = Number(Number($('#rop').val()).toFixed(1));   //НАМ р
             var rtp = Number(Number($('#rtp').val()).toFixed(1));   //ИМ р
             var oh = Number($('#oh').text());
-            var marge = Number($('#marge').text());
-            var margek = Number($('#margek').text());
+            var marge = Number(Number($('#marge').text()).toFixed(0));
+            var margek = Number(Number($('#margek').text()).toFixed(0));
             var realop = ((rop / margek)*100).toFixed(0);
             var realtp = Number(((rtp / margek)*100).toFixed(0));
             var obp = Number(Number($('#obp').val()).toFixed(1));
@@ -273,13 +273,13 @@ $(document).ready(function(){
             event.preventDefault();//Если эту херню не поставить, аякс-запрос будет постоянно отменяться (status=cancelled). Потому что у кнопки сейв был тайп = сабмит. Нужно
             // было ллибо его убрить, изменить на буттон, либо превент дефолт. ПОэтому отправлялся неполный формдата, который составляет как раз результат .serialize
                 if (
-
                     $('#trade').val() != "" &&
                     $('#seller').val() != ""
                     )
                 {
                  var positionID = $('#pricingwindow').attr('positionid');
                  var pricingID = $('#pricingwindow').attr('pricingid');
+
                  var formData =
                      '&trade=' + $('#trade').attr('trade_id') +
                      '&seller=' + $('#seller').attr('seller_id') +
