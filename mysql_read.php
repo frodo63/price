@@ -22,14 +22,13 @@ if(isset($_POST['table'])){
                             </li>";            }
             $result .= "</ul>";
             print $result;
-        } catch (PDOExecption $e) {
-        $pdo->rollback();
-        print "Error!: " . $e->getMessage() . "</br>";
+        } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
         /**//////////////////////////////////////////////////////////////ЧТЕНИЕ СПИСКА ЗАЯВОК
     } else if ($table == 'requests') {
         try {
-
             $statement = $pdo->prepare("SELECT 
                                         a.created AS req_date,
                                         a.requests_id AS req_id,
@@ -37,43 +36,53 @@ if(isset($_POST['table'])){
                                         a.name AS req_name,
                                         a.req_rent AS rent,
                                         a.req_sum AS sum,
+                                        a.1c_num AS 1c_num,
                                         b.byers_id AS b_id,
                                         b.byers_nameid AS b_nameid,
                                         b.name AS b_name
                                         FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
                                         ORDER BY `b`.`name` ASC");
             $statement->execute();
-            $result = "<table><thead><tr><th>Дата</th><th>№ Заказа</th><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Сумма</th><th></th></tr></thead>";
-            foreach ($statement as $row) {$result .= "<tr requestid =" . $row['req_id'] . ">
-            <td class='req_date'><span>" . $row['req_date'] . "</span></td>
+
+            $result .= "<table><thead><tr><th>Дата</th><th>№ Заказа</th><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Сумма</th><th></th></tr></thead>";
+            foreach ($statement as $row) {
+
+                /*Заголовок заказа////////////////////////////////////////////////////////////////////////////////////////////////*/
+                $phpdate = strtotime( $row['req_date'] );
+                $mysqldate = date( 'd.m.y', $phpdate );
+                /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+                $result .= "<tr requestid =" . $row['req_id'] . ">
+            <td class='req_date'><span>" . $mysqldate . "</span></td>
             <td class='req_id'><span>" . $row['req_id'] . "</span></td>
             <td byerid=" . $row['b_id'] . " name=" . $row['b_nameid'] . "><span>". $row['b_name'] ."</span></td>
-            <td category='requests' name =" . $row['req_nameid'] . "><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='W' class='collapse'>Наименование заказа: <span class='name'> \"" . $row['req_name'] . "\" </span>
+            <td category='requests' name =" . $row['req_nameid'] . "><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='W' class='collapse'><span class='name'>" . $row['req_name'] . "</span>
             
-            <div id=" . $row['req_nameid'] . " class='contents'> 
-            <div class='rentcount'></div>           
-            <div class='positions'></div>
-            
-            <input type='button' class='add_pos' value='+позиция'>
-            <div class='add-pos-inputs'>
-            <input type='text' class='trade' name='new_req_name' placeholder='Название позиции' size='50'>
-            <div class='sres'></div>
-            <input type='button' name =" . $row['req_id'] . " value='Добавить' class='addpos'>
+            <div id=" . $row['req_nameid'] . " class='contents'>
+                <h3 class='req_header_".$row['req_id']."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму ".$row['sum'].". Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h3/><br>
+                <input type='button' class='edit_1c_num' value='Номер в 1С и дата' requestid='".$row['req_id']."'>
+                <input type='button' class='add_pos' value='+позиция'>
+                <div class='add-pos-inputs'>
+                <input type='text' class='trade' name='new_req_name' placeholder='Название позиции' size='50'>
+                <div class='sres'></div>
+                <input type='button' name =" . $row['req_id'] . " value='Добавить' class='addpos'>
             </div>
             
+            <div class='positions'></div>
+            <div class='rentcount'></div>            
             </td>
                 <td class = 'rent_whole'>".number_format($row['rent'], 2, '.', ' ')."</td>
                 <td class = 'sum_whole'>" .number_format($row['sum'], 2, '.', ' '). "</td>
             <td class = 'req_buttons'><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='R' class='edit'>
          <input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='X' class='delete'></td></tr>";
             }
-            $result .= "</table><!--<script src='js/mysql_edc.js'></script>-->";
+            $result .= "</table>";
             print $result;
 
 
-        } catch (PDOExecption $e) {
-            $pdo->rollback();
-            print "Error!: " . $e->getMessage() . "</br>";
+        } catch( PDOException $Exception ) {
+            // Note The Typecast To An Integer!
+            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
         }
     } else if(($table == 'byers')) {
     /**//////////////////////////////////////////////////////////////ЧТЕНИЕ ПОКУПАТЕЛИ/ПОСТАВЩИКИ/ТОВАРЫ
@@ -126,9 +135,9 @@ if(isset($_POST['table'])){
 
 
 
-        } catch(PDOExecption $e) {
-            $pdo->rollback();
-            print "Error!: " . $e->getMessage() . "</br>";
+        } catch( PDOException $Exception ) {
+            // Note The Typecast To An Integer!
+            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
         }
         /**//////////////////////////////////////////////////////////////
     };
@@ -156,13 +165,10 @@ try{
 									LEFT JOIN
 								(SELECT * FROM `req_positions`) AS b ON a.`pricingid` = b.`winnerid` WHERE `req_positionid`=?");
     $nowinners->execute(array($req_id));
-    $result = "<br><br><input type='button' requestid='" . $req_id . "' class = 'check_rent' value='Посчитать рентабельность'><br><br><table><thead><th>№</th><th>Название позиции</th><th>Сумма</th><th>Поб</th><th>Рент</th><th>Опции</th></thead>";
+    $result .= "<br><table><thead><th>№</th><th>Название позиции</th><th>Сумма</th><th>Поб</th><th>Рент</th><th>Опции</th></thead><tboby";
     $rownumber = 1;
     foreach ($nowinners as $row)
     {
-        /*echo('<pre>');
-        echo (print_r($row));
-        echo('</pre>');*/
         if ($row['winnerid']!=0){//Если это виннер
             $winners->execute(array($row['req_positionid']));
             foreach ($winners as $row)
@@ -184,18 +190,14 @@ try{
                     </td></tr>";
                     ++$rownumber;
                 };
-
         }else{
-
             $result .= "<tr position =".$row['req_positionid']."><td> ".$rownumber.".</td>
             <td category='positions'>
                 <input type='button' position =".$row['req_positionid']." value='V' class='collapsepos'>
                 <span class='name'>" . $row['pos_name'] . "</span>
                 <div class='pricings'>
                 </div>
-                </td>
-    
-    
+                </td>  
                 <td>
                 <input type='button' position =" . $row['req_positionid'] . " value='R' class='edit'>
                 <input type='button' position =" . $row['req_positionid'] . " value='X' class='posdelete'>
@@ -203,14 +205,16 @@ try{
             ++$rownumber;
         };
     }
-    $result.="</table>";
+    $result.="</tbody></table>";
+    $result.= "<input type='button' requestid='" . $req_id . "' class = 'check_rent' value='Посчитать рентабельность'>";
+
 
 
     echo $result;
 
-} catch (PDOExecption $e) {
-    $pdo->rollback();
-    print "Error!: " . $e->getMessage() . "</br>";
+} catch( PDOException $Exception ) {
+    // Note The Typecast To An Integer!
+    throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
 }
 
 };
@@ -307,9 +311,9 @@ if (isset($_POST['positionid'])){
 
         echo $result;
 
-    } catch (PDOExecption $e) {
-        $pdo->rollback();
-        print "Error!: " . $e->getMessage() . "</br>";
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
 
 };
@@ -324,9 +328,9 @@ if (isset($_POST['pricingid'])){
         $statement->execute(array($pricing_id));
         $result = $statement->fetch();
         echo json_encode($result);/*Перевели массив расценки в формат JSON*/
-    } catch (PDOExecption $e) {
-        $pdo->rollback();
-        print "Error!: " . $e->getMessage() . "</br>";
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
 
 };
@@ -390,9 +394,9 @@ if (isset($_POST['category']) && isset($_POST['theid'])){
                 print $result;
             };
 
-        } catch (PDOExecption $e) {
-            $pdo->rollback();
-            print "Error!: " . $e->getMessage() . "</br>";
+        } catch( PDOException $Exception ) {
+            // Note The Typecast To An Integer!
+            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
         }
     };
     /*Список заявок по названию заявки*/
@@ -443,9 +447,9 @@ if (isset($_POST['category']) && isset($_POST['theid'])){
             print $result;
 
 
-        } catch (PDOExecption $e) {
-            $pdo->rollback();
-            print "Error!: " . $e->getMessage() . "</br>";
+        } catch( PDOException $Exception ) {
+            // Note The Typecast To An Integer!
+            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
         }
     };
     /*Список заявок по Поставщику*/
@@ -515,9 +519,9 @@ if (isset($_POST['category']) && isset($_POST['theid'])){
                 $result .= "</table><!--<script src='js/mysql_edc.js'></script>-->";
                 print $result;
             };
-        } catch (PDOExecption $e) {
-            $pdo->rollback();
-            print "Error!: " . $e->getMessage() . "</br>";
+        } catch( PDOException $Exception ) {
+            // Note The Typecast To An Integer!
+            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
         }
 
     };
@@ -587,9 +591,9 @@ if (isset($_POST['category']) && isset($_POST['theid'])){
                 $result .= "</table><!--<script src='js/mysql_edc.js'></script>-->";
                 print $result;
             };
-        } catch (PDOExecption $e) {
-            $pdo->rollback();
-            print "Error!: " . $e->getMessage() . "</br>";
+        } catch( PDOException $Exception ) {
+            // Note The Typecast To An Integer!
+            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
         }
     };
 
@@ -644,10 +648,84 @@ if (isset($_POST['from']) && isset($_POST['to'])) {
         print $result;
 
 
-    } catch (PDOExecption $e) {
-        $pdo->rollback();
-        print "Error!: " . $e->getMessage() . "</br>";
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/// GETTER для разных параметров из разных таблиц. Возвращает одно значение
+/*if ( isset($_POST['gt_table']) && isset($_POST['gt_identifier']) && isset($_POST['gt_attribute']) && isset($_POST['gt_id_number']) ){
+    try{
+        $table = $_POST['gt_table'];
+        $identifier = $_POST['gt_identifier'];
+        $id_number = $_POST['gt_id_number'];
+        $attribute = $_POST['gt_attribute'];
+
+        $statement=$pdo->prepare("SELECT :attribute FROM :the_table WHERE :identifier = :id_number");
+
+        $statement->bindValue(':the_table',$table);
+        $statement->bindValue(':identifier',$identifier);
+        $statement->bindValue(':id_number',$id_number);
+        $statement->bindValue(':attribute',$attribute);
+
+        $pdo->beginTransaction();
+        $statement->execute();
+        $pdo->commit();
+
+        $result = $statement->fetch();
+        print $result;
+
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+};*/
+
+
+//ЧТЕНИЕ ДАТЫ ЗАЯВКИ
+if ( isset($_POST['gt_id_number']) ){
+    try{
+        $id_number = $_POST['gt_id_number'];
+
+        $statement=$pdo->prepare("SELECT created FROM requests WHERE requests_id = ?");
+
+        $pdo->beginTransaction();
+        $statement->execute(array($id_number));
+        $pdo->commit();
+
+        $result = $statement->fetch();
+
+        $phpdate = strtotime( $result['created'] );
+        $result = date( 'd.m.y', $phpdate );
+
+        print $result;
+
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+};
+
+//ЧТЕНИЕ 1С Номера ЗАЯВКИ
+if ( isset($_POST['gt_id_number_1c']) ){
+    try{
+        $id_number = $_POST['gt_id_number_1c'];
+
+        $statement=$pdo->prepare("SELECT 1c_num FROM requests WHERE requests_id = ?");
+
+        $pdo->beginTransaction();
+        $statement->execute(array($id_number));
+        $pdo->commit();
+
+        $result = $statement->fetch();
+        $new1c_num = $result['1c_num'];
+
+        print $new1c_num;
+
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+};

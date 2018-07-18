@@ -284,9 +284,11 @@ $(document).ready(function(){
         $('#button_add_giveaway').attr('requestid',''+$(event.target).attr('requestid')+'');//Добавляем в кнопку
     });
 
-    $(document).off('click.come1cnum').on('click.come1cnum', '.edit_1c_num', function () {
+    $(document).off('click.come1cnum').on('click.come1cnum', '.edit_1c_num', function (event) {
         $('#edit_1c_num').toggleClass('come_here', 1000);
         $('#edit_1c_num>input[name=1]').val('');//Стираем все данные
+        $('#edit_1c_num>input[name=2]').val('');//Стираем все данные
+        console.log($(event.target).attr('requestid'));
         $('#button_edit_1c_num').attr('requestid',''+$(event.target).attr('requestid')+'');//Добавляем в кнопку
         $('#button_edit_created').attr('requestid',''+$(event.target).attr('requestid')+'');//Добавляем в кнопку
     });
@@ -312,6 +314,7 @@ $(document).ready(function(){
     $(document).off('click.go1cnum').on('click.go1cnum', '.close_edit_1c_num', function () {
         $('#edit_1c_num').toggleClass('come_here', 1000);
         $('#add_giveaway>input[name=1]').val('');//Стираем все данные
+        $('#add_giveaway>input[name=2]').val('');//Стираем все данные
         $('#button_edit_1c_num').attr('requestid','xxx');//Стираем номер заявки из кнопки добавления
         $('#button_edit_created').attr('requestid','xxx');//Стираем номер заявки из кнопки добавления
     });
@@ -426,21 +429,30 @@ $(document).ready(function(){
             data: {reqid:reqid, new_1c_num:new1cnum},
             success: function (data) {
                 $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
-            }, complete: function () {
-                $.ajax({
-                    url: 'mysql_giveaways.php',
-                    method: 'POST',
-                    dataType: 'json',
-                    cache: false,
-                    data: {the_request:reqid},
-                    success: function (data) {
-                        $('.ga_contents[ga_request='+reqid+'] .ga_c_payments').html(data.data1);
-                        $('.ga_contents[ga_request='+reqid+'] .ga_c_positions').html(data.data2);
-                        $('.ga_contents[ga_request='+reqid+'] .ga_c_giveaways').html(data.data3);
-                        $('.ga_contents[ga_request='+reqid+'] .ga_options').html(data.data4);
-                        $('#edit_1c_num').toggleClass('come_here');
-                    }
-                });
+            }, complete: function () {//Нужно обновить данные
+                if($('#tab_giveaways').hasClass('ui-state-active')){//Если мы в выдачах
+                    console.log('Мы в выдачах');
+                    $.ajax({
+                        url: 'mysql_read.php',
+                        method: 'POST',
+                        data: {/*gt_table:'requests',gt_identifier:'requests_id',*/gt_id_number_1c:reqid/*,gt_attribute:'created'*/},
+                        success: function (data) {
+                            $('.req_header_'+reqid+' .1c_num').html(data);
+                        }
+                    });
+                }
+                //Если мы в заявках/расценках
+                if($('#tab_requests').hasClass('ui-state-active')) {
+                    console.log('Мы в расценках/заявках');
+                    $.ajax({
+                        url: 'mysql_read.php',
+                        method: 'POST',
+                        data: {/*gt_table:'requests',gt_identifier:'requests_id',*/gt_id_number_1c:reqid/*,gt_attribute:'created'*/},
+                        success: function (data) {
+                            $('.req_header_'+reqid+' .1c_num').html(data);
+                        }
+                    });
+                }
             }
         });
     });
@@ -448,8 +460,9 @@ $(document).ready(function(){
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //ИЗМЕНЕНИЕ ДАТЫ ЗАЯВКИ/////////////////////////////////////////////////////////////////////////////////////////////
+
     $(document).off('click.edit_created').on('click.edit_created', '#button_edit_created', function(event){
-        var reqid = $(event.target).attr("requestid");
+        var reqid = Number($(event.target).attr("requestid"));
         /*Данные для заполнения выдачи*/
         var newdate = $('#add_created').val();
         console.log(newdate);
@@ -462,21 +475,30 @@ $(document).ready(function(){
             data: {reqid:reqid, newdate:newdate},
             success: function (data) {
                 $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
-            }, complete: function () {
-                $.ajax({
-                    url: 'mysql_giveaways.php',
-                    method: 'POST',
-                    dataType: 'json',
-                    cache: false,
-                    data: {the_request:reqid},
-                    success: function (data) {
-                        $('.ga_contents[ga_request='+reqid+'] .ga_c_payments').html(data.data1);
-                        $('.ga_contents[ga_request='+reqid+'] .ga_c_positions').html(data.data2);
-                        $('.ga_contents[ga_request='+reqid+'] .ga_c_giveaways').html(data.data3);
-                        $('.ga_contents[ga_request='+reqid+'] .ga_options').html(data.data4);
-                        //$('#edit_1c_num').toggleClass('come_here');
-                    }
-                });
+            }, complete: function () {//Нужно обновить данные
+                if($('#tab_giveaways').hasClass('ui-state-active')){//Если мы в выдачах
+                    console.log('Мы в выдачах');
+                    $.ajax({
+                        url: 'mysql_read.php',
+                        method: 'POST',
+                        data: {/*gt_table:'requests',gt_identifier:'requests_id',*/gt_id_number:reqid/*,gt_attribute:'created'*/},
+                        success: function (data) {
+                            $('.req_header_'+reqid+' .date').html(data);
+                        }
+                    });
+                }
+                //Если мы в заявках/расценках
+                if($('#tab_requests').hasClass('ui-state-active')) {
+                    console.log('Мы в расценках/заявках');
+                    $.ajax({
+                        url: 'mysql_read.php',
+                        method: 'POST',
+                        data: {/*gt_table:'requests',gt_identifier:'requests_id',*/gt_id_number:reqid/*,gt_attribute:'created'*/},
+                        success: function (data) {
+                            $('.req_header_'+reqid+' .date').html(data);
+                        }
+                    });
+                }
             }
         });
     });

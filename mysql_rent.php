@@ -29,9 +29,9 @@ if(isset($_POST['plus_winid']) && isset($_POST['posid'])){
             "data3"=>$w[0]['rent']
             ));
 
-    } catch(PDOExecption $e) {
-        $pdo->rollback();
-        print "Error!: " . $e->getMessage() . "</br>";
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
 };
 
@@ -50,9 +50,9 @@ if(isset($_POST['minus_winid']) && isset($_POST['posid'])){
         $pdo->commit();
         echo 'Победитель отменен.';
 
-    } catch(PDOExecption $e) {
-        $pdo->rollback();
-        print "Error!: " . $e->getMessage() . "</br>";
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
 };
 
@@ -185,10 +185,10 @@ if (isset($_POST['request'])){
 
 
 
-    } catch(PDOExecption $e) {
-        $pdo->rollback();
-        print "Error!: " . $e->getMessage() . "</br>";
-    };
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
 };
 /***/
 

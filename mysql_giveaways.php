@@ -42,7 +42,11 @@ if (isset($_POST['the_byer'])){
             $pdo->commit();
 
             $result.="<tr ga_request='". $row['requests_id'] ."'>";
-            $result.="<td>".$row['created']."</td>";
+            /*Делаем дату читаемой*/
+            $phpdate = strtotime( $row['created'] );
+            $mysqldate = date( 'd.m.y', $phpdate );
+            $result.="<td>".$mysqldate."</td>";
+            /*/////////////////////////////////////////////////*/
             $result.="<td>".$row['requests_id']."</td>";
             $result.="<td>".$row['1c_num']."</td>";
             $result.="<td><input class='collapse_ga_request' ga_request='". $row['requests_id'] ."' type='button' value='W'><span>".$row['name']."</span>
@@ -168,7 +172,7 @@ if (isset($_POST['the_request'])){
         foreach($get_req_info as $row){
             $phpdate = strtotime( $row['created'] );
             $mysqldate = date( 'd.m.y', $phpdate );
-            $result4 .= "<h2>Заказ от ".$mysqldate." на сумму ".$row['req_sum'].". Номер в 1С: ".$row['1c_num']." </h2>";
+            $result4 .="<h2 class='req_header_".$the_request."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму ".$row['req_sum'].". Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h2/><br>";
         }
 
 

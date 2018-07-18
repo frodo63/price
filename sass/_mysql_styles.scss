@@ -159,6 +159,13 @@ li[category="request"] {
 }
 /**/
 
+#reads {
+  height:85vh;
+  width:98vw;
+}
+
+
+
 #pricingwindow .closepricing {
     position: absolute;
     top: 1vw;
@@ -331,6 +338,10 @@ tr[pricingid] td {border: 1px solid black}
     font-size: 20px;
     font-weight: 600;
 }
+
+.rentcount {
+  display: none;
+}
 /*Закончилась Таблица расшифровки расчет рентабельности*/
 
 
@@ -404,6 +415,7 @@ tr[pricingid] td {border: 1px solid black}
   border-radius: 5px;
   border:2px solid black;
   color: black;
+  z-index: 100;
 
   position: fixed;
   left:150px;

@@ -856,7 +856,7 @@ $(document).ready(function() {
             cache: false,
             data: {request:reqid},
             success: function (data) {
-                $('tr[requestid='+reqid+'] .rentcount').html(data.data1);
+                $('tr[requestid='+reqid+'] .rentcount').toggle().html(data.data1);
                 $('tr[requestid='+reqid+'] .rent_whole').html(data.data2);
                 $('tr[requestid='+reqid+'] .sum_whole').html(data.data3);
             }

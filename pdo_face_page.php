@@ -20,7 +20,7 @@ echo "
         <label for='op'>НАШ ПРОЦЕНТ:</label> <input type='number' size='2' name='op' id='op'  min='1' step='0.01'/>% / <p id='opr'></p> руб.<br />
         <label for='tp'>ЕНОТ:</label> <input type='number' size='2' name='tp' id='tp'  min='0' step='0.01'/>% / <p id='tpr'></p> руб. НА РУКИ : <p id='firstoh'></p> руб. (<p id='clearp'></p> ЧИСТЫМИ)<br/><br />
         <label for='firstobp'>ОБНАЛ:</label> <input type='number' size='2' name='firstobp' id='firstobp'  min='0' step='0.1'/>% / <p id='firstobpr'></p> руб.<br />
-        <label for='wtime'>ОТСРОЧКА:</label> <input type='number' size='2' name='wtime' id='wtime'  min='0' step='0.03'/> мес. <p id='wtimeday'></p> дней.
+        <label for='wtime'>ОТСРОЧКА:</label> <input type='number' size='2' name='wtime' id='wtime'  min='0' step='0.03'/> мес. <p id='wtimeday'></p> дней.        
         </div>
         <div id='margediv'>
         <br />
@@ -53,13 +53,28 @@ echo "
 <div id='sres'></div>
 <br>
 <input type='button' id='readstoggle' value='Скрыть/Показать табы'>
+<!--Блок редактирования номера и зады заявки-->
+<div id='edit_1c_num'>
+                  <span>Изменить номер заказа в 1С</span>
+                  <br>
+                  <label for='1'><span>Введите новый номер:</span></label><input id='add_1c_num' name='1' type='text' size='20'><br>
+                  <input id='button_edit_1c_num' type='button' name='edit_1c_num' requestid='' value='Изменить номер'><br><br>
+                  
+                  <span>Изменить дату заказа</span>
+                  <br>
+                  <label for='2'><span>Дата:</span></label><input id='add_created' name='2' size='20'><br>
+                  <input id='button_edit_created' type='button' name='edit_created' requestid='' value='Изменить дату'>
+                  
+                  <input class='close_edit_1c_num' type='button' value='X'>
+              </div> 
+<!---->
 <div id='reads'>                                                                                                               
       <ul>
-        <li><a href='#requests'>Заявки</a></li>
-        <li><a href='#byers'>Покупатели</a></li>
-        <li><a href='#sellers'>Поставщики</a></li>
-        <li><a href='#trades'>Товары</a></li>
-        <li><a href='#givaways'>Расчеты по заявкам</a></li>
+        <li id='tab_requests'><a href='#requests'>Заявки</a></li>
+        <li id='tab_byers'><a href='#byers'>Покупатели</a></li>
+        <li id='tab_sellers'><a href='#sellers'>Поставщики</a></li>
+        <li id='tab_trades'><a href='#trades'>Товары</a></li>
+        <li id='tab_giveaways'><a href='#givaways'>Расчеты по заявкам</a></li>
       </ul>
   
       <div id='requests'>
@@ -124,18 +139,7 @@ echo "
       </div>  
       
       <div id='givaways'>      
-      <!--Добавить Платежку -->    
-              <div id='edit_1c_num'>
-                  <span>Изменить номер заказа в 1С</span>
-                  <br>
-                  <label for='1'><span>Введите новый номер:</span></label><input id='add_1c_num' name='1' type='text' size='20'><br>
-                  <input id='button_edit_1c_num' type='button' name='edit_1c_num' requestid='' value='Изменить номер'><br><br>
-                  
-                  <label for='2'><span>Дата:</span></label><input id='add_created' name='2' size='20'><br>
-                  <input id='button_edit_created' type='button' name='edit_created' requestid='' value='Изменить дату'>
-                  
-                  <input class='close_edit_1c_num' type='button' value='X'>
-              </div>  
+      <!--Добавить Платежку -->  
               <div id='add_payment'>
                   <span>Вводим платежку</span>
                   <br>
@@ -165,6 +169,7 @@ echo "
       </div>    
   
 </div>
+
 <input type='button' id='req_searchstoggle' value='Скрыть/Показать результаты поиска'>
 <div id='search_reads'>
 <div class='requests_list'>
