@@ -435,7 +435,7 @@ $(document).ready(function(){
                     $.ajax({
                         url: 'mysql_read.php',
                         method: 'POST',
-                        data: {/*gt_table:'requests',gt_identifier:'requests_id',*/gt_id_number_1c:reqid/*,gt_attribute:'created'*/},
+                        data: {chng_number_1c:reqid},
                         success: function (data) {
                             $('.req_header_'+reqid+' .1c_num').html(data);
                         }
@@ -447,7 +447,7 @@ $(document).ready(function(){
                     $.ajax({
                         url: 'mysql_read.php',
                         method: 'POST',
-                        data: {/*gt_table:'requests',gt_identifier:'requests_id',*/gt_id_number_1c:reqid/*,gt_attribute:'created'*/},
+                        data: {/*gt_table:'requests',gt_identifier:'requests_id',*/chng_number_1c:reqid/*,gt_attribute:'created'*/},
                         success: function (data) {
                             $('.req_header_'+reqid+' .1c_num').html(data);
                         }
@@ -481,7 +481,7 @@ $(document).ready(function(){
                     $.ajax({
                         url: 'mysql_read.php',
                         method: 'POST',
-                        data: {/*gt_table:'requests',gt_identifier:'requests_id',*/gt_id_number:reqid/*,gt_attribute:'created'*/},
+                        data: {chng_number:reqid},
                         success: function (data) {
                             $('.req_header_'+reqid+' .date').html(data);
                         }
@@ -493,7 +493,7 @@ $(document).ready(function(){
                     $.ajax({
                         url: 'mysql_read.php',
                         method: 'POST',
-                        data: {/*gt_table:'requests',gt_identifier:'requests_id',*/gt_id_number:reqid/*,gt_attribute:'created'*/},
+                        data: {/*gt_table:'requests',gt_identifier:'requests_id',*/chng_number:reqid/*,gt_attribute:'created'*/},
                         success: function (data) {
                             $('.req_header_'+reqid+' .date').html(data);
                         }

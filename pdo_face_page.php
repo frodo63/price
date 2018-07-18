@@ -41,33 +41,15 @@ echo "
         <div id='rent'><h2>Рентабельность:</h2><h1>0</h1></div>
         <div id='cases'></div>
     </form>
-        <input type='button' value='X' class='closepricing'>
-                
+        <input type='button' value='X' class='closepricing'>                
         <script src='js/price_mysql.js'></script>
-        <script src='js/mysql_scripts.js'></script>
-
-        
+        <script src='js/mysql_scripts.js'></script>        
 </div>
 <div id='editmsg'></div>
 <input id='thesearch' type='text' placeholder='Начните вводить наименование поставщика, покупателя, товара или название заявки'category='' theID=''>
 <div id='sres'></div>
 <br>
 <input type='button' id='readstoggle' value='Скрыть/Показать табы'>
-<!--Блок редактирования номера и зады заявки-->
-<div id='edit_1c_num'>
-                  <span>Изменить номер заказа в 1С</span>
-                  <br>
-                  <label for='1'><span>Введите новый номер:</span></label><input id='add_1c_num' name='1' type='text' size='20'><br>
-                  <input id='button_edit_1c_num' type='button' name='edit_1c_num' requestid='' value='Изменить номер'><br><br>
-                  
-                  <span>Изменить дату заказа</span>
-                  <br>
-                  <label for='2'><span>Дата:</span></label><input id='add_created' name='2' size='20'><br>
-                  <input id='button_edit_created' type='button' name='edit_created' requestid='' value='Изменить дату'>
-                  
-                  <input class='close_edit_1c_num' type='button' value='X'>
-              </div> 
-<!---->
 <div id='reads'>                                                                                                               
       <ul>
         <li id='tab_requests'><a href='#requests'>Заявки</a></li>
@@ -169,7 +151,21 @@ echo "
       </div>    
   
 </div>
-
+<!--Блок редактирования номера и зады заявки-->
+              <div id='edit_1c_num'>
+                  <span>Изменить номер заказа в 1С</span>
+                  <br>
+                  <label for='1'><span>Введите новый номер:</span></label><input id='add_1c_num' name='1' type='text' size='20'><br>
+                  <input id='button_edit_1c_num' type='button' name='edit_1c_num' requestid='' value='Изменить номер'><br><br>
+                  
+                  <span>Изменить дату заказа</span>
+                  <br>
+                  <label for='2'><span>Дата:</span></label><input id='add_created' name='2' size='20'><br>
+                  <input id='button_edit_created' type='button' name='edit_created' requestid='' value='Изменить дату'>
+                  
+                  <input class='close_edit_1c_num' type='button' value='X'>
+              </div> 
+<!---->
 <input type='button' id='req_searchstoggle' value='Скрыть/Показать результаты поиска'>
 <div id='search_reads'>
 <div class='requests_list'>

@@ -9,7 +9,7 @@ $(document).ready(function(){
         $('#seller+div ul').html('');
     });
 
-    /*Поведение большой поисковой строки (БПС)*/
+    /*Поведение ВЕЛИКОЙ СТРОКИ ПОИСКА ВСЕГО (ВСПВ)*/
     $(document).off('mouseenter.sres').on('mouseenter.sres', '#sres ul li', function (event) {
         /*После выпадения списка в бпс при клике попадает текст итема.*/
         $('#thesearch').val($(event.target).children('span').text());
@@ -19,30 +19,32 @@ $(document).ready(function(){
         console.log('Категория: '+$('#thesearch').attr('category')+', ID: '+$('#thesearch').attr('theID'));
         /*Мы готовы для аякса*/
     });
-    /*Клик на элементе выпадающего списка из БСПВ*/
+    /*Клик на элементе выпадающего списка из ВСПВ*/
     /*На клике отключено событие скрывания списка по нажатию на что-либо*/
 
     $(document).off('click.sres').on('click.sres', '#sres ul li', function (event) {
         var category = $(event.target).attr('category');
         var theid = $(event.target).attr('theid');
+        var table = 'requests';
         //TODO: Вставить проверку, что айди и категория - not undefined
         console.log('На аякс: категория: '+category+', ID: '+theid+'.');
-
-        $.ajax({
-            url: 'mysql_read.php',
-            method: 'POST',
-            data: {category:category, theid:theid},
-            success: function(data){
-                $('#reads').slideUp();
-                $('#search_reads').show();
-                $('#search_reads div.requests_list').html(data);
-            },
-            complete: function() {
-                if(category == 'request'){
-                    $('.collapse').trigger('click.collapse');
-                };
-            }
-        });
+        if (!!category && !!theid){
+            $.ajax({
+                url: 'mysql_read.php',
+                method: 'POST',
+                data: {table:table, category:category, theid:theid },
+                success: function(data){
+                    $('#reads').slideUp();
+                    $('#search_reads').show();
+                    $('#search_reads div.requests_list').html(data);
+                },
+                complete: function() {
+                    if(category == 'request'){
+                        $('.collapse').trigger('click.collapse');
+                    };
+                }
+            });
+        }
     });
 
     /*При изменении текста должен меняться атрибут #byer - byer_id, #seller - seller_id, #trade - trade_id*/
