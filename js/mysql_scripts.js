@@ -96,7 +96,7 @@ $(document).ready(function(){
             $.ajax({
                 url: 'mysql_read.php',
                 method: 'POST',
-                data: {from:from, to:to},
+                data: {table:'requests', from:from, to:to},
                 success: function (data) {
                     $('#reads .requests_list').html(data);
                 },
@@ -332,7 +332,7 @@ $(document).ready(function(){
         }else if(isNaN(p_sum)){
             console.log(2);
             $(event.target).switchClass('ready','not_ready');
-            $(event.target).siblings('.ready_comment').text('Не число').switchClass('ok','not-ok');
+            $(event.target).siblings('.ready_comment').text('Не число.Уберите пробелы и буквы.База их не любит.').switchClass('ok','not-ok');
         }else if(p_sum<=0){
             console.log(3);
             $(event.target).switchClass('ready','not_ready');
@@ -517,7 +517,16 @@ $(document).ready(function(){
     });
 
     /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    /*Отображение заявок одного покупателя*/////////////////////////////////////////////////////////////////////////////
+    $(document).off('.dblclick.sort_byer').on('dblclick.sort_byer', '.requests_list td[byerid]', function(event){
+        var the_b_id = $(event.target).attr('byerid');
+        console.log(the_b_id);
+        var what2hide = $('.requests_list tr:not(.requests_list tr[byerid="'+the_b_id+'"],.requests_list thead tr)');
+        what2hide.toggle();
+    });
+
     /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

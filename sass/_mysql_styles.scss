@@ -160,7 +160,7 @@ li[category="request"] {
 /**/
 
 #reads {
-  height:85vh;
+  min-height:85vh;
   width:98vw;
 }
 
@@ -192,13 +192,13 @@ table{
 
 /*Класс - таблица из результатов поиска. айдишник - таблица из табов*/
 /*Таблица первого уровня (заявки)*/
-.requests_list>table>thead>tr>th:nth-child(1){width: 5%}
-.requests_list>table>thead>tr>th:nth-child(2){width: 5%}
-.requests_list>table>thead>tr>th:nth-child(3){width: 10%}
-.requests_list>table>thead>tr>th:nth-child(4){width: 68%}
-.requests_list>table>thead>tr>th:nth-child(5){width: 5%}
-.requests_list>table>thead>tr>th:nth-child(6){width: 7%}
-.requests_list>table>thead>tr>th:nth-child(6){width: 5%}
+.requests_list>table>thead>tr>th:nth-child(1){width: 7%}
+.requests_list>table>thead>tr>th:nth-child(2){width: 4%}
+.requests_list>table>thead>tr>th:nth-child(3){width: 11%}
+.requests_list>table>thead>tr>th:nth-child(4){width: 56%}
+.requests_list>table>thead>tr>th:nth-child(5){width: 7%}
+.requests_list>table>thead>tr>th:nth-child(6){width: 10%}
+.requests_list>table>thead>tr>th:nth-child(7){width: 5%}
 .requests_list>table>thead>tr{border-bottom: 1px black solid;}
 
 /*Таблица второго уровня (позциии)*/
@@ -250,6 +250,7 @@ table{
     border-right: 1px black solid;
 }
 
+.requests_list tr td:nth-child(1),
 .requests_list tr td:nth-child(2),
 .requests_list tr td:nth-child(3),
 .requests_list tr td:nth-child(4),

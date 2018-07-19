@@ -8,6 +8,7 @@ if(isset($_POST['table'])){
     $tablenid = $table . '_nameid';
 
     if ($table == 'requests') {
+        //Блок рисовки результатов поиска из ВСПВ
         if (isset($_POST['category']) && isset($_POST['theid'])){
             $category = $_POST['category'];
             $theid = $_POST['theid'];
@@ -155,7 +156,34 @@ if(isset($_POST['table'])){
                     throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
                 }
             };
-        }else{//Общий список заявок
+        }/*Временной интурвал*/else if(isset($_POST['from']) && isset($_POST['to'])) {
+            $from = $_POST['from'];
+            $to = $_POST['to'];
+            try {
+
+                $statement = $pdo->prepare("SELECT                                       
+                                        a.created AS req_date,
+                                        a.requests_id AS req_id,
+                                        a.requests_nameid AS req_nameid,
+                                        a.name AS req_name,
+                                        a.req_rent AS rent,
+                                        a.req_sum AS sum,
+                                        a.1c_num AS 1c_num,
+                                        b.byers_id AS b_id,
+                                        b.byers_nameid AS b_nameid,
+                                        b.name AS b_name
+                                        FROM (SELECT * FROM (SELECT * FROM requests WHERE `created` BETWEEN ? AND ?) AS x LEFT JOIN allnames ON x.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
+                                        ORDER BY `b`.`name` ASC");
+
+                $pdo->beginTransaction();
+                $statement->execute(array($from,$to));
+                $pdo->commit();
+
+            } catch( PDOException $Exception ) {
+                // Note The Typecast To An Integer!
+                throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+            }
+        }/*Общий список заявок*/else{
             try {
                 $statement = $pdo->prepare("SELECT 
                                         a.created AS req_date,
@@ -175,9 +203,9 @@ if(isset($_POST['table'])){
                 // Note The Typecast To An Integer!
                 throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
             }
-        }//Общий список заявок
+        }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            $result .= "<table><thead><tr><th>Дата</th><th>№ Заказа</th><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Сумма</th><th></th></tr></thead>";
+            $result .= "<table><thead><tr><th>Дата</th><th>№ в 1С</th><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Сумма</th><th></th></tr></thead>";
             foreach ($statement as $row) {
 
                 /*Заголовок заказа////////////////////////////////////////////////////////////////////////////////////////////////*/
@@ -185,9 +213,9 @@ if(isset($_POST['table'])){
                 $mysqldate = date( 'd.m.y', $phpdate );
                 /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
-                $result .= "<tr requestid =" . $row['req_id'] . ">
+                $result .= "<tr requestid =" . $row['req_id'] . " byerid =".$row['b_id'].">
             <td class='req_date'><span>" . $mysqldate . "</span></td>
-            <td class='req_id'><span>" . $row['req_id'] . "</span></td>
+            <td class='1c_num'><span>" . $row['1c_num'] . "</span></td>
             <td byerid=" . $row['b_id'] . " name=" . $row['b_nameid'] . "><span>". $row['b_name'] ."</span></td>
             <td category='requests' name =" . $row['req_nameid'] . "><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='W' class='collapse'><span class='name'>" . $row['req_name'] . "</span>
             
@@ -315,7 +343,7 @@ if (isset($_POST['requestid'])){
 									LEFT JOIN
 								(SELECT * FROM `req_positions`) AS b ON a.`pricingid` = b.`winnerid` WHERE `req_positionid`=?");
         $nowinners->execute(array($req_id));
-        $result .= "<br><table><thead><th>№</th><th>Название позиции</th><th>Сумма</th><th>Поб</th><th>Рент</th><th>Опции</th></thead><tboby";
+        $result .= "<br><table><thead><th>№</th><th>Название позиции</th><th>Сумма</th><th>Поб</th><th>Рент</th><th>Опции</th></thead><tbody>";
         $rownumber = 1;
         foreach ($nowinners as $row)
         {
@@ -488,7 +516,7 @@ if (isset($_POST['pricingid'])){
 
 
 /*ЧТЕНИЕ СПИСКА ЗАЯВОК ИЗ ФИЛЬТРОВ ПО ДАТЕ*/
-if (isset($_POST['from']) && isset($_POST['to'])) {
+/*if (isset($_POST['from']) && isset($_POST['to'])) {
     $from = $_POST['from'];
     $to = $_POST['to'];
     try {
@@ -506,6 +534,8 @@ if (isset($_POST['from']) && isset($_POST['to'])) {
                                         FROM (SELECT * FROM (SELECT * FROM requests WHERE `created` BETWEEN ? AND ?) AS x LEFT JOIN allnames ON x.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
                                         ORDER BY `b`.`name` ASC");
         $statement->execute(array($from,$to));
+
+
         $result = "<table><thead><tr><th>Дата</th><th>№ Заказа</th><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Сумма</th><th></th></tr></thead>";
         foreach ($statement as $row) {
             $result .= "<tr requestid =" . $row['req_id'] . ">
@@ -539,7 +569,7 @@ if (isset($_POST['from']) && isset($_POST['to'])) {
         // Note The Typecast To An Integer!
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
-}
+}*/
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /// GETTER для разных параметров из разных таблиц. Возвращает одно значение

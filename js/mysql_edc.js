@@ -379,6 +379,8 @@ $(document).ready(function() {
     $(document).off('click.closepricing').on('click.closepricing', 'input.closepricing', function(event){
         var posid = $('#pricingwindow').attr('positionid');
         var prcid = $('#pricingwindow').attr('pricingid');
+        console.log(posid);
+        console.log(prcid);
 
 
         if(posid != '-'){
@@ -387,6 +389,7 @@ $(document).ready(function() {
             var theId = $('input.editpricing[pricing='+prcid+']');
         };
 
+        //Очищаем окно расценки
         $('#trade').attr('trade_id', '').val('');
         $('#seller').attr('seller_id', '').val('');
         $('#pricingwindow input[type="number"]').val('');
@@ -748,10 +751,13 @@ $(document).ready(function() {
         var posid = $(event.target).parents('tr[position]').attr('position'); // ID позиции, где выбирается победитель
         var reqid = $(event.target).parents('tr[requestid]').attr('requestid'); //ID заявки, где есть позиция, где выбирается победитель
 
+        console.log("winid: "+winid+" , posid: "+posid+", reqid: "+reqid);
+
         //Если Победитель выбран, мы щелкаем по "П" и победитель убирается.
         if($('tr[pricingid='+winid+']').hasClass('win')){
             /*Отменяем победителя*/
             console.log('это виннер, делаем лузера');
+            console.log(winid+" , "+posid);
             $.ajax({//на мскл_рент отправлется минус_винайди и посайди
                 url: 'mysql_rent.php',
                 method: 'POST',

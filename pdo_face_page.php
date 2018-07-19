@@ -42,8 +42,7 @@ echo "
         <div id='cases'></div>
     </form>
         <input type='button' value='X' class='closepricing'>                
-        <script src='js/price_mysql.js'></script>
-        <script src='js/mysql_scripts.js'></script>        
+        <script src='js/price_mysql.js'></script>     
 </div>
 <div id='editmsg'></div>
 <input id='thesearch' type='text' placeholder='Начните вводить наименование поставщика, покупателя, товара или название заявки'category='' theID=''>
