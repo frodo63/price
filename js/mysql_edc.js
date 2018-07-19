@@ -394,11 +394,12 @@ $(document).ready(function() {
         $('#seller').attr('seller_id', '').val('');
         $('#pricingwindow input[type="number"]').val('');
         $('#pricingwindow input[type="text"]').text('');
-        $('#cases p').text('');
+        $('#cases p,#obtzr,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh').text('');
+        $('#pricingwindow').attr({'positionid': '-', 'pricingid': '-'});
 
         /*Скроллимся к только что открытой завяке*/
         $('html, body').animate({scrollTop: $(".widen").offset().top}, 1000);
-        $('#pricingwindow')/*.slideUp(200)*/.attr({'positionid': '-', 'pricingid': '-'}); //Убрал сокрытие прайсингвиндова потому что жопа со
+         //Убрал сокрытие прайсингвиндова потому что жопа со
         // скроллингом и никому он не мешает, все равно он пустой стоит.
         /**/
     });
@@ -411,14 +412,19 @@ $(document).ready(function() {
         var seller = $(event.target).parents('td').siblings('.pr-seller-name').text();
         var trade = $(event.target).parents('td').siblings('.pr-trade-name').text();
 
-        switch ($('#pricingwindow').css('display')){
-            case 'none':
                 console.log('рыба не видна');
                 window.scrollTo(0, 0);
                 $('#pricingwindow').slideDown(200).attr('pricingid', prid);
+
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //Очищаем окно расценки
                 $('#trade').attr('trade_id', '').val('');
                 $('#seller').attr('seller_id', '').val('');
-                $('#obtzr').text('');
+                $('#pricingwindow input[type="number"]').val('');
+                $('#pricingwindow input[type="text"]').text('');
+                $('#cases p,#obtzr,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh').text('');
+                $('#pricingwindow').attr({'positionid': '-', 'pricingid': '-'});
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
                 console.log($('#trade').attr('trade_id'),$('#seller').attr('seller_id'));
 
                 //АЯКС на едитпрайсинг
@@ -462,7 +468,7 @@ $(document).ready(function() {
                             $('#firstoh').text(json.firstoh);
                             $('#clearp').text(json.clearp);
                             $('#go').trigger('click');
-                        };
+                        }
                         if (json.fixed == 1){
                             /*Косметика*/
                             $('#fixate').addClass('active').attr('value', 'Отпустить').slideDown();
@@ -498,31 +504,11 @@ $(document).ready(function() {
                         $('#editmsg').css('display', 'block'). delay(2000).slideUp(300).html('Расценка ' + prid + ' выгружена.');
                     }
                 });
-                //АЯКС на едитпрайсинг
 
-                break;
-            case 'block':
-                console.log('рыба видна');
-                /*НАЖАТИЕ НА editpricing при открытом окне расчета цены: Окно это закрывается, все переменные стираются*/
-                prid = $('#pricingwindow').attr('pricingid');
-
-                //Аякс на сейв прайсинг
-                window.scrollTo(0, 0);
-                $('#pricingwindow').slideUp(200).attr({'pricingid': '-', 'positionid': '-'});
-                $('#trade').attr('trade_id', '').val('');
-                $('#seller').attr('seller_id', '').val('');
-                $('#obtzr').text('');
-                console.log($('#trade').attr('trade_id'),$('#seller').attr('seller_id'));
-                $('#pricingwindow input[type="number"]').val('');
-                $('#pricingwindow input[type="text"]').text('');
-                $('#cases p').text('');
-                break;
-        };
     });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /*Переименование*/
-//TODO: заменить на использование атрибута HTML5 contenteditable
 //По клику на кнопку "Переименовать":
     $(document).off('click.rename').on('click.rename', '.edit', function (event) {
         console.log('клик на Переименовать');

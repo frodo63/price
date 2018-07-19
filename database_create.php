@@ -21,9 +21,9 @@ CREATE TABLE IF NOT EXISTS `trades` (
 CREATE TABLE IF NOT EXISTS `byers` (
 `byers_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
 `byers_nameid` MEDIUMINT UNSIGNED NOT NULL,
-`clearp` FLOAT(2) UNSIGNED,
-`obnal` SMALLINT UNSIGNED,
-`wtime` FLOAT(2) UNSIGNED,
+`ov_firstobp` FLOAT(5,2) NULL UNSIGNED,
+`ov_tp` FLOAT(5,2) NULL UNSIGNED,
+`ov_wt` FLOAT(4,2) NULL UNSIGNED
  PRIMARY KEY (`byers_id`),
  FOREIGN KEY (`byers_nameid`) REFERENCES `allnames`(`nameid`)
  ON UPDATE CASCADE
@@ -48,7 +48,11 @@ CREATE TABLE IF NOT EXISTS `requests` (
 `byersid` SMALLINT UNSIGNED NOT NULL,
 `payment` BOOLEAN NULL,
 `req_sum` INT NULL,
-`1c_num` TINYINT NULL
+`1c_num` TINYINT NULL,
+`ov_op` FLOAT(5,2) NULL UNSIGNED,
+`ov_firstobp` FLOAT(5,2) NULL UNSIGNED,
+`ov_tp` FLOAT(5,2) NULL UNSIGNED,
+`ov_wt` FLOAT(4,2) NULL UNSIGNED
  PRIMARY KEY (`requests_id`),
  FOREIGN KEY (`requests_nameid`) REFERENCES `allnames`(`nameid`),
  FOREIGN KEY (`byersid`) REFERENCES `byers`(`byers_id`)

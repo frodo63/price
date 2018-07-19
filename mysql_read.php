@@ -156,7 +156,7 @@ if(isset($_POST['table'])){
                     throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
                 }
             };
-        }/*Временной интурвал*/else if(isset($_POST['from']) && isset($_POST['to'])) {
+        }/*Временной интервал*/else if(isset($_POST['from']) && isset($_POST['to'])) {
             $from = $_POST['from'];
             $to = $_POST['to'];
             try {
@@ -265,22 +265,22 @@ if(isset($_POST['table'])){
         /**//////////////////////////////////////////////////////////////ЧТЕНИЕ ПОКУПАТЕЛИ/ПОСТАВЩИКИ/ТОВАРЫ
         try {
 
-            $statement = $pdo->prepare("SELECT name, byers_id, nameid, clearp, obnal, wtime, comment  FROM $table  LEFT JOIN `allnames` ON allnames.nameid=$table.$tablenid GROUP BY name");
+            $statement = $pdo->prepare("SELECT name, byers_id, nameid, ov_tp, ov_firstobp, ov_wt, comment  FROM $table  LEFT JOIN `allnames` ON allnames.nameid=$table.$tablenid GROUP BY name");
             $statement->execute();
             $result = "<table><thead><tr><th>Покупатель</th><th>%</th><th>Обн</th><th>Отсрочка</th><th>Коммент</th><th>Опции</th></tr></thead>";
             foreach ($statement as $row)
             {
                 $result .= "<tr><td category='" . $table . "' name =" . $row['nameid'] . ">";
                 $result .= "<span class='name' byerid=" . $row['byers_id'] . " name =" . $row['nameid'] . ">" . $row['name'] . "</span></td>
-                                <td class='clearp'><span>" . $row['clearp'] . "<span/></td>
-                                <td class='obnal'><span>" . $row['obnal'] . "<span/></td>
-                                <td class='wtime'><span>" . $row['wtime'] . "<span/></td>
+                                <td class='ov_tp'><span>" . $row['ov_tp'] . "<span/></td>
+                                <td class='ov_firstobp'><span>" . $row['ov_firstobp'] . "<span/></td>
+                                <td class='ov_wt'><span>" . $row['ov_wt'] . "<span/></td>
                                 <td class='comment'><span>" . $row['comment'] . "<span/></td>
                 <td class = 'item_buttons'>
          <input type='button' name =" . $row['nameid'] . " value='R' class='edit'>
          <input type='button' name =" . $row['nameid'] . " value='X' class='delete'></td></tr>";
             }
-            $result.="</table><!--<script src='js/mysql_edc.js'></script>-->";
+            $result.="</table>";
 
             print $result;
 
@@ -384,7 +384,7 @@ if (isset($_POST['requestid'])){
             };
         }
         $result.="</tbody></table>";
-        $result.= "<input type='button' requestid='" . $req_id . "' class = 'check_rent' value='Посчитать рентабельность'>";
+        $result.= "<input type='button' requestid='" . $req_id . "' class = 'check_rent' value='Рентабельность'>";
 
 
 

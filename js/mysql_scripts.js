@@ -16,7 +16,8 @@ $(document).ready(function(){
 
     //ДОБАВЛЕНИЕ в Таблицу. Имя талицы берется из атрибута инпута ('name')//////////////////////////////////////////////
     $(document).off('click.addtab').on('click.addtab', '.creates input[type="button"]', function(event){
-        if($(event.target).attr('name') == 'requests'){//Добавляем заявку?
+        //Добавляем заявку?
+        if($(event.target).attr('name') == 'requests'){
             var byer = $('#byer').attr("byer_id");
             var thename = $('#req_name').val();
             console.log("Добавляем заявку");
@@ -521,10 +522,18 @@ $(document).ready(function(){
 
     /*Отображение заявок одного покупателя*/////////////////////////////////////////////////////////////////////////////
     $(document).off('.dblclick.sort_byer').on('dblclick.sort_byer', '.requests_list td[byerid]', function(event){
-        var the_b_id = $(event.target).attr('byerid');
+        //if( event.target != this )
+            //return false;
+        var the_b_id = $(event.target).parents('[byerid]').attr('byerid');
         console.log(the_b_id);
         var what2hide = $('.requests_list tr:not(.requests_list tr[byerid="'+the_b_id+'"],.requests_list thead tr)');
         what2hide.toggle();
+    });
+
+    $(".example").click(function(){
+        $(this).fadeOut("fast");
+    }).children().click(function(e) {
+        return false;
     });
 
     /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
