@@ -41,6 +41,7 @@ if(isset($_POST['table'])){
                     }
                 } catch( PDOException $Exception ) {
                     // Note The Typecast To An Integer!
+                    $pdo->rollback();
                     throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
                 }
             };
@@ -65,6 +66,7 @@ if(isset($_POST['table'])){
                     $pdo->commit();
                 } catch( PDOException $Exception ) {
                     // Note The Typecast To An Integer!
+                    $pdo->rollback();
                     throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
                 }
             };
@@ -108,6 +110,7 @@ if(isset($_POST['table'])){
                     };
                 } catch( PDOException $Exception ) {
                     // Note The Typecast To An Integer!
+                    $pdo->rollback();
                     throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
                 }
 
@@ -153,6 +156,7 @@ if(isset($_POST['table'])){
                     };
                 } catch( PDOException $Exception ) {
                     // Note The Typecast To An Integer!
+                    $pdo->rollback();
                     throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
                 }
             };
@@ -181,6 +185,7 @@ if(isset($_POST['table'])){
 
             } catch( PDOException $Exception ) {
                 // Note The Typecast To An Integer!
+                $pdo->rollback();
                 throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
             }
         }/*Общий список заявок*/else{
@@ -221,7 +226,8 @@ if(isset($_POST['table'])){
             
             <div id=" . $row['req_nameid'] . " class='contents'>
                 <h3 class='req_header_".$row['req_id']."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму ".$row['sum'].". Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h3/><br>
-                <input type='button' class='edit_1c_num' value='Номер в 1С и дата' requestid='".$row['req_id']."'>
+                <input type='button' class='edit_options' value='Опции' requestid='".$row['req_id']."'>
+                <input type='button' class='edit_1c_num' value='Номер в 1С и дата' requestid='".$row['req_id']."'>                
                 <input type='button' class='add_pos' value='+позиция'>
                 <div class='add-pos-inputs'>
                 <input type='text' class='trade' name='new_req_name' placeholder='Название позиции' size='50'>
@@ -621,6 +627,7 @@ if ( isset($_POST['chng_number']) ){
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
+        $pdo->rollback();
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
 };
@@ -643,6 +650,7 @@ if ( isset($_POST['chng_number_1c']) ){
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
+        $pdo->rollback();
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
 };

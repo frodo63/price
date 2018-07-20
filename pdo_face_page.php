@@ -8,8 +8,7 @@ echo"
 </head>
 ";
 
-echo "
-<div id='pricingwindow' positionid='-' pricingid='-'>
+echo "<div id='pricingwindow' positionid='-' pricingid='-'>
     <form id='price'><div class='sres'></div>
         <label for='trade'>Товар</label><input trade_id = 'blank' autocomplete='off' type='text' name='trade' id='trade' placeholder='Введите товар' size='70'/><div class='sres'></div>
         <label for='seller'>Поставщик:</label><input seller_id = 'blank' autocomplete='off' type='text' name='seller' id='seller' placeholder='Введите поставщика' size='70'/><div class='sres'></div><br />
@@ -85,7 +84,7 @@ echo "
               <div class='creates add_ramk'>
           <br>
                   <input type='text' placeholder='Введите наименование Покупателя' size='70'>
-                  <input type='button' name='byers' value='Добавить'>
+                  <input type='button' tc='1' name='byers' value='Добавить'>
           <br>
           <br>
               </div>
@@ -98,7 +97,7 @@ echo "
           <div class='creates add_ramk'>
           <br>
               <input type='text' placeholder='Введите наименование Поставщика' size='70'>
-              <input type='button' name='sellers' value='Добавить'>  
+              <input type='button' tc='2' name='sellers' value='Добавить'>  
           <br>
           <br>
           </div>
@@ -111,7 +110,7 @@ echo "
           <div class ='creates add_ramk'>
           <br>
               <input type='text' placeholder='Введите наименование Товара' size='70'>
-              <input type='button' name='trades' value='Добавить'>
+              <input type='button' tc='3' name='trades' value='Добавить'>
           <br>
           <br>
           </div>
@@ -150,7 +149,6 @@ echo "
       </div>    
   
 </div>
-<!--Блок редактирования номера и зады заявки-->
               <div id='edit_1c_num'>
                   <span>Изменить номер заказа в 1С</span>
                   <br>
@@ -161,17 +159,42 @@ echo "
                   <br>
                   <label for='2'><span>Дата:</span></label><input id='add_created' name='2' size='20'><br>
                   <input id='button_edit_created' type='button' name='edit_created' requestid='' value='Изменить дату'>
-                  
+                  <span class='ready_comment'></span><br>
                   <input class='close_edit_1c_num' type='button' value='X'>
               </div> 
-<!---->
+
+
+              <div id='edit_options'>
+                  <span>Изменить Наценку</span>
+                  <br>
+                  <b><span id='req_op_op'></span></b>
+                  <label for='1'><span>Наценка:</span></label><input id='edit_op' type='number' name='1' type='text' size='20' min='0' step='0.01'>,%<br>
+                  <input id='button_edit_op' type='button' name='edit_op' requestid='' value='Задать наценку'><br><br>
+                  
+                  <span>Изменить Енот</span>
+                  <br>
+                  <b><span id='req_op_tp'></span></b><br>
+                  <label for='2'><span>Енот:</span></label><input id='edit_tp' type='number' name='2' size='20'min='0' step='0.01'>,%<br>
+                  <input id='button_edit_tp' type='button' name='edit_tp' requestid='' value='Задать Енот'><br><br>
+                  
+                  <span>Изменить Обнал</span>
+                  <br>
+                  <b><span id='req_op_firstobp'></span></b><br>
+                  <label for='3'><span>Обнал:</span></label><input id='edit_firstobp' type='number' name='3' size='20'min='0' step='0.01'>,%<br>
+                  <input id='button_edit_firstobp' type='button' name='edit_firstobp' requestid='' value='Задать Обнал'><br><br>
+                  
+                  <span>Изменить Отсрочку</span>
+                  <br>
+                  <b><span id='req_op_wt'></span></b><br>
+                  <label for='4'><span>Отсрочка:</span></label><input type='number' id='edit_wt' name='4' size='20'min='0' step='0.03'>мес.<br>
+                  <input id='button_edit_wt' type='button' name='edit_wt' requestid='' value='Задать Отсрочку'><br><br>
+                  <span class='ready_comment'></span><br>                  
+                  <input class='close_edit_options' type='button' value='X'>
+              </div> 
+
 <input type='button' id='req_searchstoggle' value='Скрыть/Показать результаты поиска'>
 <div id='search_reads'>
-<div class='requests_list'>
-          </div> 
-
-</div> 
-";
+<div class='requests_list'></div></div>";
 
 
 

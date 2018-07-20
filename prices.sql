@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Июл 17 2018 г., 18:04
+-- Время создания: Июл 20 2018 г., 19:41
 -- Версия сервера: 5.7.22-0ubuntu0.16.04.1
 -- Версия PHP: 7.0.30-0ubuntu0.16.04.1
 
@@ -44,7 +44,7 @@ INSERT INTO `allnames` (`nameid`, `name`) VALUES
 (111, 'Валдай ТК'),
 (112, 'ВиК'),
 (113, 'Дженерал Компани'),
-(114, 'Литол-24 18кг'),
+(114, 'Смазка Литол-24 (бидон 18 кг)'),
 (115, 'Литол-24 180кг'),
 (116, 'Литол-24 50кг'),
 (117, 'Масло гидравлическое ВМГЗ (бочка)'),
@@ -65,7 +65,7 @@ INSERT INTO `allnames` (`nameid`, `name`) VALUES
 (161, 'Химэкспресс'),
 (162, 'ДВК'),
 (163, 'САМ-ПО'),
-(165, 'Гидромарка А 10л ВолгаОйл'),
+(165, 'Масло гидр.марки "А" (канистра 10л)'),
 (166, 'Абиана'),
 (167, 'Ondina 919 1л'),
 (169, 'ННК'),
@@ -83,7 +83,7 @@ INSERT INTO `allnames` (`nameid`, `name`) VALUES
 (182, 'БелтИмпэкс'),
 (183, 'FAG ARKANOL-TEMP110 50кг'),
 (184, 'Стройсервис'),
-(186, 'Керосин КО-25 бочка'),
+(186, 'Керосин КО-25 (216л/170кг)'),
 (187, 'Керосин РТ бочка'),
 (188, 'ПРОМ ТЭК 2668435 2725648'),
 (189, 'Химоптторг'),
@@ -93,7 +93,7 @@ INSERT INTO `allnames` (`nameid`, `name`) VALUES
 (214, 'Смазка силиконовая Si-M (тюбик)'),
 (215, 'Состав МВС-3Н (24 кг)'),
 (216, 'Масло гидравлическое МГЕ-46В (бочка)'),
-(217, 'Масло индустриальное И-20 (бочка)'),
+(217, 'И-20 А (216,5л/180 кг) - масло индустриальное '),
 (218, 'Масло авиационное МС-20 (бочка)'),
 (219, 'Смазка ЦИАТИМ-221 (банка 0,8кг)'),
 (220, 'Масло компрессорное КС-19 (бочка 180 кг)'),
@@ -155,7 +155,7 @@ INSERT INTO `allnames` (`nameid`, `name`) VALUES
 (282, 'Состав МВС-3Н в КГ'),
 (283, 'СЭП (ТСК)'),
 (284, 'Мотор-Трейд (Кр.Куц.)'),
-(285, 'Литол-24 21кг'),
+(285, 'Смазка Литол-24 (КНБ 21 кг)'),
 (286, 'Литол-24 45кг'),
 (287, 'Смазка АМС-3 (бидон 15 кг)'),
 (288, 'СовИнТех'),
@@ -172,11 +172,11 @@ INSERT INTO `allnames` (`nameid`, `name`) VALUES
 (301, 'Керосин РТ 10л'),
 (302, 'Масло моторное М10Г2К OR (10л)'),
 (303, 'Масло вазелиновое ГОСТ (4л)'),
-(304, 'Shell Corena D 68 (20л)'),
-(305, 'Shell Corena P 150 (20л)'),
+(304, 'Shell Corena S3 R 68 (20л)- компрессорное масло'),
+(305, 'Shell Corena S2 P 150 (Corena P 150) (20л)- компрессорное масло'),
 (308, 'Керосин РТ 20л'),
 (309, 'Медхим'),
-(310, 'Масло вазелиновое МХ-250 (аналог ГОСТ) (4л)'),
+(310, 'Масло вазелиновое МХ-250 с пищ доп. минеральное(канистра 4 кг)'),
 (311, 'Промышленные технологии (Фаворит Ойл)'),
 (313, 'Нефрас С2 80/120 (бочка)'),
 (314, 'Балашейские пески'),
@@ -219,7 +219,7 @@ INSERT INTO `allnames` (`nameid`, `name`) VALUES
 (362, 'Анвек'),
 (364, 'Масло редукторное Shell Omala S2 G68 - бочка (208л)'),
 (365, 'Евросмаз'),
-(367, 'Тосол 10 л'),
+(367, 'Тосол 10 кг Дзержинский'),
 (368, 'Castrol GTX Magnatec 5w-40 (4л)'),
 (369, 'Литол-24 0,8 кг'),
 (370, 'Смазка графитная Ж 21 кг'),
@@ -252,14 +252,14 @@ INSERT INTO `allnames` (`nameid`, `name`) VALUES
 (401, 'Mannol silicone spray 400ml'),
 (403, 'Сервис'),
 (404, 'Герметик Автосил 180 мл'),
-(406, 'Инрол-СТС СибТрейдСервис'),
-(407, 'Mobilube 85-w140 (20л)'),
+(406, 'Инрол-СТС'),
+(407, 'Mobilube HD 85W-140 (20л) - масло трансмиссионное '),
 (409, 'Ойл-Форби'),
 (410, 'Слоистые пластики'),
-(411, 'Bechem Berutemp 500 T2 (0,8 кг)'),
+(411, 'Смазка Berutemp 500 T2 (800г)'),
 (414, 'Масло ИГП-38 (бочка 180 кг)'),
 (415, 'Петро-Самара (276-45-80)'),
-(416, 'ТНК Revolux D1 SAE 10W-40 (20л)'),
+(416, 'Revolux D1 SAE 10W-40 ТНК в литрах'),
 (417, 'Контур СПБ'),
 (418, 'Масло приборное (170 кг бочка)'),
 (419, 'Масло приборное МВП (170 кг бочка)'),
@@ -358,11 +358,11 @@ INSERT INTO `allnames` (`nameid`, `name`) VALUES
 (541, 'Shell Tellus S2 V 46 (209 л)'),
 (542, 'КАСКАД Наприенко'),
 (545, 'НЭТЧ'),
-(546, 'Shell Omala S2 G 320 (20л)'),
-(548, 'Тосол бочка (200л)'),
+(546, 'Shell Omala S2 G320 (Omala 320) (20 л) масло редукторное'),
+(548, 'Тосол 216 л, Дзержинский'),
 (550, 'ЭТИЛАЦЕТАТ бочка 180 кг'),
 (551, 'Адверс'),
-(552, 'Avantin 361 IN 18кг (канистра 20л)'),
+(552, 'СОЖ Avantin 361 I-N (18 кг)'),
 (554, 'Oemeta Frigomet NF 470/30N (бочка 220 кг)'),
 (556, 'УТС РУС (ШАТРОВ)'),
 (557, 'LM Pro-Line Silikon-Spray (0,4л)'),
@@ -379,14 +379,52 @@ INSERT INTO `allnames` (`nameid`, `name`) VALUES
 (569, 'СМОЛА ПЛС-ЛС 1 кг'),
 (571, 'СУПЕРКОНТ  г. Красноярск'),
 (572, 'ИНТЕРХИМ Дзержинск'),
-(578, 'Масло моторное Роснефть Maximum Diesel 10w40 (20л)'),
+(578, 'Масло Роснефть Maximum Diesel 10W-40 (20л) п/с'),
 (579, 'Тосол Top40 (10кг)'),
 (580, 'Антифриз G-12 красный МиГ (10кг)'),
 (582, 'Mobil ATF 220 Dexron II (20л)'),
 (583, 'Развитие'),
 (604, 'Стройиндустрия'),
 (605, 'Стройавтокран'),
-(608, 'СККМ');
+(608, 'СККМ'),
+(609, 'И-12 3 бочки и Циатим 20шт'),
+(610, 'Альянс-Полимер 89371759681'),
+(611, 'Квоит'),
+(613, 'Революкс 40 и Тосол 10'),
+(614, 'Сиб Трейд Сервис'),
+(615, 'РЖ-8У 3 бочки'),
+(616, 'Рабочая жидкость РЖ-8 У (бочка 200 л)'),
+(617, 'Рабочая жидкость РЖ-8 У (бочка 200 л) пломба'),
+(618, 'И-20 А (216,5л/180 кг) - масло индустриальное  1 бочка'),
+(619, 'Жидкость "ТЭН -концентрат" охлаждающая (бочка 215 кг)'),
+(620, 'Жидкость "ТОСОЛ -концентрат" охлаждающая (бочка 215 кг)'),
+(621, 'Масло ЛУКОЙЛ-АВАНГАРД ЭКСТРА , 10W40 (18л) - моторное п/синт'),
+(622, 'Антифриз FELIX CARBOX G-12 (50 кг)'),
+(623, 'Антифриз  G-12 (10кг) красный, Дзержинский'),
+(624, 'Kluber Isoflex LDS 18 Spezial А (1 кг)'),
+(625, 'Жидкость "ТЭН -концентрат" охлаждающая (бочка 215 кг) 5шт'),
+(626, 'Жидкость "ТОСОЛ -концентрат" охлаждающая (бочка 215 кг) 5шт'),
+(627, 'Моторки и Тосолы'),
+(628, 'Спирт изопропиловый (20л)'),
+(629, 'Спирт изопропиловый (20л) 2шт'),
+(630, 'Авантин 4 шт'),
+(631, 'Shell Tellus S2 М46 (Tellus 46) (20л) - гидравлическое масло'),
+(632, 'Shell, Тосол, Литол'),
+(633, 'Замазка уплотнительная У-20 А'),
+(634, 'Замазка уплотнительная У-20 А 20кг'),
+(635, 'Масло ТМ-5,SAE 80W-90,GL-5(18л) трансмис. '),
+(636, 'Трансмиссия'),
+(637, '5 Авантинов'),
+(638, 'Смазка Berutemp 500 T2 (800г) 2шт'),
+(639, 'Керосин бочка'),
+(640, 'Mobilube HD 85W-140 (20л) 4 шт'),
+(641, 'Корены и Ваз'),
+(642, 'Тосол 216 л, Дзержинский 1бочка'),
+(660, 'ПРобная заявка для проверки опций покупателя'),
+(662, 'Смазка Berutemp 500 T2 (10кг)'),
+(663, 'ПМС-400 1 бочка'),
+(664, 'Масло силиконовое ПМС-400 (200л/200кг)'),
+(665, 'Силикон-Снаб');
 
 -- --------------------------------------------------------
 
@@ -397,9 +435,9 @@ INSERT INTO `allnames` (`nameid`, `name`) VALUES
 CREATE TABLE `byers` (
   `byers_id` smallint(5) UNSIGNED NOT NULL,
   `byers_nameid` mediumint(8) UNSIGNED NOT NULL,
-  `clearp` float(5,2) UNSIGNED NOT NULL,
-  `obnal` smallint(5) UNSIGNED NOT NULL,
-  `wtime` float UNSIGNED NOT NULL,
+  `ov_firstobp` float(5,2) UNSIGNED DEFAULT NULL,
+  `ov_tp` float(5,2) UNSIGNED DEFAULT NULL,
+  `ov_wt` float(4,2) UNSIGNED DEFAULT NULL,
   `comment` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -407,42 +445,45 @@ CREATE TABLE `byers` (
 -- Дамп данных таблицы `byers`
 --
 
-INSERT INTO `byers` (`byers_id`, `byers_nameid`, `clearp`, `obnal`, `wtime`, `comment`) VALUES
-(42, 106, 0.00, 0, 0, 'И-12 - по 550 на шт, Ц221 - по 60 на шт'),
-(43, 107, 0.00, 0, 0, NULL),
-(44, 108, 0.00, 0, 0, NULL),
-(45, 109, 0.00, 0, 0, NULL),
-(46, 132, 4.75, 0, 0, 'чистыми'),
-(47, 146, 5.00, 12, 0, NULL),
-(48, 153, 0.00, 0, 0, NULL),
-(49, 163, 0.00, 0, 0, NULL),
-(50, 169, 0.00, 0, 0, NULL),
-(51, 170, 0.00, 0, 0, NULL),
-(52, 184, 0.00, 0, 0, NULL),
-(53, 209, 0.00, 0, 0, 'на шт - 8, делится как 5 и 3'),
-(54, 272, 5.00, 12, 0, NULL),
-(55, 294, 5.00, 12, 0, NULL),
-(56, 299, 7.00, 11, 0, 'Делится 2/3 -Ц, 1/3-М'),
-(57, 300, 0.00, 0, 0, NULL),
-(58, 314, 0.00, 0, 0, NULL),
-(59, 328, 0.00, 0, 0, NULL),
-(60, 333, 0.00, 0, 0, NULL),
-(61, 341, 0.00, 0, 0, NULL),
-(62, 356, 0.00, 0, 0, NULL),
-(63, 399, 0.00, 0, 0, NULL),
-(64, 403, 0.00, 0, 0, NULL),
-(65, 406, 0.00, 0, 0, NULL),
-(66, 410, 5.00, 12, 0, 'при обнале - 45-12'),
-(67, 424, 0.00, 0, 0, NULL),
-(68, 427, 5.00, 11, 0, NULL),
-(69, 447, 0.00, 0, 0, NULL),
-(70, 516, 0.00, 0, 0, NULL),
-(71, 528, 0.00, 0, 0, NULL),
-(72, 545, 0.00, 0, 0, NULL),
-(73, 551, 0.00, 0, 0, NULL),
-(74, 604, 10.00, 10, 0, NULL),
-(75, 605, 10.00, 12, 0, 'когда малая рент - 100 на шт'),
-(78, 608, 0.00, 0, 0, NULL);
+INSERT INTO `byers` (`byers_id`, `byers_nameid`, `ov_firstobp`, `ov_tp`, `ov_wt`, `comment`) VALUES
+(42, 106, 0.00, 0.00, 0.00, 'И-12 - по 550 на шт, Ц221 - по 60 на шт'),
+(43, 107, 0.00, 0.00, 0.00, NULL),
+(44, 108, 0.00, 0.00, 0.00, NULL),
+(45, 109, 0.00, 0.00, 0.00, NULL),
+(46, 132, 0.00, 4.75, 0.00, 'чистыми'),
+(47, 146, 12.00, 5.00, 0.00, NULL),
+(48, 153, 0.00, 0.00, 0.00, NULL),
+(49, 163, 0.00, 0.00, 0.00, NULL),
+(50, 169, 0.00, 0.00, 0.00, NULL),
+(51, 170, 0.00, 0.00, 0.00, NULL),
+(52, 184, 0.00, 0.00, 0.00, NULL),
+(53, 209, 0.00, 0.00, 0.00, 'на шт - 8, делится как 5 и 3'),
+(54, 272, 12.00, 5.00, 0.00, NULL),
+(55, 294, 12.00, 5.00, 0.00, NULL),
+(56, 299, 11.00, 7.00, 0.00, 'Делится 2/3 -Ц, 1/3-М'),
+(57, 300, 0.00, 0.00, 0.00, NULL),
+(58, 314, 0.00, 0.00, 0.00, NULL),
+(59, 328, 0.00, 0.00, 0.00, NULL),
+(60, 333, 0.00, 0.00, 0.00, NULL),
+(61, 341, 0.00, 0.00, 0.00, NULL),
+(62, 356, 0.00, 0.00, 0.00, NULL),
+(63, 399, 0.00, 0.00, 0.00, NULL),
+(64, 403, 0.00, 0.00, 0.00, NULL),
+(65, 406, 0.00, 0.00, 0.00, NULL),
+(66, 410, 12.00, 5.00, 0.00, 'при обнале - 45-12'),
+(67, 424, 0.00, 0.00, 0.00, NULL),
+(68, 427, 11.00, 5.00, 0.00, NULL),
+(69, 447, 0.00, 0.00, 0.00, NULL),
+(70, 516, 0.00, 0.00, 0.00, NULL),
+(71, 528, 0.00, 0.00, 0.00, NULL),
+(72, 545, 0.00, 0.00, 0.00, NULL),
+(73, 551, 0.00, 0.00, 0.00, NULL),
+(74, 604, 10.00, 10.00, 0.00, NULL),
+(75, 605, 12.00, 10.00, 0.00, 'когда малая рент - 100 на шт'),
+(78, 608, 0.00, 0.00, 0.00, NULL),
+(79, 610, 0.00, 0.00, 0.00, NULL),
+(80, 611, 0.00, 0.00, 0.00, NULL),
+(81, 614, 0.00, 0.00, 0.00, NULL);
 
 -- --------------------------------------------------------
 
@@ -473,6 +514,20 @@ CREATE TABLE `payments` (
   `requestid` mediumint(8) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Дамп данных таблицы `payments`
+--
+
+INSERT INTO `payments` (`payed`, `payments_id`, `number`, `comment`, `sum`, `requestid`) VALUES
+('2018-07-06', 8, 1406, '', 5990, 123),
+('2018-07-05', 9, 153, '', 37800, 130),
+('2018-07-09', 10, 728, '', 40350, 121),
+('2018-07-13', 11, 1692, '', 6000, 139),
+('2018-07-16', 12, 1715, '', 5775, 139),
+('2018-07-16', 13, 168, '', 54450, 131),
+('2018-07-16', 14, 1210, '', 5150, 133),
+('2018-07-17', 15, 2132, '', 23125, 134);
+
 -- --------------------------------------------------------
 
 --
@@ -482,7 +537,6 @@ CREATE TABLE `payments` (
 CREATE TABLE `pricings` (
   `pricingid` smallint(5) UNSIGNED NOT NULL,
   `positionid` smallint(5) UNSIGNED NOT NULL,
-  `byerid` smallint(5) UNSIGNED NOT NULL,
   `tradeid` smallint(5) UNSIGNED NOT NULL,
   `sellerid` smallint(5) UNSIGNED NOT NULL,
   `zak` float UNSIGNED NOT NULL,
@@ -490,26 +544,34 @@ CREATE TABLE `pricings` (
   `tzr` smallint(5) UNSIGNED DEFAULT NULL,
   `wtime` float UNSIGNED DEFAULT NULL,
   `fixed` smallint(5) UNSIGNED NOT NULL,
-  `op` float UNSIGNED NOT NULL,
-  `tp` float UNSIGNED NOT NULL,
+  `op` float(5,2) UNSIGNED NOT NULL,
+  `tp` float(5,2) UNSIGNED DEFAULT NULL,
   `opr` float UNSIGNED NOT NULL,
-  `tpr` float UNSIGNED NOT NULL,
-  `firstobp` float UNSIGNED NOT NULL,
-  `firstobpr` float UNSIGNED NOT NULL,
-  `firstoh` float UNSIGNED NOT NULL,
-  `marge` float UNSIGNED NOT NULL,
-  `margek` float UNSIGNED NOT NULL,
-  `rop` float UNSIGNED NOT NULL,
-  `realop` float UNSIGNED NOT NULL,
-  `rtp` float UNSIGNED NOT NULL,
-  `realtp` float UNSIGNED NOT NULL,
-  `clearp` float UNSIGNED NOT NULL,
-  `obp` float UNSIGNED NOT NULL,
-  `oh` smallint(5) UNSIGNED NOT NULL,
+  `tpr` float UNSIGNED DEFAULT NULL,
+  `firstobp` float UNSIGNED DEFAULT NULL,
+  `firstobpr` float UNSIGNED DEFAULT NULL,
+  `firstoh` float UNSIGNED DEFAULT NULL,
+  `marge` float UNSIGNED DEFAULT NULL,
+  `margek` float UNSIGNED DEFAULT NULL,
+  `rop` float UNSIGNED DEFAULT NULL,
+  `realop` float UNSIGNED DEFAULT NULL,
+  `rtp` float UNSIGNED DEFAULT NULL,
+  `realtp` float UNSIGNED DEFAULT NULL,
+  `clearp` float(5,2) UNSIGNED DEFAULT NULL,
+  `obp` float UNSIGNED DEFAULT NULL,
+  `oh` smallint(5) UNSIGNED DEFAULT NULL,
   `price` float UNSIGNED NOT NULL,
   `rent` float UNSIGNED NOT NULL,
-  `winner` smallint(5) UNSIGNED NOT NULL
+  `winner` smallint(5) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп данных таблицы `pricings`
+--
+
+INSERT INTO `pricings` (`pricingid`, `positionid`, `tradeid`, `sellerid`, `zak`, `kol`, `tzr`, `wtime`, `fixed`, `op`, `tp`, `opr`, `tpr`, `firstobp`, `firstobpr`, `firstoh`, `marge`, `margek`, `rop`, `realop`, `rtp`, `realtp`, `clearp`, `obp`, `oh`, `price`, `rent`, `winner`) VALUES
+(1, 508, 260, 50, 98000, 1, 2600, 1, 0, 20.56, 4.99, 20683.4, 6052.04, 0, 0, 6052, 0, 0, 0, 0, 0, 0, 4.75, 0, 0, 127335, 16, 1),
+(2, 508, 260, 104, 100000, 1, 2300, 0, 0, 20.19, 4.99, 20654.4, 6135.42, 0, 0, 6135, 0, 0, 0, 0, 0, 0, 4.75, 0, 0, 129089, 16, 0);
 
 -- --------------------------------------------------------
 
@@ -526,8 +588,38 @@ CREATE TABLE `requests` (
   `byersid` smallint(5) UNSIGNED NOT NULL,
   `payment` tinyint(1) DEFAULT NULL,
   `req_sum` int(11) DEFAULT NULL,
-  `1c_num` int(4) DEFAULT NULL
+  `1c_num` int(4) DEFAULT NULL,
+  `ov_op` float(5,2) UNSIGNED DEFAULT NULL,
+  `ov_firstobp` float(5,2) UNSIGNED DEFAULT NULL,
+  `ov_tp` float(5,2) UNSIGNED DEFAULT NULL,
+  `ov_wt` float(4,2) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп данных таблицы `requests`
+--
+
+INSERT INTO `requests` (`created`, `requests_id`, `req_comment`, `requests_nameid`, `req_rent`, `byersid`, `payment`, `req_sum`, `1c_num`, `ov_op`, `ov_firstobp`, `ov_tp`, `ov_wt`) VALUES
+('2018-07-05', 121, NULL, 609, 0, 42, NULL, 0, 230, NULL, NULL, NULL, NULL),
+('2018-07-02', 123, NULL, 613, 0, 65, NULL, NULL, 221, NULL, NULL, NULL, NULL),
+('2018-07-11', 124, NULL, 615, 0, 65, NULL, NULL, 239, NULL, NULL, NULL, NULL),
+('2018-07-13', 125, NULL, 618, 0, 65, NULL, NULL, 244, NULL, NULL, NULL, NULL),
+('2018-07-03', 126, NULL, 625, 0, 46, NULL, NULL, 222, NULL, NULL, NULL, NULL),
+('2018-07-03', 127, NULL, 626, 0, 46, NULL, NULL, 223, NULL, NULL, NULL, NULL),
+('2018-07-06', 128, NULL, 627, 0, 46, NULL, NULL, 234, NULL, NULL, NULL, NULL),
+('2018-07-05', 129, NULL, 629, 0, 47, NULL, NULL, 225, NULL, NULL, NULL, NULL),
+('2018-07-05', 130, NULL, 630, 0, 55, NULL, NULL, 226, NULL, NULL, NULL, NULL),
+('2018-07-11', 131, NULL, 632, 0, 79, NULL, NULL, 240, NULL, NULL, NULL, NULL),
+('2018-07-12', 132, NULL, 634, 0, 61, NULL, NULL, 241, NULL, NULL, NULL, NULL),
+('2018-07-13', 133, NULL, 636, 0, 45, NULL, NULL, 242, NULL, NULL, NULL, NULL),
+('2018-07-16', 134, NULL, 637, 0, 80, NULL, NULL, 245, NULL, NULL, NULL, NULL),
+('2018-07-19', 135, NULL, 638, 0, 49, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2018-07-17', 136, NULL, 639, 0, 52, NULL, NULL, 247, NULL, NULL, NULL, NULL),
+('2018-07-17', 137, NULL, 640, 0, 81, NULL, NULL, 248, NULL, NULL, NULL, NULL),
+('2018-07-05', 138, NULL, 641, 0, 56, NULL, NULL, 232, NULL, NULL, NULL, NULL),
+('2018-07-10', 139, NULL, 642, 0, 52, NULL, NULL, 238, NULL, NULL, NULL, NULL),
+('2018-07-20', 140, NULL, 660, 0, 56, NULL, NULL, NULL, 21.00, 11.00, 7.00, 0.00),
+('2018-07-20', 142, NULL, 663, 16, 46, NULL, 127335, NULL, 21.00, 0.00, 4.75, 0.00);
 
 -- --------------------------------------------------------
 
@@ -542,6 +634,41 @@ CREATE TABLE `req_positions` (
   `requestid` mediumint(8) UNSIGNED NOT NULL,
   `giveaway` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп данных таблицы `req_positions`
+--
+
+INSERT INTO `req_positions` (`req_positionid`, `pos_name`, `winnerid`, `requestid`, `giveaway`) VALUES
+(474, 'Revolux D1 SAE 10W-40 ТНК в литрах', 0, 123, NULL),
+(475, 'Тосол 10 кг Дзержинский', 0, 123, NULL),
+(477, 'Рабочая жидкость РЖ-8 У (бочка 200 л) пломба 2шт', 0, 124, NULL),
+(479, 'И-20 А (216,5л/180 кг) - масло индустриальное 1бочка', 0, 125, NULL),
+(480, 'Рабочая жидкость РЖ-8 У (бочка 200 л) 1 шт', 0, 124, NULL),
+(482, 'Жидкость "ТЭН -концентрат" охлаждающая (бочка 215 кг) 5шт', 0, 126, NULL),
+(483, 'Жидкость "ТОСОЛ -концентрат" охлаждающая (бочка 215 кг) 5шт', 0, 127, NULL),
+(484, 'Жидкость "ТОСОЛ -концентрат" охлаждающая (бочка 215 кг) 11шт', 0, 128, NULL),
+(485, 'Масло гидр.марки "А" (канистра 10л) 5шт', 0, 128, NULL),
+(486, 'Антифриз FELIX CARBOX G-12 (50 кг) 1шт', 0, 128, NULL),
+(487, 'Тосол 10 кг Дзержинский 10шт', 0, 128, NULL),
+(489, 'Спирт изопропиловый (20л) 2шт', 0, 129, NULL),
+(490, 'СОЖ Avantin 361 I-N (18 кг) 4шт', 0, 130, NULL),
+(491, 'Shell Omala S2 G320 (Omala 320) (20 л) масло редукторное 1шт', 0, 131, NULL),
+(492, 'Shell Tellus S2 М46 (Tellus 46) (20л) - гидравлическое масло 1шт', 0, 131, NULL),
+(493, 'Тосол 216 л, Дзержинский 3шт', 0, 131, NULL),
+(494, 'Смазка Литол-24 (КНБ 21 кг) 1шт', 0, 131, NULL),
+(496, 'Замазка уплотнительная У-20 А 20кг', 0, 132, NULL),
+(497, 'Масло ТМ-5,SAE 80W-90,GL-5(18л) трансмис. 2шт', 0, 133, NULL),
+(498, 'СОЖ Avantin 361 I-N (18 кг) 5шт', 0, 134, NULL),
+(499, 'Смазка Berutemp 500 T2 (800г) 2шт', 0, 135, NULL),
+(500, 'Керосин КО-25 (216л/170кг) 1шт', 0, 136, NULL),
+(501, 'Mobilube HD 85W-140 (20л) - масло трансмиссионное  4шт', 0, 137, NULL),
+(502, 'Масло индустриальное И-12 (бочка) 3шт', 0, 121, NULL),
+(503, 'Shell Corena S3 R 68 (20л)- компрессорное масло 1шт', 0, 138, NULL),
+(504, 'Shell Corena S2 P 150 (Corena P 150) (20л)- компрессорное масло 3шт', 0, 138, NULL),
+(505, 'Масло вазелиновое МХ-250 с пищ доп. минеральное(канистра 4 кг) 4шт', 0, 138, NULL),
+(506, 'Тосол 216 л, Дзержинский 1бочка', 0, 139, NULL),
+(508, 'Масло силиконовое ПМС-400 (200л/200кг) 1шт', 1, 142, NULL);
 
 -- --------------------------------------------------------
 
@@ -644,7 +771,8 @@ INSERT INTO `sellers` (`sellers_id`, `sellers_nameid`) VALUES
 (99, 558),
 (100, 571),
 (101, 572),
-(102, 583);
+(102, 583),
+(104, 665);
 
 -- --------------------------------------------------------
 
@@ -889,7 +1017,21 @@ INSERT INTO `trades` (`trades_id`, `trades_nameid`) VALUES
 (242, 578),
 (243, 579),
 (244, 580),
-(245, 582);
+(245, 582),
+(246, 616),
+(247, 617),
+(248, 619),
+(249, 620),
+(250, 621),
+(251, 622),
+(252, 623),
+(253, 624),
+(254, 628),
+(255, 631),
+(256, 633),
+(257, 635),
+(259, 662),
+(260, 664);
 
 --
 -- Индексы сохранённых таблиц
@@ -965,47 +1107,47 @@ ALTER TABLE `trades`
 -- AUTO_INCREMENT для таблицы `allnames`
 --
 ALTER TABLE `allnames`
-  MODIFY `nameid` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=609;
+  MODIFY `nameid` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=666;
 --
 -- AUTO_INCREMENT для таблицы `byers`
 --
 ALTER TABLE `byers`
-  MODIFY `byers_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `byers_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 --
 -- AUTO_INCREMENT для таблицы `giveaways`
 --
 ALTER TABLE `giveaways`
-  MODIFY `giveaways_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `giveaways_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT для таблицы `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payments_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `payments_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT для таблицы `pricings`
 --
 ALTER TABLE `pricings`
-  MODIFY `pricingid` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=554;
+  MODIFY `pricingid` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT для таблицы `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `requests_id` mediumint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
+  MODIFY `requests_id` mediumint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
 --
 -- AUTO_INCREMENT для таблицы `req_positions`
 --
 ALTER TABLE `req_positions`
-  MODIFY `req_positionid` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=472;
+  MODIFY `req_positionid` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=509;
 --
 -- AUTO_INCREMENT для таблицы `sellers`
 --
 ALTER TABLE `sellers`
-  MODIFY `sellers_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `sellers_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 --
 -- AUTO_INCREMENT для таблицы `trades`
 --
 ALTER TABLE `trades`
-  MODIFY `trades_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=246;
+  MODIFY `trades_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=261;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --

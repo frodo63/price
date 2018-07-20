@@ -427,6 +427,10 @@ $(document).ready(function() {
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                 console.log($('#trade').attr('trade_id'),$('#seller').attr('seller_id'));
 
+                /*Вставим прайсингайди в прайсингвиндоу ПРОБНОЕ!!!*/
+                $('#pricingwindow').attr({'pricingid': prid});
+                /**/
+
                 //АЯКС на едитпрайсинг
                 $.ajax({
                     url: 'mysql_read.php',
@@ -459,6 +463,7 @@ $(document).ready(function() {
                             $('#realop, #realtp').text("");
                             console.log('Цена отпущена');
                             /*//Косметика*/
+
 
                             $('#op').val(json.op);
                             $('#tp').val(json.tp);

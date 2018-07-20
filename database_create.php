@@ -23,7 +23,8 @@ CREATE TABLE IF NOT EXISTS `byers` (
 `byers_nameid` MEDIUMINT UNSIGNED NOT NULL,
 `ov_firstobp` FLOAT(5,2) NULL UNSIGNED,
 `ov_tp` FLOAT(5,2) NULL UNSIGNED,
-`ov_wt` FLOAT(4,2) NULL UNSIGNED
+`ov_wt` FLOAT(4,2) NULL UNSIGNED,
+`comment` VARCHAR(300) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL;
  PRIMARY KEY (`byers_id`),
  FOREIGN KEY (`byers_nameid`) REFERENCES `allnames`(`nameid`)
  ON UPDATE CASCADE
@@ -114,17 +115,17 @@ CREATE TABLE IF NOT EXISTS `pricings` (
     `firstobp` FLOAT(2) UNSIGNED NOT NULL,
     `firstobpr` FLOAT(2) UNSIGNED NOT NULL,
     `firstoh` FLOAT(2) UNSIGNED NOT NULL,
-    `marge` FLOAT(2) UNSIGNED NOT NULL,
-    `margek` FLOAT(2) UNSIGNED NOT NULL,
-    `rop` FLOAT(2) UNSIGNED NOT NULL,
-    `realop` FLOAT(2) UNSIGNED NOT NULL,
-    `rtp` FLOAT(2) UNSIGNED NOT NULL,
-    `realtp` FLOAT(2) UNSIGNED NOT NULL,
-    `clearp` FLOAT(2) UNSIGNED NOT NULL,
-    `obp`FLOAT(2) UNSIGNED NOT NULL,
+    `marge` FLOAT UNSIGNED NOT NULL,
+    `margek` FLOAT UNSIGNED NOT NULL,
+    `rop` FLOAT(5,2) UNSIGNED NOT NULL,
+    `realop` FLOAT(5,2) UNSIGNED NOT NULL,
+    `rtp` FLOAT(5,2) UNSIGNED NOT NULL,
+    `realtp` FLOAT(5,2) UNSIGNED NOT NULL,
+    `clearp` FLOAT(5,2) UNSIGNED NOT NULL,
+    `obp`FLOAT(5,2) UNSIGNED NOT NULL,
     `oh` SMALLINT UNSIGNED NOT NULL,
-    `price` FLOAT(2) UNSIGNED NOT NULL,
-    `rent` FLOAT(3) UNSIGNED NOT NULL,
+    `price` FLOAT UNSIGNED NOT NULL,
+    `rent` FLOAT(5,3) UNSIGNED NOT NULL,
     `winner` SMALLINT UNSIGNED,
      PRIMARY KEY (`pricingid`),
      FOREIGN KEY (`sellerid`) REFERENCES `sellers`(`sellers_id`)

@@ -23,9 +23,10 @@ if(isset($_POST['table'])){
             $result .= "</ul>";
             print $result;
         } catch( PDOException $Exception ) {
-        // Note The Typecast To An Integer!
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
-    }
+            // Note The Typecast To An Integer!
+            $pdo->rollback();
+            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        }
         /**//////////////////////////////////////////////////////////////ЧТЕНИЕ СПИСКА ЗАЯВОК
     }
     else if ($table == 'requests') {

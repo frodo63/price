@@ -177,9 +177,9 @@ $(document).ready(function(){
         var lzak = Number($('#zak').val());    //Закупочная цена (за 1 единицу товара)
         var lkol = Number($('#kol').val());    //Количество товара
         var ltzr = Number($('#tzr').val());    //Транспортные (общая сумма за рейс)
-        var ltp = Number(Number($('#tp').val()).toFixed(3));        //Ненаша наценка (в формате десятичных двух знаков)
+        var ltp = Number(Number($('#tp').val()).toFixed(2));        //Ненаша наценка (в формате десятичных двух знаков)
         var wt = Number(Number($('#wtime').val()).toFixed(2));        //Отсрочка платежа, в месяцах, нужна при расчете рентабельности
-        var lop = Number(Number($('#op').val()).toFixed(3));        //Наша наценка (в формате десятичных двух знаков)
+        var lop = Number(Number($('#op').val()).toFixed(2));        //Наша наценка (в формате десятичных двух знаков)
         var fobp = Number(Number($('#firstobp').val()).toFixed(0));
         var firstobpr = Number($('#firstobpr').text());
         var uid = Number($('#id').text());
@@ -234,7 +234,7 @@ $(document).ready(function(){
             //Высчитываем РЕАЛЬНЫЙ процент (для наруки)
                 var firstoh = Number((Number($('#firstoh').text())).toFixed(2));
                 var clearp = firstoh/lprice*100;
-                $('#clearp').text((clearp).toFixed(3) + ' %');
+                $('#clearp').text((clearp).toFixed(2) + ' %');
                 var opr = Number((Number($('#opr').text())).toFixed(2));
 
                 /*Расчет рентабельности*/
@@ -286,8 +286,8 @@ $(document).ready(function(){
                      '&zak=' + Number($('#zak').val()) +
                      '&kol=' + Number($('#kol').val()) +
                      '&tzr=' + Number($('#tzr').val()) +
-                     '&op=' + Number(Number($('#op').val()).toFixed(3)) +
-                     '&tp=' + Number(Number($('#tp').val()).toFixed(3)) +
+                     '&op=' + Number(Number($('#op').val()).toFixed(2)) +
+                     '&tp=' + Number(Number($('#tp').val()).toFixed(2)) +
                      '&firstobp=' + Number(Number($('#firstobp').val()).toFixed(0)) +
                      '&wtime=' + Number(Number($('#wtime').val()).toFixed(2)) +
                      '&obp=' + Number(Number($('#obp').val()).toFixed(1)) +
@@ -305,8 +305,8 @@ $(document).ready(function(){
                      '&oh=' + oh +
                      '&marge=' + marge +
                      '&margek=' + margek +
-                     '&clearp=' + clearp;
-                if(positionID != '-'){
+                     '&clearp=' + Number(Number(clearp).toFixed(2));
+                if(positionID != '-'){//Если это первое сохранение расценки
                     formData += '&positionid=' + positionID;
                     console.log(formData);
                     //Аякс скрипт на savepricing
@@ -328,7 +328,7 @@ $(document).ready(function(){
                             });
                         }
                     });
-                }else{
+                }else{//Если это редактирование расценки
                     formData += '&pricingid=' + pricingID;
                     console.log(formData);
                     //Аякс скрипт на editpricing

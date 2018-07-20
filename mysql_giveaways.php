@@ -103,10 +103,11 @@ if (isset($_POST['the_byer'])){
         $result.="</tr></tbody></table>";
         print $result;
 
-    }catch(PDOExecption $e) {
+    }catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
         $pdo->rollback();
-        print "Error!: " . $e->getMessage() . "</br>";
-    };
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
 
 };
 
@@ -178,10 +179,11 @@ if (isset($_POST['the_request'])){
 
         print(json_encode(array('data1'=>$result1,'data2'=>$result2,'data3'=>$result3,'data4'=>$result4)));
 
-    }catch(PDOExecption $e) {
+    }catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
         $pdo->rollback();
-        print "Error!: " . $e->getMessage() . "</br>";
-    };
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
 
 };
 

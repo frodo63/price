@@ -1,27 +1,41 @@
 <?php
 include_once 'pdo_connect.php';
 
-if(isset($_POST['table']) && isset($_POST['thename'])){
+if(isset($_POST['table_c']) && isset($_POST['thename'])){
 
-    $table = $_POST['table'];
+    $table_c = $_POST['table_c'];
     $thename = $_POST['thename'];
 
     /**//////////////////////////////////////////////////////////////
     $statement = $pdo->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
-
     try {
         $pdo->beginTransaction();
         $statement->execute(array($thename));
+
+        switch($table_c)
+        {
+            case 1:
+                $table = 'byers';
+                break;
+            case 2:
+                $table = 'sellers';
+                break;
+            case 3:
+                $table = 'trades';
+                break;
+        }
+
         $theID = $pdo->lastInsertId();
         $thecolumn = $table . '_nameid';
-        $statement = $pdo->prepare("INSERT INTO `$table`(`$thecolumn`) VALUES(?)");
 
+        $statement = $pdo->prepare("INSERT INTO `$table`(`$thecolumn`) VALUES(?)");
         $statement->execute(array($theID));
         $pdo->commit();
 
-    } catch(PDOExecption $e) {
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
         $pdo->rollback();
-        print "Error!: " . $e->getMessage() . "</br>";
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
     /**//////////////////////////////////////////////////////////////
 
@@ -37,18 +51,36 @@ if(isset($_POST['byer']) && isset($_POST['thename'])){
     $created = date("Y-m-d");
 
     /**//////////////////////////////////////////////////////////////
-    $statement = $pdo->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
-    $stmt = $pdo->prepare("INSERT INTO `requests`(`created`,`requests_nameid`,`byersid`) VALUES(?,?,?)");
+
+
     try {
+
+        //Запросы
+        $statement = $pdo->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");//Имя заявки
+        $request_options = $pdo->prepare("SELECT byers.ov_tp,byers.ov_firstobp,byers.ov_wt FROM byers where byers.byers_id=?");//Опции заявки из Покупателя
+        $stmt = $pdo->prepare("INSERT INTO `requests`(`created`,`requests_nameid`,`byersid`,`ov_op`,`ov_firstobp`,`ov_tp`,`ov_wt`) VALUES(?,?,?,?,?,?,?)");//Сама заявка
+
+
         $pdo->beginTransaction();
         $statement->execute(array($thename));
         $theID = $pdo->lastInsertId();
-        $stmt->execute(array($created, $theID, $byer));
+
+        $request_options->execute(array($byer));
+        $result = $request_options->fetch();
+
+        //Опции заявки
+        $ov_op = 21; //Наша дефолтная наценка
+        $ov_tp = $result['ov_tp'];
+        $ov_firstobp = $result['ov_firstobp'];
+        $ov_wt = $result['ov_wt'];
+
+        $stmt->execute(array($created, $theID, $byer, $ov_op, $ov_firstobp, $ov_tp, $ov_wt));
         $pdo->commit();
 
-    } catch(PDOExecption $e) {
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
         $pdo->rollback();
-        print "Error!: " . $e->getMessage() . "</br>";
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
     /**//////////////////////////////////////////////////////////////
 
@@ -75,9 +107,10 @@ if(isset($_POST['reqid']) && isset($_POST['posname'])){
         $statement->execute();
         $pdo->commit();
 
-    } catch(PDOExecption $e) {
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
         $pdo->rollback();
-        print "Error!: " . $e->getMessage() . "</br>";
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
     /**//////////////////////////////////////////////////////////////
 
@@ -110,9 +143,10 @@ if(isset($_POST['reqid']) && isset($_POST['payment_date']) && isset($_POST['num'
         $statement->execute();
         $pdo->commit();
 
-    } catch(PDOExecption $e) {
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
         $pdo->rollback();
-        echo "Error!: " . $e->getMessage() . "</br>";
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
     /**//////////////////////////////////////////////////////////////
 
@@ -144,9 +178,10 @@ if(isset($_POST['reqid']) && isset($_POST['giveaway_date']) && isset($_POST['com
         $statement->execute();
         $pdo->commit();
 
-    } catch(PDOExecption $e) {
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
         $pdo->rollback();
-        echo "Error!: " . $e->getMessage() . "</br>";
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
     /**//////////////////////////////////////////////////////////////
 

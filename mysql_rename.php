@@ -13,9 +13,10 @@ function OutNewRename($pdo, $newname, $nameid, $table){
 
             $pdo->commit();
             print $newname;
-        } catch(PDOExecption $e) {
+        } catch( PDOException $Exception ) {
+            // Note The Typecast To An Integer!
             $pdo->rollback();
-            print "Error!: " . $e->getMessage() . "</br>";
+            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
         }
 
     }else{
@@ -27,9 +28,10 @@ function OutNewRename($pdo, $newname, $nameid, $table){
 
             $pdo->commit();
             print $newname;
-        } catch(PDOExecption $e) {
+        } catch( PDOException $Exception ) {
+            // Note The Typecast To An Integer!
             $pdo->rollback();
-            print "Error!: " . $e->getMessage() . "</br>";
+            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
         }
     };
 };

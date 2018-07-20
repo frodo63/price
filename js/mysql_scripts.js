@@ -20,6 +20,7 @@ $(document).ready(function(){
         if($(event.target).attr('name') == 'requests'){
             var byer = $('#byer').attr("byer_id");
             var thename = $('#req_name').val();
+
             console.log("Добавляем заявку");
             console.log(byer);
             console.log(thename);
@@ -33,20 +34,21 @@ $(document).ready(function(){
                         console.log("Добавлена заявка");
                         $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                         $('#creates input[type=\'text\']').val('');
-                    },
+                    }/*,
                     complete: function() {$('a[href = "#requests"]').trigger('click');
-                    }
+                    }*/
                 });
-            } else {alert("Чето вы не то ввели. Там же две графы всего, разве это так сложно?")};
+            } else {alert("Чето вы не то ввели. Там же две графы всего, разве это так сложно?")}
         }else{
             var table = $(event.target).attr("name");
+            var table_c = $(event.target).attr("tc");
             var thename = $(event.target).prev().val();
             var addinput = $(event.target).prev('input[type="text"]');
                     if(thename!=''){
                         $.ajax({
                             url: 'mysql_insert.php',
                             method: 'POST',
-                            data: {table:table, thename:thename},
+                            data: {table_c:table_c, thename:thename},
                             success: function (data) {
                                 $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                                 $('#creates input[type=\'text\']').val('');
@@ -294,6 +296,47 @@ $(document).ready(function(){
         $('#button_edit_created').attr('requestid',''+$(event.target).attr('requestid')+'');//Добавляем в кнопку
     });
 
+    $(document).off('click.comeoptions').on('click.comeoptions', '.edit_options', function (event) {
+        $('#edit_options>input[name=1]').val('');//Стираем все данные
+        $('#edit_options>input[name=2]').val('');//Стираем все данные
+        $('#edit_options>input[name=3]').val('');//Стираем все данные
+        $('#edit_options>input[name=4]').val('');//Стираем все данные
+        var reqid = $(event.target).attr('requestid');
+        $('#button_edit_op').attr('requestid',''+reqid+'');//Добавляем в кнопку
+        $('#button_edit_tp').attr('requestid',''+reqid+'');//Добавляем в кнопку
+        $('#button_edit_firstobp').attr('requestid',''+reqid+'');//Добавляем в кнопку
+        $('#button_edit_wt').attr('requestid',''+reqid+'');//Добавляем в кнопку
+
+        /*Запрос в базу для текущих опций*/
+        if($('#edit_options').hasClass('come_here')){
+            return false;
+        }else{
+            $.ajax({
+                url: 'mysql_req_options.php',
+                method: 'POST',
+                dataType: 'json',
+                cache: false,
+                data: {req_options:reqid},
+                success: function (data) {
+
+                    $('#req_op_op').text(data.op);
+                    $('#req_op_tp').text(data.tp);
+                    $('#req_op_firstobp').text(data.firstobp);
+                    $('#req_op_wt').text(data.wt);
+
+                    $('#edit_op').val(data.op);
+                    $('#edit_tp').val(data.tp);
+                    $('#edit_firstobp').val(data.firstobp);
+                    $('#edit_wt').val(data.wt);
+
+                }
+            });
+        }
+
+        $('#edit_options').toggleClass('come_here', 1000);
+        /*///////////////////////////////*/
+    });
+
     /*ЗАКРЫТИЕ ОКНА ДОБАВЛЕНИЯ*/////////////////////////////////////////////////////////////////////////////////////////
     $(document).off('click.gopayment').on('click.gopayment', '.close_add_p', function (event) {
         $('#add_payment').toggleClass('come_here', 1000);
@@ -314,14 +357,36 @@ $(document).ready(function(){
 
     $(document).off('click.go1cnum').on('click.go1cnum', '.close_edit_1c_num', function () {
         $('#edit_1c_num').toggleClass('come_here', 1000);
-        $('#add_giveaway>input[name=1]').val('');//Стираем все данные
-        $('#add_giveaway>input[name=2]').val('');//Стираем все данные
+        $('#edit_1c_num>input[name=1]').val('');//Стираем все данные
+        $('#edit_1c_num>input[name=2]').val('');//Стираем все данные
         $('#button_edit_1c_num').attr('requestid','xxx');//Стираем номер заявки из кнопки добавления
         $('#button_edit_created').attr('requestid','xxx');//Стираем номер заявки из кнопки добавления
     });
 
-    /*Проверка числовых значений*//////////////////////////////////////////////////////////////////////////////////////////////////
-    $(document).off('keyup.check_ga').on('keyup.check_ga', '.come_here #add_payment_sum, .come_here #add_giveaway_sum', function (event) {
+    $(document).off('click.gooptions').on('click.gooptions', '.close_edit_options', function () {
+        $('#edit_options').toggleClass('come_here', 1000);
+        $('#edit_options>input[name=1]').val('');//Стираем все данные
+        $('#edit_options>input[name=2]').val('');//Стираем все данные
+        $('#edit_options>input[name=3]').val('');//Стираем все данные
+        $('#edit_options>input[name=4]').val('');//Стираем все данные
+        $('#button_edit_op').attr('requestid','xxx');//Стираем номер заявки из кнопки добавления
+        $('#button_edit_tp').attr('requestid','xxx');//Стираем номер заявки из кнопки добавления
+        $('#button_edit_firstobp').attr('requestid','xxx');//Стираем номер заявки из кнопки добавления
+        $('#button_edit_wt').attr('requestid','xxx');//Стираем номер заявки из кнопки добавления
+
+        $('#req_op_op').text('');
+        $('#req_op_tp').text('');
+        $('#req_op_firstobp').text('');
+        $('#req_op_wt').text('');
+
+        $('#edit_op').val();
+        $('#edit_tp').val();
+        $('#edit_firstobp').val();
+        $('#edit_wt').val();
+    });
+
+    /*Проверка числовых значений*///////////////////////////////////////////////////////////////////////////////////////
+    $(document).off('keyup.check_ga').on('keyup.check_ga', '.come_here #add_payment_sum, .come_here #add_giveaway_sum, .come_here #add_1c_num, .come_here #edit_op, .come_here #edit_tp, .come_here #edit_firstobp, .come_here #edit_wt', function (event) {
         console.log($(event.target).attr('id')+' - '+$(event.target).val());
         var p_sum = Number(Number($(event.target).val()).toFixed(2));
         var p_sum_str = $(event.target).val();
@@ -502,6 +567,28 @@ $(document).ready(function(){
                 }
             }
         });
+    });
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //ИЗМЕНЕНИЕ ОПЦИЙ ЗАКАЗА////////////////////////////////////////////////////////////////////////////////////////////
+    $(document).off('click.edit_options').on('click.edit_options', '#button_edit_op, #button_edit_tp, #button_edit_firstobp, #button_edit_wt', function(event){
+        var reqid = $(event.target).attr("requestid");
+        /*Данные для заполнения выдачи*/
+        var the_input = $(event.target).attr('id').substring(7);
+        console.log(the_input);
+        var new_option = $('#'+the_input).val();
+        console.log(new_option);
+        /*ПРОВЕРКА, ИЗМЕНИЛАСЬ ЛИ ОПЦИЯ ПЕРЕД ОТПРАВКОЙ НОВОЙ ЦИФРЫ*/
+        /*//////////////////////////////*/
+        /*$.ajax({
+            url: 'mysql_save.php',
+            method: 'POST',
+            data: {reqid:reqid, new_1c_num:new1cnum},
+            success: function (data) {
+                $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+            }, complete: function () {}
+        });*/
     });
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
