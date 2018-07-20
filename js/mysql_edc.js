@@ -368,10 +368,12 @@ $(document).ready(function() {
 //Расширение дива/////////////////////////////////////////////////////////////////////////////////////////////////
     /*Добавление расценки Всплывающее окно прайсинговой рыбы*/
     $(document).off('click.addpricing').on('click.addpricing', 'input.addpricing', function(event){
+        var reqid = $(event.target).parents('tr[requestid]').attr('requestid');
         var posid = $(event.target).attr('positionid');
                 $('#pricingwindow').slideDown().attr('positionid', posid);
                 $('#trade').attr('trade_id', '').val('');
                 $('#seller').attr('seller_id', '').val('');
+
                 window.scrollTo(0, 0);
     });
 

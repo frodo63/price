@@ -575,20 +575,41 @@ $(document).ready(function(){
     $(document).off('click.edit_options').on('click.edit_options', '#button_edit_op, #button_edit_tp, #button_edit_firstobp, #button_edit_wt', function(event){
         var reqid = $(event.target).attr("requestid");
         /*Данные для заполнения выдачи*/
+
+        var the_span = $(event.target).attr('id').substring(12);
+        var c_c = $(event.target).attr('cc');
+        var put_span = $('#req_op_'+the_span);//Куда результат будет в конце посажен
+        the_span = $('#req_op_'+the_span).text();
+        the_span = Number(parseFloat(the_span));
         var the_input = $(event.target).attr('id').substring(7);
-        console.log(the_input);
-        var new_option = $('#'+the_input).val();
-        console.log(new_option);
+        the_input = $('#'+the_input).val();
+        the_input = Number(parseFloat(the_input));
+        console.log(the_span+" "+typeof the_span);
+        console.log(the_input+" "+typeof the_input);
         /*ПРОВЕРКА, ИЗМЕНИЛАСЬ ЛИ ОПЦИЯ ПЕРЕД ОТПРАВКОЙ НОВОЙ ЦИФРЫ*/
-        /*//////////////////////////////*/
-        /*$.ajax({
-            url: 'mysql_save.php',
-            method: 'POST',
-            data: {reqid:reqid, new_1c_num:new1cnum},
-            success: function (data) {
-                $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
-            }, complete: function () {}
-        });*/
+        if (the_span === the_input){
+            console.log("отказ");
+            return false;
+        }else{
+            $.ajax({
+                url: 'mysql_save.php',
+                method: 'POST',
+                data: {reqid:reqid, c_c:c_c, the_input:the_input},
+                success: function (data) {//Изменяем
+                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                },complete: function (data) {
+                    $.ajax({
+                        url: 'mysql_read.php',
+                        method: 'POST',
+                        data: {c_c:c_c, reqid:reqid},
+                        success: function (data) {//Читаем
+                            $(put_span).html(data);
+                            console.log("выполнено");
+                        }
+                    });
+                }
+            });
+        }
     });
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -624,6 +645,16 @@ $(document).ready(function(){
     });
 
     /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /*Отображение дней отсрочки в опциях заявки*////////////////////////////////////////////////////////////////////////
+    $('#edit_wt').change(function () {
+        //Изменяется количество дней
+        var wtime = Number(Number($('#edit_wt').val()).toFixed(2));
+        $('#req_op_wt_days').text((wtime / 0.0334).toFixed(0));
+        wtime = null;
+    });
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 

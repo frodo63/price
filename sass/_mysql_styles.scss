@@ -436,9 +436,24 @@ tr[pricingid] td {border: 1px solid black}
   position: fixed;
   left:5px;
   top:-500px;
-  width: 250px;
+  width: 220px;
+  span {
+    font-size: 25px;
+  }
   &.come_here {
     top:133px;
+  }
+  #req_op_op,#req_op_tp,#req_op_firstobp,#req_op_wt{
+    font-size: 25px;
+  }
+  #edit_op,#edit_tp,#edit_firstobp,#edit_wt{
+    font-size: 20px;
+    width: 200px;
+    text-align: center;
+  }
+  input[cc]{
+    width:200px;
+    font-size: 20px;
   }
 }
 #button_add_giveaway,#button_add_payment{

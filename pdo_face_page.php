@@ -16,7 +16,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-'>
         <label for='kol'>Кол-во:</label> <input type='number' name='kol' id='kol'  min='1'/><br />
         <label for='tzr'>ТЗР на ШТУКЕ:</label> <input type='number' name='tzr' id='tzr'  min='0' step='1'/> руб. С обналом: <p id='obtzr'></p> руб.<br /><br />
         <div id='fcount'>
-        <label for='op'>НАШ ПРОЦЕНТ:</label> <input type='number' size='2' name='op' id='op'  min='1' step='0.01'/>% / <p id='opr'></p> руб.<br />
+        <label for='op'>НАШ ПРОЦЕНТ:</label> <input type='number' size='4' name='op' id='op'  min='1' step='0.01'/>% / <p id='opr'></p> руб.<br />
         <label for='tp'>ЕНОТ:</label> <input type='number' size='2' name='tp' id='tp'  min='0' step='0.01'/>% / <p id='tpr'></p> руб. НА РУКИ : <p id='firstoh'></p> руб. (<p id='clearp'></p> ЧИСТЫМИ)<br/><br />
         <label for='firstobp'>ОБНАЛ:</label> <input type='number' size='2' name='firstobp' id='firstobp'  min='0' step='0.1'/>% / <p id='firstobpr'></p> руб.<br />
         <label for='wtime'>ОТСРОЧКА:</label> <input type='number' size='2' name='wtime' id='wtime'  min='0' step='0.03'/> мес. <p id='wtimeday'></p> дней.        
@@ -165,29 +165,18 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-'>
 
 
               <div id='edit_options'>
-                  <span>Изменить Наценку</span>
-                  <br>
-                  <b><span id='req_op_op'></span></b>
-                  <label for='1'><span>Наценка:</span></label><input id='edit_op' type='number' name='1' type='text' size='20' min='0' step='0.01'>,%<br>
-                  <input id='button_edit_op' type='button' name='edit_op' requestid='' value='Задать наценку'><br><br>
                   
-                  <span>Изменить Енот</span>
-                  <br>
-                  <b><span id='req_op_tp'></span></b><br>
-                  <label for='2'><span>Енот:</span></label><input id='edit_tp' type='number' name='2' size='20'min='0' step='0.01'>,%<br>
-                  <input id='button_edit_tp' type='button' name='edit_tp' requestid='' value='Задать Енот'><br><br>
-                  
-                  <span>Изменить Обнал</span>
-                  <br>
-                  <b><span id='req_op_firstobp'></span></b><br>
-                  <label for='3'><span>Обнал:</span></label><input id='edit_firstobp' type='number' name='3' size='20'min='0' step='0.01'>,%<br>
-                  <input id='button_edit_firstobp' type='button' name='edit_firstobp' requestid='' value='Задать Обнал'><br><br>
-                  
-                  <span>Изменить Отсрочку</span>
-                  <br>
-                  <b><span id='req_op_wt'></span></b><br>
-                  <label for='4'><span>Отсрочка:</span></label><input type='number' id='edit_wt' name='4' size='20'min='0' step='0.03'>мес.<br>
-                  <input id='button_edit_wt' type='button' name='edit_wt' requestid='' value='Задать Отсрочку'><br><br>
+                  <label for='1'><span>Наценка:</span></label>&nbsp<b><span id='req_op_op'></span></b><br><input id='edit_op' type='number' name='1' type='text' size='5' min='0' step='0.05'>,%<br>
+                  <input cc='1' id='button_edit_op' type='button' name='edit_op' requestid='' value='Задать наценку'><br><br>
+                                    
+                  <label for='2'><span>Енот:</span></label>&nbsp<b><span id='req_op_tp'></span></b><br><input id='edit_tp' type='number' name='2' size='5' min='0' step='0.05'>,%<br>
+                  <input cc='2' id='button_edit_tp' type='button' name='edit_tp' requestid='' value='Задать Енот'><br><br>
+                                    
+                  <label for='3'><span>Обнал:</span></label>&nbsp<b><span id='req_op_firstobp'></span></b><br><input id='edit_firstobp' type='number' name='3' size='5' min='0' step='0.1'>,%<br>
+                  <input cc='3' id='button_edit_firstobp' type='button' name='edit_firstobp' requestid='' value='Задать Обнал'><br><br>
+                                    
+                  <label for='4'><span>Отсрочка:</span></label>&nbsp<b><span id='req_op_wt'></span></b><br><input type='number' id='edit_wt' name='4' size='5' min='0' step='0.03'>мес.<span id='req_op_wt_days'></span>дней.<br>
+                  <input cc='4' id='button_edit_wt' type='button' name='edit_wt' requestid='' value='Задать Отсрочку'><br><br>
                   <span class='ready_comment'></span><br>                  
                   <input class='close_edit_options' type='button' value='X'>
               </div> 

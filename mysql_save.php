@@ -289,3 +289,51 @@ if(
     }
 };
 /**/
+
+/*РЕДАКТИРОВАНИЕ ОПЦИЙ ЗАЯВКИ*/
+if(
+
+    isset($_POST["reqid"]) && isset($_POST["c_c"]) && isset($_POST["the_input"])
+)
+{
+    $reqid = ($_POST["reqid"]);
+    $c_c = ($_POST["c_c"]);
+    $the_input = ($_POST["the_input"]);
+
+    try{
+
+        switch($c_c)
+        {
+            case 1:
+                $column = 'ov_op';
+                $c_text = 'Наценка';
+                break;
+            case 2:
+                $column = 'ov_tp';
+                $c_text = 'Енот';
+                break;
+            case 3:
+                $column = 'ov_firstobp';
+                $c_text = 'Обнал';
+                break;
+            case 4:
+                $column = 'ov_wt';
+                $c_text = 'Отсрочка';
+                break;
+        }
+
+        $sql = "UPDATE `requests` SET $column = ? WHERE requests_id = ?";
+        $statement = $pdo->prepare($sql);
+
+       $pdo->beginTransaction();
+        $statement->execute(array($the_input,$reqid));
+        $pdo->commit();
+
+        echo "<p>Опция ".$c_text." в заявке ".$reqid." обновлена. ".$the_input."</p>";
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        $pdo->rollback();
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+};
+/**/
