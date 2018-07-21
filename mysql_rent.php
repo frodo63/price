@@ -25,7 +25,7 @@ if(isset($_POST['plus_winid']) && isset($_POST['posid'])){
         $w = $getvars->fetchAll(PDO::FETCH_ASSOC);
         print json_encode(array(
             "data1"=>$w[0]['name'],
-            "data2"=>(int)$w[0]['price']*(int)$w[0]['kol'],
+            "data2"=>round($w[0]['price']*(int)$w[0]['kol'], 2),
             "data3"=>$w[0]['rent']
             ));
 
@@ -60,7 +60,7 @@ if(isset($_POST['minus_winid']) && isset($_POST['posid'])){
 
 /*РАСЧЕТ ОБЩЕЙ РЕНТАБЕЛЬНОСТИ*/
 if (isset($_POST['request'])){
-    $reqid = (int)$_POST['request'];
+    $reqid = $_POST['request'];
     $wincount == 0;
     $getvars = $pdo->prepare("SELECT `req_positionid`,`winnerid` FROM req_positions WHERE `req_positions`.`requestid` = ?");
     $nam == 0;//Переменная, в зависимости от того, зафиксирована расценка или нет
@@ -107,13 +107,13 @@ if (isset($_POST['request'])){
 
         foreach ($c as $row){
             /*Временные переменные для приведения к числу*/
-            $pricingid=(int)$row['pricingid'];
-            $price=(int)$row['price'];
-            $fixed=(int)$row['fixed'];
-            $opr=(int)$row['opr'];
-            $rop=(int)$row['rop'];
-            $kol=(int)$row['kol'];
-            $wtime=(int)$row['wtime'];
+            $pricingid=$row['pricingid'];
+            $price=round($row['price'], 2);
+            $fixed=$row['fixed'];
+            $opr=round($row['opr'], 2);
+            $rop=round($row['rop'], 2);
+            $kol=round($row['kol'], 2);
+            $wtime=round($row['wtime'], 2);
 
             switch ($fixed) {
                 case 0:$nam = $opr;

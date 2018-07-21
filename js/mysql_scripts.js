@@ -296,6 +296,7 @@ $(document).ready(function(){
         $('#button_edit_created').attr('requestid',''+$(event.target).attr('requestid')+'');//Добавляем в кнопку
     });
 
+    //ВЫЗОВ ОКНА ОПЦИЙ ЗАЯВКИ
     $(document).off('click.comeoptions').on('click.comeoptions', '.edit_options', function (event) {
         $('#edit_options>input[name=1]').val('');//Стираем все данные
         $('#edit_options>input[name=2]').val('');//Стираем все данные
@@ -312,7 +313,7 @@ $(document).ready(function(){
             return false;
         }else{
             $.ajax({
-                url: 'mysql_req_options.php',
+                url: 'mysql_options.php',
                 method: 'POST',
                 dataType: 'json',
                 cache: false,
@@ -337,6 +338,88 @@ $(document).ready(function(){
         /*///////////////////////////////*/
     });
 
+    //ВЫЗОВ ОКНА ОПЦИЙ ПОЗИЦИИ
+    $(document).off('click.comeposoptions').on('click.comeposoptions', '.edit_options_pos', function (event) {
+        $('#edit_options_pos>input[name=1]').val('');//Стираем все данные
+        $('#edit_options_pos>input[name=2]').val('');//Стираем все данные
+        $('#edit_options_pos>input[name=3]').val('');//Стираем все данные
+        $('#edit_options_pos>input[name=4]').val('');//Стираем все данные
+        var posid = $(event.target).attr('pos_op_id');
+        var reqid = $(event.target).attr('req_op_id');
+        $('#button_edit_op_pos').attr('positionid',''+posid+'');//Добавляем в кнопку
+        $('#button_edit_tp_pos').attr('positionid',''+posid+'');//Добавляем в кнопку
+        $('#button_edit_firstobp_pos').attr('positionid',''+posid+'');//Добавляем в кнопку
+        $('#button_edit_wt_pos').attr('positionid',''+posid+'');//Добавляем в кнопку
+
+        /*Запрос в базу для текущих опций*/
+        if($('#edit_options_pos').hasClass('come_here')){
+            return false;
+        }else{
+            $.ajax({
+                url: 'mysql_options.php',
+                method: 'POST',
+                dataType: 'json',
+                cache: false,
+                data: {name_and_queen:posid},
+                success: function (data) {
+
+                    $('#edit_options_pos h3').text(data.name);
+                    var queen_status = data.queen;
+                    console.log(queen_status+" "+typeof queen_status);
+                    if(queen_status === "1"){//queen = 1
+                        console.log('queen true');
+                        $('#add_queen').prop('checked', true);
+                        $('#edit_op_pos, #edit_tp_pos, #edit_firstobp_pos, #edit_wt_pos, #button_edit_op_pos, #button_edit_tp_pos, #button_edit_firstobp_pos, #button_edit_wt_pos').prop('disabled', false);
+                        //запрос опций в позицию
+                        $.ajax({
+                            url: 'mysql_options.php',
+                            method: 'POST',
+                            dataType: 'json',
+                            cache: false,
+                            data: {pos_options:posid},
+                            success: function (data) {
+                                $('#edit_op_pos').val(data.op);
+                                $('#edit_tp_pos').val(data.tp);
+                                $('#edit_firstobp_pos').val(data.firstobp);
+                                $('#edit_wt_pos').val(data.wt);
+
+                                $('#pos_op_op').text(data.op);
+                                $('#pos_op_tp').text(data.tp);
+                                $('#pos_op_firstobp').text(data.firstobp);
+                                $('#pos_op_wt').text(data.wt);
+                            }
+                        });
+                    }else if (queen_status === "0") {//queen = 0
+                        console.log('queen false');
+                        $('#add_queen').prop('checked', false);
+                        $('#edit_op_pos, #edit_tp_pos, #edit_firstobp_pos, #edit_wt_pos, #button_edit_op_pos, #button_edit_tp_pos, #button_edit_firstobp_pos, #button_edit_wt_pos').prop('disabled', true);
+                        //запрос опций в заявку
+                        $.ajax({
+                            url: 'mysql_options.php',
+                            method: 'POST',
+                            dataType: 'json',
+                            cache: false,
+                            data: {req_options:reqid},
+                            success: function (data) {
+                                $('#edit_op_pos').val(data.op);
+                                $('#edit_tp_pos').val(data.tp);
+                                $('#edit_firstobp_pos').val(data.firstobp);
+                                $('#edit_wt_pos').val(data.wt);
+
+                                $('#pos_op_op').text(data.op);
+                                $('#pos_op_tp').text(data.tp);
+                                $('#pos_op_firstobp').text(data.firstobp);
+                                $('#pos_op_wt').text(data.wt);
+                            }
+                        });
+                    }
+                }
+            });
+        }
+        $('#edit_options_pos').toggleClass('come_here', 1000);
+        /*///////////////////////////////*/
+    });
+
     /*ЗАКРЫТИЕ ОКНА ДОБАВЛЕНИЯ*/////////////////////////////////////////////////////////////////////////////////////////
     $(document).off('click.gopayment').on('click.gopayment', '.close_add_p', function (event) {
         $('#add_payment').toggleClass('come_here', 1000);
@@ -355,6 +438,7 @@ $(document).ready(function(){
         $('#button_add_giveaway').attr('requestid','xxx');//Стираем номер заявки из кнопки добавления
     });
 
+    /*Закрытие окна редактирования номера в 1с и даты*/
     $(document).off('click.go1cnum').on('click.go1cnum', '.close_edit_1c_num', function () {
         $('#edit_1c_num').toggleClass('come_here', 1000);
         $('#edit_1c_num>input[name=1]').val('');//Стираем все данные
@@ -363,6 +447,7 @@ $(document).ready(function(){
         $('#button_edit_created').attr('requestid','xxx');//Стираем номер заявки из кнопки добавления
     });
 
+    /*Закрытие окна редактирования опций заявки*/
     $(document).off('click.gooptions').on('click.gooptions', '.close_edit_options', function () {
         $('#edit_options').toggleClass('come_here', 1000);
         $('#edit_options>input[name=1]').val('');//Стираем все данные
@@ -385,26 +470,82 @@ $(document).ready(function(){
         $('#edit_wt').val();
     });
 
+    /*Закрытие окна редактирования опций позиции*/
+    $(document).off('click.goposoptions').on('click.goposoptions', '.close_edit_options_pos', function () {
+        $('#edit_options_pos').toggleClass('come_here', 1000);
+        $('#add_queen').prop( "checked", false );//Стираем все данные
+
+        $('#edit_options_pos>input[name=1]').val('');//Стираем все данные
+        $('#edit_options_pos>input[name=2]').val('');//Стираем все данные
+        $('#edit_options_pos>input[name=3]').val('');//Стираем все данные
+        $('#edit_options_pos>input[name=4]').val('');//Стираем все данные
+        $('#button_edit_op_pos').attr('positionid','xxx');//Стираем номер заявки из кнопки добавления
+        $('#button_edit_tp_pos').attr('positionid','xxx');//Стираем номер заявки из кнопки добавления
+        $('#button_edit_firstobp_pos').attr('positionid','xxx');//Стираем номер заявки из кнопки добавления
+        $('#button_edit_wt_pos').attr('positionid','xxx');//Стираем номер заявки из кнопки добавления
+
+        $('#pos_op_op').text('');
+        $('#pos_op_tp').text('');
+        $('#pos_op_firstobp').text('');
+        $('#pos_op_wt').text('');
+
+        $('#edit_op_pos').val();
+        $('#edit_tp_pos').val();
+        $('#edit_firstobp_pos').val();
+        $('#edit_wt_pos').val();
+    });
+
+    /*Действия по чекингу/анчекингу королевы*/
+    //$('#edit_options_pos #queen').prop( "checked", false );//Стираем все данные
+    $(document).off('click.addqueen').on('click.addqueen', '#add_queen', function (event) {
+        var posid = $('#button_edit_op_pos').attr('positionid');
+        if($('#add_queen').prop('checked')){
+            console.log($('#add_queen').prop('checked'));
+            $('#edit_op_pos, #edit_tp_pos, #edit_firstobp_pos, #edit_wt_pos, #button_edit_op_pos, #button_edit_tp_pos, #button_edit_firstobp_pos, #button_edit_wt_pos').prop('disabled', false);
+        }else{
+            console.log($('#add_queen').prop('checked'));
+            if(confirm("Вы действительно хотите отменить особые опции для этой позиции?")){
+                console.log('YF fzrc');
+                $.ajax({
+                    url: 'mysql_options.php',
+                    method: 'POST',
+                    data: {minus_queen: posid},
+                    success: function (data) {
+                        $('#editmsg').css("display", "block"). delay(2000).slideUp(3000).html(data);
+                    },complete: function () {
+                        $('#edit_op_pos, #edit_tp_pos, #edit_firstobp_pos, #edit_wt_pos, #button_edit_op_pos, #button_edit_tp_pos, #button_edit_firstobp_pos, #button_edit_wt_pos').prop('disabled', true);
+                    }
+                });
+            }else{
+                $('#add_queen').prop('checked', true);
+            }
+
+        }
+    });
+    /**/
+
     /*Проверка числовых значений*///////////////////////////////////////////////////////////////////////////////////////
-    $(document).off('keyup.check_ga').on('keyup.check_ga', '.come_here #add_payment_sum, .come_here #add_giveaway_sum, .come_here #add_1c_num, .come_here #edit_op, .come_here #edit_tp, .come_here #edit_firstobp, .come_here #edit_wt', function (event) {
+    $(document).off('change.check_ga').on('change.check_ga', '.come_here #add_payment_sum, .come_here #add_giveaway_sum, .come_here #add_1c_num, ' +
+        '.come_here #edit_op, .come_here #edit_tp, .come_here #edit_firstobp, .come_here #edit_wt,' +
+        '.come_here #edit_op_pos, .come_here #edit_tp_pos, .come_here #edit_firstobp_pos, .come_here #edit_wt_pos', function (event) {
         console.log($(event.target).attr('id')+' - '+$(event.target).val());
         var p_sum = Number(Number($(event.target).val()).toFixed(2));
         var p_sum_str = $(event.target).val();
 
         if(p_sum_str.indexOf(',') >= 0){
-            console.log(1);
+            //console.log(1);
             $(event.target).switchClass('ready','not_ready');
             $(event.target).siblings('.ready_comment').text('Замените запятую на точку. База иначе не поймет.').switchClass('ok','not-ok');
         }else if(isNaN(p_sum)){
-            console.log(2);
+            //console.log(2);
             $(event.target).switchClass('ready','not_ready');
             $(event.target).siblings('.ready_comment').text('Не число.Уберите пробелы и буквы.База их не любит.').switchClass('ok','not-ok');
         }else if(p_sum<=0){
-            console.log(3);
+            //console.log(3);
             $(event.target).switchClass('ready','not_ready');
             $(event.target).siblings('.ready_comment').text('Сумма <= 0').switchClass('ok','not-ok');
         }else {
-            console.log(4);
+            //console.log(4);
             $(event.target).switchClass('not_ready','ready');
             $(event.target).siblings('.ready_comment').text('Все ОК').switchClass('not-ok','ok');
         };
@@ -605,6 +746,59 @@ $(document).ready(function(){
                         data: {c_c:c_c, reqid:reqid},
                         success: function (data) {//Читаем
                             $(put_span).html(data);
+                            console.log("выполнено");
+                        }
+                    });
+                }
+            });
+        }
+    });
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //ИЗМЕНЕНИЕ ОПЦИЙ ПОЗИЦИИ///////////////////////////////////////////////////////////////////////////////////////////
+    $(document).off('click.edit_options').on('click.edit_options', '#button_edit_op_pos, #button_edit_tp_pos, #button_edit_firstobp_pos, #button_edit_wt_pos', function(event){
+        var posid = $(event.target).attr("positionid");
+        /*Данные для заполнения выдачи*/
+
+        var the_span = $(event.target).attr('id').substring(12);
+        the_span = the_span.replace('_pos', '');
+        //console.log("the_span: "+the_span);
+        var c_c = $(event.target).attr('cc');
+        var put_span = $('#pos_op_'+the_span);//Куда результат будет в конце посажен
+        the_span = $('#pos_op_'+the_span).text();
+        the_span = Number(parseFloat(the_span));
+        var the_input = $(event.target).attr('id').substring(7);
+        //console.log("the_unput: "+the_input);
+        the_input = $('#'+the_input).val();
+        the_input = Number(parseFloat(the_input));
+        //console.log(the_span+" "+typeof the_span);
+        //console.log(the_input+" "+typeof the_input);
+
+        var queen = $('#add_queen').prop('checked');
+        if(queen){queen=1}else{queen=0};
+        //console.log(queen);
+
+        /*ПРОВЕРКА, ИЗМЕНИЛАСЬ ЛИ ОПЦИЯ ПЕРЕД ОТПРАВКОЙ НОВОЙ ЦИФРЫ*/
+        if (the_span === the_input){
+            console.log("отказ");
+            return false;
+        }else{
+            //TODO:На соответствующий инпут надо положить класс .changed
+            $.ajax({
+                url: 'mysql_save.php',
+                method: 'POST',
+                data: {posid:posid, c_c:c_c, the_input:the_input, queen:queen},
+                success: function (data) {//Изменяем
+                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                },complete: function (data) {
+                    $.ajax({
+                        url: 'mysql_read.php',
+                        method: 'POST',
+                        data: {pos_c_c:c_c, posid:posid},
+                        success: function (data) {//Читаем
+                            $(put_span).text(data);
+                            console.log(put_span);
                             console.log("выполнено");
                         }
                     });

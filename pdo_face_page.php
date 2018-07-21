@@ -116,9 +116,9 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-'>
           </div>
           <div class='trades_list'>
           </div>
-      </div>  
+      </div>";
       
-      <div id='givaways'>      
+echo"      <div id='givaways'>      
       <!--Добавить Платежку -->  
               <div id='add_payment'>
                   <span>Вводим платежку</span>
@@ -139,6 +139,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-'>
                   <label for='2'><span>Комментарий:</span></label><input id='add_giveaway_comment' type='text' name='2' size='20'><br>
                   <label for='3'><span>Сумма, руб.:</span></label><input id='add_giveaway_sum' type='text' name='3' size='20'><br>
                   <span class='ready_comment'></span><br>
+                  
                   <input id='button_add_giveaway' type='button' name='add_giveaway' requestid='' value='Добавить выдачу'>
                   <input class='close_add_g' type='button' value='X'>
               </div>
@@ -159,6 +160,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-'>
                   <br>
                   <label for='2'><span>Дата:</span></label><input id='add_created' name='2' size='20'><br>
                   <input id='button_edit_created' type='button' name='edit_created' requestid='' value='Изменить дату'>
+                  
                   <span class='ready_comment'></span><br>
                   <input class='close_edit_1c_num' type='button' value='X'>
               </div> 
@@ -177,8 +179,30 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-'>
                                     
                   <label for='4'><span>Отсрочка:</span></label>&nbsp<b><span id='req_op_wt'></span></b><br><input type='number' id='edit_wt' name='4' size='5' min='0' step='0.03'>мес.<span id='req_op_wt_days'></span>дней.<br>
                   <input cc='4' id='button_edit_wt' type='button' name='edit_wt' requestid='' value='Задать Отсрочку'><br><br>
+                  
                   <span class='ready_comment'></span><br>                  
                   <input class='close_edit_options' type='button' value='X'>
+                  
+              </div>
+              
+              <div id='edit_options_pos'>
+              <h3></h3>
+                  <label for='add_queen'>Считать отдельно:</label><input id='add_queen' type='checkbox' name='queen'><br>
+    
+                      <label for='1'><span>Наценка:</span></label>&nbsp<b><span id='pos_op_op'></span></b><br><input id='edit_op_pos' type='number' name='1' type='text' size='5' min='0' step='0.05' disabled>,%<br>
+                      <input cc='1' id='button_edit_op_pos' type='button' name='edit_op_pos' positionid='' value='Задать наценку' disabled><br><br>
+                                        
+                      <label for='2'><span>Енот:</span></label>&nbsp<b><span id='pos_op_tp'></span></b><br><input id='edit_tp_pos' type='number' name='2' size='5' min='0' step='0.05'disabled >,%<br>
+                      <input cc='2' id='button_edit_tp_pos' type='button' name='edit_tp_pos' positionid='' value='Задать Енот' disabled><br><br>
+                                        
+                      <label for='3'><span>Обнал:</span></label>&nbsp<b><span id='pos_op_firstobp'></span></b><br><input id='edit_firstobp_pos' type='number' name='3' size='5' min='0' step='0.1' disabled>,%<br>
+                      <input cc='3' id='button_edit_firstobp_pos' type='button' name='edit_firstobp_pos' positionid='' value='Задать Обнал' disabled><br><br>
+                                        
+                      <label for='4'><span>Отсрочка:</span></label>&nbsp<b><span id='pos_op_wt'></span></b><br><input type='number' id='edit_wt_pos' name='4' size='5' min='0' step='0.03' disabled>мес.<span id='req_op_wt_days'></span>дней.<br>
+                      <input cc='4' id='button_edit_wt_pos' type='button' name='edit_wt_pos' positionid='' value='Задать Отсрочку' disabled><br><br>
+
+                  <span class='ready_comment'></span><br>                  
+                  <input class='close_edit_options_pos' type='button' value='X'>
               </div> 
 
 <input type='button' id='req_searchstoggle' value='Скрыть/Показать результаты поиска'>

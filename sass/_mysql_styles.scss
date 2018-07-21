@@ -28,7 +28,7 @@ input {
     color: white;
     font-size: 2.5vh;
     padding: 0.5vh;
-    z-index: 1000;
+    z-index: 20;
 }
 .contents, .pricings, .pricing_container  {
     display: none;
@@ -456,6 +456,46 @@ tr[pricingid] td {border: 1px solid black}
     font-size: 20px;
   }
 }
+
+#edit_options_pos{
+  padding:10px;
+  border-radius: 5px;
+  border:2px solid black;
+  color: black;
+
+  position: fixed;
+  right:15px;
+  top:-700px;
+  width: 220px;
+  span {
+    font-size: 25px;
+  }
+  &.come_here {
+    top:0;
+  }
+  #pos_op_op,#pos_op_tp,#pos_op_firstobp,#pos_op_wt{
+    font-size: 25px;
+  }
+  #edit_op_pos,#edit_tp_pos,#edit_firstobp_pos,#edit_wt_pos{
+    font-size: 20px;
+    width: 200px;
+    text-align: center;
+  }
+  input[cc]{
+    width:200px;
+    font-size: 20px;
+  }
+
+  label[for="queen"]{
+    font-size: 22px;
+  }
+  #add_queen{
+    height: 20px;
+    width: 20px;
+    vertical-align: middle;
+  }
+}
+
 #button_add_giveaway,#button_add_payment{
   position: absolute;
   bottom: 10px;
@@ -463,13 +503,13 @@ tr[pricingid] td {border: 1px solid black}
   width: 150px;
 }
 .close_add_g,
-.close_add_p,.close_edit_1c_num,.close_edit_options{
+.close_add_p,.close_edit_1c_num,.close_edit_options, .close_edit_options_pos{
   position: absolute;
   top: 10px;
   right: 10px;
 }
 
-#add_payment, #add_giveaway, #edit_1c_num, #edit_options{
+#add_payment, #add_giveaway, #edit_1c_num, #edit_options, #edit_options_pos{
   background-color: white;
 }
 .ga_byer_requests {

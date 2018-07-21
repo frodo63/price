@@ -371,6 +371,7 @@ if (isset($_POST['requestid'])){
                     <td class = 'pos_buttons'>
                         <input type='button' position =" . $row['req_positionid'] . " value='R' class='edit'>
                         <input type='button' position =" . $row['req_positionid'] . " value='X' class='posdelete'>
+                        <input type='button' req_op_id='".$req_id."' pos_op_id=". $row['req_positionid'] ." value='...' class='edit_options_pos'>
                     </td></tr>";
                     ++$rownumber;
                 };
@@ -571,7 +572,7 @@ if ( isset($_POST['chng_number_1c']) ){
 };
 /**/
 
-//Чтение ОПЦИИ ЗАЯВКИ ПО ОДНОЙ
+//Чтение ОПЦИЙ ЗАЯВКИ ПО ОДНОЙ
 
 if ( isset($_POST['c_c']) &&  isset($_POST['reqid'])){
     try{
@@ -613,21 +614,38 @@ if ( isset($_POST['c_c']) &&  isset($_POST['reqid'])){
 
 /**/
 
-//Чтение ОПЦИИ ЗАЯВКИ все 4 для добавления в расценку
+//Чтение ОПЦИЙ ПОЗИЦИИ ПО ОДНОЙ
 
-if ( isset($_POST['reqid_op_insert'])){
+if ( isset($_POST['pos_c_c']) &&  isset($_POST['posid'])){
     try{
-        $reqid = ($_POST["reqid_op_insert"]);
+        $posid = ($_POST["posid"]);
+        $c_c = ($_POST["pos_c_c"]);
 
-        $statement=$pdo->prepare("SELECT `ov_op`,`ov_firstobp`,`ov_tp`,`ov_wt` FROM `requests` WHERE requests_id = ?");
+        switch($c_c)
+        {
+            case 1:
+                $column = 'ov_op';
+                break;
+            case 2:
+                $column = 'ov_tp';
+                break;
+            case 3:
+                $column = 'ov_firstobp';
+                break;
+            case 4:
+                $column = 'ov_wt';
+                break;
+        }
+
+        $statement=$pdo->prepare("SELECT $column FROM `req_positions` WHERE req_positionid = ?");
 
         $pdo->beginTransaction();
-        $statement->execute(array($reqid));
+        $statement->execute(array($posid));
         $pdo->commit();
 
         $result = $statement->fetch();
 
-        print(json_encode(array('data1'=>$result['ov_op'],'data2'=>$result['ov_tp'],'data3'=>$result['ov_firstobp'],'data4'=>$result['ov_wt'])));
+        print $result[$column];
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!

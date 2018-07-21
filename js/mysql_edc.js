@@ -356,8 +356,6 @@ $(document).ready(function() {
                 /*Растуманивание всей заявки*/
                 //$('tr[requestid='+requestid+'] tr[position]').css('opacity', 1);
                 /**/
-
-
                 break;
         };
 
@@ -374,24 +372,57 @@ $(document).ready(function() {
                 $('#trade').attr('trade_id', '').val('');
                 $('#seller').attr('seller_id', '').val('');
                 //Запрос в базу за опциями покупателя
+        //Проверка на QUEEN
         $.ajax({
-            url: 'mysql_read.php',
+            url: 'mysql_options.php',
             method: 'POST',
             dataType: 'json',
             cache: false,
-            data: {reqid_op_insert:reqid},
-            success: function(data){
-                $('#op').val(data.data1);
-                $('#tp').val(data.data2);
-                $('#firstobp').val(data.data3);
-                $('#wtime').val(data.data4);
-                console.log(data.data1);
-                console.log(data.data2);
-                console.log(data.data3);
-                console.log(data.data4);
-            }
+            data: {name_and_queen:posid},
+            success: function (data) {
+                var queen = data.queen;
+                console.log(queen+" "+typeof queen);
+                if(queen == "1"){
+                    $.ajax({//БЕРЕМ ИЗ ПОЗИЦИИ
+                        url: 'mysql_options.php',
+                        method: 'POST',
+                        dataType: 'json',
+                        cache: false,
+                        data: {pos_options:posid},
+                        success: function(data){
+                            $('#op').val(data.op);
+                            $('#tp').val(data.tp);
+                            $('#firstobp').val(data.firstobp);
+                            $('#wtime').val(data.wt);
+                            console.log(data.op);
+                            console.log(data.tp);
+                            console.log(data.firstobp);
+                            console.log(data.wt);
+                        }
+                    });
 
+                }else if(queen == null){
+                    $.ajax({//БЕРЕМ ИЗ ЗАЯВКИ
+                        url: 'mysql_options.php',
+                        method: 'POST',
+                        dataType: 'json',
+                        cache: false,
+                        data: {req_options:reqid},
+                        success: function(data){
+                            $('#op').val(data.op);
+                            $('#tp').val(data.tp);
+                            $('#firstobp').val(data.firstobp);
+                            $('#wtime').val(data.wt);
+                            console.log(data.op);
+                            console.log(data.tp);
+                            console.log(data.firstobp);
+                            console.log(data.wt);
+                        }
+                    });
+                }
+            }
         });
+
                 window.scrollTo(0, 0);
     });
 
@@ -429,6 +460,7 @@ $(document).ready(function() {
     /*ЧТЕНИЕ/ИЗМЕНЕНИЕ РАСЦЕНКИ*/
     $(document).off('click.editpricing').on('click.editpricing', '.editpricing', function(event){
         var reqid = $(event.target).parents('tr[requestid]').attr('requestid');
+        var posid = $(event.target).parents('tr[position]').attr('position');
         var prid = $(event.target).attr('pricing');
         var seller = $(event.target).parents('td').siblings('.pr-seller-name').text();
         var trade = $(event.target).parents('td').siblings('.pr-trade-name').text();
@@ -523,29 +555,82 @@ $(document).ready(function() {
                             $('#realop').text(json.realop + '%, от маржи');
                             $('#realtp').text(json.realtp + '%, от маржи');
                             $('#go').trigger('click');
-                        };
+                        }
                     },
                     complete: function(){
-                        //Вставляем опции из заявки
+                        //Проверка на QUEEN
                         $.ajax({
-                            url: 'mysql_read.php',
+                            url: 'mysql_options.php',
                             method: 'POST',
                             dataType: 'json',
                             cache: false,
-                            data: {reqid_op_insert:reqid},
+                            data: {name_and_queen:posid},
+                            success: function (data) {
+                                var queen = data.queen;
+                                console.log(queen+" "+typeof queen);
+                                if(queen == "1"){
+                                    $.ajax({//БЕРЕМ ИЗ ПОЗИЦИИ
+                                        url: 'mysql_options.php',
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        cache: false,
+                                        data: {pos_options:posid},
+                                        success: function(data){
+                                            $('#op').val(data.op);
+                                            $('#tp').val(data.tp);
+                                            $('#firstobp').val(data.firstobp);
+                                            $('#wtime').val(data.wt);
+                                            console.log(data.op);
+                                            console.log(data.tp);
+                                            console.log(data.firstobp);
+                                            console.log(data.wt);
+                                            //TODO:ПРОВЕРКУ НА FIXED!!!
+                                        }
+                                    });
+
+                                }else if(queen == null){
+                                    $.ajax({//БЕРЕМ ИЗ ЗАЯВКИ
+                                        url: 'mysql_options.php',
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        cache: false,
+                                        data: {req_options:reqid},
+                                        success: function(data){
+                                            $('#op').val(data.op);
+                                            $('#tp').val(data.tp);
+                                            $('#firstobp').val(data.firstobp);
+                                            $('#wtime').val(data.wt);
+                                            console.log(data.op);
+                                            console.log(data.tp);
+                                            console.log(data.firstobp);
+                                            console.log(data.wt);
+                                            //TODO:ПРОВЕРКУ НА FIXED!!!
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                        ////////////////////////////////////////////////////////////////////////////////////////////////
+                        //Вставляем опции из заявки
+                        /*$.ajax({
+                            url: 'mysql_options.php',
+                            method: 'POST',
+                            dataType: 'json',
+                            cache: false,
+                            data: {req_options:reqid},
                             success: function(data){
-                                $('#op').val(data.data1);
-                                $('#tp').val(data.data2);
-                                $('#firstobp').val(data.data3);
-                                $('#wtime').val(data.data4);
-                                console.log(data.data1);
-                                console.log(data.data2);
-                                console.log(data.data3);
-                                console.log(data.data4);
-                                //TODO:ПРОВЕРКУ НА FIXED!!!
+                                $('#op').val(data.op);
+                                $('#tp').val(data.tp);
+                                $('#firstobp').val(data.firstobp);
+                                $('#wtime').val(data.wt);
+                                console.log(data.op);
+                                console.log(data.tp);
+                                console.log(data.firstobp);
+                                console.log(data.wt);
+
                             }
 
-                        });
+                        });*/
                         /*Выводим сообщение о том что расценка выгружена*/
                         $('#editmsg').css('display', 'block'). delay(2000).slideUp(300).html('Расценка ' + prid + ' выгружена.');
                     }

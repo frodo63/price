@@ -67,6 +67,11 @@ CREATE TABLE IF NOT EXISTS `req_positions` (
 `winnerid`  SMALLINT UNSIGNED NULL,
 `requestid` MEDIUMINT UNSIGNED NOT NULL,
 `giveaway` BOOLEAN NULL,
+`queen` BOOLEAN NULL,
+`ov_op` FLOAT(5,2) NULL UNSIGNED,
+`ov_firstobp` FLOAT(5,2) NULL UNSIGNED,
+`ov_tp` FLOAT(5,2) NULL UNSIGNED,
+`ov_wt` FLOAT(4,2) NULL UNSIGNED,
  PRIMARY KEY (`req_positionid`),
  FOREIGN KEY (`requestid`) REFERENCES `requests`(`requests_id`)
  ON UPDATE CASCADE
