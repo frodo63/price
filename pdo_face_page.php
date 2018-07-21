@@ -177,7 +177,7 @@ echo"      <div id='givaways'>
                   <label for='3'><span>Обнал:</span></label>&nbsp<b><span id='req_op_firstobp'></span></b><br><input id='edit_firstobp' type='number' name='3' size='5' min='0' step='0.1'>,%<br>
                   <input cc='3' id='button_edit_firstobp' type='button' name='edit_firstobp' requestid='' value='Задать Обнал'><br><br>
                                     
-                  <label for='4'><span>Отсрочка:</span></label>&nbsp<b><span id='req_op_wt'></span></b><br><input type='number' id='edit_wt' name='4' size='5' min='0' step='0.03'>мес.<span id='req_op_wt_days'></span>дней.<br>
+                  <label for='4'><span>Отсрочка:</span></label>&nbsp<b><span id='req_op_wt'></span></b><br><input type='number' id='edit_wt' name='4' size='5' min='0' step='0.03'>мес.<span class='req_op_wt_days'></span>дней.<br>
                   <input cc='4' id='button_edit_wt' type='button' name='edit_wt' requestid='' value='Задать Отсрочку'><br><br>
                   
                   <span class='ready_comment'></span><br>                  
@@ -198,7 +198,7 @@ echo"      <div id='givaways'>
                       <label for='3'><span>Обнал:</span></label>&nbsp<b><span id='pos_op_firstobp'></span></b><br><input id='edit_firstobp_pos' type='number' name='3' size='5' min='0' step='0.1' disabled>,%<br>
                       <input cc='3' id='button_edit_firstobp_pos' type='button' name='edit_firstobp_pos' positionid='' value='Задать Обнал' disabled><br><br>
                                         
-                      <label for='4'><span>Отсрочка:</span></label>&nbsp<b><span id='pos_op_wt'></span></b><br><input type='number' id='edit_wt_pos' name='4' size='5' min='0' step='0.03' disabled>мес.<span id='req_op_wt_days'></span>дней.<br>
+                      <label for='4'><span>Отсрочка:</span></label>&nbsp<b><span id='pos_op_wt'></span></b><br><input type='number' id='edit_wt_pos' name='4' size='5' min='0' step='0.03' disabled>мес.<span class='req_op_wt_days'></span>дней.<br>
                       <input cc='4' id='button_edit_wt_pos' type='button' name='edit_wt_pos' positionid='' value='Задать Отсрочку' disabled><br><br>
 
                   <span class='ready_comment'></span><br>                  

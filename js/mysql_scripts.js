@@ -463,6 +463,7 @@ $(document).ready(function(){
         $('#req_op_tp').text('');
         $('#req_op_firstobp').text('');
         $('#req_op_wt').text('');
+        $('#edit_options .req_op_wt_days').text('');
 
         $('#edit_op').val();
         $('#edit_tp').val();
@@ -488,11 +489,13 @@ $(document).ready(function(){
         $('#pos_op_tp').text('');
         $('#pos_op_firstobp').text('');
         $('#pos_op_wt').text('');
+        $('#edit_options_pos .req_op_wt_days').text('');
 
         $('#edit_op_pos').val();
         $('#edit_tp_pos').val();
         $('#edit_firstobp_pos').val();
         $('#edit_wt_pos').val();
+
     });
 
     /*Действия по чекингу/анчекингу королевы*/
@@ -757,7 +760,7 @@ $(document).ready(function(){
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //ИЗМЕНЕНИЕ ОПЦИЙ ПОЗИЦИИ///////////////////////////////////////////////////////////////////////////////////////////
-    $(document).off('click.edit_options').on('click.edit_options', '#button_edit_op_pos, #button_edit_tp_pos, #button_edit_firstobp_pos, #button_edit_wt_pos', function(event){
+    $(document).off('click.edit_options_pos').on('click.edit_options_pos', '#button_edit_op_pos, #button_edit_tp_pos, #button_edit_firstobp_pos, #button_edit_wt_pos', function(event){
         var posid = $(event.target).attr("positionid");
         /*Данные для заполнения выдачи*/
 
@@ -824,7 +827,7 @@ $(document).ready(function(){
 
 
     /*Отображение заявок одного покупателя*/////////////////////////////////////////////////////////////////////////////
-    $(document).off('.dblclick.sort_byer').on('dblclick.sort_byer', '.requests_list td[byerid]', function(event){
+    $(document).off('dblclick.sort_byer').on('dblclick.sort_byer', '.requests_list td[byerid]', function(event){
         //if( event.target != this )
             //return false;
         var the_b_id = $(event.target).parents('[byerid]').attr('byerid');
@@ -842,10 +845,10 @@ $(document).ready(function(){
     /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /*Отображение дней отсрочки в опциях заявки*////////////////////////////////////////////////////////////////////////
-    $('#edit_wt').change(function () {
+    $(document).off('change.wt').on('change.wt', '#edit_wt, #edit_wt_pos', function(event){
         //Изменяется количество дней
-        var wtime = Number(Number($('#edit_wt').val()).toFixed(2));
-        $('#req_op_wt_days').text((wtime / 0.0334).toFixed(0));
+        var wtime = Number(Number($(event.target).val()).toFixed(2));
+        $(event.target).siblings('.req_op_wt_days').text((wtime / 0.0334).toFixed(0));
         wtime = null;
     });
 

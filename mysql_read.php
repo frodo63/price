@@ -386,6 +386,7 @@ if (isset($_POST['requestid'])){
                 <td>
                 <input type='button' position =" . $row['req_positionid'] . " value='R' class='edit'>
                 <input type='button' position =" . $row['req_positionid'] . " value='X' class='posdelete'>
+                <input type='button' req_op_id='".$req_id."' pos_op_id=". $row['req_positionid'] ." value='...' class='edit_options_pos'>
                 </td></tr>";
                 ++$rownumber;
             };

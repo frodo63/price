@@ -382,7 +382,8 @@ $(document).ready(function() {
             success: function (data) {
                 var queen = data.queen;
                 console.log(queen+" "+typeof queen);
-                if(queen == "1"){
+                if(queen == '1'){
+                    console.log('Из позиции');
                     $.ajax({//БЕРЕМ ИЗ ПОЗИЦИИ
                         url: 'mysql_options.php',
                         method: 'POST',
@@ -402,6 +403,7 @@ $(document).ready(function() {
                     });
 
                 }else if(queen == null){
+                    console.log('Из заявки');
                     $.ajax({//БЕРЕМ ИЗ ЗАЯВКИ
                         url: 'mysql_options.php',
                         method: 'POST',
