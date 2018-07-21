@@ -571,7 +571,7 @@ if ( isset($_POST['chng_number_1c']) ){
 };
 /**/
 
-//Чтение ОПЦИИ ЗАЯВКИ
+//Чтение ОПЦИИ ЗАЯВКИ ПО ОДНОЙ
 
 if ( isset($_POST['c_c']) &&  isset($_POST['reqid'])){
     try{
@@ -603,6 +603,31 @@ if ( isset($_POST['c_c']) &&  isset($_POST['reqid'])){
         $result = $statement->fetch();
 
         print $result[$column];
+
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        $pdo->rollback();
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+};
+
+/**/
+
+//Чтение ОПЦИИ ЗАЯВКИ все 4 для добавления в расценку
+
+if ( isset($_POST['reqid_op_insert'])){
+    try{
+        $reqid = ($_POST["reqid_op_insert"]);
+
+        $statement=$pdo->prepare("SELECT `ov_op`,`ov_firstobp`,`ov_tp`,`ov_wt` FROM `requests` WHERE requests_id = ?");
+
+        $pdo->beginTransaction();
+        $statement->execute(array($reqid));
+        $pdo->commit();
+
+        $result = $statement->fetch();
+
+        print(json_encode(array('data1'=>$result['ov_op'],'data2'=>$result['ov_tp'],'data3'=>$result['ov_firstobp'],'data4'=>$result['ov_wt'])));
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!

@@ -373,7 +373,25 @@ $(document).ready(function() {
                 $('#pricingwindow').slideDown().attr('positionid', posid);
                 $('#trade').attr('trade_id', '').val('');
                 $('#seller').attr('seller_id', '').val('');
+                //Запрос в базу за опциями покупателя
+        $.ajax({
+            url: 'mysql_read.php',
+            method: 'POST',
+            dataType: 'json',
+            cache: false,
+            data: {reqid_op_insert:reqid},
+            success: function(data){
+                $('#op').val(data.data1);
+                $('#tp').val(data.data2);
+                $('#firstobp').val(data.data3);
+                $('#wtime').val(data.data4);
+                console.log(data.data1);
+                console.log(data.data2);
+                console.log(data.data3);
+                console.log(data.data4);
+            }
 
+        });
                 window.scrollTo(0, 0);
     });
 
@@ -410,6 +428,7 @@ $(document).ready(function() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*ЧТЕНИЕ/ИЗМЕНЕНИЕ РАСЦЕНКИ*/
     $(document).off('click.editpricing').on('click.editpricing', '.editpricing', function(event){
+        var reqid = $(event.target).parents('tr[requestid]').attr('requestid');
         var prid = $(event.target).attr('pricing');
         var seller = $(event.target).parents('td').siblings('.pr-seller-name').text();
         var trade = $(event.target).parents('td').siblings('.pr-trade-name').text();
@@ -507,6 +526,26 @@ $(document).ready(function() {
                         };
                     },
                     complete: function(){
+                        //Вставляем опции из заявки
+                        $.ajax({
+                            url: 'mysql_read.php',
+                            method: 'POST',
+                            dataType: 'json',
+                            cache: false,
+                            data: {reqid_op_insert:reqid},
+                            success: function(data){
+                                $('#op').val(data.data1);
+                                $('#tp').val(data.data2);
+                                $('#firstobp').val(data.data3);
+                                $('#wtime').val(data.data4);
+                                console.log(data.data1);
+                                console.log(data.data2);
+                                console.log(data.data3);
+                                console.log(data.data4);
+                                //TODO:ПРОВЕРКУ НА FIXED!!!
+                            }
+
+                        });
                         /*Выводим сообщение о том что расценка выгружена*/
                         $('#editmsg').css('display', 'block'). delay(2000).slideUp(300).html('Расценка ' + prid + ' выгружена.');
                     }

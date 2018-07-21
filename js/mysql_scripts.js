@@ -591,6 +591,7 @@ $(document).ready(function(){
             console.log("отказ");
             return false;
         }else{
+            //TODO:На соответствующий инпут надо положить класс .changed
             $.ajax({
                 url: 'mysql_save.php',
                 method: 'POST',
