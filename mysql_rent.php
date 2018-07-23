@@ -86,11 +86,12 @@ if (isset($_POST['request'])){
         $c=$countrent->fetchAll(PDO::FETCH_ASSOC);
 
         $result="
-                <table>
+                <table class='rent-table'>
                 <thead>                
                 <th>Номенклатура</th>
                 <th>Наши</th> 
                 <th>Количество</th>
+                <th>Сумма</th>
                 <th>Отсрочка</th>
                 <th>Цена</th>
                 </thead>";
@@ -108,12 +109,12 @@ if (isset($_POST['request'])){
         foreach ($c as $row){
             /*Временные переменные для приведения к числу*/
             $pricingid=$row['pricingid'];
-            $price = number_format($row['price'], 2);
+            $price = round($row['price'], 2);
             $fixed=$row['fixed'];
-            $opr = number_format($row['opr'], 2);
-            $rop = number_format($row['rop'], 2);
-            $kol = number_format($row['kol'], 2);
-            $wtime = number_format($row['wtime'], 2);
+            $opr = round($row['opr'], 2);
+            $rop = round($row['rop'], 2);
+            $kol = round($row['kol'], 2);
+            $wtime = round($row['wtime'], 2);
 
             switch ($fixed) {
                 case 0:$nam = $opr;
@@ -122,10 +123,11 @@ if (isset($_POST['request'])){
                 break;
             };
             $result.= "<tr><td class ='pricingid'>" . $row['name'] . "</td>";
-            $result .="<td class ='nam'>" . number_format($nam, 2, ".", " ") . "</td>";
+            $result .="<td class ='nam'>" . round($nam, 2) . "</td>";
             $result.= "<td class ='kol'>" . $kol . "</td>";
+            $result.= "<td class ='sum'>" . round($nam, 2)*$kol . "</td>";
             $result .="<td class ='wtime'>" . $wtime . "</td>";
-            $result.= "<td class ='price'>" . number_format($price, 2, ".", " ") . "</td></tr>";
+            $result.= "<td class ='price'>" . round($price, 2) . "</td></tr>";
 
             /*формула расчета:*/
             $form_top[] = $nam * $kol * (1 - (0.015 * $wtime));
@@ -167,10 +169,10 @@ if (isset($_POST['request'])){
             $dem_bot = substr($dem_bot, 0, -3);
 
             /*расчет рентабельности*/
-            $top = number_format($top, 2, ".", " ");
-            $bot = number_format($bot, 2, ".", " ");
+            $top = round($top, 2);
+            $bot = round($bot, 2);
 
-            $rent = number_format($top/$bot*100, 2, ".", " ");
+            $rent = round($top/$bot*100, 2);
 
             //Сохраняем в базу рентабельность заказа
             $pdo->beginTransaction();

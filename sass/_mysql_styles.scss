@@ -243,6 +243,13 @@ table{
 .requests_list .pricing-list td:nth-child(10){text-align: center}
 .requests_list .pricing-list td:nth-child(11){text-align: center}
 
+/*Таблица отображения циферок рентабельности*/
+  .rentcount .rent-table{
+    td{
+      text-align: center;
+    }
+  }
+/**/
 
 /*граница низ-прав для Ряда заявки*/
 .requests_list tr{
@@ -435,7 +442,7 @@ tr[pricingid] td {border: 1px solid black}
 
   position: fixed;
   left:5px;
-  top:-500px;
+  top:-700px;
   width: 220px;
   span {
     font-size: 25px;
