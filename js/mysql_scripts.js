@@ -34,9 +34,9 @@ $(document).ready(function(){
                         console.log("Добавлена заявка");
                         $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                         $('#creates input[type=\'text\']').val('');
-                    }/*,
+                    },
                     complete: function() {$('a[href = "#requests"]').trigger('click');
-                    }*/
+                    }
                 });
             } else {alert("Чето вы не то ввели. Там же две графы всего, разве это так сложно?")}
         }else{
@@ -65,6 +65,12 @@ $(document).ready(function(){
 
     //Чтение таблицы. Имя табицы берется из атрибута li('href') и отрезанием первого символа #//////////////////////////
     $(document).off('click.readtab').on('click.readtab', '#reads li a', function(){
+
+        /**/
+        $('.requests_list').removeClass('shrinken');
+        $('td.widen').removeClass('widen');
+        $('.requests_list tr').css('opacity', 1);
+        /**/
 
         var table = $(this).attr("href").substring(1);
             $.ajax({
@@ -543,11 +549,15 @@ $(document).ready(function(){
             //console.log(2);
             $(event.target).switchClass('ready','not_ready');
             $(event.target).siblings('.ready_comment').text('Не число.Уберите пробелы и буквы.База их не любит.').switchClass('ok','not-ok');
-        }else if(p_sum<=0){
+        }else if(p_sum<0){
             //console.log(3);
             $(event.target).switchClass('ready','not_ready');
             $(event.target).siblings('.ready_comment').text('Сумма <= 0').switchClass('ok','not-ok');
-        }else {
+        }else if(p_sum=0){
+            if($(event.target).attr('id') == 'add_payment_sum' || $(event.target).attr('id') == 'add_giveaway_sum'){
+                console.log('ПЛатежка и выдача с нулевой суммой? О_о');
+            }
+        }else{
             //console.log(4);
             $(event.target).switchClass('not_ready','ready');
             $(event.target).siblings('.ready_comment').text('Все ОК').switchClass('not-ok','ok');

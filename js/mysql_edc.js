@@ -591,7 +591,9 @@ $(document).ready(function() {
                                     });
 
                                 }else if(queen == null){
-                                    $.ajax({//БЕРЕМ ИЗ ЗАЯВКИ
+                                    console.log('queen has just almost killed this pricing, but i saved it!');
+                                        //ЕСЛИ QUEEN == NULL мы НИЧЕГО НЕ МЕНЯЕМ!!!
+                                    /*$.ajax({//БЕРЕМ ИЗ ЗАЯВКИ
                                         url: 'mysql_options.php',
                                         method: 'POST',
                                         dataType: 'json',
@@ -609,7 +611,7 @@ $(document).ready(function() {
                                             //TODO:ПРОВЕРКУ НА FIXED!!!
                                         }
                                     });
-                                }
+                                */}
                             }
                         });
                         ////////////////////////////////////////////////////////////////////////////////////////////////
