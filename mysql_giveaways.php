@@ -7,14 +7,14 @@ if (isset($_POST['the_byer'])){
     try {
         $the_byer = $_POST['the_byer'];
         if(isset($_POST['from']) && isset($_POST['to'])){
-            $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE requests.byersid = ? AND requests.created BETWEEN ? AND ?");
+            $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE (requests.byersid = ? AND requests.created BETWEEN ? AND ? AND requests.r1_hidden = 0)");
             $from = $_POST['from'];
             $to = $_POST['to'];
 
             $from_norm = substr($from,8,2).'-'.substr($from,5,2).'-'.substr($from,0,4);
             $to_norm = substr($to,8,2).'-'.substr($to,5,2).'-'.substr($to,0,4);
         }else{
-            $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE requests.byersid = ?");
+            $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE (requests.byersid = ? AND requests.r1_hidden = 0)");
         }
         $req_payments = $pdo->prepare("SELECT requests_id,payments_id,number,payed,sum,req_sum FROM requests LEFT JOIN payments ON requests.requests_id=payments.requestid WHERE requests_id = ? ORDER BY payed");
         $req_giveaways = $pdo->prepare("SELECT requests_id,given_away,giveaways_id,giveaway_sum FROM requests LEFT JOIN giveaways ON requests.requests_id=giveaways.requestid WHERE requests_id=? ORDER BY given_away");
@@ -84,17 +84,21 @@ if (isset($_POST['the_byer'])){
             $req_pay_ostatok = round($req_sum, 0) - round($req_pay, 0);//Остаток к оплате
             $req_give_ostatok = round($req_count,0) - round($req_give,0);
 
+            /*КНОПКА УБРАТЬ ИЗ ВЫДАЧИ Р1*/
+            $result .="<td><input type='button' value='убрать из Р-1' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$the_byer."'>";
+            /**/
+
             /**/
 
             /*УСЛОВИЯ ПО СТАТУСУ ЗАКАЗА*/
             if((int)$req_sum == round($req_pay,0) && round($req_sum,0) !=0 && round($req_pay,0) !=0){
-                $result .="<td>Заказ оплачен полностью. К выдаче: ".$req_give_ostatok.".</td>";
+                $result .="$nbsp Заказ оплачен полностью. К выдаче: ".$req_give_ostatok.".</td>";
             }elseif (round($req_sum,0) == 0){
-                $result .="<td>Сумма заказа не определена. Назначьте победителя.</td>";
+                $result .="$nbspСумма заказа не определена. Назначьте победителя.</td>";
             }elseif (round($req_pay,0) == 0){
-                $result .="<td>Оплат еще не поступало.</td>";
+                $result .="$nbspОплат еще не поступало.</td>";
             }else{
-                $result .="<td>Заказ оплачен не полностью. К оплате :".$req_pay_ostatok."</td>";
+                $result .="$nbspЗаказ оплачен не полностью. К оплате :".$req_pay_ostatok."</td>";
                 }
             //$result .="<td>Сумма заказа : ".$req_sum.". Оплата : ".$req_pay.". Начислено : ".$req_count.". Выдано : ".$req_give.".</td>";
             /**/

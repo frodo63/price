@@ -53,7 +53,8 @@ CREATE TABLE IF NOT EXISTS `requests` (
 `ov_op` FLOAT(5,2) NULL UNSIGNED,
 `ov_firstobp` FLOAT(5,2) NULL UNSIGNED,
 `ov_tp` FLOAT(5,2) NULL UNSIGNED,
-`ov_wt` FLOAT(4,2) NULL UNSIGNED
+`ov_wt` FLOAT(4,2) NULL UNSIGNED,
+`r1_hidden` TINYINT(1) UNSIGNED NULL DEFAULT '0',
  PRIMARY KEY (`requests_id`),
  FOREIGN KEY (`requests_nameid`) REFERENCES `allnames`(`nameid`),
  FOREIGN KEY (`byersid`) REFERENCES `byers`(`byers_id`)

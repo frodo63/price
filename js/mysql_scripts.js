@@ -864,6 +864,71 @@ $(document).ready(function(){
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /*УБИРАНИЕ ЗАКАЗА ИЗ ВЫДАЧИ Р-1*/
+    $(document).off('dblclick.r1_hide').on('dblclick.r1_hide', '.r1_hide', function(event){
+        if(confirm('Убрать этот заказ из выдачи отчета Р-1? Он не будет появляться в этом списке, пока вы не измените' +
+                ' его статус в списке расценок из вкладки "Заявки"')){
+            var reqid = $(event.target).attr('requestid');
+            var byerid = $(event.target).attr('byerid');
+            console.log(reqid);
+            console.log(byerid);
+            $.ajax({
+                url: 'mysql_save.php',
+                method: 'POST',
+                data: {r1_hide_reqid:reqid},
+                success: function (data) {//Изменяем
+                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                },complete: function (data) {
+                    $.ajax({//Чтение
+                        url: 'mysql_giveaways.php',
+                        method: 'POST',
+                        data: {the_byer:byerid},
+                        success: function (data) {
+                            $('.ga_byer_requests[ga_byer=' + byerid + ']').html(data);
+                        }
+                    });
+                }
+
+            });
+        }
+    });
+    /**/
+
+    /*ВОЗВРАЩЕНИЕ ЗАКАЗА В ВЫДАЧУ Р-1*/
+    $(document).off('dblclick.r1_show').on('dblclick.r1_show', '.r1_show', function(event){
+        if(confirm('Вернуть этот заказ в выдачу отчета Р-1? Он будет появляться в Р-1, пока вы не измените' +
+                ' его статус во вкладке "Р-1"')){
+            var reqid = $(event.target).attr('requestid');
+            console.log(reqid);
+            $.ajax({
+                url: 'mysql_save.php',
+                method: 'POST',
+                data: {r1_show_reqid:reqid},
+                success: function (data) {//Изменяем
+                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                },
+                complete:function () {
+                    $.ajax({
+                        url: 'mysql_read.php',
+                        method: 'POST',
+                        data: {requestid:reqid},
+                        success: function (data) {
+                            $('input[requestid='+reqid+'] ~ div div.positions').html(data);
+                        }
+                    });
+                }
+            });
+        }
+    });
+    /**/
+
+    /*Уточнение по скрыванию заказов в Р-1*/
+    $(document).off('click.r1_showhide').on('click.r1_showhide', '.r1_show, .r1_hide', function(event){
+            $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html('<span>Двойной клик по кнопке и подтверждение.</span>');
+    });
+    /**/
+
+
 
 
 });

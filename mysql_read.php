@@ -227,7 +227,8 @@ if(isset($_POST['table'])){
             <div id=" . $row['req_nameid'] . " class='contents'>
                 <h3 class='req_header_".$row['req_id']."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму ".$row['sum'].". Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h3/><br>
                 <input type='button' class='edit_options' value='Опции' requestid='".$row['req_id']."'>
-                <input type='button' class='edit_1c_num' value='Номер в 1С и дата' requestid='".$row['req_id']."'>                
+                <input type='button' class='edit_1c_num' value='Номер в 1С и дата' requestid='".$row['req_id']."'>  
+                <input type='button' value='Вернуть в Р-1' class='r1_show' requestid='".$row['req_id']."'>              
                 <input type='button' class='add_pos' value='+позиция'>
                 <div class='add-pos-inputs'>
                 <input type='text' class='trade' name='new_req_name' placeholder='Название позиции' size='50'>
@@ -249,7 +250,7 @@ if(isset($_POST['table'])){
     else if ($table == 'givaways') {
         try {
 
-            $statement = $pdo->prepare("SELECT byers.byers_id AS b_id,byers.byers_nameid AS b_nid,allnames.name AS b_name FROM `byers` LEFT JOIN `allnames` ON byers.byers_nameid=allnames.nameid");
+            $statement = $pdo->prepare("SELECT byers.byers_id AS b_id,byers.byers_nameid AS b_nid,allnames.name AS b_name FROM `byers` LEFT JOIN `allnames` ON byers.byers_nameid=allnames.nameid ORDER BY b_name");
             $statement->execute();
             $result = "<ul class='byer_req_list'>";
 

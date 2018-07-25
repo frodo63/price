@@ -386,3 +386,55 @@ if(
     }
 };
 /**/
+
+/*Редактирование статуса "Спрятан в Р-1 Изменение на 1*/
+if(
+    isset($_POST["r1_hide_reqid"])
+)
+{
+    $reqid = ($_POST["r1_hide_reqid"]);
+
+    try{
+        $sql = "UPDATE `requests` SET r1_hidden = 1 WHERE requests_id = ?";
+        $statement = $pdo->prepare($sql);
+
+        $pdo->beginTransaction();
+        $statement->execute(array($reqid));
+        $pdo->commit();
+
+        echo "<p>Заявка ".$reqid." убрана из выдачи Р-1.</p>";
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        $pdo->rollback();
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+};
+
+
+/**/
+
+/*Редактирование статуса "Спрятан в Р-1 Изменение на 1*/
+if(
+isset($_POST["r1_show_reqid"])
+)
+{
+    $reqid = ($_POST["r1_show_reqid"]);
+
+    try{
+        $sql = "UPDATE `requests` SET r1_hidden = 0 WHERE requests_id = ?";
+        $statement = $pdo->prepare($sql);
+
+        $pdo->beginTransaction();
+        $statement->execute(array($reqid));
+        $pdo->commit();
+
+        echo "<p>Заявка ".$reqid." возвращена в выдачу Р-1.</p>";
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        $pdo->rollback();
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+};
+
+
+/**/
