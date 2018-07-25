@@ -451,6 +451,7 @@ $(document).ready(function(){
         $('#edit_1c_num>input[name=2]').val('');//Стираем все данные
         $('#button_edit_1c_num').attr('requestid','xxx');//Стираем номер заявки из кнопки добавления
         $('#button_edit_created').attr('requestid','xxx');//Стираем номер заявки из кнопки добавления
+        $('#1cnum').prop('checked',false);
     });
 
     /*Закрытие окна редактирования опций заявки*/
@@ -641,6 +642,12 @@ $(document).ready(function(){
         var reqid = $(event.target).attr("requestid");
         /*Данные для заполнения выдачи*/
         var new1cnum = $('#add_1c_num').val();
+        //Проверка на чекбокс ИП
+        if($('#1cnum').prop('checked') == true){
+            new1cnum += '_ИП';
+            console.log(new1cnum);
+            console.log('ИП checked');
+        }
         console.log(new1cnum);
         /*//////////////////////////////*/
         $.ajax({
