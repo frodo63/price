@@ -61,37 +61,37 @@ if (isset($_POST['the_byer'])){
             $req_give = 0;//Отдано
             /*Расчет общего количества начислений*/
             foreach ($req_countings as $rc){
-                if ((int)$rc['oh'] == 0) {
-                    $onhands = (int)$rc['firstoh'];
+                if (round($rc['oh'],0) == 0) {
+                    $onhands = round($rc['firstoh'],0);
                 } else {
-                    $onhands = (int)$rc['oh'];
+                    $onhands = round($rc['oh'],0);
                 };
-                $req_count+=(int)$onhands * (int)$rc['kol'];
+                $req_count+=round($onhands,0) * round($rc['kol'],0);
             }
             /**/
             /*Расчет общего количества оплат*/
             foreach ($req_payments as $rp){
-                $req_pay+=(int)$rp['sum'];
+                $req_pay+=round($rp['sum'],0);
             }
             /**/
             /*Расчет общего количества выдач*/
             foreach ($req_giveaways as $rg){
-                $req_give+=(int)$rg['giveaway_sum'];
+                $req_give+=round($rg['giveaway_sum'],0);
             }
             /**/
 
             /*Подготовка переходных переменных*/
-            $req_pay_ostatok = (int)$req_sum - (int)$req_pay;//Остаток к оплате
-            $req_give_ostatok = (int)$req_count - (int)$req_give;
+            $req_pay_ostatok = round($req_sum, 0) - round($req_pay, 0);//Остаток к оплате
+            $req_give_ostatok = round($req_count,0) - round($req_give,0);
 
             /**/
 
             /*УСЛОВИЯ ПО СТАТУСУ ЗАКАЗА*/
-            if((int)$req_sum == (int)$req_pay && (int)$req_sum !=0 && (int)$req_pay !=0){
+            if((int)$req_sum == round($req_pay,0) && round($req_sum,0) !=0 && round($req_pay,0) !=0){
                 $result .="<td>Заказ оплачен полностью. К выдаче: ".$req_give_ostatok.".</td>";
-            }elseif ((int)$req_sum == 0){
+            }elseif (round($req_sum,0) == 0){
                 $result .="<td>Сумма заказа не определена. Назначьте победителя.</td>";
-            }elseif ((int)$req_pay == 0){
+            }elseif (round($req_pay,0) == 0){
                 $result .="<td>Оплат еще не поступало.</td>";
             }else{
                 $result .="<td>Заказ оплачен не полностью. К оплате :".$req_pay_ostatok."</td>";
