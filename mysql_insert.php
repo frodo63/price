@@ -120,24 +120,22 @@ if(isset($_POST['reqid']) && isset($_POST['posname'])){
 //////////////////////////////////////////////////////////////////////
 
 //ДОБАВЛЕНИЕ ПЛАТЕЖКИ/////////////////////////////////////////////////
-if(isset($_POST['reqid']) && isset($_POST['payment_date']) && isset($_POST['num']) && isset($_POST['comment']) && isset($_POST['sum'])){
+if(isset($_POST['reqid']) && isset($_POST['payment_date']) && isset($_POST['num']) && isset($_POST['sum'])){
 
     $reqid = $_POST['reqid'];
     $payment_date = $_POST['payment_date'];
     $num = $_POST['num'];
-    $comment = $_POST['comment'];
     $sum = $_POST['sum'];
 
     /**//////////////////////////////////////////////////////////////
 
     try {
-        $statement = $pdo->prepare("INSERT INTO `payments`(`requestid`,`payed`,`number`,`comment`,`sum`) VALUES(?,?,?,?,?)");
+        $statement = $pdo->prepare("INSERT INTO `payments`(`requestid`,`payed`,`number`,`sum`) VALUES(?,?,?,?)");
 
         $statement->bindParam(1, $reqid);
         $statement->bindParam(2, $payment_date);
         $statement->bindParam(3, $num);
-        $statement->bindParam(4, $comment);
-        $statement->bindParam(5, $sum);
+        $statement->bindParam(4, $sum);
 
         $pdo->beginTransaction();
         $statement->execute();

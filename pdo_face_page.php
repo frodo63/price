@@ -125,8 +125,7 @@ echo"      <div id='givaways'>
                   <br>
                   <label for='1'><span>Дата платежа:</span></label><input id='add_payment_date' name='1' type='date' size='20'><br>
                   <label for='2'><span>Номер п/п</span></label><input id='add_payment_1c_num' name='2' type='text' size='20'><br>
-                  <label for='3'><span>Комментарий</span></label><input id='add_payment_comment'name='3' type='text' size='20'><br>
-                  <label for='4'><span>Сумма, руб.</span></label><input id='add_payment_sum' name='4' type='text' size='20'><br>
+                  <label for='3'><span>Сумма, руб.</span></label><input id='add_payment_sum' name='3' type='text' size='20'><br>
                   <span class='ready_comment'></span><br>
                   <input id='button_add_payment' type='button' name='add_payment' requestid='' value='Добавить платежку'>
                   <input class='close_add_p' type='button' value='X'>

@@ -573,13 +573,12 @@ $(document).ready(function(){
         /*Данные для заполнения платежки*/
         var payment_date = $('#add_payment.come_here #add_payment_date').val();
         var num = $('#add_payment.come_here #add_payment_1c_num').val();
-        var comment = $('#add_payment.come_here #add_payment_comment').val();
         var sum = Number(Number($('#add_payment.come_here #add_payment_sum').val()).toFixed(2));
         /*//////////////////////////////*/
          $.ajax({
              url: 'mysql_insert.php',
              method: 'POST',
-             data: {reqid:reqid, payment_date:payment_date, num:num, comment:comment, sum:sum},
+             data: {reqid:reqid, payment_date:payment_date, num:num, sum:sum},
              success: function (data) {
                  $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                  console.log(data);
