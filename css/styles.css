@@ -900,6 +900,19 @@ tr:hover, li:hover {
   background-color: #F0F0F0;
 }
 
+/* line 573, ../sass/_mysql_styles.scss */
+#go_up {
+  position: fixed;
+  right: 200px;
+  top: 500px;
+  color: black;
+}
+/* line 578, ../sass/_mysql_styles.scss */
+#go_up:hover {
+  background-color: green;
+  color: white;
+}
+
 /* line 1, ../sass/_price.scss */
 h2 {
   margin: 0;

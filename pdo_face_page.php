@@ -116,6 +116,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-'>
           </div>
           <div class='trades_list'>
           </div>
+          <input type='button' value='ВВЕРХ' id='go_up'>
       </div>";
       
 echo"      <div id='givaways'>      

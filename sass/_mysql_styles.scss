@@ -569,3 +569,15 @@ tr[pricingid] td {border: 1px solid black}
 tr:hover,li:hover{
   background-color: #F0F0F0;
 }
+
+#go_up{
+  position: fixed;
+  right: 200px;
+  top: 500px;
+  color: black;
+  &:hover{
+    background-color: green;
+    color: white;
+
+  }
+}

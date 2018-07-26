@@ -934,6 +934,12 @@ $(document).ready(function(){
     });
     /**/
 
+    /*Скролл к верху страницы в списке товаров*/
+    $(document).off('click.go_up').on('click.go_up', '#go_up', function(event){
+        window.scrollTo(0, 0);
+    });
+    /**/
+
 
 
 
