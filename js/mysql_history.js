@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
-    $(document).off('click.give_hist').on('click.give_hist', '#button_history', function () {
+    $(document).off('click.give_hist').on('click.give_hist', '#button_history', function (event) {
+        console.log('ujuj');
         var trade = $(event.target).attr('hist_trade');
         var byer = $(event.target).attr('hist_byer');
         $.ajax({

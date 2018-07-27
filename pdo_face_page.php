@@ -220,5 +220,6 @@ echo"
 <script src='js/mysql_scripts.js'></script>
 <script src='js/mysql_edc.js'></script>
 <script src='js/mysql_searching.js'></script>
+<script src='js/mysql_history.js'></script>
 
 ";
