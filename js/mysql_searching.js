@@ -60,7 +60,10 @@ $(document).ready(function(){
 
     $(document).off('click.srestrade').on('click.srestrade', '#trade+div ul li p', function (event) {
         $('#trade').val($(event.target).text());
-        $('#trade').attr('trade_id', $(event.target).parent().attr('trades_id'));
+        var tradeid = $(event.target).parent().attr('trades_id');
+        console.log(tradeid);
+        $('#trade').attr('trade_id', tradeid);
+        $('#button_history').attr('hist_trade', tradeid);//Добавление трейдайди в атрибут инфокнопки и стории для окончательного запроса
     });
 
 

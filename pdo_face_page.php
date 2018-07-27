@@ -5,8 +5,7 @@ echo"
         <link rel='stylesheet' href='css/jquery-ui.structure.min.css'>
         <link rel='stylesheet' href='css/styles.css'>
         <script src='js/jquery.js'></script>
-</head>
-";
+</head>";
 
 echo "<div id='pricingwindow' positionid='-' pricingid='-'>
     <form id='price'><div class='sres'></div>
@@ -38,6 +37,8 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-'>
         <input name='fixate' id='fixate' type='button' value='Закрепить'/>
         </div>
         <div id='rent'><h2>Рентабельность:</h2><h1>0</h1></div>
+        <input id='button_history' hist_byer='' hist_trade='' type='button' value='i'>
+        <div class='history'></div>
         <div id='cases'></div>
     </form>
         <input type='button' value='X' class='closepricing'>                

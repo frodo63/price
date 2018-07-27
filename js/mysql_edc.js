@@ -368,9 +368,13 @@ $(document).ready(function() {
     $(document).off('click.addpricing').on('click.addpricing', 'input.addpricing', function(event){
         var reqid = $(event.target).parents('tr[requestid]').attr('requestid');
         var posid = $(event.target).attr('positionid');
+        var byerid = $(event.target).parents('tr[byerid]').attr('byerid');
+
                 $('#pricingwindow').slideDown().attr('positionid', posid);
                 $('#trade').attr('trade_id', '').val('');
                 $('#seller').attr('seller_id', '').val('');
+                $('#button_history').attr('hist_byer', byerid);//Дбавляем идентификатор ПОкупателя в инпут по истории
+
                 //Запрос в базу за опциями покупателя
         //Проверка на QUEEN
         $.ajax({
@@ -445,6 +449,8 @@ $(document).ready(function() {
         //Очищаем окно расценки
         $('#trade').attr('trade_id', '').val('');
         $('#seller').attr('seller_id', '').val('');
+        $('#button_history').attr('hist_byer', '');//Убираем идентификатор покупателя из Кнопки по истории
+        $('#button_history').attr('hist_trade', '');//Убираем идентификатор товара из Кнопки по истории
         $('#pricingwindow input[type="number"]').val('');
         $('#pricingwindow input[type="text"]').text('');
         $('#cases p,#obtzr,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh').text('');
@@ -466,6 +472,7 @@ $(document).ready(function() {
         var prid = $(event.target).attr('pricing');
         var seller = $(event.target).parents('td').siblings('.pr-seller-name').text();
         var trade = $(event.target).parents('td').siblings('.pr-trade-name').text();
+        var byerid = $(event.target).parents('tr[byerid]').attr('byerid');
 
                 console.log('рыба не видна');
                 window.scrollTo(0, 0);
@@ -496,6 +503,7 @@ $(document).ready(function() {
                         /*ШАПКА*/
                         $('#trade').attr('trade_id', json.tradeid).val(trade);
                         $('#seller').attr('seller_id', json.sellerid).val(seller);
+                        $('#button_history').attr('hist_trade', json.tradeid);//Дбавляем идентификатор Товара в инпут по истории
 
                         $('#zak').val(json.zak);
                         $('#kol').val(json.kol);
@@ -560,6 +568,7 @@ $(document).ready(function() {
                         }
                     },
                     complete: function(){
+                        $('#button_history').attr('hist_byer', byerid);//Дбавляем идентификатор ПОкупателя в инпут по истории
                         //Проверка на QUEEN
                         $.ajax({
                             url: 'mysql_options.php',
