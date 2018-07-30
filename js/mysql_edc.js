@@ -455,6 +455,8 @@ $(document).ready(function() {
         $('#pricingwindow input[type="text"]').text('');
         $('#cases p,#obtzr,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh').text('');
         $('#pricingwindow').attr({'positionid': '-', 'pricingid': '-'});
+        $('.history').html('');
+        $('#button_history').attr({'hist_byer': '-', 'hist_trade': '-'});
 
         /*Скроллимся к только что открытой завяке*/
         $('html, body').animate({scrollTop: $(".widen").offset().top}, 1000);

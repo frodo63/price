@@ -174,11 +174,12 @@ $(document).ready(function(){
     //Главная функция
     function givePrice(){
         //Переменные
-        var lzak = Number($('#zak').val());    //Закупочная цена (за 1 единицу товара)
-        var lkol = Number($('#kol').val());    //Количество товара
-        var ltzr = Number($('#tzr').val());    //Транспортные (общая сумма за рейс)
+        var lzak = Number($('#zak').val());                         //Закупочная цена (за 1 единицу товара)
+        var lkol = Number($('#kol').val());                         //Количество товара
+        var ltzr = Number($('#tzr').val());                         //Транспортные (на 1 шт товара)
         var ltp = Number(Number($('#tp').val()).toFixed(2));        //Ненаша наценка (в формате десятичных двух знаков)
-        var wt = Number(Number($('#wtime').val()).toFixed(2));        //Отсрочка платежа, в месяцах, нужна при расчете рентабельности
+        var ltpr = Number((Number($('#tpr').text())).toFixed(2));
+        var wt = Number(Number($('#wtime').val()).toFixed(2));      //Отсрочка платежа, в месяцах, нужна при расчете рентабельности
         var lop = Number(Number($('#op').val()).toFixed(2));        //Наша наценка (в формате десятичных двух знаков)
         var fobp = Number(Number($('#firstobp').val()).toFixed(0));
         var firstobpr = Number($('#firstobpr').text());
@@ -221,26 +222,28 @@ $(document).ready(function(){
 
         }
         else
-        {
-            console.log('INactive fixate');
-            /*////////////////////////////////////////////////////////////////////////////////////////////////////*/
-            /*РАСЧЕТ ЦЕНЫ И РЕНТАБЕЛЬНОСТИ ПРИ ОТПУЩЕННОЙ ЦЕНЕ*/
+        /*////////////////////////////////////////////////////////////////////////////////////////////////////*/
+        /*РАСЧЕТ ЦЕНЫ И РЕНТАБЕЛЬНОСТИ ПРИ ОТПУЩЕННОЙ ЦЕНЕ*/{
+            console.log('inactive fixate');
             /*Расчет цены*/
                 var fixed = 0;
                 var lprice = ( (lzak + ltzr) + ((lzak + ltzr) * (lop/100)) ) +
                     ( (lzak + ltzr) + ((lzak + ltzr) * (lop/100)) ) * (ltp/100);
-
                 $('#pr').val((lprice).toFixed(2));
             //Высчитываем РЕАЛЬНЫЙ процент (для наруки)
-                var firstoh = Number((Number($('#firstoh').text())).toFixed(2));
-                var clearp = firstoh/lprice*100;
+                var clearp = ltpr/lprice*100;
                 $('#clearp').text((clearp).toFixed(2) + ' %');
-                var opr = Number((Number($('#opr').text())).toFixed(2));
 
-                /*Расчет рентабельности*/
-                var lrentS = (opr*(1-0.015*wt))/lprice*100;
+            /*Расчет рентабельности*/
+                var opr = Number((Number($('#opr').text())).toFixed(2));
+                var lrentS = (opr*(1-0.0125*wt))/lprice*100;
                 $('#rent h1').text((lrentS).toFixed(3) + ' %');
 
+            console.log('-----------------------------------------------------------------------------------------------');
+            console.log('Закуп(zak) : '+lzak+' . ТЗР(ltzr): '+ltzr+' . Наша наценка(lop)'+lop+' . Их наценка(ltp): '+ltp+' .');
+            console.log('Отсрочка(wt) : '+wt+' . Гряз на руки(ltpr): '+ltpr+' .');
+            console.log('Наша доля(opr) : '+opr+'. Чистый процент(clearp) :'+clearp+' .');
+            console.log('-----------------------------------------------------------------------------------------------');
 
                 //Разбили прайстекст на составляющие
 
@@ -271,7 +274,7 @@ $(document).ready(function(){
         /*////////////////////////БЛОК ОТПРАВКИ ФОРМЫ В БАЗУ///////////////////////////*/
         $(document).off('click.pricesave').on('click.pricesave', '#save', function(event){
             event.preventDefault();//Если эту херню не поставить, аякс-запрос будет постоянно отменяться (status=cancelled). Потому что у кнопки сейв был тайп = сабмит. Нужно
-            // было ллибо его убрить, изменить на буттон, либо превент дефолт. ПОэтому отправлялся неполный формдата, который составляет как раз результат .serialize
+            // было либо его убрать, изменить на буттон, либо превент дефолт. Поэтому отправлялся неполный формдата, который составляет как раз результат .serialize
                 if (
                     $('#trade').val() != "" &&
                     $('#seller').val() != ""

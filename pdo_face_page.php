@@ -16,7 +16,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-'>
         <label for='tzr'>ТЗР на ШТУКЕ:</label> <input type='number' name='tzr' id='tzr'  min='0' step='1'/> руб. С обналом: <p id='obtzr'></p> руб.<br /><br />
         <div id='fcount'>
         <label for='op'>НАШ ПРОЦЕНТ:</label> <input type='number' size='4' name='op' id='op'  min='1' step='0.01'/>% / <p id='opr'></p> руб.<br />
-        <label for='tp'>ЕНОТ:</label> <input type='number' size='2' name='tp' id='tp'  min='0' step='0.01'/>% / <p id='tpr'></p> руб. НА РУКИ : <p id='firstoh'></p> руб. (<p id='clearp'></p> ЧИСТЫМИ)<br/><br />
+        <label for='tp'>ЕНОТ:</label> <input type='number' size='2' name='tp' id='tp'  min='0' step='0.01'/>% / <p id='tpr'></p> руб.(<p id='clearp'></p>&nbspот цены) НА РУКИ : <p id='firstoh'></p> руб. <br/><br />
         <label for='firstobp'>ОБНАЛ:</label> <input type='number' size='2' name='firstobp' id='firstobp'  min='0' step='0.1'/>% / <p id='firstobpr'></p> руб.<br />
         <label for='wtime'>ОТСРОЧКА:</label> <input type='number' size='2' name='wtime' id='wtime'  min='0' step='0.03'/> мес. <p id='wtimeday'></p> дней.        
         </div>
@@ -41,6 +41,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-'>
         <div class='history'></div>
         <div id='cases'></div>
     </form>
+        <input type='button' value='__' class='minimizepricing'>                
         <input type='button' value='X' class='closepricing'>                
         <script src='js/price_mysql.js'></script>     
 </div>
