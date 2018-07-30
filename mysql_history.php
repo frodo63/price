@@ -15,9 +15,11 @@ AS a LEFT JOIN (SELECT * FROM (SELECT * FROM `pricings` LEFT JOIN sellers ON pri
     $pdo->beginTransaction();
     $statement->execute(array($post_byer,$post_trade));
     $byerinfo->execute(array($post_byer));
+    $b_info = $byerinfo->fetch();
     $pdo->commit();
 
-    $result = "<table class='hystory-list' tradeid='".$row['tradeid']."'><thead><tr>
+    $result = "<span>Обнал:&nbsp".$b_info['ov_firstobp']."&nbspЕнот:&nbsp".$b_info['ov_tp']."&nbspОтсрочка:&nbsp".$b_info['ov_wt']."&nbspКоммент:&nbsp".$b_info['comment']."</span>";
+    $result .= "<table class='hystory-list' tradeid='".$row['tradeid']."'><thead><tr>
                     <th>№</th>    
                     <th>Когда</th>    
                     <th>У кого</th>                    
