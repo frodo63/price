@@ -1,7 +1,66 @@
 $(document).ready(function(){
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+    //ИЗМЕНЕНИЕ ОТСРОЧКИ
+    $('#wtime').change(function () {
+        console.log('Изменилась отсрочка');
+        //Переменные
+        var zak = Number(Number($('#zak').val()).toFixed(3));      //Закупочная цена (на шт)
+        var tzr = Number(Number($('#tzr').val()).toFixed(3));      //Транспортные (на шт)
+        var a = zak+tzr;                                           //Сумма Закупа и ТЗР для формулы
+        var tp = Number(Number($('#tp').val()).toFixed(3));        //Ненаша наценка (в формате десятичных 3 знаков)
+        var op = Number(Number($('#op').val()).toFixed(3));        //Наша наценка (в формате десятичных 3 знаков)
+        var firstobp = Number($('#firstobp').val());
+        var wt = Number(Number($('#wtime').val()).toFixed(2));
+
+        //Изменяется количество дней
+        $('#wtimeday').text((wt/0.0334).toFixed(0));
+        //Изменение отсрочкорублей
+        $('#wtr').text(Number((a*0.0125*wt).toFixed(2)));
+        //Изменение еноторублей
+        $('#tpr').text(Number(((a+wt+(a+wt)*op/100)*tp/100).toFixed(2)));
+        //Стираем переменнные
+        zak=tzr=a=tp=op=firstobp=wt=null;
+        //Идет расчет цены
+        givePrice();
+    });
+    /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+    //ИЗМЕНЕНИЕ НАШЕГО ПРОЦЕНТА
+    $('#op').change(function(){
+        console.log('Изменился наш процент');
+        //Переменные
+        var zak = Number(Number($('#zak').val()).toFixed(3));      //Закупочная цена (на шт)
+        var tzr = Number(Number($('#tzr').val()).toFixed(3));      //Транспортные (на шт)
+        var a = zak+tzr;                                           //Сумма Закупа и ТЗР для формулы
+        var tp = Number(Number($('#tp').val()).toFixed(3));        //Ненаша наценка (в формате десятичных 3 знаков)
+        var op = Number(Number($('#op').val()).toFixed(3));        //Наша наценка (в формате десятичных 3 знаков)
+        var firstobp = Number($('#firstobp').val());
+        var wt = Number(Number($('#wtime').val()).toFixed(2));
+
+        //Изменяются наши проценторубли
+        $('#opr').text(Number(((a+wt)*op/100).toFixed(2)));
+        var opr = Number($('#opr').text());
+
+        //Изменяется еноторубль
+        $('#tpr').text(((a+wt+opr)*tp/100).toFixed(2));
+        var tpr = Number($('#tpr').text());
+
+        //Изменяется обналорубль
+        $('#firstobpr').text((tpr*firstobp/100).toFixed(2));
+        var firstobpr =  Number($('#firstobpr').text());
+
+        //Изменяется первое на руки
+        $('#firstoh').text((tpr - firstobpr).toFixed(2));
+
+        //Стираются все переменные
+        zak = tzr = tp = op = tpr = obp = opr = firstobpr = null;
+        //И расчет цены
+        givePrice();
+    });
+    /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
     //ИЗМЕНЕНИЕ ЕНОТОПРОЦЕНТА
     $('#tp').change(function(){
+        console.log('Изменился енотопроцент');
+        //Переменные
         var zak = Number(Number($('#zak').val()).toFixed(3));      //Закупочная цена (на шт)
         var tzr = Number(Number($('#tzr').val()).toFixed(3));      //Транспортные (на шт)
         var a = zak+tzr;                                           //Сумма Закупа и ТЗР для формулы
@@ -11,7 +70,7 @@ $(document).ready(function(){
         var wt = Number(Number($('#wtime').val()).toFixed(2));
 
             //Изменяется еноторубль
-            $('#tpr').text((a*tp/100).toFixed(2));
+            $('#tpr').text(((a+a*0.0125*wt+(a+wt)*op/100)*tp/100).toFixed(2));
             var tpr = Number($('#tpr').text());
 
             //Изменяется обналорубль
@@ -22,50 +81,12 @@ $(document).ready(function(){
             $('#firstoh').text((tpr - firstobpr).toFixed(2));
 
             //Стираются все переменные
-            zak = tzr = tp = op = tpr = obp = firstobpr = null;
+            zak = tzr = tp = op = tpr = firstobpr = null;
             //И расчет цены
             givePrice();
     });
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-    //ИЗМЕНЕНИЕ НАШЕГО ПРОЦЕНТА
-    $('#op').change(function(){
-        //Переменные
-        var zak = Number(Number($('#zak').val()).toFixed(3));      //Закупочная цена (на шт)
-        var tzr = Number(Number($('#tzr').val()).toFixed(3));      //Транспортные (на шт)
-        var tp = Number(Number($('#tp').val()).toFixed(3));        //Ненаша наценка (в формате десятичных 3 знаков)
-        var op = Number(Number($('#op').val()).toFixed(3));        //Наша наценка (в формате десятичных 3 знаков)
-        var a = zak+tzr;
-
-        //Изменяются наши рубли
-            $('#opr').text(((op/100)*(zak+tzr)).toFixed(2));
-            var opr = (zak+tzr)*(op/100);
-            //Изменяется еноторубль
-            $('#tpr').text((((zak+tzr) + opr) * (tp/100)).toFixed(2));
-            var tpr = Number($('#tpr').text());
-            var obp = Number($('#firstobp').val());
-            //Изменяется обналорубль
-            $('#firstobpr').text((tpr*obp/100).toFixed(2));
-            var firstobpr =  Number($('#firstobpr').text());
-            //Изменяется первое на руки
-            $('#firstoh').text((tpr - firstobpr).toFixed(2));
-            //Стираются все переменные
-            zak = tzr = tp = op = tpr = obp = opr = firstobpr = null;
-            //И расчет цены
-            givePrice();
-    });
-    /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-    //ИЗМЕНЕНИЕ ОТСРОЧКИ
-    $('#wtime').change(function () {
-        //Изменяется количество дней
-        var wtime = Number(Number($('#wtime').val()).toFixed(2));
-        $('#wtimeday').text((wtime/0.0334).toFixed(0));
-        //Стираем переменнные
-        wtime = null;
-        //Идет расчет цены
-        givePrice();
-    });
-    /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-    //ИЗМЕНЕНИЕ НАШЕЙ ЦЕНЫ
+    //ИЗМЕНЕНИЕ ЗАКУПА
     $('#zak').change(function () {
         var zak = Number(Number($('#zak').val()).toFixed(3));      //Закупочная цена (на шт)
         var tzr = Number(Number($('#tzr').val()).toFixed(3));      //Транспортные (на шт)
@@ -117,7 +138,6 @@ $(document).ready(function(){
         //И расчет цены
         givePrice();
     });
-
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
     /*ИЗМЕНЕНИЕ ПЕРВОГО ОБНАЛОПРОЦЕНТА*/
     $('#firstobp').change(function () {
@@ -139,7 +159,6 @@ $(document).ready(function(){
         //И считаем цену
         givePrice();
     });
-
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
     /*ИЗМЕНЕНИЕ ФИКС ОБНАЛОПРОЦЕНТ*/
     $('#obp').change(function () {
@@ -231,18 +250,21 @@ $(document).ready(function(){
         /*РАСЧЕТ ЦЕНЫ И РЕНТАБЕЛЬНОСТИ ПРИ ОТПУЩЕННОЙ ЦЕНЕ*/{
             console.log('inactive fixate');
             /*Расчет цены*/
-                var fixed = 0;
-                var la = (lzak + ltzr);             //Сумма закупа и тзр, именуемое "А"
-                var lwt = la*0.0125*wt;             //Отсрочка  это сумма отсрочек покупателю и поставщику.это дополнительная затрата в виде 1,25% в месяц от суммы закупа и ТЗР
-                var lim = la*ltp/100;               //Начислено им
-                var lnam = (la+lwt+lim)*lop/100;    //Начислено нам
-                var lprice = la + lwt +lim + lnam;
+            var fixed = 0;
+            var la = (lzak + ltzr);             //Сумма закупа и тзр, именуемое "А"
+            var lwt = la*0.0125*wt;             //Отсрочка  это сумма отсрочек покупателю и поставщику.это дополнительная затрата в виде 1,25% в месяц от суммы закупа и ТЗР
+            var lnam = (la+lwt)*lop/100;        //Начислено нам
+            var lim = (la+lwt+lnam)*ltp/100;    //Начислено им
+
+                var lprice = la + lwt + lim + lnam;
                 console.log('Закуп+ТЗР: '+la);
                 console.log('Отсрочка: '+lwt);
                 console.log('Им: '+lim);
                 console.log('Нам: '+lnam);
                 console.log('Цена: '+lprice);
+                //Даем цену
                 $('#pr').val((lprice).toFixed(2));
+
             //Высчитываем РЕАЛЬНЫЙ процент (для наруки)
                 var clearp = ltpr/lprice*100;
                 $('#clearp').text((clearp).toFixed(2) + ' %');
