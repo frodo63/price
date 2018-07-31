@@ -130,12 +130,12 @@ if (isset($_POST['request'])){
             $result.= "<td class ='price'>" . round($price, 2) . "</td></tr>";
 
             /*формула расчета:*/
-            $form_top[] = $nam * $kol * (1 - (0.015 * $wtime));
+            $form_top[] = $nam * $kol;
             $form_bot[] = $price * $kol;
             /*закончилась формула*/
 
             /*Показательная дробь*/
-            $dem_top .=$nam . " * " . $kol . " * " . "(1 - (0.015 * " . $wtime . ")) + ";
+            $dem_top .=$nam . " * " . $kol . " + ";
             $dem_bot .="(" . $row['price'] . " * " . $row['kol'].") + ";
             /*Закончилась показательная дробь*/
         };
