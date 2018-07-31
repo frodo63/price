@@ -453,7 +453,7 @@ $(document).ready(function() {
         $('#button_history').attr('hist_trade', '');//Убираем идентификатор товара из Кнопки по истории
         $('#pricingwindow input[type="number"]').val('');
         $('#pricingwindow input[type="text"]').text('');
-        $('#cases p,#obtzr,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh').text('');
+        $('#cases p,#obtzr,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday').text('');
         $('#pricingwindow').attr({'positionid': '-', 'pricingid': '-'});
         $('.history').html('');
         $('#button_history').attr({'hist_byer': '-', 'hist_trade': '-'});
@@ -486,7 +486,7 @@ $(document).ready(function() {
                 $('#seller').attr('seller_id', '').val('');
                 $('#pricingwindow input[type="number"]').val('');
                 $('#pricingwindow input[type="text"]').text('');
-                $('#cases p,#obtzr,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh').text('');
+                $('#cases p,#obtzr,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday').text('');
                 $('#pricingwindow').attr({'positionid': '-', 'pricingid': '-'});
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                 console.log($('#trade').attr('trade_id'),$('#seller').attr('seller_id'));
@@ -506,11 +506,14 @@ $(document).ready(function() {
                         $('#trade').attr('trade_id', json.tradeid).val(trade);
                         $('#seller').attr('seller_id', json.sellerid).val(seller);
                         $('#button_history').attr('hist_trade', json.tradeid);//Дбавляем идентификатор Товара в инпут по истории
+                        console.log(json.tradeid);
 
                         $('#zak').val(json.zak);
                         $('#kol').val(json.kol);
                         $('#tzr').val(json.tzr);
                         $('#wtime').val(json.wtime);
+                        $('#wtimeday').text(json.wtimeday);
+                        $('#wtr').text(json.wtr);
                         /*ЦЕНА и РЕНТАБЕЛЬНОСТЬ*/
                         $('#pr').val(Number(Number(json.price).toFixed(2)));
                         $('#rent h1').text(Number(Number(json.rent).toFixed(2)));

@@ -13,12 +13,12 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-'>
         <label for='seller'>Поставщик:</label><input seller_id = 'blank' autocomplete='off' type='text' name='seller' id='seller' placeholder='Введите поставщика' size='70'/><div class='sres'></div><br />
         <label for='zakup'>ЗАКУП ЗА 1 ШТ:</label> <input type='number' name='zak' id='zak' min='1' step='1'/> руб.<br />
         <label for='kol'>Кол-во:</label> <input type='number' name='kol' id='kol'  min='1'/><br />
-        <label for='tzr'>ТЗР на ШТУКЕ:</label> <input type='number' name='tzr' id='tzr'  min='0' step='1'/> руб. С обналом: <p id='obtzr'></p> руб.<br />
-        <label for='firstobp'>ОБНАЛ:</label> <input type='number' size='2' name='firstobp' id='firstobp'  min='0' step='0.1'/>% / <p id='firstobpr'></p> руб.<br /><br />
+        <label for='tzr'>ТЗР на ШТУКЕ:</label> <input type='number' name='tzr' id='tzr'  min='0' step='1'/> руб. С обналом: <p id='obtzr'></p> руб.<br /><br />
         <div id='fcount'>
             <label for='wtime'>ОТСРОЧКА:</label> <input type='number' size='2' name='wtime' id='wtime'  min='0' step='0.03'/> мес. <p id='wtimeday'></p> дней.&nbsp(От поставщика + От покупателя)&nbsp<span id='wtr'></span>.руб<br />           
             <label for='op'>НАШ ПРОЦЕНТ:</label> <input type='number' size='4' name='op' id='op'  min='1' step='0.01'/>% / <p id='opr'></p> руб.<br />
             <label for='tp'>ЕНОТ:</label> <input type='number' size='2' name='tp' id='tp'  min='0' step='0.01'/>% / <p id='tpr'></p> руб.(<p id='clearp'></p>&nbspот цены) НА РУКИ : <p id='firstoh'></p> руб. <br/>
+            <label for='firstobp'>ОБНАЛ:</label> <input type='number' size='2' name='firstobp' id='firstobp'  min='0' step='0.1'/>% / <p id='firstobpr'></p> руб.<br />
         </div>
                 
         <div id='margediv'>

@@ -27,6 +27,8 @@ if(
     isset($_POST["marge"]) &&
     isset($_POST["margek"]) &&
     isset($_POST["clearp"]) &&
+    isset($_POST["wtr"]) &&
+    isset($_POST["wtimeday"]) &&
     isset($_POST["positionid"])
 )
 {
@@ -52,6 +54,8 @@ if(
     $rtp = round(($_POST["rtp"]), 2);
     $realtp = round(($_POST["realtp"]), 2);
     $clearp = round($_POST["clearp"], 2);
+    $wtr = round($_POST["wtr"], 2);
+    $wtimeday = round($_POST["wtimeday"], 0);
     $obp = round(($_POST["obp"]), 2);
     $oh = (int)($_POST["oh"]);
     $price = (int)($_POST["price"]);
@@ -59,8 +63,8 @@ if(
 
     try{
         $sql = "INSERT INTO pricings(
-        positionid,tradeid,sellerid,zak,kol,tzr,wtime,fixed,op,tp,opr,tpr,firstobp,firstobpr,firstoh,marge,margek,rop,realop,rtp,realtp,clearp,obp,oh,price,rent)
-        VALUES(:positionid,:trade,:seller,:zak,:kol,:tzr,:wtime,:fixed,:op,:tp,:opr,:tpr,:firstobp,:firstobpr,:firstoh,:marge,:margek,:rop,:realop,:rtp,:realtp,:clearp,:obp,:oh,:price,:rent)";
+        positionid,tradeid,sellerid,zak,kol,tzr,wtime,fixed,op,tp,opr,tpr,firstobp,firstobpr,firstoh,marge,margek,rop,realop,rtp,realtp,clearp,obp,oh,price,rent,wtr,wtimeday)
+        VALUES(:positionid,:trade,:seller,:zak,:kol,:tzr,:wtime,:fixed,:op,:tp,:opr,:tpr,:firstobp,:firstobpr,:firstoh,:marge,:margek,:rop,:realop,:rtp,:realtp,:clearp,:obp,:oh,:price,:rent,:wtr,:wtimeday)";
         $statement = $pdo->prepare($sql);
         $statement->bindValue(':positionid', $positionid);
         $statement->bindValue(':trade', $trade);
@@ -88,6 +92,8 @@ if(
         $statement->bindValue(':oh', $oh);
         $statement->bindValue(':price', $price);
         $statement->bindValue(':rent', $rent);
+        $statement->bindValue(':wtr', $wtr);
+        $statement->bindValue(':wtimeday', $wtimeday);
         $pdo->beginTransaction();
         $statement->execute();
         $pdo->commit();
@@ -129,6 +135,8 @@ if(
     isset($_POST["marge"]) &&
     isset($_POST["margek"]) &&
     isset($_POST["clearp"]) &&
+    isset($_POST["wtr"]) &&
+    isset($_POST["wtimeday"]) &&
     isset($_POST["pricingid"])
 )
 {
@@ -158,6 +166,8 @@ if(
     $oh = (int)($_POST["oh"]);
     $price = (int)($_POST["price"]);
     $rent = round($_POST["rent"], 2);
+    $wtr = round($_POST["wtr"], 2);
+    $wtimeday = round($_POST["wtimeday"], 0);
 
     try{
 
@@ -186,7 +196,9 @@ if(
         obp = :obp,
         oh = :oh,
         price = :price,
-        rent = :rent WHERE pricingid = :pricingid";
+        rent = :rent,
+        wtr = :wtr,
+        wtimeday = :wtimeday WHERE pricingid = :pricingid";
         $statement = $pdo->prepare($sql);
 
         $statement->bindValue(':pricingid', $pricingid);
@@ -215,6 +227,8 @@ if(
         $statement->bindValue(':oh', $oh);
         $statement->bindValue(':price', $price);
         $statement->bindValue(':rent', $rent);
+        $statement->bindValue(':wtr', $wtr);
+        $statement->bindValue(':wtimeday', $wtimeday);
         $pdo->beginTransaction();
         $statement->execute();
         $pdo->commit();
