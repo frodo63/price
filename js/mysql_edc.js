@@ -453,7 +453,7 @@ $(document).ready(function() {
         $('#button_history').attr('hist_trade', '');//Убираем идентификатор товара из Кнопки по истории
         $('#pricingwindow input[type="number"]').val('');
         $('#pricingwindow input[type="text"]').text('');
-        $('#cases p,#obtzr,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday').text('');
+        $('#cases p,#obtzr,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
         $('#pricingwindow').attr({'positionid': '-', 'pricingid': '-'});
         $('.history').html('');
         $('#button_history').attr({'hist_byer': '-', 'hist_trade': '-'});

@@ -303,6 +303,10 @@ $(document).ready(function(){
                 var clearp = ltpr/lprice*100;
                 $('#clearp').text((clearp).toFixed(2) + ' %');
 
+            //Высчитываем чистый процент (отношение выдаваемого к цене)
+            var clearpnar = firstoh/lprice*100;
+            $('#clearpnar').text((clearpnar).toFixed(2) + ' %');
+
             /*Расчет рентабельности*/
                 var opr = Number((Number($('#opr').text())).toFixed(2));
                 var lrentS = lnam/lprice*100;
