@@ -35,9 +35,9 @@ if(
     $positionid = (int)($_POST["positionid"]);
     $trade = (int)($_POST["trade"]);
     $seller = (int)($_POST["seller"]);
-    $zak = (int)($_POST["zak"]);
+    $zak = round($_POST["zak"],2);
     $kol = (int)($_POST["kol"]);
-    $tzr = (int)($_POST["tzr"]);
+    $tzr = round($_POST["tzr"],2);
     $wtime = round(($_POST["wtime"]), 2);
     $fixed = (int)($_POST["fixed"]);
     $op = round(($_POST["op"]), 2);
@@ -45,8 +45,8 @@ if(
     $opr = round(($_POST["opr"]), 2);
     $tpr = round(($_POST["tpr"]), 2);
     $firstobp = round(($_POST["firstobp"]), 2);
-    $firstoh = (int)($_POST["firstoh"]);
-    $firstobpr = (int)($_POST["firstobpr"]);
+    $firstoh = round($_POST["firstoh"],2);
+    $firstobpr = round($_POST["firstobpr"],2);
     $marge = round(($_POST["margek"]), 2);
     $margek = round(($_POST["margek"]), 2);
     $rop = round(($_POST["rop"]), 2);
@@ -57,8 +57,8 @@ if(
     $wtr = round($_POST["wtr"], 2);
     $wtimeday = round($_POST["wtimeday"], 0);
     $obp = round(($_POST["obp"]), 2);
-    $oh = (int)($_POST["oh"]);
-    $price = (int)($_POST["price"]);
+    $oh = round($_POST["oh"],2);
+    $price = round($_POST["price"],2);
     $rent = round(($_POST["rent"]), 2);
 
     try{
@@ -143,9 +143,9 @@ if(
     $pricingid = (int)($_POST["pricingid"]);
     $trade = (int)($_POST["trade"]);
     $seller = (int)($_POST["seller"]);
-    $zak = (int)($_POST["zak"]);
+    $zak = round($_POST["zak"],2);
     $kol = (int)($_POST["kol"]);
-    $tzr = (int)($_POST["tzr"]);
+    $tzr = round($_POST["tzr"],2);
     $wtime = round(($_POST["wtime"]), 2);
     $fixed = (int)($_POST["fixed"]);
     $op = round(($_POST["op"]), 2);
@@ -153,8 +153,8 @@ if(
     $opr = round(($_POST["opr"]), 2);
     $tpr = round(($_POST["tpr"]), 2);
     $firstobp = round(($_POST["firstobp"]), 2);
-    $firstoh = (int)($_POST["firstoh"]);
-    $firstobpr = (int)($_POST["firstobpr"]);
+    $firstoh = round($_POST["firstoh"],2);
+    $firstobpr = round($_POST["firstobpr"],2);
     $marge = round(($_POST["margek"]), 2);
     $margek = round(($_POST["margek"]), 2);
     $rop = round(($_POST["rop"]), 2);
@@ -163,8 +163,8 @@ if(
     $realtp = round(($_POST["realtp"]), 2);
     $clearp = round($_POST["clearp"], 2);
     $obp = round(($_POST["obp"]), 2);
-    $oh = (int)($_POST["oh"]);
-    $price = (int)($_POST["price"]);
+    $oh = round($_POST["oh"],2);
+    $price = round($_POST["price"],2);
     $rent = round($_POST["rent"], 2);
     $wtr = round($_POST["wtr"], 2);
     $wtimeday = round($_POST["wtimeday"], 0);
@@ -427,7 +427,7 @@ if(
 
 /**/
 
-/*Редактирование статуса "Спрятан в Р-1 Изменение на 1*/
+/*Редактирование статуса "Спрятан в Р-1 Изменение на 0*/
 if(
 isset($_POST["r1_show_reqid"])
 )

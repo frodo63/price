@@ -454,7 +454,7 @@ $(document).ready(function() {
         $('#pricingwindow input[type="number"]').val('');
         $('#pricingwindow input[type="text"]').text('');
         $('#cases p,#obtzr,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
-        $('#pricingwindow').attr({'positionid': '-', 'pricingid': '-'});
+        $('#pricingwindow').attr({'positionid': '-', 'pricingid': '-', 'preditposid':'-'});
         $('.history').html('');
         $('#button_history').attr({'hist_byer': '-', 'hist_trade': '-'});
 
@@ -478,7 +478,8 @@ $(document).ready(function() {
 
                 console.log('рыба не видна');
                 window.scrollTo(0, 0);
-                $('#pricingwindow').slideDown(200).attr('pricingid', prid);
+                $('#pricingwindow').attr({'preditposid':'-'});//Сначала все равно очищаем, потом - ставим
+                $('#pricingwindow').slideDown(200).attr({'pricingid': prid, 'preditposid':posid});
 
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                 //Очищаем окно расценки
@@ -540,7 +541,6 @@ $(document).ready(function() {
                             $('#tpr').text(json.tpr);
                             $('#firstoh').text(json.firstoh);
                             $('#clearp').text(json.clearp);
-                            $('#go').trigger('click');
                         }
                         if (json.fixed == 1){
                             /*Косметика*/
@@ -569,11 +569,10 @@ $(document).ready(function() {
                             $('#oh').text(json.oh);
                             $('#realop').text(json.realop + '%, от маржи');
                             $('#realtp').text(json.realtp + '%, от маржи');
-                            $('#go').trigger('click');
                         }
-                    },
+                    },/*История*/
                     complete: function(){
-                        $('#button_history').attr('hist_byer', byerid);//Дбавляем идентификатор ПОкупателя в инпут по истории
+                        $('#button_history').attr('hist_byer', byerid);//Добавляем идентификатор Покупателя в инпут по истории
                         //Проверка на QUEEN
                         $.ajax({
                             url: 'mysql_options.php',

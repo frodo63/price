@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `requests` (
 `req_rent` FLOAT(3) UNSIGNED,
 `byersid` SMALLINT UNSIGNED NOT NULL,
 `payment` BOOLEAN NULL,
-`req_sum` INT NULL,
+`req_sum` FLOAT(14,2) NULL UNSIGNED,
 `1c_num` TINYINT NULL,
 `ov_op` FLOAT(5,2) NULL UNSIGNED,
 `ov_firstobp` FLOAT(5,2) NULL UNSIGNED,

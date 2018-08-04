@@ -25,7 +25,7 @@ if(isset($_POST['plus_winid']) && isset($_POST['posid'])){
         $w = $getvars->fetchAll(PDO::FETCH_ASSOC);
         print json_encode(array(
             "data1"=>$w[0]['name'],
-            "data2"=>number_format($w[0]['price']*(int)$w[0]['kol'], 2,"."," "),
+            "data2"=>round($w[0]['price']*$w[0]['kol'], 2),
             "data3"=>$w[0]['rent']
             ));
 
@@ -58,10 +58,36 @@ if(isset($_POST['minus_winid']) && isset($_POST['posid'])){
     }
 };
 
+/*Читаем данные по победителю*/
+if(isset($_POST['read_winid'])){
+    $winid = $_POST['read_winid'];//ID победителя
+
+    //Задача - добыть имя Поставщика - победителя. Из расценки его вытащим
+    //Запрос:
+    $getvars = $pdo->prepare("SELECT `name`,`price`,`kol`,`rent` FROM (SELECT sellerid,pricingid,price,kol,rent FROM pricings WHERE pricingid = ?) AS a LEFT JOIN (SELECT sellers_id,name FROM sellers LEFT JOIN allnames ON sellers.sellers_nameid=allnames.nameid) AS b ON a.sellerid = b.sellers_id");
+    try{
+        $pdo->beginTransaction();
+        $getvars->execute(array($winid));
+        $pdo->commit();
+
+        $w = $getvars->fetchAll(PDO::FETCH_ASSOC);
+        print json_encode(array(
+            "data1"=>$w[0]['name'],
+            "data2"=>round($w[0]['price']*$w[0]['kol'], 2),
+            "data3"=>$w[0]['rent']
+        ));
+
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        $pdo->rollback();
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+};
+
 /*РАСЧЕТ ОБЩЕЙ РЕНТАБЕЛЬНОСТИ*/
 if (isset($_POST['request'])){
     $reqid = $_POST['request'];
-    $wincount == 0;
+    $wincount = 0;
     $getvars = $pdo->prepare("SELECT `req_positionid`,`winnerid` FROM req_positions WHERE `req_positions`.`requestid` = ?");
     $nam == 0;//Переменная, в зависимости от того, зафиксирована расценка или нет
     $countrent = $pdo->prepare("SELECT * FROM (SELECT `winnerid` FROM `req_positions` WHERE `requestid` = ?) AS a LEFT JOIN (SELECT `kol`,`price`,`rop`,`opr`,`fixed`,`wtime`,`pricingid`,`name`,`tradeid` FROM `pricings` AS c LEFT JOIN (SELECT `trades_id`,`name` FROM `trades` LEFT JOIN `allnames` ON `trades`.`trades_nameid`=`allnames`.`nameid`) AS d ON c.`tradeid`=d.`trades_id`) AS b ON a.`winnerid` = b.`pricingid`");
@@ -78,7 +104,7 @@ if (isset($_POST['request'])){
         /*Число победителей считается перебором и сравнением с 0*/
         $p=$getvars->fetchAll(PDO::FETCH_ASSOC);
         foreach ($p as $row){
-            if ($row['1'] !== 0){
+            if ($row['winnerid'] !== '0'){
                 ++$wincount;
             }
         }
@@ -141,13 +167,15 @@ if (isset($_POST['request'])){
         };
         $result .="</table><br>";
 
-        if (((int)$poscount - (int)$wincount) > 0){
+        $countdif = round($poscount,0) - round($wincount,0);
+
+        if ($countdif > 0){
             /*Посылаем ноль в графу общей рентабельности*/
             $pdo->beginTransaction();
             $save_rent->execute(array(0, $reqid));
             $pdo->commit();
 
-            /*Посылаем ноль в графу общей рентабельности*/
+            /*Посылаем ноль в графу суммы заявки*/
             $pdo->beginTransaction();
             $save_sum->execute(array(0, $reqid));
             $pdo->commit();
@@ -159,7 +187,7 @@ if (isset($_POST['request'])){
                 "data3"=>"0.00")));
 
         };
-        if (((int)$poscount - (int)$wincount) == 0){
+        if ($countdif == 0){
             $top;
             $bot;
             foreach($form_top as $key=>$value){$top = $top + $value;}
@@ -183,13 +211,8 @@ if (isset($_POST['request'])){
             $pdo->beginTransaction();
             $save_sum->execute(array($bot, $reqid));
             $pdo->commit();
-
             print (json_encode(array("data1"=>"Расчет рентабельности: <br><br><table class ='demo'><tr><td>" . $dem_top . "</td></tr><tr><td>" . $dem_bot . "</td></tr></table><br><br><span> Общая рентабельность: " . $rent . " % </span> " . $result . " <br><br><span>Разница: " . ((int)$poscount - (int)$wincount) . " Позиций: " . (int)$poscount . " Победителей: " . (int)$wincount . "</span>","data2"=>$rent,"data3"=>$bot)));
-
         };
-
-
-
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!

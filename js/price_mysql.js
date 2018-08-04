@@ -295,8 +295,9 @@ $(document).ready(function(){
             var lnam = (la+lwt)*lop/100;        //Начислено нам
             var lim = (la+lwt+lnam)*ltp/100;    //Начислено им
 
-                var lprice = la + lwt + lim + lnam;
+                var lprice = Number((la + lwt + lim + lnam).toFixed(2));
                 //Даем цену
+            console.log(lprice+" типа "+typeof(lprice));
                 $('#pr').val((lprice).toFixed(2));
 
             //Высчитываем грязный процент (отношение начисленного к цене)
@@ -345,6 +346,12 @@ $(document).ready(function(){
                 {
                  var positionID = $('#pricingwindow').attr('positionid');
                  var pricingID = $('#pricingwindow').attr('pricingid');
+                 var preditposID = $('#pricingwindow').attr('preditposid');
+                 var reqid = $('.collapsepos[position='+preditposID+']').attr('request');
+
+                 var pr = $('#pr').val();
+                 lprice = Number(Number(pr).toFixed(2));
+                 console.log(lprice+" типа "+typeof(lprice));
 
                  var formData =
                      '&trade=' + $('#trade').attr('trade_id') +
@@ -397,6 +404,9 @@ $(document).ready(function(){
                         }
                     });
                 }else{//Если это редактирование расценки
+                    //TODO: Добавить переменную в прайсингвиндоу с номером позиции для обновления текста по окончании редактирования
+                    //это preditposid
+
                     formData += '&pricingid=' + pricingID;
                     console.log(formData);
                     //Аякс скрипт на editpricing
@@ -406,9 +416,49 @@ $(document).ready(function(){
                         data: formData,
                         success: function (data) {
                             $('#editmsg').css("display", "block"). delay(1000).slideUp(300).html(data);
+                        },
+                        complete: function () {
+                            $.ajax({//Меняются реквизиты текущей расценки
+                                url: 'mysql_read.php',
+                                method: 'POST',
+                                data: {positionid:preditposID},
+                                success: function (data) {
+                                    $('input[position='+preditposID+'] ~ div.pricings').html(data);
+                                },
+                                complete: function () {//ПРОВЕРКА, если редкатировалась расценка-победитель, то изменяем реквизиты победителя
+                                    if($('tr[pricingid='+pricingID+']').hasClass('win')){
+                                        $.ajax({
+                                            url: 'mysql_rent.php',
+                                            method: 'POST',
+                                            dataType: 'json',
+                                            cache: false,
+                                            data: {read_winid:pricingID},
+                                            success: function(data) {
+                                                $('tr[position=' + preditposID + ']>td.winname').html(data.data1);//Вставить имя Победителя (Имя)
+                                                $('tr[position=' + preditposID + ']>td.pr').html(data.data2);//Вставить СУмму по позиции
+                                                $('tr[position=' + preditposID + ']>td.rent').html(data.data3);//Вставить новую рентабельность
+                                            },
+                                            complete: function () {//Изменяем сумму заявки в списке заявок, самой большой таблице и в верхней строке
+                                                $.ajax({
+                                                    url: 'mysql_rent.php',
+                                                    method: 'POST',
+                                                    dataType: 'json',
+                                                    cache: false,
+                                                    data: {request:reqid},
+                                                    success: function (data) {
+                                                        $('tr[requestid='+reqid+'] .rent_whole').html(data.data2);
+                                                        $('tr[requestid='+reqid+'] .sum_whole').html(data.data3);
+                                                        $('h3.req_header_'+reqid+' .reqsumma').html(data.data3);
+                                                    }
+                                                });
+                                            }
+                                        })
+                                    }
+                                }
+                            });
                         }
                     });
-                };
+                }
 
                 } else {
                     alert("Для добавления в базу заполните поля: \n'Товар', \n'Поставщик'.")

@@ -51,38 +51,38 @@ if (isset($_POST['the_byer'])){
             $result.="<td>".$row['1c_num']."</td>";
             $result.="<td><input class='collapse_ga_request' ga_request='". $row['requests_id'] ."' type='button' value='W'><span>".$row['name']."</span>
 <div class='ga_contents' ga_request='". $row['requests_id'] ."'><div class='ga_options'></div><div class='ga_c_payments'></div><div class='ga_c_positions'></div><div class='ga_c_giveaways'></div></div></td>";
-            $result.="<td>".$row['req_sum']."</td>";
+            $result.="<td>".round($row['req_sum'],2)."</td>";
 
             /*ПЕРЕМЕННЫЕ НА СТАТУС ЗАКАЗА*/
             /*НА КАЖДЫЙ ЗАКАЗ У НА 4 ПЕРЕМЕННЫЕ*/
-            $req_sum=(int)$row['req_sum'];//Сумма заказа строку приводим к числу
+            $req_sum=round($row['req_sum'],2);//Сумма заказа строку приводим к числу
             $req_count = 0;//Начислено
             $req_pay = 0;//Оплачено
             $req_give = 0;//Отдано
             /*Расчет общего количества начислений*/
             foreach ($req_countings as $rc){
-                if (round($rc['oh'],0) == 0) {
-                    $onhands = round($rc['firstoh'],0);
+                if (round($rc['oh'],2) == 0) {
+                    $onhands = round($rc['firstoh'],2);
                 } else {
-                    $onhands = round($rc['oh'],0);
+                    $onhands = round($rc['oh'],2);
                 };
-                $req_count+=round($onhands,0) * round($rc['kol'],0);
+                $req_count+=round($onhands,2) * round($rc['kol'],2);
             }
             /**/
             /*Расчет общего количества оплат*/
             foreach ($req_payments as $rp){
-                $req_pay+=round($rp['sum'],0);
+                $req_pay+=round($rp['sum'],2);
             }
             /**/
             /*Расчет общего количества выдач*/
             foreach ($req_giveaways as $rg){
-                $req_give+=round($rg['giveaway_sum'],0);
+                $req_give+=round($rg['giveaway_sum'],2);
             }
             /**/
 
             /*Подготовка переходных переменных*/
-            $req_pay_ostatok = round($req_sum, 0) - round($req_pay, 0);//Остаток к оплате
-            $req_give_ostatok = round($req_count,0) - round($req_give,0);
+            $req_pay_ostatok = round($req_sum, 2) - round($req_pay, 2);//Остаток к оплате
+            $req_give_ostatok = round($req_count,2) - round($req_give,2);
 
             /*КНОПКА УБРАТЬ ИЗ ВЫДАЧИ Р1*/
             $result .="<td><input type='button' value='убрать из Р-1' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$the_byer."'>";
@@ -91,11 +91,11 @@ if (isset($_POST['the_byer'])){
             /**/
 
             /*УСЛОВИЯ ПО СТАТУСУ ЗАКАЗА*/
-            if((int)$req_sum == round($req_pay,0) && round($req_sum,0) !=0 && round($req_pay,0) !=0){
+            if(round($req_sum,2) == round($req_pay,2) && round($req_sum,2) !=0 && round($req_pay,2) !=0){
                 $result .="$nbsp Заказ оплачен полностью. К выдаче: ".$req_give_ostatok.".</td>";
-            }elseif (round($req_sum,0) == 0){
+            }elseif (round($req_sum,2) == 0){
                 $result .="$nbspСумма заказа не определена. Назначьте победителя.</td>";
-            }elseif (round($req_pay,0) == 0){
+            }elseif (round($req_pay,2) == 0){
                 $result .="$nbspОплат еще не поступало.</td>";
             }else{
                 $result .="$nbspЗаказ оплачен не полностью. К оплате :".$req_pay_ostatok."</td>";
@@ -152,13 +152,13 @@ if (isset($_POST['the_request'])){
             $result2.="<h2>Начисления</h2><table><thead><tr><th>Товар</th><th>Кол-во</th><th>Начислено, на шт</th><th>Сумма к выдаче</th></tr></thead><tbody>";
             foreach ($get_positions as $row) {
 
-                if ((int)$row['oh'] == 0) {
-                    $onhands = (int)$row['firstoh'];
+                if (round($row['oh'],2) == 0) {
+                    $onhands = round($row['firstoh'],2);
                 } else {
-                    $onhands = (int)$row['oh'];
+                    $onhands = round($row['oh'],2);
                 };
 
-                $result2 .= "<tr><td>" . $row['name'] . "</td><td>" . $row['kol'] . "</td><td>" . $onhands . "</td><td>" . (int)$row['kol'] * (int)$onhands . "</td></tr>";
+                $result2 .= "<tr><td>" . $row['name'] . "</td><td>" . $row['kol'] . "</td><td>" . $onhands . "</td><td>" . round($row['kol'],2) * round($onhands,2) . "</td></tr>";
             };
             $result2 .= "</tbody></table>";
         };
@@ -177,7 +177,7 @@ if (isset($_POST['the_request'])){
         foreach($get_req_info as $row){
             $phpdate = strtotime( $row['created'] );
             $mysqldate = date( 'd.m.y', $phpdate );
-            $result4 .="<h2 class='req_header_".$the_request."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму ".$row['req_sum'].". Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h2/><br>";
+            $result4 .="<h2 class='req_header_".$the_request."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму ".round($row['req_sum'],2).". Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h2/><br>";
         }
 
 
