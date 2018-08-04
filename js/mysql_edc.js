@@ -927,6 +927,7 @@ $(document).ready(function() {
                             $('tr[requestid='+reqid+'] .rentcount').html(data.data1);
                             $('tr[requestid='+reqid+'] .rent_whole').html(data.data2);
                             $('tr[requestid='+reqid+'] .sum_whole').html(data.data3);
+                            $('h3.req_header_'+reqid+' .reqsumma').html(data.data3);
                         }
                     });
 
@@ -974,6 +975,7 @@ $(document).ready(function() {
                             $('tr[requestid='+reqid+'] .rentcount').html(data.data1);
                             $('tr[requestid='+reqid+'] .rent_whole').html(data.data2);
                             $('tr[requestid='+reqid+'] .sum_whole').html(data.data3);
+                            $('h3.req_header_'+reqid+' .reqsumma').html(data.data3);
                         }
                     });
 
@@ -999,6 +1001,7 @@ $(document).ready(function() {
                 $('tr[requestid='+reqid+'] .rentcount').toggle().html(data.data1);
                 $('tr[requestid='+reqid+'] .rent_whole').html(data.data2);
                 $('tr[requestid='+reqid+'] .sum_whole').html(data.data3);
+                $('h3.req_header_'+reqid+' .reqsumma').html(data.data3);
             }
         });
 

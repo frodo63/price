@@ -225,7 +225,7 @@ if(isset($_POST['table'])){
             <td category='requests' name =" . $row['req_nameid'] . "><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='W' class='collapse'><span class='name'>" . $row['req_name'] . "</span>
             
             <div id=" . $row['req_nameid'] . " class='contents'>
-                <h3 class='req_header_".$row['req_id']."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму <span class='reqsumma'>".$row['sum'].".</span> Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h3/><br>
+                <h3 class='req_header_".$row['req_id']."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму <span class='reqsumma'>".$row['sum']."&nbsp</span> Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h3/><br>
                 <input type='button' class='edit_options' value='Опции' requestid='".$row['req_id']."'>
                 <input type='button' class='edit_1c_num' value='Номер в 1С и дата' requestid='".$row['req_id']."'>  
                 <input type='button' value='Вернуть в Р-1' class='r1_show' requestid='".$row['req_id']."'>              
@@ -393,7 +393,7 @@ if (isset($_POST['requestid'])){
             };
         }
         $result.="</tbody></table>";
-        $result.= "<input type='button' requestid='" . $req_id . "' class = 'check_rent' value='Рентабельность'>";
+        $result.= "<input type='button' requestid='" . $req_id . "' class = 'check_rent' value='Рассчитать сумму и рентабельность сделки'>";
 
 
 

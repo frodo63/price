@@ -167,7 +167,7 @@ $(document).ready(function(){
 
         if ($('.ga_byer_requests:visible').length > 0){
             if ($(event.target).val() == 'X'){//Закрываем открытое
-                $(event.target).css({'background': 'white', 'color': 'black', 'font-size' : '1em'}).val('W');
+                $(event.target).val('W');
                 $(event.target).next('span').css({'font-size' : '1em'});
                 $(event.target).siblings('.ga_byer_requests').slideUp();
                 return false;//На закрытии скрипт останавливается
@@ -184,8 +184,8 @@ $(document).ready(function(){
                         //Расширение в высоту
                         $('.ga_byer_requests[ga_byer='+the_byer+']').slideDown()/*.addClass('ga_widen')*/;
                         $('input.collapse_ga_byer[value = "X"]').next('span').css({'font-size' : '1em'});
-                        $('input.collapse_ga_byer[value = "X"]').css({'background': 'white', 'color': 'black','font-size' : '1em'}).val('W');
-                        $(event.target).val('X').css({'background-color' : 'green','color' : 'white','font-size' : 30});
+                        $('input.collapse_ga_byer[value = "X"]').val('W');
+                        $(event.target).val('X');
                         $(event.target).next('span').css({'font-size' : 30});
                     },complete:function () {//Подключение дейтпикера
                         $('.from,.to').datepicker({
@@ -215,7 +215,7 @@ $(document).ready(function(){
                     $('div.ga_byer_requests:visible').slideUp();
                     //Расширение в высоту
                     $('.ga_byer_requests[ga_byer='+the_byer+']').slideDown()/*.addClass('ga_widen')*/;
-                    $(event.target).val('X').css({'background-color' : 'green','color' : 'white','font-size' : 30});
+                    $(event.target).val('X');
                     $(event.target).next('span').css({'font-size' : 30});
                 },complete:function () {//Подключение дейтпикера
                     $('.from,.to').datepicker({
@@ -237,6 +237,7 @@ $(document).ready(function(){
     /*СПИСОК ПЛАТЕЖЕЙ, НАЧИСЛЕНИЙ И ВЫДАЧ В РАМКАХ ОДНОЙ ЗАЯВКИ///////////////////////////////////////////////////////*/
     $(document).off('click.ga_contents').on('click.ga_contents', '.collapse_ga_request', function (event) {
         var the_request = $(event.target).attr('ga_request');
+        var the_byer = $(event.target).parents('li[byerid]').attr('byerid');
 
         if($(event.target).val() == 'X'){//Закрываем просто
             $(event.target).parents('.ga_byer_requests').removeClass('shrinken');
@@ -244,6 +245,16 @@ $(document).ready(function(){
             $(event.target).val('W').css({'background-color':'white','color':'black'});
             $('tr[ga_request]').not('tr[ga_request='+the_request+']').show();
             $('.ga_contents').hide();//Спрятали содержимое заявок
+            //Обновляем HTML Списка заявок по данному покупателю
+            $.ajax({
+                url: 'mysql_giveaways.php',
+                method: 'POST',
+                data: {the_byer: the_byer},
+                success: function (data) {
+                    $('.ga_byer_requests[ga_byer=' + the_byer + ']').html(data);
+                }
+            });
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             return false;
         };
 
