@@ -225,7 +225,7 @@ if(isset($_POST['table'])){
             <td category='requests' name =" . $row['req_nameid'] . "><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='W' class='collapse'><span class='name'>" . $row['req_name'] . "</span>
             
             <div id=" . $row['req_nameid'] . " class='contents'>
-                <h3 class='req_header_".$row['req_id']."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму <span class='reqsumma'>".$row['sum']."&nbsp</span> Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h3/><br>
+                <h3 class='req_header_".$row['req_id']."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму <span class='reqsumma'>".number_format($row['sum'],2,'.',' ')."&nbsp</span><br> Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h3/><br>
                 <input type='button' class='edit_options' value='Опции' requestid='".$row['req_id']."'>
                 <input type='button' class='edit_1c_num' value='Номер в 1С и дата' requestid='".$row['req_id']."'>  
                 <input type='button' value='Вернуть в Р-1' class='r1_show' requestid='".$row['req_id']."'>              
@@ -358,6 +358,8 @@ if (isset($_POST['requestid'])){
                 $winners->execute(array($row['req_positionid']));
                 foreach ($winners as $row)
                 {
+                    $pr = round($row['price'],2)*round($row['kol'],2);
+                    $pr=number_format($pr,'2','.',' ');
                     $result .= "<tr position =".$row['req_positionid'].">
                     <td> ".$rownumber.".</td>
                     <td category='positions'>
@@ -366,7 +368,7 @@ if (isset($_POST['requestid'])){
                         <div class='pricings'>
                         </div>
                     </td>
-                    <td class='pr'>".round($row['price'],2)*round($row['kol'],2)."</td><!--Сумма-->
+                    <td class='pr'>".$pr."</td><!--Сумма-->
                     <td class='winname'>".$row['name']."</td>
                     <td class='rent'>".round($row['rent'], 2)."</td>
                     <td class = 'pos_buttons'>

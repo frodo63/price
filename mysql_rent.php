@@ -162,7 +162,7 @@ if (isset($_POST['request'])){
 
             /*Показательная дробь*/
             $dem_top .=$nam . " * " . $kol . " + ";
-            $dem_bot .="(" . $row['price'] . " * " . $row['kol'].") + ";
+            $dem_bot .="(" . round($row['price'],2) . " * " . $row['kol'].") + ";
             /*Закончилась показательная дробь*/
         };
         $result .="</table><br>";
@@ -211,7 +211,7 @@ if (isset($_POST['request'])){
             $pdo->beginTransaction();
             $save_sum->execute(array($bot, $reqid));
             $pdo->commit();
-            print (json_encode(array("data1"=>"Расчет рентабельности: <br><br><table class ='demo'><tr><td>" . $dem_top . "</td></tr><tr><td>" . $dem_bot . "</td></tr></table><br><br><span> Общая рентабельность: " . $rent . " % </span> " . $result . " <br><br><span>Разница: " . ((int)$poscount - (int)$wincount) . " Позиций: " . (int)$poscount . " Победителей: " . (int)$wincount . "</span>","data2"=>$rent,"data3"=>$bot)));
+            print (json_encode(array("data1"=>"Расчет рентабельности: <br><br><table class ='demo'><tr><td>" . $dem_top . "</td></tr><tr><td>" . $dem_bot . "</td></tr></table><br><br><span> Общая рентабельность: " . $rent . " % </span> " . $result . " <br><br><span>Разница: " . ((int)$poscount - (int)$wincount) . " Позиций: " . (int)$poscount . " Победителей: " . (int)$wincount . "</span>","data2"=>$rent,"data3"=>number_format($bot,2,'.',' ')." руб.")));
         };
 
     } catch( PDOException $Exception ) {
