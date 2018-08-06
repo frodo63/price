@@ -240,7 +240,7 @@ if(isset($_POST['table'])){
             <div class='rentcount'></div>            
             </td>
                 <td class = 'rent_whole'>".round($row['rent'], 2)."</td>
-                <td class = 'sum_whole'>" .round($row['sum'], 2). "</td>
+                <td class = 'sum_whole'>" .number_format(round($row['sum'], 2), 2, '.', ' '). "</td>
             <td class = 'req_buttons'><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='R' class='edit'>
          <input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='X' class='delete'></td></tr>";
             }

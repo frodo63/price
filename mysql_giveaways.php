@@ -30,7 +30,7 @@ if (isset($_POST['the_byer'])){
         $result="<div class='ga_requests_date_range'><input class='from' size='10' placeholder='От'><input class='to' size='10' placeholder='До'>
 <input class='filter_date' type='button' value='Отобразить'></div>";
         if(isset($_POST['from']) && isset($_POST['to'])){$result.="<span>Заявки за период c <b>".$from_norm."</b> по <b>".$to_norm."</b></span>.<br><br>";}
-        $result.="<table><thead><tr><th>Дата</th><th>Номер заявки</th><th>Номер заказа в 1С</th><th>Название</th><th>Сумма заявки</th><th>Статус заявки</th></tr></thead><tbody>";
+        $result.="<table><thead><tr><th>Дата</th><th>Номер заявки</th><th>Номер заказа в 1С</th><th>Название</th><th>Сумма заявки</th><th>Начислено</th><th>Статус заявки</th></tr></thead><tbody>";
 
         foreach ($reqlist as $row){
 
@@ -51,7 +51,6 @@ if (isset($_POST['the_byer'])){
             $result.="<td>".$row['1c_num']."</td>";
             $result.="<td><input class='collapse_ga_request' ga_request='". $row['requests_id'] ."' type='button' value='W'><span>".$row['name']."</span>
 <div class='ga_contents' ga_request='". $row['requests_id'] ."'><div class='ga_options'></div><div class='ga_c_payments'></div><div class='ga_c_positions'></div><div class='ga_c_giveaways'></div></div></td>";
-            $result.="<td>".round($row['req_sum'],2)."</td>";
 
             /*ПЕРЕМЕННЫЕ НА СТАТУС ЗАКАЗА*/
             /*НА КАЖДЫЙ ЗАКАЗ У НА 4 ПЕРЕМЕННЫЕ*/
@@ -59,6 +58,7 @@ if (isset($_POST['the_byer'])){
             $req_count = 0;//Начислено
             $req_pay = 0;//Оплачено
             $req_give = 0;//Отдано
+
             /*Расчет общего количества начислений*/
             foreach ($req_countings as $rc){
                 if (round($rc['oh'],2) == 0) {
@@ -69,6 +69,13 @@ if (isset($_POST['the_byer'])){
                 $req_count+=round($onhands,2) * round($rc['kol'],2);
             }
             /**/
+
+            //Выводим сумму заявки
+            $result.="<td>".round($row['req_sum'],2)."</td>";
+            //Выводим сумму начислений по заявке
+            $result.="<td>".round($req_count,2)."</td>";
+
+
             /*Расчет общего количества оплат*/
             foreach ($req_payments as $rp){
                 $req_pay+=round($rp['sum'],2);

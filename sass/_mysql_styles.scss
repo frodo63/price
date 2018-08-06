@@ -526,6 +526,11 @@ tr[pricingid] td {border: 1px solid black}
 
 #add_payment, #add_giveaway, #edit_1c_num, #edit_options, #edit_options_pos{
   background-color: white;
+  input{
+    &:focus{
+      background-color: lightblue;
+    }
+  }
 }
 .ga_byer_requests {
   display: none;
