@@ -493,6 +493,9 @@ $(document).ready(function() {
                 window.scrollTo(0, 0);
                 $('#pricingwindow').attr({'preditposid':'-'});//Сначала все равно очищаем, потом - ставим
                 $('#pricingwindow').slideDown(200).attr({'pricingid': prid, 'preditposid':posid});
+                if($(event.target).parents('#reads')){
+                    console.log('Мы в общем списке заявок, надо бы скрыть Результаты поиска');
+                }
 
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                 //Очищаем окно расценки

@@ -1,5 +1,75 @@
 $(document).ready(function(){
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+    //ИЗМЕНЕНИЕ ЗАКУПА
+    $('#zak').change(function () {
+        //Переменные
+        var zak = Number(Number($('#zak').val()).toFixed(3));      //Закупочная цена (на шт)
+        var tzr = Number(Number($('#tzr').val()).toFixed(3));      //Транспортные (на шт)
+        var a = zak+tzr;                                           //Сумма Закупа и ТЗР для формулы
+        var tp = Number(Number($('#tp').val()).toFixed(3));        //Ненаша наценка (в формате десятичных 3 знаков)
+        var op = Number(Number($('#op').val()).toFixed(3));        //Наша наценка (в формате десятичных 3 знаков)
+        var firstobp = Number($('#firstobp').val());
+        var wt = Number(Number($('#wtime').val()).toFixed(2));
+        var wtr = Number(Number($('#wtr').text()).toFixed(2));
+
+        //Изменение проценторублей
+        $('#opr').text(Number(((a+wtr)*op/100).toFixed(2)));
+        var opr = Number($('#opr').text());
+
+        //Изменение еноторублей
+        $('#tpr').text(Number(((a+wtr+(a+wtr)*op/100)*tp/100).toFixed(2)));
+        var tpr = Number(Number($('#tpr').text()).toFixed(2));
+
+        //Изменение обналорублей
+        $('#firstobpr').text(Number((tpr*firstobp/100).toFixed(2)));;
+        var firstobpr =  Number($('#firstobpr').text());
+
+        //Изменение НА РУКИ
+        $('#firstoh').text(Number((tpr - tpr*firstobp/100).toFixed(2)));
+
+        //Стираем переменнные
+        zak=tzr=a=tp=op=firstobp=wt=wtr=opr=tpr=firstobpr=null;
+        //Идет расчет цены
+        givePrice();
+    });
+    /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+    //ИЗМЕНЕНИЕ ТЗР
+    $('#tzr').change(function () {
+        //Переменные
+        var zak = Number(Number($('#zak').val()).toFixed(3));      //Закупочная цена (на шт)
+        var tzr = Number(Number($('#tzr').val()).toFixed(3));      //Транспортные (на шт)
+        var a = zak+tzr;                                           //Сумма Закупа и ТЗР для формулы
+        var tp = Number(Number($('#tp').val()).toFixed(3));        //Ненаша наценка (в формате десятичных 3 знаков)
+        var op = Number(Number($('#op').val()).toFixed(3));        //Наша наценка (в формате десятичных 3 знаков)
+        var firstobp = Number($('#firstobp').val());
+        var wt = Number(Number($('#wtime').val()).toFixed(2));
+        var wtr = Number(Number($('#wtr').text()).toFixed(2));
+
+
+        //Изменение проценторублей
+        $('#opr').text(Number(((a+wtr)*op/100).toFixed(2)));
+        var opr = Number($('#opr').text());
+
+        //Изменение еноторублей
+        $('#tpr').text(Number(((a+wtr+(a+wtr)*op/100)*tp/100).toFixed(2)));
+        var tpr = Number(Number($('#tpr').text()).toFixed(2));
+
+        //Изменение обналорублей
+        $('#firstobpr').text(Number((tpr*firstobp/100).toFixed(2)));;
+        var firstobpr =  Number($('#firstobpr').text());
+
+        //Изменение НА РУКИ
+        $('#firstoh').text(Number((tpr - tpr*firstobp/100).toFixed(2)));
+
+        //Изменяется обналотзр
+        $('#obtzr').text((tzr*(1-(firstobp/100))).toFixed(2));
+
+        //Стираем переменнные
+        zak=tzr=a=tp=op=firstobp=wt=wtr=opr=tpr=firstobpr=null;
+        //Идет расчет цены
+        givePrice();
+    });
+    /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
     //ИЗМЕНЕНИЕ ОТСРОЧКИ
     $('#wtime').change(function () {
         console.log('Изменилась отсрочка');
@@ -11,6 +81,7 @@ $(document).ready(function(){
         var op = Number(Number($('#op').val()).toFixed(3));        //Наша наценка (в формате десятичных 3 знаков)
         var firstobp = Number($('#firstobp').val());
         var wt = Number(Number($('#wtime').val()).toFixed(2));
+        var wtr = Number(Number($('#wtr').text()).toFixed(2));
 
         //Изменяется количество дней
         $('#wtimeday').text((wt/0.0334).toFixed(0));
@@ -19,10 +90,11 @@ $(document).ready(function(){
         $('#wtr').text(Number((a*0.0125*wt).toFixed(2)));
 
         //Изменение проценторублей
-        $('#opr').text(Number(((a+wt)*op/100).toFixed(2)));
+        $('#opr').text(Number(((a+wtr)*op/100).toFixed(2)));
+        var opr = Number($('#opr').text());
 
         //Изменение еноторублей
-        $('#tpr').text(Number(((a+wt+(a+wt)*op/100)*tp/100).toFixed(2)));
+        $('#tpr').text(Number(((a+wtr+(a+wtr)*op/100)*tp/100).toFixed(2)));
         var tpr = Number(Number($('#tpr').text()).toFixed(2));
 
         //Изменение обналорублей
@@ -32,7 +104,7 @@ $(document).ready(function(){
         $('#firstoh').text(Number((tpr - tpr*firstobp/100).toFixed(2)));
 
         //Стираем переменнные
-        zak=tzr=a=tp=op=firstobp=wt=null;
+        zak=tzr=a=tp=op=firstobp=wt=wtr=opr=tpr=null;
         //Идет расчет цены
         givePrice();
     });
@@ -48,13 +120,16 @@ $(document).ready(function(){
         var op = Number(Number($('#op').val()).toFixed(3));        //Наша наценка (в формате десятичных 3 знаков)
         var firstobp = Number($('#firstobp').val());
         var wt = Number(Number($('#wtime').val()).toFixed(2));
+        var wtr = Number(Number($('#wtr').text()).toFixed(2));
 
         //Изменение проценторублей
-        $('#opr').text(Number(((a+wt)*op/100).toFixed(2)));
+        $('#opr').text(Number(((a+wtr)*op/100).toFixed(2)));
+
         var opr = Number($('#opr').text());
+        console.log('zak+kol ='+a+', wtr = '+wtr+', op='+op+'. opr ='+opr);
 
         //Изменение еноторублей
-        $('#tpr').text(Number(((a+wt+(a+wt)*op/100)*tp/100).toFixed(2)));
+        $('#tpr').text(Number(((a+wtr+opr)*tp/100).toFixed(2)));
         var tpr = Number(Number($('#tpr').text()).toFixed(2));
 
         //Изменение обналорублей
@@ -65,7 +140,7 @@ $(document).ready(function(){
         $('#firstoh').text(Number((tpr - tpr*firstobp/100).toFixed(2)));
 
         //Стираем переменнные
-        zak=tzr=a=tp=op=firstobp=wt=null;
+        zak=tzr=a=tp=op=firstobp=wt=wtr=opr=tpr=firstobpr=null;
         //Идет расчет цены
         givePrice();
     });
@@ -81,9 +156,10 @@ $(document).ready(function(){
         var op = Number(Number($('#op').val()).toFixed(3));        //Наша наценка (в формате десятичных 3 знаков)
         var firstobp = Number($('#firstobp').val());
         var wt = Number(Number($('#wtime').val()).toFixed(2));
+        var wtr = Number(Number($('#wtr').text()).toFixed(2));
 
         //Изменение еноторублей
-        $('#tpr').text(Number(((a+wt+(a+wt)*op/100)*tp/100).toFixed(2)));
+        $('#tpr').text(Number(((a+wtr+(a+wtr)*op/100)*tp/100).toFixed(2)));
         var tpr = Number(Number($('#tpr').text()).toFixed(2));
 
         //Изменение обналорублей
@@ -94,75 +170,7 @@ $(document).ready(function(){
         $('#firstoh').text(Number((tpr - tpr*firstobp/100).toFixed(2)));
 
         //Стираем переменнные
-        zak=tzr=a=tp=op=firstobp=wt=null;
-        //Идет расчет цены
-        givePrice();
-    });
-    /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-    //ИЗМЕНЕНИЕ ЗАКУПА
-    $('#zak').change(function () {
-        //Переменные
-        var zak = Number(Number($('#zak').val()).toFixed(3));      //Закупочная цена (на шт)
-        var tzr = Number(Number($('#tzr').val()).toFixed(3));      //Транспортные (на шт)
-        var a = zak+tzr;                                           //Сумма Закупа и ТЗР для формулы
-        var tp = Number(Number($('#tp').val()).toFixed(3));        //Ненаша наценка (в формате десятичных 3 знаков)
-        var op = Number(Number($('#op').val()).toFixed(3));        //Наша наценка (в формате десятичных 3 знаков)
-        var firstobp = Number($('#firstobp').val());
-        var wt = Number(Number($('#wtime').val()).toFixed(2));
-
-        //Изменение проценторублей
-        $('#opr').text(Number(((a+wt)*op/100).toFixed(2)));
-        var opr = Number($('#opr').text());
-
-        //Изменение еноторублей
-        $('#tpr').text(Number(((a+wt+(a+wt)*op/100)*tp/100).toFixed(2)));
-        var tpr = Number(Number($('#tpr').text()).toFixed(2));
-
-        //Изменение обналорублей
-        $('#firstobpr').text(Number((tpr*firstobp/100).toFixed(2)));;
-        var firstobpr =  Number($('#firstobpr').text());
-
-        //Изменение НА РУКИ
-        $('#firstoh').text(Number((tpr - tpr*firstobp/100).toFixed(2)));
-
-        //Стираем переменнные
-        zak=tzr=a=tp=op=firstobp=wt=null;
-        //Идет расчет цены
-        givePrice();
-    });
-    /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-    //ИЗМЕНЕНИЕ ТЗР
-    $('#tzr').change(function () {
-        //Переменные
-        var zak = Number(Number($('#zak').val()).toFixed(3));      //Закупочная цена (на шт)
-        var tzr = Number(Number($('#tzr').val()).toFixed(3));      //Транспортные (на шт)
-        var a = zak+tzr;                                           //Сумма Закупа и ТЗР для формулы
-        var tp = Number(Number($('#tp').val()).toFixed(3));        //Ненаша наценка (в формате десятичных 3 знаков)
-        var op = Number(Number($('#op').val()).toFixed(3));        //Наша наценка (в формате десятичных 3 знаков)
-        var firstobp = Number($('#firstobp').val());
-        var wt = Number(Number($('#wtime').val()).toFixed(2));
-
-
-        //Изменение проценторублей
-        $('#opr').text(Number(((a+wt)*op/100).toFixed(2)));
-        var opr = Number($('#opr').text());
-
-        //Изменение еноторублей
-        $('#tpr').text(Number(((a+wt+(a+wt)*op/100)*tp/100).toFixed(2)));
-        var tpr = Number(Number($('#tpr').text()).toFixed(2));
-
-        //Изменение обналорублей
-        $('#firstobpr').text(Number((tpr*firstobp/100).toFixed(2)));;
-        var firstobpr =  Number($('#firstobpr').text());
-
-        //Изменение НА РУКИ
-        $('#firstoh').text(Number((tpr - tpr*firstobp/100).toFixed(2)));
-
-        //Изменяется обналотзр
-        $('#obtzr').text((tzr*(1-(firstobp/100))).toFixed(2));
-
-        //Стираем переменнные
-        zak=tzr=a=tp=op=firstobp=wt=null;
+        zak=tzr=a=tp=op=firstobp=wt=wtr=tpr=firstobpr=null;
         //Идет расчет цены
         givePrice();
     });
@@ -177,10 +185,11 @@ $(document).ready(function(){
         var op = Number(Number($('#op').val()).toFixed(3));        //Наша наценка (в формате десятичных 3 знаков)
         var firstobp = Number($('#firstobp').val());
         var wt = Number(Number($('#wtime').val()).toFixed(2));
+        var wtr = Number(Number($('#wtr').text()).toFixed(2));
 
-        //Изменение еноторублей
-        $('#tpr').text(Number(((a+wt+(a+wt)*op/100)*tp/100).toFixed(2)));
-        var tpr = Number(Number($('#tpr').text()).toFixed(2));
+        //Изменение проценторублей
+        $('#opr').text(Number(((a+wtr)*op/100).toFixed(2)));
+        var opr = Number($('#opr').text());
 
         //Изменение НА РУКИ
         $('#firstoh').text(Number((tpr - tpr*firstobp/100).toFixed(2)));
@@ -193,7 +202,7 @@ $(document).ready(function(){
         $('#obtzr').text((tzr*(1-(firstobp/100))).toFixed(2));
 
         //Удаляем все переменные
-        firstobp = tpr = firstobpr = null;
+        zak=tzr=a=tp=op=firstobp=wt=wtr=opr=null;
         //И считаем цену
         givePrice();
     });
@@ -264,7 +273,7 @@ $(document).ready(function(){
             var obp = Number(Number($('#obp').val()).toFixed(1));
             var wt = Number(Number($('#wtime').val()).toFixed(2));        //Отсрочка платежа, в месяцах, нужна при расчете рентабельности
             var clearp = ((oh/lprice)*100).toFixed(2);
-            /*Расчет рентабельности*/
+            //Расчет рентабельности
             var lrentS = (rop * (1 - 0.0125*wt))/lprice*100;
             $('#rent h1').text((lrentS).toFixed(3) + ' %');
 
@@ -284,16 +293,16 @@ $(document).ready(function(){
 
 
         }
-        else
+        else{
         /*////////////////////////////////////////////////////////////////////////////////////////////////////*/
-        /*РАСЧЕТ ЦЕНЫ И РЕНТАБЕЛЬНОСТИ ПРИ ОТПУЩЕННОЙ ЦЕНЕ*/{
+        //РАСЧЕТ ЦЕНЫ И РЕНТАБЕЛЬНОСТИ ПРИ ОТПУЩЕННОЙ ЦЕНЕ
             console.log('inactive fixate');
             /*Расчет цены*/
             var fixed = 0;
             var la = (lzak + ltzr);             //Сумма закупа и тзр, именуемое "А"
             var lwt = la*0.0125*wt;             //Отсрочка  это сумма отсрочек покупателю и поставщику.это дополнительная затрата в виде 1,25% в месяц от суммы закупа и ТЗР
-            var lnam = (la+lwt)*lop/100;        //Начислено нам
-            var lim = (la+lwt+lnam)*ltp/100;    //Начислено им
+            var lnam = (la+lwt)*lop/100;        //Начислено нам в рублях
+            var lim = (la+lwt+lnam)*ltp/100;    //Начислено им в рублях
 
                 var lprice = Number((la + lwt + lim + lnam).toFixed(2));
                 //Даем цену
@@ -309,30 +318,34 @@ $(document).ready(function(){
             $('#clearpnar').text((clearpnar).toFixed(2) + ' %');
 
             /*Расчет рентабельности*/
-                var opr = Number((Number($('#opr').text())).toFixed(2));
+                //var opr = Number((Number($('#opr').text())).toFixed(2));
                 var lrentS = lnam/lprice*100;
                 $('#rent h1').text((lrentS).toFixed(3) + ' %');
+            console.log('Проверка расчета рентабельности. Наше: '+lnam+'. Цена: '+lprice+'. Рентабельность: '+lrentS+'.');
 
                 //Разбили прайстекст на составляющие
                 var pricetext = '<p>Цена: <b>' + (lprice).toFixed(2) + '</b> При расчете :<br>' +
                     'НАМ: '+
                     //Нам чистыми на 1 шт
-                    ((lzak + ltzr) * (lop/100)).toFixed(2) + ' руб. за шт.' + '<br>/<br>' +
+                    //((lzak + ltzr) * (lop/100)).toFixed(2) + ' руб. за шт.' + '<br>/<br>' +
+                    (lnam).toFixed(2) + ' руб. за шт.' + '<br>/<br>' +
                     //НЕ наш процент
                     'НЕ НАМ: '+
                     //Им чистыми за 1 шт
-                    ( ( ((lzak+ltzr) * (1+lop/100)) ) * (ltp/100) ).toFixed(2) + 'руб. за шт.' +
+                    //( ( ((lzak+ltzr) * (1+lop/100)) ) * (ltp/100) ).toFixed(2) + 'руб. за шт.' +
+                    (lim).toFixed(2) + 'руб. за шт.' +
                     '<br>Чистыми : ' + (clearp).toFixed(3) + ' %' +
-                    '<br> На руки: ' + (Number((((lzak+ltzr) + ((lzak+ltzr) * (lop/100)) ) * (ltp/100)).toFixed(2)) - firstobpr).toFixed(2) + ' руб. с 1 шт.' +
+                    //'<br> На руки: ' + (Number((((lzak+ltzr) + ((lzak+ltzr) * (lop/100)) ) * (ltp/100)).toFixed(2)) - firstobpr).toFixed(2) + ' руб. с 1 шт.' +
+                    '<br> На руки: ' + (Number((lim).toFixed(2)) - firstobpr).toFixed(2) + ' руб. с 1 шт.' +
                     '<br>При рентабельности: ' + (lrentS).toFixed(3) + ' % <input type="submit" name="save" id="save" value="Сохранить этот результат" />';
                 $('#cases').html(pricetext);
                 pricetext = null;
                 $('#cases').slideDown();
 
                 //Эти две переменные зявляются для подготовки отправки формы POST
-                var ltpr = ( (lzak+ltzr) + ((lzak+ltzr) * (lop/100)) ) * (ltp/100);
-                var lopr = (lzak + ltzr) * (lop/100);
-                $('#obnal, #fixate').slideDown();
+                //var ltpr = ( (lzak+ltzr) + ((lzak+ltzr) * (lop/100)) ) * (ltp/100);
+                //var lopr = (lzak + ltzr) * (lop/100);
+                $('#obnal/*, #fixate*/').slideDown();
         }
 
         /*////////////////////////БЛОК ОТПРАВКИ ФОРМЫ В БАЗУ///////////////////////////*/
@@ -367,8 +380,10 @@ $(document).ready(function(){
                      '&price=' + lprice +
                      '&firstoh=' + firstoh +
                      '&rent=' + lrentS +
-                     '&tpr=' + ltpr +
-                     '&opr=' + lopr +
+                     //'&tpr=' + ltpr +
+                     '&tpr=' + lim +//новое
+                     //'&opr=' + lopr +
+                     '&opr=' + lnam +//новое
                      '&fixed=' + fixed +
                      '&firstobpr=' + firstobpr +
                      '&rop=' + rop +
@@ -467,7 +482,7 @@ $(document).ready(function(){
     }
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
     //ЗАКРЕПЛЕНИЕ ЦЕНЫ
-    $('#fixate').click(function () {
+    /*$('#fixate').click(function () {
         //Переменные
         var zak = Number(Number($('#zak').val()).toFixed(0));      //Закупочная цена (за 1 единицу товара)
         var kol = Number(Number($('#kol').val()).toFixed(0));      //Количество товара
@@ -495,7 +510,7 @@ $(document).ready(function(){
             $('#cases').slideUp();
             $('#fixate').attr("value", "Отпустить");
 
-        /*////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             var marge = (price * kol) - ( (zak+tzr) * kol );
             $('#marge').text((marge).toFixed(0));
@@ -521,7 +536,7 @@ $(document).ready(function(){
             $('#oh').text((tmargeo).toFixed(2));
         }
         else {
-            /*//////////////////////////////////////*/
+            ////////////////////////////////////////
             //Красота
             $('#fixate').attr("value", "Закрепить");
             $('#pr').css("font-weight", "normal");
@@ -534,16 +549,16 @@ $(document).ready(function(){
             $('#fcount').css("opacity", "1")
             $('#go').slideDown();
             $('#cases').slideUp();
-            /*///////////////////////////////////////*/
+            /////////////////////////////////////////
             $('#margediv').slideUp();
             $('#rop, #rtp').val("");
             $('#realop, #realtp, #oh').text("");
 
         }
-    });
+    });*/
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
     //СООТНОШЕНИЕ ВНУТРИ МАРЖИ
-    $('#rtp').change(function () {
+    /*$('#rtp').change(function () {
         var zak = Number(Number($('#zak').val()).toFixed(0));      //Закупочная цена (за 1 единицу товара)
         var kol = Number(Number($('#kol').val()).toFixed(0));      //Количество товара
         var tzr = Number(Number($('#tzr').val()).toFixed(0));      //Транспортные (общая сумма за рейс)
@@ -572,8 +587,8 @@ $(document).ready(function(){
         }
         givePrice();
 
-    });
-    $('#rop').change(function () {
+    });*/
+    /*$('#rop').change(function () {
         var zak = Number(Number($('#zak').val()).toFixed(0));      //Закупочная цена (за 1 единицу товара)
         var kol = Number(Number($('#kol').val()).toFixed(0));      //Количество товара
         var tzr = Number(Number($('#tzr').val()).toFixed(0));      //Транспортные (общая сумма за рейс)
@@ -600,7 +615,7 @@ $(document).ready(function(){
             $('#rop').val(margek);
         }
         givePrice();
-    });
+    })*/
 
 
 
