@@ -946,6 +946,12 @@ tr:hover, li:hover {
   border: 1px solid black;
 }
 
+/* line 613, ../sass/_mysql_styles.scss */
+#search_reads {
+  min-height: 100vh;
+  display: none;
+}
+
 /* line 1, ../sass/_price.scss */
 h2 {
   margin: 0;

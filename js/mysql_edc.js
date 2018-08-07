@@ -459,7 +459,20 @@ $(document).ready(function() {
         $('#button_history').attr({'hist_byer': '-', 'hist_trade': '-'});
 
         /*Скроллимся к только что открытой завяке*/
-        $('html, body').animate({scrollTop: $(".widen").offset().top}, 1000);
+        /*Если скрыты результаты поиска (то есть мы работаем с общим списком заявок, то к открытой заявке в списке заявок мы и скролимся)*/
+        /*А если результаты поиска не скрыты, то значит мы работаем со списком результатов из ВСПВ и скролимся мы тогда туда*/
+        var thedisp = $('#search_reads').css('display');
+        switch (thedisp){
+            case 'none':
+                console.log(thedisp);
+                $('html, body').animate({scrollTop: $("#reads .widen").offset().top}, 1000);
+                break;
+            case 'block':
+                console.log(thedisp);
+                $('html, body').animate({scrollTop: $("#search_reads .widen").offset().top}, 1000);
+                break;
+        }
+
          //Убрал сокрытие прайсингвиндова потому что жопа со
         // скроллингом и никому он не мешает, все равно он пустой стоит.
         /**/

@@ -42,6 +42,7 @@ $(document).ready(function(){
                     if(category == 'request'){
                         $('.collapse').trigger('click.collapse');
                     };
+                    $('html, body').animate({scrollTop: $("#thesearch").offset().top}, 1000);
                 }
             });
         }
