@@ -532,7 +532,7 @@ $(document).ready(function() {
                         $('#wtimeday').text(json.wtimeday);
                         $('#wtr').text(json.wtr);
                         /*ЦЕНА и РЕНТАБЕЛЬНОСТЬ*/
-                        $('#pr').val(Number(Number(json.price).toFixed(2)));
+                        $('#pr').val(Number(Number(json.price).toFixed(3)));
                         $('#rent h1').text(Number(Number(json.rent).toFixed(2)));
 
                         console.log(json.fixed);

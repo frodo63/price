@@ -58,7 +58,7 @@ if(
     $wtimeday = round($_POST["wtimeday"], 0);
     $obp = round(($_POST["obp"]), 2);
     $oh = round($_POST["oh"],2);
-    $price = round($_POST["price"],2);
+    $price = round($_POST["price"],3);
     $rent = round(($_POST["rent"]), 2);
 
     try{
@@ -164,7 +164,7 @@ if(
     $clearp = round($_POST["clearp"], 2);
     $obp = round(($_POST["obp"]), 2);
     $oh = round($_POST["oh"],2);
-    $price = round($_POST["price"],2);
+    $price = round($_POST["price"],3);
     $rent = round($_POST["rent"], 2);
     $wtr = round($_POST["wtr"], 2);
     $wtimeday = round($_POST["wtimeday"], 0);

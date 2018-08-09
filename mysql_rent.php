@@ -135,7 +135,7 @@ if (isset($_POST['request'])){
         foreach ($c as $row){
             /*Временные переменные для приведения к числу*/
             $pricingid=$row['pricingid'];
-            $price = round($row['price'], 2);
+            $price = round($row['price'], 3);
             $fixed=$row['fixed'];
             $opr = round($row['opr'], 2);
             $rop = round($row['rop'], 2);
@@ -153,7 +153,7 @@ if (isset($_POST['request'])){
             $result.= "<td class ='kol'>" . $kol . "</td>";
             $result.= "<td class ='sum'>" . round($nam, 2)*$kol . "</td>";
             $result .="<td class ='wtime'>" . $wtime . "</td>";
-            $result.= "<td class ='price'>" . round($price, 2) . "</td></tr>";
+            $result.= "<td class ='price'>" . $price . "</td></tr>";
 
             /*формула расчета:*/
             $form_top[] = $nam * $kol;
@@ -197,8 +197,8 @@ if (isset($_POST['request'])){
             $dem_bot = substr($dem_bot, 0, -3);
 
             /*расчет рентабельности*/
-            $top = round($top, 2);
-            $bot = round($bot, 2);
+            $top = round($top, 3);
+            $bot = round($bot, 3);
 
             $rent = round($top/$bot*100, 2);
 

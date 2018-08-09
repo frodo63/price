@@ -260,9 +260,9 @@ $(document).ready(function(){
 
         //РАСЧЕТ ЦЕНЫ И РЕНТАБЕЛЬНОСТИ ПРИ ЗАФИКСИРОВАННОЙ ЦЕНЕ
         if ($('#fixate').hasClass('active')){
-            console.log('active fixate');
+            /*console.log('active fixate');
             var fixed = 1;
-            var lprice = Number($('#pr').val());
+            var lprice = Number(Number($('#pr').val()).toFixed(3));
             var rop = Number(Number($('#rop').val()).toFixed(1));   //НАМ р
             var rtp = Number(Number($('#rtp').val()).toFixed(1));   //ИМ р
             var oh = Number($('#oh').text());
@@ -277,7 +277,7 @@ $(document).ready(function(){
             var lrentS = (rop * (1 - 0.0125*wt))/lprice*100;
             $('#rent h1').text((lrentS).toFixed(3) + ' %');
 
-            var pricetext = '<p>Цена: <b>' + (lprice).toFixed(2) + '</b> При расчете : ' +
+            var pricetext = '<p>Цена: <b>' + lprice + '</b> При расчете : ' +
                 '<br>НАМ: ' +
                 //Нам чистыми на 1 шт
                 (rop).toFixed(2) + 'руб. за шт.' + ' <br>/<br> НЕ НАМ: ' +
@@ -289,25 +289,23 @@ $(document).ready(function(){
                 '<br>' + '<input type="submit" name="save" id="save" value="Сохранить этот результат" />';
             $('#cases').html(pricetext);
             pricetext = null;
-            $('#cases').slideDown();
-
-
+            $('#cases').slideDown();*/
         }
         else{
-        /*////////////////////////////////////////////////////////////////////////////////////////////////////*/
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
         //РАСЧЕТ ЦЕНЫ И РЕНТАБЕЛЬНОСТИ ПРИ ОТПУЩЕННОЙ ЦЕНЕ
             console.log('inactive fixate');
-            /*Расчет цены*/
+            //Расчет цены
             var fixed = 0;
             var la = (lzak + ltzr);             //Сумма закупа и тзр, именуемое "А"
             var lwt = la*0.0125*wt;             //Отсрочка  это сумма отсрочек покупателю и поставщику.это дополнительная затрата в виде 1,25% в месяц от суммы закупа и ТЗР
             var lnam = (la+lwt)*lop/100;        //Начислено нам в рублях
             var lim = (la+lwt+lnam)*ltp/100;    //Начислено им в рублях
 
-                var lprice = Number((la + lwt + lim + lnam).toFixed(2));
+                var lprice = Number((la + lwt + lim + lnam).toFixed(3));
                 //Даем цену
             console.log(lprice+" типа "+typeof(lprice));
-                $('#pr').val((lprice).toFixed(2));
+                $('#pr').val((lprice).toFixed(3));
 
             //Высчитываем грязный процент (отношение начисленного к цене)
                 var clearp = ltpr/lprice*100;
@@ -317,7 +315,7 @@ $(document).ready(function(){
             var clearpnar = firstoh/lprice*100;
             $('#clearpnar').text((clearpnar).toFixed(2) + ' %');
 
-            /*Расчет рентабельности*/
+            //Расчет рентабельности
                 //var opr = Number((Number($('#opr').text())).toFixed(2));
                 var lrentS = lnam/lprice*100;
                 $('#rent h1').text((lrentS).toFixed(3) + ' %');
@@ -345,7 +343,7 @@ $(document).ready(function(){
                 //Эти две переменные зявляются для подготовки отправки формы POST
                 //var ltpr = ( (lzak+ltzr) + ((lzak+ltzr) * (lop/100)) ) * (ltp/100);
                 //var lopr = (lzak + ltzr) * (lop/100);
-                $('#obnal/*, #fixate*/').slideDown();
+                $('#obnal').slideDown();
         }
 
         /*////////////////////////БЛОК ОТПРАВКИ ФОРМЫ В БАЗУ///////////////////////////*/
@@ -363,7 +361,7 @@ $(document).ready(function(){
                  var reqid = $('.collapsepos[position='+preditposID+']').attr('request');
 
                  var pr = $('#pr').val();
-                 lprice = Number(Number(pr).toFixed(2));
+                 lprice = Number(Number(pr).toFixed(3));
                  console.log(lprice+" типа "+typeof(lprice));
 
                  var formData =
@@ -477,7 +475,7 @@ $(document).ready(function(){
 
                 } else {
                     alert("Для добавления в базу заполните поля: \n'Товар', \n'Поставщик'.")
-                };
+                }
         });
     }
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
