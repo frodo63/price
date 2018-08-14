@@ -58,6 +58,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-'>
         <li id='tab_sellers'><a href='#sellers'>Поставщики</a></li>
         <li id='tab_trades'><a href='#trades'>Товары</a></li>
         <li id='tab_giveaways'><a href='#givaways'>Р-1</a></li>
+        <li id='tab_totals'><a href='#totals'>Р-2</a></li>
       </ul>
   
       <div id='requests'>
@@ -122,7 +123,8 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-'>
           <input type='button' value='ВВЕРХ' id='go_up'>
       </div>";
       
-echo"      <div id='givaways'>      
+echo"      
+      <div id='givaways'>      
       <!--Добавить Платежку -->  
               <div id='add_payment'>
                   <span>Вводим платежку</span>
@@ -147,11 +149,13 @@ echo"      <div id='givaways'>
                   <input class='close_add_g' type='button' value='X'>
               </div>
       
-          <div class='givaways_list'>
-          
+          <div class='givaways_list'>          
           </div>      
-      </div>    
-  
+      </div>
+      
+      <div id='totals'>
+          <div class='totals_list'></div>
+      </div>
 </div>
               <div id='edit_1c_num'>
                   <span>Изменить номер заказа в 1С</span>
@@ -211,10 +215,6 @@ echo"      <div id='givaways'>
 <input type='button' id='req_searchstoggle' value='Скрыть/Показать результаты поиска'>
 <div id='search_reads'>
 <div class='requests_list'></div></div>";
-
-
-
-
 
 echo"
 <script src='js/jquery.js'></script>

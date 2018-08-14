@@ -299,6 +299,126 @@ if(isset($_POST['table'])){
         }
         /**//////////////////////////////////////////////////////////////
     }
+    else if ($table == 'totals') {
+        try {
+            //Totals 1 уровень рисуем
+            //Выборка: Заказы, НЕскрытые в Р-1, отсортированные по наименованию покупателя, дать цифры для расчета оплаченности заказа
+            $get_byers = $pdo->prepare("SELECT byers_id, name FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid");
+            $get_req_sums = $pdo->prepare("SELECT requests_id,req_sum FROM requests WHERE r1_hidden=0 AND byersid=?");
+            $get_req_paysum = $pdo->prepare("SELECT sum(sum) AS paysum,requestid FROM payments WHERE requestid=?");
+            $get_req_countsum = $pdo->prepare("SELECT requests_id,1c_num,req_positionid,winnerid,name,(kol * firstoh) AS countsum FROM (SELECT requests_id,1c_num,req_positionid,
+winnerid FROM requests LEFT JOIN req_positions ON requests_id=requestid) AS a LEFT JOIN (SELECT pricingid,kol,firstoh,name FROM pricings LEFT JOIN (SELECT trades_id,name FROM trades LEFT JOIN
+ allnames on trades.trades_nameid = allnames.nameid ) AS g ON pricings.tradeid = g.trades_id) AS b ON a.winnerid=b.pricingid WHERE requests_id=?");
+            $get_req_givesum = $pdo->prepare("SELECT given_away,giveaway_sum,requestid FROM giveaways WHERE requestid=?");
+            //Выборка: Дата последней платежки
+            $lastpayment = $pdo->prepare("SELECT MAX(payed) AS lpayed,number FROM `payments` WHERE requestid IN (SELECT requests_id FROM requests WHERE r1_hidden=0 AND byersid=?)");
+
+            $result = "<table class='byer_req_list'><thead><tr><th>Наименование</th><th>Сумма долга</th><th>Дата прихода денег</th></tr></thead><tbody>";
+
+
+            //Переменные
+            $byers_list = array();
+
+            $get_byers->execute();
+            $byers_list = $get_byers->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($byers_list as $byer){
+                $b_id = $byer['byers_id'];
+                $b_name = $byer['name'];
+                //Перезаряжаем переменные
+                $byers_list = array();
+                $requests_list = array();
+                $paysum = array();
+                $givesum = array();
+                $countsum = array();
+                $sum_total = array();
+                $payed_total = array();
+                $req_countgive_diff = 0;
+                $given_total = array();
+                $given_r = array();
+                $counted_r = array();
+                $counted_total = array();
+                $r_id_list = array();
+                $s_t = 0;
+                $p_t = 0;
+                $c_t = 0;
+                $g_t = 0;
+                ////////////////////////////////////////////////////////////
+
+                //Что-то делаем с byerid и именем
+
+                $get_req_sums->execute(array($b_id));
+                $requests_list = $get_req_sums->fetchAll(PDO::FETCH_ASSOC);
+                //
+                foreach ($requests_list as $request) {
+                    $r_id = $request['requests_id'];//ID заказа
+                    $r_sum = round($request['req_sum'],2);//Сумма заказа
+
+                    //Расчет платежей
+                    $get_req_paysum->execute(array($r_id));
+                    $paysum = $get_req_paysum->fetch(PDO::FETCH_ASSOC);
+                    $pay_sum = round($paysum['paysum'],2);//Сумма денег по всем платежкам этого заказа
+
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
+                    //Посчитать сумму начисленных
+                    $get_req_countsum->execute(array($r_id));
+                    $countsum = $get_req_countsum->fetchAll(PDO::FETCH_ASSOC);
+                    foreach ($countsum as $cunt) {
+                        //Что-то делаем со списком начислений. Расчет общей суммы начислений и рисование красивой таблички для ховера
+                        $counted_r[] = $cunt['countsum'];
+                    }
+                    $c_sum = round(array_sum($counted_r),2);//Сумма начисленных по одному заказу
+                    //Посчитать сумму выданного
+                    $get_req_givesum->execute(array($r_id));
+                    $givesum = $get_req_givesum->fetchAll(PDO::FETCH_ASSOC);
+                    foreach ($givesum as $give) {
+                        //Что-то делаем со списком выдач. Расчет общей суммы выдач и рисование красивой таблички для ховера
+                        $given_r[] = $give['giveaway_sum'];
+                    }
+                    $g_sum = round(array_sum($given_r),2);//Сумма начисленных по одному заказу
+
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
+                    //Если заказ не оплачен, он в Р-2 не отображается, а его сумма и сумма платежей не идут в общий расчет
+                    if($r_sum>0 && $pay_sum>0 && $r_sum == $pay_sum && $c_sum>0 && $g_sum>=0){
+                        //Если напротив - то сумма и платежи идут в общую сумму по заказу для расчета ОПЛАЧЕННОСТИ
+                        $sum_total[] = $r_sum;//Сумма всех заказов этого покупателя
+                        $payed_total[] = $pay_sum;//Сумма денег по всем платежкам этого покупателя
+                        $counted_total[] = $c_sum;//Сумма начислений по всем заказам этого покупателя
+                        $given_total[] = $g_sum;//Сумма начислений по всем заказам этого покупателя
+                        $r_id_list[] = $r_id;//А ID - в список ID заказов, отображаемых дальше
+                    }
+                }
+                //Прошлись по всем заказам покупателя, собрали данные и сравниваем
+                //Если сумма заказов равна сумме платежей и не равна нулю, рисуем
+                //TODO: ЗАКАЗ ДОЛЖЕН ПОЯВЛЯТЬСЯ В Р-2 ТОЛЬКО ЕСЛИ ЕСТЬ ЕЩЕ НАЧИСЛЕНИЯ, ТО ЕСТЬ СУММА НАЧИСЛЕНИЙ НЕ РАВНА НУЛЮ
+                $s_t = round(array_sum($sum_total),2);//СУмма заказов
+                $p_t = round(array_sum($payed_total),2);//СУмма платежек
+                $c_t = round(array_sum($counted_total),2);//Сумма начислений
+                $g_t = round(array_sum($given_total),2);//Сумма выдач
+                //Посчитать сумму долга
+                $req_countgive_diff = round(array_sum($counted_total),2) - round(array_sum($given_total),2);//Долг
+                if( $s_t==$p_t && $s_t>0 && $p_t>0 && $c_t>0 && $g_t>=0){
+                    $result .= '<tr byerid =' . $byer["byers_id"] . '>';
+                    $result .= '<td><input type="button" totals_byer =' . $b_id . ' value="W" class="collapse_totals_byer"><span class="name">' . $b_name . '</span><div class="totals_byer_requests" totals_byer =' . $b_id . '>
+</div></td>';
+                    $result .="<td>".number_format($req_countgive_diff,'2','.',' ')."</td>";
+                    //Получить дату и сумму последней платежки
+                    $lastpayment->execute(array($b_id));
+                    $lpayment = $lastpayment->fetch(PDO::FETCH_ASSOC);
+                    $lpay_number = $lpayment['number'];
+                    $lpayed = $lpayment['lpayed'];
+                    $result .= '<td>№ '.$lpay_number.' от '.$lpayed.'</td></tr>';
+                }else{
+                }
+            }
+
+            $result .= "</tbody></table>";
+            print $result;
+        } catch( PDOException $Exception ) {
+            // Note The Typecast To An Integer!
+            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        }
+        /**//////////////////////////////////////////////////////////////ЧТЕНИЕ СПИСКА ЗАЯВОК
+    }
     else {
         /**//////////////////////////////////////////////////////////////ЧТЕНИЕ ПОКУПАТЕЛИ/ПОСТАВЩИКИ/ТОВАРЫ
         try {
