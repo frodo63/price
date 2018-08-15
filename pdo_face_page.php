@@ -58,7 +58,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-'>
         <li id='tab_sellers'><a href='#sellers'>Поставщики</a></li>
         <li id='tab_trades'><a href='#trades'>Товары</a></li>
         <li id='tab_giveaways'><a href='#givaways'>Р-1</a></li>
-        <li id='tab_totals'><a href='#totals'>Р-2</a></li>
+        <li id='tab_totals'><a href='#totals'>Раскаты грома</a></li>
       </ul>
   
       <div id='requests'>

@@ -952,6 +952,36 @@ tr:hover, li:hover {
   display: none;
 }
 
+/* line 618, ../sass/_mysql_styles.scss */
+.shrinken_totals {
+  display: none;
+}
+
+/* line 619, ../sass/_mysql_styles.scss */
+.widen_totals {
+  width: 93vw;
+}
+
+/* line 622, ../sass/_mysql_styles.scss */
+.byer_req_list_totals tr td:nth-child(2), .byer_req_list_totals tr td:nth-child(3), .byer_req_list_totals tr td:nth-child(4) {
+  text-align: center;
+}
+/* line 624, ../sass/_mysql_styles.scss */
+.byer_req_list_totals .totals_byer_requests {
+  display: none;
+  padding-left: 2vw;
+}
+/* line 627, ../sass/_mysql_styles.scss */
+.byer_req_list_totals .totals_byer_requests li {
+  list-style: none;
+}
+
+/* line 631, ../sass/_mysql_styles.scss */
+.totals_requests_list table tr:hover {
+  background-color: green;
+  color: white;
+}
+
 /* line 1, ../sass/_price.scss */
 h2 {
   margin: 0;

@@ -614,3 +614,22 @@ tr:hover,li:hover{
   min-height:100vh;
   display: none;
 }
+
+.shrinken_totals{display: none}
+.widen_totals{width: 93vw}
+.byer_req_list_totals{//Это таблица
+  tr {
+    td:nth-child(2), td:nth-child(3), td:nth-child(4) {text-align: center}
+  }
+  .totals_byer_requests{
+    display: none;
+    padding-left: 2vw;
+    li{list-style: none}
+  }
+}
+.totals_requests_list{
+  table tr:hover{
+    background-color: green;
+    color: white;
+  }
+}
