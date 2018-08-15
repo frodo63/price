@@ -309,7 +309,7 @@ if(isset($_POST['table'])){
             $get_req_countsum = $pdo->prepare("SELECT created,requests_id,1c_num,req_positionid,winnerid,name,(kol * firstoh) AS countsum FROM (SELECT created,requests_id,1c_num,req_positionid,
 winnerid FROM requests LEFT JOIN req_positions ON requests_id=requestid) AS a LEFT JOIN (SELECT pricingid,kol,firstoh,name FROM pricings LEFT JOIN (SELECT trades_id,name FROM trades LEFT JOIN
  allnames on trades.trades_nameid = allnames.nameid ) AS g ON pricings.tradeid = g.trades_id) AS b ON a.winnerid=b.pricingid WHERE requests_id=?");
-            $get_req_givesum = $pdo->prepare("SELECT given_away,giveaway_sum,requestid FROM giveaways WHERE requestid=?");
+            $get_req_givesum = $pdo->prepare("SELECT given_away,giveaway_sum,requestid,comment FROM giveaways WHERE requestid=?");
             //Выборка: Дата последней платежки
             $lastpayment = $pdo->prepare("SELECT MAX(payed) AS lpayed,number FROM `payments` WHERE requestid IN (SELECT requests_id FROM requests WHERE r1_hidden=0 AND byersid=?)");
             $lastgiveaway = $pdo->prepare("SELECT MAX(given_away) AS lgiven,giveaway_sum FROM `giveaways` WHERE requestid IN (SELECT requests_id FROM requests WHERE r1_hidden=0 AND byersid=?)");
@@ -399,11 +399,18 @@ winnerid FROM requests LEFT JOIN req_positions ON requests_id=requestid) AS a LE
                 }
                 //Создаем красивый массив для рисования
                 $requests_paints_list = array();
+                $giveaways_paints_list = array();
                 foreach($r_id_list as $row){
                     $temp_array = array();
                     $get_req_countsum->execute(array($row));
                     $temp_array=$get_req_countsum->fetchAll(PDO::FETCH_ASSOC);
                     $requests_paints_list[]=$temp_array;
+                }
+                foreach($r_id_list as $gow){
+                    $temp_array = array();
+                    $get_req_givesum->execute(array($gow));
+                    $temp_array=$get_req_givesum->fetchAll(PDO::FETCH_ASSOC);
+                    $giveaways_paints_list[]=$temp_array;
                 }
                 //Прошлись по всем заказам покупателя, собрали данные и сравниваем
                 //Если сумма заказов равна сумме платежей и не равна нулю, рисуем
@@ -418,7 +425,7 @@ winnerid FROM requests LEFT JOIN req_positions ON requests_id=requestid) AS a LE
                     $result .= '<tr byerid =' . $byer["byers_id"] . '>';
                     $result .= '<td><input type="button" totals_byer =' . $b_id . ' value="W" class="collapse_totals_byer"><span class="name">' . $b_name . '</span>';
                     //Рисуем список заказов, вошедших в расчет.
-                    $result .= '<div class="totals_byer_requests" totals_byer =' . $b_id . '></br><span>Всего к выдаче: '.$req_countgive_diff.'</span>';
+                    $result .= '<div class="totals_byer_requests" totals_byer =' . $b_id . '></br><b>Осталось выдать: '.$req_countgive_diff.'</b>';
                     $result .= '<table class="totals_requests_list"><tr><td>&nbsp;</td></tr>';
 
 
@@ -430,6 +437,14 @@ winnerid FROM requests LEFT JOIN req_positions ON requests_id=requestid) AS a LE
                         }
                         $result .= '</table></td></tr><tr><td>&nbsp;</td></tr>';
                     };
+
+                    //Выводим выдачи
+                    $result .='<tr><td><b>Уже выдано</b></td></tr>';
+                    foreach($giveaways_paints_list as $g_list){
+                        foreach($g_list as $g_l){
+                            $result .='<tr><td>'.$g_l['given_away'].' '.$g_l['comment'].'</td><td>'.$g_l['giveaway_sum'].'</td></tr>';
+                        }
+                    }
 
                     $result .= '</table></div></td>';
 
