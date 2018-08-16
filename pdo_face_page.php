@@ -133,7 +133,7 @@ echo"
                   <label for='2'><span>Номер п/п</span></label><input id='add_payment_1c_num' name='2' type='text' size='20'><br>
                   <label for='3'><span>Сумма, руб.</span></label><input id='add_payment_sum' name='3' type='text' size='20'><br>
                   <span class='ready_comment'></span><br>
-                  <input id='button_add_payment' type='button' name='add_payment' requestid='' value='Добавить платежку'>
+                  <input id='button_add_payment' type='button' name='add_payment' requestid='-' paymentid='-' value='Сохранить платежку'>
                   <input class='close_add_p' type='button' value='X'>
               </div>
       <!--Добавить Выдачу -->
@@ -145,7 +145,7 @@ echo"
                   <label for='3'><span>Сумма, руб.:</span></label><input id='add_giveaway_sum' type='text' name='3' size='20'><br>
                   <span class='ready_comment'></span><br>
                   
-                  <input id='button_add_giveaway' type='button' name='add_giveaway' requestid='' value='Добавить выдачу'>
+                  <input id='button_add_giveaway' type='button' name='add_giveaway' requestid='-' giveawayid='-' value='Сохранить выдачу'>
                   <input class='close_add_g' type='button' value='X'>
               </div>
       
@@ -223,5 +223,6 @@ echo"
 <script src='js/mysql_edc.js'></script>
 <script src='js/mysql_searching.js'></script>
 <script src='js/mysql_history.js'></script>
+<script src='js/mysql_thunderclap.js'></script>
 
 ";

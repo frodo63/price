@@ -449,6 +449,85 @@ isset($_POST["r1_show_reqid"])
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
 };
-
-
 /**/
+
+
+
+/////Редактирование ПЛАТЕЖКИ/////////////////////////////////////////////////
+if(isset($_POST['reqid']) && isset($_POST['payment_date']) && isset($_POST['num']) && isset($_POST['sum']) && isset($_POST['pay_id'])){
+
+    $reqid = $_POST['reqid'];
+    $payment_date = $_POST['payment_date'];
+    $num = $_POST['num'];
+    $sum = $_POST['sum'];
+    $pay_id = $_POST['pay_id'];
+
+    /**//////////////////////////////////////////////////////////////
+
+    try{
+
+        $sql = "UPDATE payments SET payed = :payed,number = :number,sum = :sum WHERE requestid = :requestid AND payments_id = :payments_id";
+        $statement = $pdo->prepare($sql);
+
+        $statement->bindValue(':payed', $payment_date);
+        $statement->bindValue(':number', $num);
+        $statement->bindValue(':sum', $sum);
+        $statement->bindValue(':requestid', $reqid);
+        $statement->bindValue(':payments_id', $pay_id);
+
+        $pdo->beginTransaction();
+        $statement->execute();
+        $pdo->commit();
+
+        echo "<p>Номер заказа в 1С обновлен</p>";
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        $pdo->rollback();
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+    /**//////////////////////////////////////////////////////////////
+
+    echo "Получилось! Обновлена платежка  на сумму $sum в заявкe $reqid.";
+
+};
+//////////////////////////////////////////////////////////////////////
+///
+/// //Редактирование ВЫДАЧИ///////////////////////////////////////////////////
+if(isset($_POST['reqid']) && isset($_POST['giveaway_date']) && isset($_POST['comment']) && isset($_POST['sum']) && isset($_POST['give_id'])){
+
+    $reqid = $_POST['reqid'];
+    $giveaway_date = $_POST['giveaway_date'];
+    $comment = $_POST['comment'];
+    $sum = $_POST['sum'];
+    $give_id = $_POST['give_id'];
+
+    /**//////////////////////////////////////////////////////////////
+
+    try{
+
+        $sql = "UPDATE giveaways SET given_away = :given_away,comment = :comment,giveaway_sum = :giveaway_sum WHERE giveaways_id = :giveaways_id AND giveaways_id = :giveaways_id";
+        $statement = $pdo->prepare($sql);
+
+        $statement->bindValue(':given_away', $giveaway_date);
+        $statement->bindValue(':comment', $comment);
+        $statement->bindValue(':giveaway_sum', $sum);
+        $statement->bindValue(':requestid', $reqid);
+        $statement->bindValue(':giveaways_id', $give_id);
+
+
+        $pdo->beginTransaction();
+        $statement->execute();
+        $pdo->commit();
+
+        echo "<p>Номер заказа в 1С обновлен</p>";
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        $pdo->rollback();
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+    /**//////////////////////////////////////////////////////////////
+
+    echo "Получилось! Обновлена выдача на сумму $sum в заявку $reqid.";
+
+};
+//////////////////////////////////////////////////////////////////////

@@ -835,3 +835,37 @@ if ( isset($_POST['pos_c_c']) &&  isset($_POST['posid'])){
 };
 
 /**/
+
+//ЧТЕНИЕ ПЛАТЕЖКИ
+if(isset($_POST['pay_reqid']) && isset($_POST['pay_id'])){
+    $paymentid = $_POST['pay_id'];
+    $requestid = $_POST['pay_reqid'];
+    try{
+        $pdo->beginTransaction();
+        $statement = $pdo->prepare("SELECT * FROM `payments` WHERE payments_id=? AND requestid=?");
+        $statement->execute(array($paymentid,$requestid));
+        $result = $statement->fetch();
+        echo json_encode($result);/*Перевели массив расценки в формат JSON*/
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+}
+
+//ЧТЕНИЕ ВЫДАЧИ
+if(isset($_POST['give_reqid']) && isset($_POST['give_id'])){
+    $giveawayid = $_POST['give_id'];
+    $requestid = $_POST['give_reqid'];
+
+    try{
+        $pdo->beginTransaction();
+        $statement = $pdo->prepare("SELECT * FROM `giveaways` WHERE giveaways_id=? AND requestid=?");
+        $statement->execute(array($giveawayid,$requestid));
+        $result = $statement->fetch();
+        echo json_encode($result);/*Перевели массив расценки в формат JSON*/
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+
+}
