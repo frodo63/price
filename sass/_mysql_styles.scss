@@ -585,9 +585,10 @@ tr:hover,li:hover{
 
 #go_up{
   position: fixed;
-  right: 200px;
-  top: 500px;
+  right: 20vw;
+  bottom: 15vh;
   color: black;
+  z-index:100;
   &:hover{
     background-color: green;
     color: white;

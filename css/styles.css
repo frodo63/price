@@ -916,67 +916,68 @@ tr:hover, li:hover {
 /* line 586, ../sass/_mysql_styles.scss */
 #go_up {
   position: fixed;
-  right: 200px;
-  top: 500px;
+  right: 20vw;
+  bottom: 15vh;
   color: black;
+  z-index: 100;
 }
-/* line 591, ../sass/_mysql_styles.scss */
+/* line 592, ../sass/_mysql_styles.scss */
 #go_up:hover {
   background-color: green;
   color: white;
 }
 
-/* line 598, ../sass/_mysql_styles.scss */
+/* line 599, ../sass/_mysql_styles.scss */
 .current_pricing {
   color: green;
 }
 
-/* line 601, ../sass/_mysql_styles.scss */
+/* line 602, ../sass/_mysql_styles.scss */
 .history {
   display: none;
   width: 60vw;
 }
-/* line 604, ../sass/_mysql_styles.scss */
+/* line 605, ../sass/_mysql_styles.scss */
 .history td {
   text-align: center;
 }
 
-/* line 609, ../sass/_mysql_styles.scss */
+/* line 610, ../sass/_mysql_styles.scss */
 #fcount {
   border: 1px solid black;
 }
 
-/* line 613, ../sass/_mysql_styles.scss */
+/* line 614, ../sass/_mysql_styles.scss */
 #search_reads {
   min-height: 100vh;
   display: none;
 }
 
-/* line 618, ../sass/_mysql_styles.scss */
+/* line 619, ../sass/_mysql_styles.scss */
 .shrinken_totals {
   display: none;
 }
 
-/* line 619, ../sass/_mysql_styles.scss */
+/* line 620, ../sass/_mysql_styles.scss */
 .widen_totals {
   width: 93vw;
 }
 
-/* line 622, ../sass/_mysql_styles.scss */
+/* line 623, ../sass/_mysql_styles.scss */
 .byer_req_list_totals tr td:nth-child(2), .byer_req_list_totals tr td:nth-child(3), .byer_req_list_totals tr td:nth-child(4) {
   text-align: center;
 }
-/* line 624, ../sass/_mysql_styles.scss */
+/* line 625, ../sass/_mysql_styles.scss */
 .byer_req_list_totals .totals_byer_requests {
   display: none;
   padding-left: 2vw;
 }
-/* line 627, ../sass/_mysql_styles.scss */
+/* line 628, ../sass/_mysql_styles.scss */
 .byer_req_list_totals .totals_byer_requests li {
   list-style: none;
 }
 
-/* line 631, ../sass/_mysql_styles.scss */
+/* line 632, ../sass/_mysql_styles.scss */
 .totals_requests_list table tr:hover {
   background-color: green;
   color: white;

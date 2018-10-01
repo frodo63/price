@@ -27,7 +27,7 @@ if(isset($_POST['table'])){
                                         a.req_rent AS rent,
                                         a.req_sum AS sum 
                                         FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
-                                        WHERE a.byersid = ? ORDER BY `b`.`byers_id` ASC");
+                                        WHERE a.byersid = ? ORDER BY `a`.`1c_num` DESC");
                     //////////////////////////////////////////////////////////////////////////
                     $pdo->beginTransaction();
                     $statement->execute(array($theid));
@@ -60,7 +60,7 @@ if(isset($_POST['table'])){
                                         a.req_rent AS rent,
                                         a.req_sum AS sum
                                         FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
-                                        WHERE a.requests_id = ? ORDER BY `b`.`byers_id` ASC");
+                                        WHERE a.requests_id = ? ORDER BY `a`.`1c_num` DESC");
                     $pdo->beginTransaction();
                     $statement->execute(array($theid));
                     $pdo->commit();
@@ -103,7 +103,7 @@ if(isset($_POST['table'])){
                                         b.byers_nameid AS b_nameid,
                                         b.name AS b_name
                                             FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
-                                            WHERE `a`.`requests_id` IN (".$ids.") ORDER BY a.requests_id ASC");
+                                            WHERE `a`.`requests_id` IN (".$ids.") ORDER BY `a`.`1c_num` DESC");
                         $statement->execute();
                         $pdo->commit();
 
@@ -149,7 +149,7 @@ if(isset($_POST['table'])){
                                         b.byers_nameid AS b_nameid,
                                         b.name AS b_name
                                             FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
-                                            WHERE a.requests_id IN (" . $ids . ") ORDER BY `b`.`byers_id` ASC");
+                                            WHERE a.requests_id IN (" . $ids . ") ORDER BY `a`.`1c_num` DESC");
                         $statement->execute();
                         $pdo->commit();
 

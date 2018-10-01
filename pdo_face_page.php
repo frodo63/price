@@ -120,7 +120,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-'>
           </div>
           <div class='trades_list'>
           </div>
-          <input type='button' value='ВВЕРХ' id='go_up'>
+          
       </div>";
       
 echo"      
@@ -214,7 +214,7 @@ echo"
 
 <input type='button' id='req_searchstoggle' value='Скрыть/Показать результаты поиска'>
 <div id='search_reads'>
-<div class='requests_list'></div></div>";
+<div class='requests_list'></div></div><input type='button' value='ВВЕРХ' id='go_up'>";
 
 echo"
 <script src='js/jquery.js'></script>
