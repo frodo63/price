@@ -101,11 +101,11 @@ if (isset($_POST['the_byer'])){
             if(round($req_sum,2) == round($req_pay,2) && round($req_sum,2) !=0 && round($req_pay,2) !=0){
                 $result .="$nbsp Заказ оплачен полностью. К выдаче: ".$req_give_ostatok.".</td>";
             }elseif (round($req_sum,2) == 0){
-                $result .="$nbspСумма заказа не определена. Назначьте победителя.</td>";
+                $result .="$nbsp Сумма заказа не определена. Назначьте победителя.</td>";
             }elseif (round($req_pay,2) == 0){
-                $result .="$nbspОплат еще не поступало.</td>";
+                $result .="$nbsp Оплат еще не поступало.</td>";
             }else{
-                $result .="$nbspЗаказ оплачен не полностью. К оплате :".$req_pay_ostatok."</td>";
+                $result .="$nbsp Заказ оплачен не полностью. К оплате :".$req_pay_ostatok."</td>";
                 }
             //$result .="<td>Сумма заказа : ".$req_sum.". Оплата : ".$req_pay.". Начислено : ".$req_count.". Выдано : ".$req_give.".</td>";
             /**/
