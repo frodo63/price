@@ -268,6 +268,27 @@ if(isset($_POST['table'])){
         }
         /**//////////////////////////////////////////////////////////////ЧТЕНИЕ СПИСКА ЗАЯВОК
     }
+    else if ($table == 'vidachi') {
+        try {
+
+            $statement = $pdo->prepare("SELECT byers.byers_id AS b_id,byers.byers_nameid AS b_nid,allnames.name AS b_name FROM `byers` LEFT JOIN `allnames` ON byers.byers_nameid=allnames.nameid ORDER BY b_name");
+            $statement->execute();
+            $result = "<ul class='byer_vid_list'>";
+
+            foreach ($statement as $row) {
+                $result .= "<li byerid =" . $row['b_id'] . ">
+                                <input type='button' name =" . $row['b_nid'] . " vid_byer =" . $row['b_id'] . " value='W' class='collapse_vid_byer'>
+                                <span class='name'>" . $row['b_name'] . "</span>
+                                <div class='vid_byer_requests' vid_byer ='" . $row['b_id'] . "'></div>
+                            </li>";            }
+            $result .= "</ul>";
+            print $result;
+        } catch( PDOException $Exception ) {
+            // Note The Typecast To An Integer!
+            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        }
+        /**//////////////////////////////////////////////////////////////ЧТЕНИЕ СПИСКА ЗАЯВОК
+    }
     else if(($table == 'byers')) {
         /**//////////////////////////////////////////////////////////////ЧТЕНИЕ ПОКУПАТЕЛИ/ПОСТАВЩИКИ/ТОВАРЫ
         try {
@@ -306,10 +327,12 @@ if(isset($_POST['table'])){
             $get_byers = $pdo->prepare("SELECT byers_id, name FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid");
             $get_req_sums = $pdo->prepare("SELECT requests_id,req_sum FROM requests WHERE r1_hidden=0 AND byersid=?");
             $get_req_paysum = $pdo->prepare("SELECT sum(sum) AS paysum,requestid FROM payments WHERE requestid=?");
-            $get_req_countsum = $pdo->prepare("SELECT created,requests_id,1c_num,req_positionid,winnerid,name,(kol * firstoh) AS countsum FROM (SELECT created,requests_id,1c_num,req_positionid,
+           /*Старый крутой большой запрос $get_req_countsum = $pdo->prepare("SELECT created,requests_id,1c_num,req_positionid,winnerid,name,(kol * firstoh) AS countsum FROM (SELECT created,requests_id,1c_num,req_positionid,
 winnerid FROM requests LEFT JOIN req_positions ON requests_id=requestid) AS a LEFT JOIN (SELECT pricingid,kol,firstoh,name FROM pricings LEFT JOIN (SELECT trades_id,name FROM trades LEFT JOIN
- allnames on trades.trades_nameid = allnames.nameid ) AS g ON pricings.tradeid = g.trades_id) AS b ON a.winnerid=b.pricingid WHERE requests_id=?");
-            $get_req_givesum = $pdo->prepare("SELECT given_away,giveaway_sum,requestid,comment FROM giveaways WHERE requestid=?");
+ allnames on trades.trades_nameid = allnames.nameid ) AS g ON pricings.tradeid = g.trades_id) AS b ON a.winnerid=b.pricingid WHERE requests_id=?");*/
+           /*Новый поскромнее*/ $get_req_countsum = $pdo->prepare("SELECT created,requests_id,req_sum,1c_num,req_positionid,winnerid,(kol * firstoh) AS countsum FROM (SELECT created,requests_id,req_sum,1c_num,req_positionid,
+winnerid FROM requests LEFT JOIN req_positions ON requests_id=requestid) AS a LEFT JOIN (SELECT pricingid,kol,firstoh FROM pricings) AS b ON a.winnerid=b.pricingid WHERE requests_id=?");
+            $get_req_givesum = $pdo->prepare("SELECT given_away,giveaway_sum,requestid,1c_num,comment FROM giveaways LEFT JOIN requests ON requestid=requests_id WHERE requestid=?");
             //Выборка: Дата последней платежки
             $lastpayment = $pdo->prepare("SELECT MAX(payed) AS lpayed,number FROM `payments` WHERE requestid IN (SELECT requests_id FROM requests WHERE r1_hidden=0 AND byersid=?)");
             $lastgiveaway = $pdo->prepare("SELECT MAX(given_away) AS lgiven,giveaway_sum FROM `giveaways` WHERE requestid IN (SELECT requests_id FROM requests WHERE r1_hidden=0 AND byersid=?)");
@@ -353,7 +376,7 @@ winnerid FROM requests LEFT JOIN req_positions ON requests_id=requestid) AS a LE
 
                 $get_req_sums->execute(array($b_id));
                 $requests_list = $get_req_sums->fetchAll(PDO::FETCH_ASSOC);
-                foreach ($requests_list as $request) {
+                foreach ($requests_list as $request) {//Проходимся по всем заявкам из $requests_list
                     //Перезаряжаем заказовские переменные
                     $counted_r = array();
                     $given_r = array();
@@ -377,13 +400,13 @@ winnerid FROM requests LEFT JOIN req_positions ON requests_id=requestid) AS a LE
                     }
                     $c_sum = round(array_sum($counted_r),2);//Сумма начисленных по одному заказу
                     //Посчитать сумму выданного
-                    $get_req_givesum->execute(array($r_id));
+                    $get_req_givesum->execute(array($r_id));//РАсчет деается для каждой заявки
                     $givesum = $get_req_givesum->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($givesum as $give) {
                         //Что-то делаем со списком выдач. Расчет общей суммы выдач и рисование красивой таблички для ховера
                         $given_r[] = $give['giveaway_sum'];
                     }
-                    $g_sum = round(array_sum($given_r),2);//Сумма начисленных по одному заказу
+                    $g_sum = round(array_sum($given_r),2);//Сумма выданных по одному заказу
 
                     ////////////////////////////////////////////////////////////////////////////////////////////////////
                     //Если заказ не оплачен, он в Р-2 не отображается, а его сумма и сумма платежей не идут в общий расчет
@@ -425,28 +448,32 @@ winnerid FROM requests LEFT JOIN req_positions ON requests_id=requestid) AS a LE
                     $result .= '<tr byerid =' . $byer["byers_id"] . '>';
                     $result .= '<td><input type="button" totals_byer =' . $b_id . ' value="W" class="collapse_totals_byer"><span class="name">' . $b_name . '</span>';
                     //Рисуем список заказов, вошедших в расчет.
-                    $result .= '<div class="totals_byer_requests" totals_byer =' . $b_id . '></br><b>Осталось выдать: '.$req_countgive_diff.'</b>';
-                    $result .= '<table class="totals_requests_list"><tr><td>&nbsp;</td></tr>';
+                    $result .= '<div class="totals_byer_requests" totals_byer =' . $b_id . '>';
+                    $result .= '<table class="totals_requests_list"><tr><th>Заказ №</th><th>Дата</th><th>Сумма</th><th>Начислено</th></tr>';
 
 
                     //Рисование
                     foreach($requests_paints_list as $r_list){//По каждой заявке рисуем строку (нужно requestid, 1c_num, показать сумму начислений по всей заявке)
-                        $result .= '<tr><td><span requestid="'.$r_list[0]['requests_id'].'"><b>'.$r_list[0]['1c_num'].' от '.$r_list[0]['created'].'</b></span><table>';//Номер заявки в 1С, и заявкоайди в атрибут
-                        foreach($r_list as $request_count){//По каждой позиции показываем начисление (берем name и countsum)
-                            $result .='<tr><td>'.$request_count['name'].'</td><td>'.number_format(round($request_count['countsum'],2),2,'.',' ').'</td></tr>';
+                        $result .= '<tr><td requestid="'.$r_list[0]['requests_id'].'">'.$r_list[0]['1c_num'].'</td><td>'.$r_list[0]['created'].'</td><td>'.$r_list[0]['req_sum'].'</td>';//Номер заявки в 1С, и заявкоайди в атрибут
+                        $countsum_sum = 0;
+                        foreach($r_list as $request_count){
+                            $countsum_sum +=$request_count['countsum'];
                         }
-                        $result .= '</table></td></tr><tr><td>&nbsp;</td></tr>';
+                        $result .= '<td>'.number_format(round($countsum_sum,2),2,'.',' ').'</td></tr>';
                     };
 
+
                     //Выводим выдачи
-                    $result .='<tr><td><b>Уже выдано</b></td></tr>';
+                    $result .='</table><table class="totals_giveaways_list"><tr><th>Выдано</th><th>По заказу</th><th>Сумма</th></tr>';
                     foreach($giveaways_paints_list as $g_list){
                         foreach($g_list as $g_l){
-                            $result .='<tr><td>'.$g_l['given_away'].' '.$g_l['comment'].'</td><td>'.$g_l['giveaway_sum'].'</td></tr>';
+                            $result .='<tr><td>'.$g_l['given_away'].$g_l['comment'].'</td><td>По заказу №'.$g_l['1c_num'].'</td><td>'.$g_l['giveaway_sum'].'</td></tr>';
                         }
                     }
+                    $result .= '</table>';
 
-                    $result .= '</table></div></td>';
+
+                    $result .= '</br><b>Осталось выдать: '.$req_countgive_diff.'</b></div></td>';
 
                     $result .="<td>".number_format($req_countgive_diff,'2','.',' ')."</td>";
                     //Получить дату и номер последней платежки
@@ -526,7 +553,7 @@ if (isset($_POST['requestid'])){
 									LEFT JOIN
 								(SELECT * FROM `req_positions`) AS b ON a.`pricingid` = b.`winnerid` WHERE `req_positionid`=?");
         $nowinners->execute(array($req_id));
-        $result .= "<br><table><thead><th>№</th><th>Название позиции</th><th>Сумма</th><th>Поб</th><th>Рент</th><th>Опции</th></thead><tbody>";
+        $result .= "<br><table><thead><th>№</th><th>Название позиции</th><th>Цена</th><th>Сумма</th><th>Поб</th><th>Рент</th><th>Опции</th></thead><tbody>";
         $rownumber = 1;
         foreach ($nowinners as $row)
         {
@@ -534,8 +561,10 @@ if (isset($_POST['requestid'])){
                 $winners->execute(array($row['req_positionid']));
                 foreach ($winners as $row)
                 {
+                    $price = number_format(round($row['price'],2),'2','.', ' ');
                     $pr = round($row['price'],2)*round($row['kol'],2);
                     $pr=number_format($pr,'2','.',' ');
+
                     $result .= "<tr position =".$row['req_positionid'].">
                     <td> ".$rownumber.".</td>
                     <td category='positions'>
@@ -544,6 +573,7 @@ if (isset($_POST['requestid'])){
                         <div class='pricings'>
                         </div>
                     </td>
+                    <td class='pr'>".$price."</td>
                     <td class='pr'>".$pr."</td><!--Сумма-->
                     <td class='winname'>".$row['name']."</td>
                     <td class='rent'>".round($row['rent'], 2)."</td>
@@ -700,7 +730,6 @@ if (isset($_POST['pricingid'])){
 
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 //ЧТЕНИЕ ДАТЫ ЗАЯВКИ
 if ( isset($_POST['chng_number']) ){

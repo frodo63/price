@@ -58,7 +58,8 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-'>
         <li id='tab_sellers'><a href='#sellers'>Поставщики</a></li>
         <li id='tab_trades'><a href='#trades'>Товары</a></li>
         <li id='tab_giveaways'><a href='#givaways'>Р-1</a></li>
-        <li id='tab_totals'><a href='#totals'>Раскаты грома</a></li>
+        <li id='tab_vidachi'><a href='#vidachi'>Выдачи</a></li>
+        <li id='tab_totals'><a href='#totals'>Долги</a></li>
       </ul>
   
       <div id='requests'>
@@ -81,8 +82,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-'>
           </div>
           <div class='requests_list'>
           </div>                
-      </div>     
-      
+      </div>  
       <div id='byers'>
       <input type='button' class='addnew' value='+'> Добавить покупателя
               <div class='creates add_ramk'>
@@ -95,7 +95,6 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-'>
           <div class='byers_list'>
           </div>
       </div>      
-      
       <div id='sellers'>
       <input type='button' class='addnew' value='+'> Добавить поставщика
           <div class='creates add_ramk'>
@@ -108,7 +107,6 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-'>
           <div class='sellers_list'>
           </div>
       </div>
-        
       <div id='trades'>
       <input type='button' class='addnew' value='+'> Добавить номенклатуру
           <div class ='creates add_ramk'>
@@ -122,7 +120,6 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-'>
           </div>
           
       </div>";
-      
 echo"      
       <div id='givaways'>      
       <!--Добавить Платежку -->  
@@ -152,7 +149,9 @@ echo"
           <div class='givaways_list'>          
           </div>      
       </div>
-      
+      <div id='vidachi'>
+          <div class='vidachi_list'></div>      
+      </div>
       <div id='totals'>
           <div class='totals_list'></div>
       </div>

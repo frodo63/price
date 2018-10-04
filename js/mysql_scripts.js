@@ -159,7 +159,70 @@ $(document).ready(function(){
         };
     });
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
+
+    /*СПИСОК ВЫДАЧ В РАМКАХ ОДНОГО ПОКУПАТЕЛЯ////////////////////////////////////////////////////////////////////////*/
+    $(document).off('click.vid_vidachi').on('click.vid_vidachi', '.collapse_vid_byer', function (event) {
+        var the_byer = $(event.target).attr('vid_byer');
+
+        if ($('.vid_byer_requests:visible').length > 0){
+            if ($(event.target).val() == 'X'){//Закрываем открытое
+                $(event.target).val('W');
+                $(event.target).next('span').css({'font-size' : '1em'});
+                $(event.target).siblings('.vid_byer_requests').slideUp();
+                return false;//На закрытии скрипт останавливается
+            }else {
+                //Открываем новое
+                $.ajax({
+                    url: 'mysql_vidachi.php',
+                    method: 'POST',
+                    data: {the_byer:the_byer},
+                    success: function (data) {
+                        $('.vid_byer_requests[vid_byer='+the_byer+']').html(data);
+                        //Скрытие открытых
+                        $('.vid_byer_requests:visible').slideUp();
+                        //Расширение в высоту
+                        $('.vid_byer_requests[vid_byer='+the_byer+']').slideDown()/*.addClass('ga_widen')*/;
+                        $('input.collapse_vid_byer[value = "X"]').next('span').css({'font-size' : '1em'});
+                        $('input.collapse_vid_byer[value = "X"]').val('W');
+                        $(event.target).val('X');
+                        $(event.target).next('span').css({'font-size' : 30});
+                    }
+                });
+            }
+
+        }else{
+
+            //Просто открываем новое
+            $.ajax({
+                url: 'mysql_vidachi.php',
+                method: 'POST',
+                data: {the_byer:the_byer},
+                success: function (data) {
+                    $('.vid_byer_requests[vid_byer='+the_byer+']').html(data);
+                    //Скрытие открытых
+                    $('div.vid_byer_requests:visible').slideUp();
+                    //Расширение в высоту
+                    $('.vid_byer_requests[vid_byer='+the_byer+']').slideDown()/*.addClass('ga_widen')*/;
+                    $(event.target).val('X');
+                    $(event.target).next('span').css({'font-size' : 30});
+                },complete:function () {//Подключение дейтпикера
+                    $('.from,.to').datepicker({
+                        dateFormat: "dd-mm-yy",
+                        showButtonPanel: true,
+                        dayNames: [ "Воскресение", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота" ],
+                        dayNamesMin: [ "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб" ],
+                        dayNamesShort: [ "Вос", "Пон", "Втр", "Срд", "Чтв", "Пят", "Суб" ],
+                        monthNames: [ "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" ],
+                        monthNamesShort: [ "Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Нов", "Дек" ]
+                    });
+                    $('.from,.to').val('');
+                }
+            });
+        }
+    });
+    /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     /*СПИСОК ЗАЯВОК В РАМКАХ ОДНОГО ПОКУПАТЕЛЯ////////////////////////////////////////////////////////////////////////*/
     $(document).off('click.ga_requests').on('click.ga_requests', '.collapse_ga_byer', function (event) {
         var the_byer = $(event.target).attr('ga_byer');
@@ -1049,18 +1112,20 @@ $(document).ready(function(){
 
     //Открытие/Закрытие списка заказов в Раскатах Грома
     $(document).off('click.totals').on('click.totals', '.collapse_totals_byer', function(event){
+        var t_b = $(event.target).attr('totals_byer');
         if($('.totals_byer_requests:visible').length > 0){
-            $('.collapse_totals_byer').val('W').css({'background-color':'white','color':'black'});
-            $('.totals_byer_requests').hide();
-            $('.byer_req_list_totals th:first-child').toggleClass('widen_totals');
-            $('.byer_req_list_totals th:nth-child(2),.byer_req_list_totals th:nth-child(3),.byer_req_list_totals th:nth-child(4)').toggle();
-            $('.byer_req_list_totals>tbody>tr>td:nth-child(2),.byer_req_list_totals>tbody>tr>td:nth-child(3),.byer_req_list_totals>tbody>tr>td:nth-child(4)').toggle();
+            $('.collapse_totals_byer').val('W').css({'background-color':'white','color':'black'});//Меняем кнопку
+            $(event.target).siblings('.totals_byer_requests').toggle();//Скрываем внутренность
+            $(event.target).parents('tr[byerid]').toggleClass('widen_totals');//Уменьшаем внутренность
+            $('.byer_req_list_totals tr[byerid]').toggle();
+            $('.byer_req_list_totals tr[byerid='+t_b+']').toggle();//Кроме этой самой
         }else{
-            $(event.target).val('X').css({'background-color':'red','color':'white'});
-            $(event.target).siblings('.totals_byer_requests').toggle();
-            $('.byer_req_list_totals th:first-child').toggleClass('widen_totals');
-            $('.byer_req_list_totals th:nth-child(2),.byer_req_list_totals th:nth-child(3),.byer_req_list_totals th:nth-child(4)').toggle();
-            $('.byer_req_list_totals>tbody>tr>td:nth-child(2),.byer_req_list_totals>tbody>tr>td:nth-child(3),.byer_req_list_totals>tbody>tr>td:nth-child(4)').toggle();
+            $(event.target).val('X').css({'background-color':'red','color':'white'});//Меняем кнопку
+            $(event.target).siblings('.totals_byer_requests').toggle();//Показываем внутренность
+            $(event.target).parents('tr[byerid]').toggleClass('widen_totals');//Расширяем внутренность
+            $('.byer_req_list_totals tr[byerid]').toggle();//Скрываем все строки
+            $('.byer_req_list_totals tr[byerid='+t_b+']').toggle();//Кроме этой самой
+
         }
 
     });
