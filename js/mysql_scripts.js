@@ -181,7 +181,7 @@ $(document).ready(function(){
                         //Скрытие открытых
                         $('.vid_byer_requests:visible').slideUp();
                         //Расширение в высоту
-                        $('.vid_byer_requests[vid_byer='+the_byer+']').slideDown()/*.addClass('ga_widen')*/;
+                        $('.vid_byer_requests[vid_byer='+the_byer+']').slideDown();
                         $('input.collapse_vid_byer[value = "X"]').next('span').css({'font-size' : '1em'});
                         $('input.collapse_vid_byer[value = "X"]').val('W');
                         $(event.target).val('X');
@@ -202,7 +202,7 @@ $(document).ready(function(){
                     //Скрытие открытых
                     $('div.vid_byer_requests:visible').slideUp();
                     //Расширение в высоту
-                    $('.vid_byer_requests[vid_byer='+the_byer+']').slideDown()/*.addClass('ga_widen')*/;
+                    $('.vid_byer_requests[vid_byer='+the_byer+']').slideDown();
                     $(event.target).val('X');
                     $(event.target).next('span').css({'font-size' : 30});
                 },complete:function () {//Подключение дейтпикера
@@ -222,17 +222,18 @@ $(document).ready(function(){
     });
     /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
     /*СПИСОК ЗАЯВОК В РАМКАХ ОДНОГО ПОКУПАТЕЛЯ////////////////////////////////////////////////////////////////////////*/
     $(document).off('click.ga_requests').on('click.ga_requests', '.collapse_ga_byer', function (event) {
         var the_byer = $(event.target).attr('ga_byer');
 
         if ($('.ga_byer_requests:visible').length > 0){
-            if ($(event.target).val() == 'X'){//Закрываем открытое
-                $(event.target).val('W');
+            if ($(event.target).val() == 'X'){
+                $(event.target).css({"background-color" : "white", "color" : "black"}).val('W');
                 $(event.target).next('span').css({'font-size' : '1em'});
                 $(event.target).siblings('.ga_byer_requests').slideUp();
-                return false;//На закрытии скрипт останавливается
+                //Скрытие открытых
+                $('li[byerid].ga_widen').removeClass('ga_widen');
+                $('.ga_byer_requests:visible').slideUp();
             }else {
                 //Открываем новое
                 $.ajax({
@@ -241,13 +242,20 @@ $(document).ready(function(){
                     data: {the_byer:the_byer},
                     success: function (data) {
                         $('.ga_byer_requests[ga_byer='+the_byer+']').html(data);
-                        //Скрытие открытых
-                        $('.ga_byer_requests:visible').slideUp();
+
                         //Расширение в высоту
-                        $('.ga_byer_requests[ga_byer='+the_byer+']').slideDown()/*.addClass('ga_widen')*/;
+                        $(event.target).parent('li[byerid]').addClass('ga_widen');
+
+                        /*Скроллимся к только что открытой завяке*/
+                        var e = $('.ga_widen').offset().top;
+                        console.log(e);
+                        $('html, body').animate({scrollTop: e}, 1000);
+                        /**/
+
+                        $('.ga_byer_requests[ga_byer='+the_byer+']').slideDown();
                         $('input.collapse_ga_byer[value = "X"]').next('span').css({'font-size' : '1em'});
                         $('input.collapse_ga_byer[value = "X"]').val('W');
-                        $(event.target).val('X');
+                        $(event.target).css({"background-color" : "red", "color" : "white"}).val('X');
                         $(event.target).next('span').css({'font-size' : 30});
                     },complete:function () {//Подключение дейтпикера
                         $('.from,.to').datepicker({
@@ -274,9 +282,18 @@ $(document).ready(function(){
                 success: function (data) {
                     $('.ga_byer_requests[ga_byer='+the_byer+']').html(data);
                     //Скрытие открытых
+                    $('li[byerid].ga_widen').removeClass('ga_widen');
                     $('div.ga_byer_requests:visible').slideUp();
                     //Расширение в высоту
-                    $('.ga_byer_requests[ga_byer='+the_byer+']').slideDown()/*.addClass('ga_widen')*/;
+                    $(event.target).parent('li[byerid]').addClass('ga_widen');
+
+                    /*Скроллимся к только что открытой завяке*/
+                    var e = $('.ga_widen').offset().top;
+                    console.log(e);
+                    $('html, body').animate({scrollTop: e}, 1000);
+                    /**/
+
+                    $('.ga_byer_requests[ga_byer='+the_byer+']').slideDown();
                     $(event.target).val('X');
                     $(event.target).next('span').css({'font-size' : 30});
                 },complete:function () {//Подключение дейтпикера
@@ -1129,4 +1146,26 @@ $(document).ready(function(){
         }
 
     });
+
+    $(document).off('click.totals_glist').on('click.totals_glist', '.collapse_totals_g_list', function(event){
+        if($('.totals_g_list:visible').length > 0){
+            $('.collapse_totals_g_list').val('W').css({'background-color':'white','color':'black'});//Меняем кнопку
+            $(event.target).next('.totals_g_list').toggle();//Скрываем внутренность
+        }else{
+            $(event.target).val('X').css({'background-color':'red','color':'white'});//Меняем кнопку
+            $(event.target).next('.totals_g_list').toggle();//Скрываем внутренность
+        }
+
+    });
+
+    $(document).off('click.show_hr1').on('click.show_hr1', '.green, .lightgreen, .yellow, .lightblue, .red', function(event){
+        $(event.target).children('input').toggle();
+    });
+
+    $(document).off('click.r1span').on('click.r1span', '.green span, .lightgreen span, .yellow span, .lightblue span, .red span', function(event){
+        $(event.target).next('input').trigger('click.show_hr1');
+    });
+
+
+
 });

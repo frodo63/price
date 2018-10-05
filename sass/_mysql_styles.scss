@@ -370,20 +370,18 @@ tr[pricingid] td {border: 1px solid black}
 }
 
 .ga_widen {
-  height: 100vh;
-  width: 100vw;
+  min-height: 99vh;
+
   & .ga_contents>div{
     margin:5vh 0;
-    min-height: 20vh;
+    min-height: 15vh;
   }
   & .ga_contents>.ga_options{
     margin:0;
     height: 3vh;
     min-height: 3vh;
   }
-  .ga_c_payments,.ga_c_positions,.ga_c_giveaways{
-    background-color: rgba(30, 197, 201, 0.15)
-  }
+
 }
 .shrinken {
     &>table>thead>tr>th:nth-child(1), &>table>tbody>tr>td:nth-child(1){display: none}
@@ -538,7 +536,13 @@ tr[pricingid] td {border: 1px solid black}
   table{
     text-align: center;
     th:nth-child(4),td:nth-child(4){text-align: left}
+    th:nth-child(1){width: 5%}
+    th:nth-child(2){width: 5%}
+    th:nth-child(3){width: 5%}
     th:nth-child(4){width: 25%}
+    th:nth-child(5){width: 10%}
+    th:nth-child(6){width: 10%}
+    th:nth-child(7){width: 20%}
   }
 }
 
@@ -617,6 +621,12 @@ tr:hover,li:hover{
   display: none;
 }
 
+.totals_list{
+  table{
+    font-size: 20px;
+  }
+}
+
 .shrinken_totals{display: none}
 .widen_totals{height: 70vh}
 .byer_req_list_totals{//Это таблица
@@ -630,30 +640,25 @@ tr:hover,li:hover{
   }
 }
 .totals_requests_list{
-tr:hover{
-    background-color: green;
-    color: white;
-  }
   th{
     width:10vw;
+  }
+  th:nth-child(5){
+    width:20vw;
   }
   td{
     text-align: center;
   }
 }
-.totals_giveaways_list{
-  tr:hover{
-    background-color: green;
-    color: white;
-  }
-  th{
-    width:13vw;
-  }
-  tr{
-    text-align: center;
+.totals_g_list{
+  display: none;
+  table{
+    tr:hover{
+      color: white;
+      background: green;
+    }
   }
 }
-
 .vid_byer_requests{
   td{
     text-align: center;
@@ -663,3 +668,28 @@ tr:hover{
     color: white;
   }
 }
+
+/*Статус заказа в Р-1*/
+#givaways{
+  &,table{
+    font-size: 21px;
+  };
+}
+.green,.lightgreen,.yellow,.lightblue,.red {
+  border-radius: 5px;
+  border: 1px solid white;
+  position: relative;
+  input{
+    display: none;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    font-size: 16px;
+  }
+}
+
+.green {background-color: green; color: white}
+.lightgreen {background-color: lightgreen; color: black}
+.yellow {background-color: yellow; color: black}
+.lightblue {background-color: lightblue; color: blue}
+.red {background-color: red; color: white}

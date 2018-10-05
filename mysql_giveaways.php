@@ -91,24 +91,54 @@ if (isset($_POST['the_byer'])){
             $req_pay_ostatok = round($req_sum, 2) - round($req_pay, 2);//Остаток к оплате
             $req_give_ostatok = round($req_count,2) - round($req_give,2);
 
-            /*КНОПКА УБРАТЬ ИЗ ВЫДАЧИ Р1*/
-            $result .="<td><input type='button' value='убрать из Р-1' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$the_byer."'>";
-            /**/
-
             /**/
 
             /*УСЛОВИЯ ПО СТАТУСУ ЗАКАЗА*/
-            if(round($req_sum,2) == round($req_pay,2) && round($req_sum,2) !=0 && round($req_pay,2) !=0){
-                $result .="$nbsp Заказ оплачен полностью. К выдаче: ".$req_give_ostatok.".</td>";
+            if(round($req_sum,2) == round($req_pay,2) && round($req_sum,2) !=0 && round($req_pay,2) != 0 && $req_give_ostatok == 0 && $req_give != 0){
+                $result .="<td>
+                               <div class='green'>
+                                   <span>Оплата 100%. Выдача 100%.</span>
+                                   <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$the_byer."'>
+                                       
+                               </div>
+                           </td>";
+            }elseif (round($req_sum,2) == round($req_pay,2) && round($req_sum,2) !=0 && round($req_pay,2) != 0 && $req_give_ostatok == 0 && $req_give == 0){
+                $result .="<td>
+                               <div class='green'>
+                                   <span>Оплата 100%. Начислений не было.</span>
+                                   <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$the_byer."'>
+                                       
+                               </div>
+                           </td>";
+            }elseif(round($req_sum,2) == round($req_pay,2) && round($req_sum,2) !=0 && round($req_pay,2) !=0){
+                $result .="<td>
+                               <div class='lightgreen'>
+                                   <span>Оплата 100%. К выдаче: ".$req_give_ostatok.".</span>
+                                   <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$the_byer."'>                                       
+                               </div>
+                           </td>";
             }elseif (round($req_sum,2) == 0){
-                $result .="$nbsp Сумма заказа не определена. Назначьте победителя.</td>";
+                $result .="<td>
+                               <div class='red'>
+                                   <span>Назначьте победителя.</span>
+                                   <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$the_byer."'>                                       
+                               </div>
+                           </td>";
             }elseif (round($req_pay,2) == 0){
-                $result .="$nbsp Оплат еще не поступало.</td>";
+                $result .="<td>
+                               <div class='lightblue'>
+                                   <span>Оплат не поступало.</span>
+                                   <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$the_byer."'>
+                               </div>
+                           </td>";
             }else{
-                $result .="$nbsp Заказ оплачен не полностью. К оплате :".$req_pay_ostatok."</td>";
+                $result .="<td>
+                               <div class='yellow'>
+                                   <span>Оплата < 100%. К оплате :".$req_pay_ostatok.".</span>
+                                   <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$the_byer."'>                                       
+                               </div>
+                           </td>";
                 }
-            //$result .="<td>Сумма заказа : ".$req_sum.". Оплата : ".$req_pay.". Начислено : ".$req_count.". Выдано : ".$req_give.".</td>";
-            /**/
         };
 
         $result.="</tr></tbody></table>";
