@@ -608,13 +608,13 @@ tr[pricingid] td {border: 1px solid black}
 
 #go_up{
   position: fixed;
-  left: -1px;
+  left: -5px;
   top: 0;
   color: green;
   z-index: 100;
   height: 100vh;
   font-size: 13px;
-  width: 16px;
+  width: 17px;
   padding: 0;
   &:hover{
     background-color: green;

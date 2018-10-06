@@ -73,12 +73,15 @@ $(document).ready(function(){
         /**/
 
         var table = $(this).attr("href").substring(1);
+        if (table=='search'){
+            return false;
+        }else{
             $.ajax({
                 url: 'mysql_read.php',
                 method: 'POST',
                 data: {table:table},
                 success: function (data) {
-                   $('#reads .' + table + '_list').html(data);
+                    $('#reads .' + table + '_list').html(data);
                 },
                 complete: function(){
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Данные из таблицы " + table + " получены.");
@@ -86,6 +89,8 @@ $(document).ready(function(){
                     $('.from,.to').val('');
                 }
             });
+        }
+
     });
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

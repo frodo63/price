@@ -34,15 +34,9 @@ $(document).ready(function(){
                 method: 'POST',
                 data: {table:table, category:category, theid:theid },
                 success: function(data){
-                    $('#reads').slideUp();
-                    $('#search_reads').show();
-                    $('#search_reads div.requests_list').html(data);
-                },
-                complete: function() {
-                    if(category == 'request'){
-                        $('.collapse').trigger('click.collapse');
-                    };
                     $('html, body').animate({scrollTop: $("#thesearch").offset().top}, 1000);
+                    $('#tab_search a').trigger('click.readtab');
+                    $('#search .requests_list').html(data);
                 }
             });
         }

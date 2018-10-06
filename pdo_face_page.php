@@ -50,7 +50,6 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-'>
 <input id='thesearch' type='text' placeholder='Начните вводить наименование поставщика, покупателя, товара или название заявки'category='' theID=''>
 <div id='sres'></div>
 <br>
-<input type='button' id='readstoggle' value='Скрыть/Показать табы'>
 <div id='reads'>                                                                                                               
       <ul>
         <li id='tab_requests'><a href='#requests'>Заявки</a></li>
@@ -60,6 +59,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-'>
         <li id='tab_giveaways'><a href='#givaways'>Р-1</a></li>
         <li id='tab_vidachi'><a href='#vidachi'>Выдачи</a></li>
         <li id='tab_totals'><a href='#totals'>Долги</a></li>
+        <li id='tab_search'><a href='#search'>Результаты поиска</a></li>
       </ul>
   
       <div id='requests'>
@@ -155,6 +155,9 @@ echo"
       <div id='totals'>
           <div class='totals_list'></div>
       </div>
+      <div id='search'>РЕЗУЬЛТАТЫ ПОИСКА
+          <div class='requests_list'></div>
+      </div>
 </div>
               <div id='edit_1c_num'>
                   <span>Изменить номер заказа в 1С</span>
@@ -211,9 +214,7 @@ echo"
                   <input class='close_edit_options_pos' type='button' value='X'>
               </div> 
 
-<input type='button' id='req_searchstoggle' value='Скрыть/Показать результаты поиска'>
-<div id='search_reads'>
-<div class='requests_list'></div></div><input type='button' value='▲' id='go_up'>";
+<input type='button' value='▲' id='go_up'>";
 
 echo"
 <script src='js/jquery.js'></script>
