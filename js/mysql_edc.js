@@ -223,7 +223,7 @@ $(document).ready(function() {
         if($('div.contents:visible').length > 0){
 
             if ($(event.target).val() == 'X'){//Закрываем открытое
-                $(event.target).val('W').css({'background' : 'white', 'color' : 'black'}).siblings('div div.positions').html('');
+                $(event.target).val('♢').css({'background' : 'white', 'color' : 'black'}).siblings('div div.positions').html('');
                 $(event.target).siblings('div.contents').slideUp(400);
                 $('.requests_list').removeClass('shrinken');
                 $(event.target).parent().removeClass('widen');
@@ -240,7 +240,7 @@ $(document).ready(function() {
             $('input.collapse[value = "X"]').css('color', 'black');
             $('input.collapse[value = "X"] ~ div div.positions').html('');
             $('input.collapse[value = "X"]').siblings('div.contents').slideUp(400);
-            $('input.collapse[value = "X"]').val('W');
+            $('input.collapse[value = "X"]').val('♢');
             $('.requests_list').removeClass('shrinken');
             $(event.target).parent().removeClass('widen');
             $('tr[requestid='+rid+'] .rentcount').html('');//По закрытию чистим расчет рентабельности
@@ -323,7 +323,7 @@ $(document).ready(function() {
             case 'none':
                 $('td[position="'+positionid+'"] div.pricings').slideUp();
                 $('div.pricings').slideUp();
-                $('input.collapsepos').val('V').css({'background-color': 'white', 'color': 'black'});
+                $('input.collapsepos').val('♢').css({'background-color': 'white', 'color': 'black'});
 
 
                 $(event.target).siblings('div.pricings').slideDown();
@@ -351,7 +351,7 @@ $(document).ready(function() {
                 $('td[position="'+positionid+'"] div.pricings').slideUp();
                 $(event.target).siblings('div.pricings').slideUp();
                 $('input[position='+positionid+'] ~ div').html('');
-                $(event.target).val('V').css('background-color', 'white');
+                $(event.target).val('♢').css('background-color', 'white');
                 $(event.target).css('color', 'black');
                 /*Растуманивание всей заявки*/
                 //$('tr[requestid='+requestid+'] tr[position]').css('opacity', 1);

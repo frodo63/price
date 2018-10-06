@@ -49,7 +49,7 @@ if (isset($_POST['the_byer'])){
             /*/////////////////////////////////////////////////*/
             $result.="<td>".$row['requests_id']."</td>";
             $result.="<td>".$row['1c_num']."</td>";
-            $result.="<td><input class='collapse_ga_request' ga_request='". $row['requests_id'] ."' type='button' value='W'><span>".$row['name']."</span>
+            $result.="<td><input class='collapse_ga_request' ga_request='". $row['requests_id'] ."' type='button' value='♢'><span>".$row['name']."</span>
 <div class='ga_contents' ga_request='". $row['requests_id'] ."'><div class='ga_options'></div><div class='ga_c_payments'></div><div class='ga_c_positions'></div><div class='ga_c_giveaways'></div></div></td>";
 
             /*ПЕРЕМЕННЫЕ НА СТАТУС ЗАКАЗА*/
@@ -174,7 +174,7 @@ if (isset($_POST['the_request'])){
         $pdo->commit();
 
         $result1="<input class='add_payment' requestid='".$the_request."' type='button' value='+платеж'><br>";
-        if($get_payments->rowCount() == 0) {$result1 .= "Ничего еще не оплачено.";
+        if($get_payments->rowCount() == 0) {$result1 .= "<h3>Платежи</h3><span>Ничего еще не оплачено.</span>";
         }else {
             $result1.="<h2>Платежи</h2><table><thead><tr><th>Дата</th><th>Номер п/п</th><th>Сумма платежки</th><th></th></tr></thead><tbody>";
             foreach ($get_payments as $row) {
@@ -184,7 +184,7 @@ if (isset($_POST['the_request'])){
         };
 
         $result2="<input type='button' value='Перейти к заявке'>";
-        if($get_positions->rowCount() == 0) {$result2 .= "Ничего не начислено. <input type='button' value='Перейти к заявке'>";
+        if($get_positions->rowCount() == 0) {$result2 .= "<h3>Начисления</h3><span>Ничего не начислено.</span> <input type='button' value='Перейти к заявке'>";
         }else {
             $result2.="<h2>Начисления</h2><table><thead><tr><th>Товар</th><th>Кол-во</th><th>Начислено, на шт</th><th>Сумма к выдаче</th></tr></thead><tbody>";
             foreach ($get_positions as $row) {
@@ -201,7 +201,7 @@ if (isset($_POST['the_request'])){
         };
 
         $result3="<input class='add_giveaway' requestid='".$the_request."' type='button' value='+выдача'><br>";
-        if($get_giveaways->rowCount() == 0) {$result3 .= "Ничего еще не выдано.";
+        if($get_giveaways->rowCount() == 0) {$result3 .= "<h3>Выдачи</h3><span>Ничего еще не выдано.</span>";
         }else {
             $result3.="<h2>Выдачи</h2><table><thead><tr><th>Дата</th><th>Комментарий</th><th>Сумма</th><th></th></tr></thead><tbody>";
             foreach ($get_giveaways as $row) {

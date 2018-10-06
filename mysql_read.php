@@ -228,7 +228,7 @@ if(isset($_POST['table'])){
             <td class='req_date'><span>" . $mysqldate . "</span></td>
             <td class='1c_num'><span>" . $row['1c_num'] . "</span></td>
             <td byerid=" . $row['b_id'] . " name=" . $row['b_nameid'] . "><span>". $row['b_name'] ."</span></td>
-            <td category='requests' name =" . $row['req_nameid'] . "><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='W' class='collapse'><span class='name'>" . $row['req_name'] . "</span>
+            <td category='requests' name =" . $row['req_nameid'] . "><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value=♢ class='collapse'><span class='name'>" . $row['req_name'] . "</span>
             
             <div id=" . $row['req_nameid'] . " class='contents'>
                 <h3 class='req_header_".$row['req_id']."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму <span class='reqsumma'>".number_format($row['sum'],2,'.',' ')."&nbsp</span><br> Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h3/><br>
@@ -262,7 +262,7 @@ if(isset($_POST['table'])){
 
             foreach ($statement as $row) {
                 $result .= "<li byerid =" . $row['b_id'] . ">
-                                <input type='button' name =" . $row['b_nid'] . " ga_byer =" . $row['b_id'] . " value='W' class='collapse_ga_byer'>
+                                <input type='button' name =" . $row['b_nid'] . " ga_byer =" . $row['b_id'] . " value='♢' class='collapse_ga_byer w'>
                                 <span class='name'>" . $row['b_name'] . "</span>
                                 <div class='ga_byer_requests' ga_byer ='" . $row['b_id'] . "'></div>
                             </li>";            }
@@ -283,7 +283,7 @@ if(isset($_POST['table'])){
 
             foreach ($statement as $row) {
                 $result .= "<li byerid =" . $row['b_id'] . ">
-                                <input type='button' name =" . $row['b_nid'] . " vid_byer =" . $row['b_id'] . " value='W' class='collapse_vid_byer'>
+                                <input type='button' name =" . $row['b_nid'] . " vid_byer =" . $row['b_id'] . " value=♢ class='collapse_vid_byer'>
                                 <span class='name'>" . $row['b_name'] . "</span>
                                 <div class='vid_byer_requests' vid_byer ='" . $row['b_id'] . "'></div>
                             </li>";            }
@@ -574,7 +574,7 @@ if (isset($_POST['requestid'])){
                     $result .= "<tr position =".$row['req_positionid'].">
                     <td> ".$rownumber.".</td>
                     <td category='positions'>
-                        <input type='button' request=".$req_id." position =".$row['req_positionid']." value='V' class='collapsepos'>
+                        <input type='button' request=".$req_id." position =".$row['req_positionid']." value=♢ class='collapsepos'>
                         <span class='name'>" . $row['pos_name'] . "</span>
                         <div class='pricings'>
                         </div>
@@ -593,7 +593,7 @@ if (isset($_POST['requestid'])){
             }else{
                 $result .= "<tr position =".$row['req_positionid']."><td> ".$rownumber.".</td>
             <td category='positions'>
-                <input type='button' position =".$row['req_positionid']." value='V' class='collapsepos'>
+                <input type='button' position =".$row['req_positionid']." value=♢ class='collapsepos'>
                 <span class='name'>" . $row['pos_name'] . "</span>
                 <div class='pricings'>
                 </div>
