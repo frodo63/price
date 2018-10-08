@@ -211,7 +211,6 @@ if(isset($_POST['table'])){
                                         ORDER BY `b`.`name` ASC");
                 $statement->execute();
             } catch( PDOException $Exception ) {
-                // Note The Typecast To An Integer!
                 throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
             }
         }
@@ -788,7 +787,6 @@ if ( isset($_POST['chng_number_1c']) ){
 /**/
 
 //Чтение ОПЦИЙ ЗАЯВКИ ПО ОДНОЙ
-
 if ( isset($_POST['c_c']) &&  isset($_POST['reqid'])){
     try{
         $reqid = ($_POST["reqid"]);
@@ -826,11 +824,9 @@ if ( isset($_POST['c_c']) &&  isset($_POST['reqid'])){
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
 };
-
 /**/
 
 //Чтение ОПЦИЙ ПОЗИЦИИ ПО ОДНОЙ
-
 if ( isset($_POST['pos_c_c']) &&  isset($_POST['posid'])){
     try{
         $posid = ($_POST["posid"]);
@@ -868,7 +864,6 @@ if ( isset($_POST['pos_c_c']) &&  isset($_POST['posid'])){
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
 };
-
 /**/
 
 //ЧТЕНИЕ ПЛАТЕЖКИ
@@ -886,6 +881,7 @@ if(isset($_POST['pay_reqid']) && isset($_POST['pay_id'])){
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
 }
+/**/
 
 //ЧТЕНИЕ ВЫДАЧИ
 if(isset($_POST['give_reqid']) && isset($_POST['give_id'])){
@@ -904,3 +900,4 @@ if(isset($_POST['give_reqid']) && isset($_POST['give_id'])){
     }
 
 }
+/**/

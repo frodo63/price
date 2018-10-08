@@ -459,17 +459,26 @@ $(document).ready(function() {
         $('#button_history').attr({'hist_byer': '-', 'hist_trade': '-'});
 
         /*Скроллимся к только что открытой завяке*/
-        /*Если скрыты результаты поиска (то есть мы работаем с общим списком заявок, то к открытой заявке в списке заявок мы и скролимся)*/
-        /*А если результаты поиска не скрыты, то значит мы работаем со списком результатов из ВСПВ и скролимся мы тогда туда*/
-        var thedisp = $('#search_reads').css('display');
-        switch (thedisp){
-            case 'none':
-                console.log(thedisp);
-                $('html, body').animate({scrollTop: $("#reads .widen").offset().top}, 1000);
+        /*Надо понять, откуда была открыта расценка. То есть, из заявок или из результатов поиска, или из Р-1*/
+        /*К счастью, открытую табу выдает класс 'ui-state-active'*/
+        /*Проверяем, у какой табы есть клас 'ui-state-active' и туда скроллимся. ХЗ правда куда пристегиваться*/
+        var thetab = $('#reads li.ui-state-active').attr('id');
+        console.log(thetab);
+        switch (thetab){
+            //Заявки
+            case 'tab_requests':
+                console.log(thetab);
+                //$('html, body').animate({scrollTop: $("#reads .widen").offset().top}, 1000);
                 break;
-            case 'block':
-                console.log(thedisp);
-                $('html, body').animate({scrollTop: $("#search_reads .widen").offset().top}, 1000);
+            //Результаты поиска
+            case 'tab_search':
+                console.log(thetab);
+                //$('html, body').animate({scrollTop: $("#search_reads .widen").offset().top}, 1000);
+                break;
+            //Р-1
+            case 'tab_giveaways':
+                console.log(thetab);
+                //$('html, body').animate({scrollTop: $("#search_reads .widen").offset().top}, 1000);
                 break;
         }
 

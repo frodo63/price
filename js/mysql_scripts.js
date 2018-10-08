@@ -64,7 +64,7 @@ $(document).ready(function(){
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //Чтение таблицы. Имя табицы берется из атрибута li('href') и отрезанием первого символа #//////////////////////////
-    $(document).off('click.readtab').on('click.readtab', '#reads li a', function(){
+    $(document).off('click.readtab').on('click.readtab', '.show_list', function(event){
 
         /**/
         $('.requests_list').removeClass('shrinken');
@@ -72,7 +72,8 @@ $(document).ready(function(){
         $('.requests_list tr').css('opacity', 1);
         /**/
 
-        var table = $(this).attr("href").substring(1);
+        var table = $(event.target).parent().attr('id');
+        console.log(table);
         if (table=='search'){
             return false;
         }else{
@@ -81,7 +82,8 @@ $(document).ready(function(){
                 method: 'POST',
                 data: {table:table},
                 success: function (data) {
-                    $('#reads .' + table + '_list').html(data);
+                    //$('#reads .' + table + '_list').html(data);
+                    $(event.target).siblings('.' + table + '_list').html(data);
                 },
                 complete: function(){
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Данные из таблицы " + table + " получены.");

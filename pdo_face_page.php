@@ -63,7 +63,8 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-'>
       </ul>
   
       <div id='requests'>
-      <input type='button' class='addnew' value='+'> Добавить заявку
+          <input type='button' class='show_list' value='ЗАКАЗЫ⏎'><br><br>
+          <input type='button' class='addnew' value='+'> Добавить заявку
           <div class='creates add_ramk'>
               <br>
                     <input type='text' placeholder='Выберите Покупателя' size='20' id ='byer' autocomplete='off'>
@@ -84,6 +85,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-'>
           </div>                
       </div>  
       <div id='byers'>
+      <input type='button' class='show_list' value='ПОКУПАТЕЛИ⏎'><br><br>
       <input type='button' class='addnew' value='+'> Добавить покупателя
               <div class='creates add_ramk'>
           <br>
@@ -96,6 +98,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-'>
           </div>
       </div>      
       <div id='sellers'>
+      <input type='button' class='show_list' value='ПОСТАВЩИКИ⏎'><br><br>
       <input type='button' class='addnew' value='+'> Добавить поставщика
           <div class='creates add_ramk'>
           <br>
@@ -108,6 +111,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-'>
           </div>
       </div>
       <div id='trades'>
+      <input type='button' class='show_list' value='НОМЕНКЛАТУРА⏎'><br><br>
       <input type='button' class='addnew' value='+'> Добавить номенклатуру
           <div class ='creates add_ramk'>
           <br>
@@ -121,7 +125,8 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-'>
           
       </div>";
 echo"      
-      <div id='givaways'>      
+      <div id='givaways'> 
+      <input type='button' class='show_list' value='РАСЧЕТЫ⏎'><br><br>    
       <!--Добавить Платежку -->  
               <div id='add_payment'>
                   <span>Вводим платежку</span>
@@ -150,13 +155,15 @@ echo"
           </div>      
       </div>
       <div id='vidachi'>
+      <input type='button' class='show_list' value='ВЫДАЧИ⏎'><br><br>
           <div class='vidachi_list'></div>      
       </div>
       <div id='totals'>
+      <input type='button' class='show_list' value='ДОЛГИ⏎'><br><br>
           <div class='totals_list'></div>
       </div>
-      <div id='search'>РЕЗУЬЛТАТЫ ПОИСКА
-          <div class='requests_list'></div>
+      <div id='search'>
+          <div class='search_list'></div>
       </div>
 </div>
               <div id='edit_1c_num'>

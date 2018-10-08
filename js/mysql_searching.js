@@ -35,8 +35,10 @@ $(document).ready(function(){
                 data: {table:table, category:category, theid:theid },
                 success: function(data){
                     $('html, body').animate({scrollTop: $("#thesearch").offset().top}, 1000);
-                    $('#tab_search a').trigger('click.readtab');
-                    $('#search .requests_list').html(data);
+                    $('#tab_search a').trigger('click');
+                    $('#search .search_list').html(data);
+                },complete: function(){
+                    console.log('Триггерим клик на кнопку Рез поиска');
                 }
             });
         }
