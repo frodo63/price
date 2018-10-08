@@ -219,19 +219,16 @@ $(document).ready(function() {
 //Чтение заявки. Айди берется из инпута плюса///////////////////////////////////////////////////////////////////////
     $(document).off('click.collapse').on('click.collapse', 'input.collapse', function(event){
         var rid = $(event.target).attr('requestid');
+        var thetab = $('#reads li.ui-state-active').attr('id').substr(4);
 
         if($('div.contents:visible').length > 0){
 
             if ($(event.target).val() == 'X'){//Закрываем открытое
                 $(event.target).val('♢').css({'background' : 'white', 'color' : 'black'}).siblings('div div.positions').html('');
                 $(event.target).siblings('div.contents').slideUp(400);
-                $('.requests_list').removeClass('shrinken');
+                $('.'+thetab+'_list').removeClass('shrinken');
                 $(event.target).parent().removeClass('widen');
                 $('tr[requestid='+rid+'] .rentcount').html('');//По закрытию чистим расчет рентабельности
-
-                /*Растуманивание всех заявок*/
-                $('.requests_list tr').css('opacity', 1);
-                /*закончилось Растуманивание*/
                 return false;
 
             };
@@ -241,7 +238,7 @@ $(document).ready(function() {
             $('input.collapse[value = "X"] ~ div div.positions').html('');
             $('input.collapse[value = "X"]').siblings('div.contents').slideUp(400);
             $('input.collapse[value = "X"]').val('♢');
-            $('.requests_list').removeClass('shrinken');
+            $('.'+thetab+'_list').removeClass('shrinken');
             $(event.target).parent().removeClass('widen');
             $('tr[requestid='+rid+'] .rentcount').html('');//По закрытию чистим расчет рентабельности
 
@@ -251,7 +248,7 @@ $(document).ready(function() {
             $(event.target).css('background', 'red');
             $(event.target).css('color', 'white');
             $(event.target).siblings('div.contents').slideDown(400);
-            $('.requests_list').addClass('shrinken');//Сужаем другие столбцы
+            $('.'+thetab+'_list').addClass('shrinken');//Сужаем другие столбцы
             $(event.target).parent().addClass('widen');//Расширяем окно заявки
 
             $.ajax({
@@ -263,10 +260,6 @@ $(document).ready(function() {
                 },
                 complete: function(){
                     $('#editmsg').css('display', 'block'). delay(2000).slideUp(300).html('Содержимое заявки ' + rid + ' получено.');
-                    /*Затуманивание списка позиций открытой заявки*/
-                    $('.requests_list tr').css('opacity', 0);
-                    $('.requests_list tr[requestid="'+rid+'"], .requests_list tr[requestid="'+rid+'"] table tr').css('opacity', 1);
-                    /*закончилось Затуманивание*/
                 }
             });
 
@@ -281,7 +274,7 @@ $(document).ready(function() {
             $(event.target).siblings('div').slideDown(400);
             $(event.target).css({'background' : 'red', 'color' : 'white'});
             $(event.target).val('X');
-            $('.requests_list').addClass('shrinken')//Сужаем другие столбцы
+            $('.'+thetab+'_list').addClass('shrinken')//Сужаем другие столбцы
             $(event.target).parent().addClass('widen');//Расширяем окно заявки
 
             $.ajax({
@@ -293,10 +286,6 @@ $(document).ready(function() {
                 },
                 complete: function(){
                     $('#editmsg').css('display', 'block'). delay(2000).slideUp(300).html('Содержимое заявки ' + rid + ' получено.');
-                    /*Затуманивание списка позиций открытой заявки*/
-                    $('.requests_list tr').css('opacity', 0);
-                    $('.requests_list tr[requestid="'+rid+'"], .requests_list tr[requestid="'+rid+'"] table tr').css('opacity', 1);
-                    /*закончилось Затуманивание*/
                 }
             });
 
@@ -462,29 +451,18 @@ $(document).ready(function() {
         /*Надо понять, откуда была открыта расценка. То есть, из заявок или из результатов поиска, или из Р-1*/
         /*К счастью, открытую табу выдает класс 'ui-state-active'*/
         /*Проверяем, у какой табы есть клас 'ui-state-active' и туда скроллимся. ХЗ правда куда пристегиваться*/
-        var thetab = $('#reads li.ui-state-active').attr('id');
+        var thetab = $('#reads li.ui-state-active').attr('id').substr(4);
         console.log(thetab);
-        switch (thetab){
-            //Заявки
-            case 'tab_requests':
-                console.log(thetab);
-                //$('html, body').animate({scrollTop: $("#reads .widen").offset().top}, 1000);
-                break;
-            //Результаты поиска
-            case 'tab_search':
-                console.log(thetab);
-                //$('html, body').animate({scrollTop: $("#search_reads .widen").offset().top}, 1000);
-                break;
-            //Р-1
-            case 'tab_giveaways':
-                console.log(thetab);
-                //$('html, body').animate({scrollTop: $("#search_reads .widen").offset().top}, 1000);
-                break;
-        }
 
-         //Убрал сокрытие прайсингвиндова потому что жопа со
-        // скроллингом и никому он не мешает, все равно он пустой стоит.
-        /**/
+        if($('#' + thetab + ' .widen').length == 0)
+        {
+            $('html, body').animate({scrollTop: $('#' + thetab).offset().top}, 1000);
+        }
+        else
+        {
+            $('html, body').animate({scrollTop: $('#' + thetab + ' .widen').offset().top}, 1000);
+        }
+        //TODO:СДелать условие скролла и открытия для выдач (Р-1)
     });
 
 

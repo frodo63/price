@@ -201,57 +201,99 @@ table{
 
 /*Класс - таблица из результатов поиска. айдишник - таблица из табов*/
 /*Таблица первого уровня (заявки)*/
-.requests_list>table>thead>tr>th:nth-child(1){width: 7%}
-.requests_list>table>thead>tr>th:nth-child(2){width: 4%}
-.requests_list>table>thead>tr>th:nth-child(3){width: 11%}
-.requests_list>table>thead>tr>th:nth-child(4){width: 56%}
-.requests_list>table>thead>tr>th:nth-child(5){width: 7%}
-.requests_list>table>thead>tr>th:nth-child(6){width: 10%}
-.requests_list>table>thead>tr>th:nth-child(7){width: 5%}
-.requests_list>table>thead>tr{border-bottom: 1px black solid;}
+.requests_list, .search_list{
+  &>table>thead>tr>th:nth-child(1){width: 7%}
+  &>table>thead>tr>th:nth-child(2){width: 4%}
+  &>table>thead>tr>th:nth-child(3){width: 11%}
+  &>table>thead>tr>th:nth-child(4){width: 56%}
+  &>table>thead>tr>th:nth-child(5){width: 7%}
+  &>table>thead>tr>th:nth-child(6){width: 10%}
+  &>table>thead>tr>th:nth-child(7){width: 5%}
+  &>table>thead>tr{border-bottom: 1px black solid;}
 
-/*Таблица второго уровня (позциии)*/
-.requests_list .positions th:nth-child(1){width: 2%}
-.requests_list .positions th:nth-child(2){width: 76%}
-.requests_list .positions th:nth-child(3){width: 8%}
-.requests_list .positions th:nth-child(4){width: 8%}
-.requests_list .positions th:nth-child(5){width: 5%}
-.requests_list .positions th:nth-child(6){width: 5%}
+  /*Таблица второго уровня (позциии)*/
+  & .positions th:nth-child(1){width: 2%}
+  & .positions th:nth-child(2){width: 76%}
+  & .positions th:nth-child(3){width: 8%}
+  & .positions th:nth-child(4){width: 8%}
+  & .positions th:nth-child(5){width: 5%}
+  & .positions th:nth-child(6){width: 5%}
 
-/*Таблица  третьего уровня (расценки) */
-.requests_list .pricing-list th:nth-child(1){width: 20%}
-.requests_list .pricing-list th:nth-child(2){width: 20%}
-.requests_list .pricing-list th:nth-child(3){width: 7%}
-.requests_list .pricing-list th:nth-child(4){width: 5%}
-.requests_list .pricing-list th:nth-child(5){width: 5%}
-.requests_list .pricing-list th:nth-child(6){width: 5%}
-.requests_list .pricing-list th:nth-child(7){width: 4%}
-.requests_list .pricing-list th:nth-child(8){width: 10%}
-.requests_list .pricing-list th:nth-child(9){width: 5%}
-.requests_list .pricing-list th:nth-child(10){width: 14%}
+  /*Таблица  третьего уровня (расценки) */
+  & .pricing-list th:nth-child(1){width: 20%}
+  & .pricing-list th:nth-child(2){width: 20%}
+  & .pricing-list th:nth-child(3){width: 7%}
+  & .pricing-list th:nth-child(4){width: 5%}
+  & .pricing-list th:nth-child(5){width: 5%}
+  & .pricing-list th:nth-child(6){width: 5%}
+  & .pricing-list th:nth-child(7){width: 4%}
+  & .pricing-list th:nth-child(8){width: 10%}
+  & .pricing-list th:nth-child(9){width: 5%}
+  & .pricing-list th:nth-child(10){width: 14%}
 
-/*Горизонтальное позиционирование содержимого td:*/
-/*1й уровень (заявки)*/
-.requests_list td{text-align: center}
-.requests_list td:nth-child(4){text-align: left}
-/*2й уровень (позиции*/
-.requests_list .positions td:nth-child(1){text-align: center}
-.requests_list .positions td:nth-child(2){text-align: left}
-.requests_list .positions td:nth-child(3){text-align: center; vertical-align: middle}
-.requests_list .positions td:nth-child(4){text-align: left; vertical-align: middle}
-.requests_list .positions td:nth-child(5){text-align: center}
-/*3й уровень (расцеки)*/
-.requests_list .pricing-list td:nth-child(1){text-align: center}
-.requests_list .pricing-list td:nth-child(2){text-align: center}
-.requests_list .pricing-list td:nth-child(3){text-align: center}
-.requests_list .pricing-list td:nth-child(4){text-align: center}
-.requests_list .pricing-list td:nth-child(5){text-align: center}
-.requests_list .pricing-list td:nth-child(6){text-align: center}
-.requests_list .pricing-list td:nth-child(7){text-align: center}
-.requests_list .pricing-list td:nth-child(8){text-align: center}
-.requests_list .pricing-list td:nth-child(9){text-align: center}
-.requests_list .pricing-list td:nth-child(10){text-align: center}
-.requests_list .pricing-list td:nth-child(11){text-align: center}
+  /*Горизонтальное позиционирование содержимого td:*/
+  /*1й уровень (заявки)*/
+  & td{text-align: center}
+  & td:nth-child(4){text-align: left}
+  /*2й уровень (позиции*/
+  & .positions td:nth-child(1){text-align: center}
+  & .positions td:nth-child(2){text-align: left}
+  & .positions td:nth-child(3){text-align: center; vertical-align: middle}
+  & .positions td:nth-child(4){text-align: left; vertical-align: middle}
+  & .positions td:nth-child(5){text-align: center}
+  /*3й уровень (расцеки)*/
+  & .pricing-list td:nth-child(1){text-align: center}
+  & .pricing-list td:nth-child(2){text-align: center}
+  & .pricing-list td:nth-child(3){text-align: center}
+  & .pricing-list td:nth-child(4){text-align: center}
+  & .pricing-list td:nth-child(5){text-align: center}
+  & .pricing-list td:nth-child(6){text-align: center}
+  & .pricing-list td:nth-child(7){text-align: center}
+  & .pricing-list td:nth-child(8){text-align: center}
+  & .pricing-list td:nth-child(9){text-align: center}
+  & .pricing-list td:nth-child(10){text-align: center}
+  & .pricing-list td:nth-child(11){text-align: center}
+
+  /*Таблица отображения циферок рентабельности*/
+  .rentcount .rent-table{
+    td{
+      text-align: center;
+    }
+  }
+  /**/
+
+  /*граница низ-прав для Ряда заявки*/
+  & tr{
+    border-bottom: 1px black solid;
+    border-right: 1px black solid;
+  }
+
+  & tr td:nth-child(1),
+  & tr td:nth-child(2),
+  & tr td:nth-child(3),
+  & tr td:nth-child(4),
+  & tr td:nth-child(5),
+  & tr td:nth-child(6),
+  & tr td:nth-child(7){
+    border-right: 1px black solid;
+  }
+
+
+  & tr td:last-child {
+    border-right: none;
+  }
+
+
+  /*Таблица второго уровня*/
+  & tr td .contents .positions td{border: none}
+  & tr td .contents .positions .pricings table.pricing-list tbody tr {border-bottom: 1px solid black;}
+  & tr td .contents .positions .pricings table.pricing-list tbody tr:nth-last-of-type(1) {border: none;}
+}
+
+
+
+
+
 
 /*Таблица отображения циферок рентабельности*/
   .rentcount .rent-table{
@@ -692,7 +734,7 @@ tr[pricingid] td {border: 1px solid black}
 }
 
 /*Статус заказа в Р-1*/
-#givaways{
+#requests,#byers,#sellers,#trades,#givaways,#vidachi,#totals,#search{
   &,table{
     font-size: 21px;
   };
