@@ -7,6 +7,8 @@ if(
     isset($_POST["zak"]) &&
     isset($_POST["kol"]) &&
     isset($_POST["tzr"]) &&
+    isset($_POST["tzrknam"]) &&
+    isset($_POST["tzrkpok"]) &&
     isset($_POST["op"]) &&
     isset($_POST["tp"]) &&
     isset($_POST["firstobp"]) &&
@@ -18,14 +20,14 @@ if(
     isset($_POST["tpr"]) &&
     isset($_POST["opr"]) &&
     isset($_POST["fixed"]) &&
-    isset($_POST["firstobpr"]) &&
+    isset($_POST["firstobpr"]) &&/*
     isset($_POST["rop"]) &&
     isset($_POST["rtp"]) &&
     isset($_POST["realop"]) &&
     isset($_POST["realtp"]) &&
     isset($_POST["oh"]) &&
     isset($_POST["marge"]) &&
-    isset($_POST["margek"]) &&
+    isset($_POST["margek"]) &&*/
     isset($_POST["clearp"]) &&
     isset($_POST["wtr"]) &&
     isset($_POST["wtimeday"]) &&
@@ -38,6 +40,8 @@ if(
     $zak = round($_POST["zak"],2);
     $kol = (int)($_POST["kol"]);
     $tzr = round($_POST["tzr"],2);
+    $tzrknam = round($_POST["tzrknam"],2);
+    $tzrkpok = round($_POST["tzrkpok"],2);
     $wtime = round(($_POST["wtime"]), 2);
     $fixed = (int)($_POST["fixed"]);
     $op = round(($_POST["op"]), 2);
@@ -46,25 +50,25 @@ if(
     $tpr = round(($_POST["tpr"]), 2);
     $firstobp = round(($_POST["firstobp"]), 2);
     $firstoh = round($_POST["firstoh"],2);
-    $firstobpr = round($_POST["firstobpr"],2);
+    $firstobpr = round($_POST["firstobpr"],2);/*
     $marge = round(($_POST["margek"]), 2);
     $margek = round(($_POST["margek"]), 2);
     $rop = round(($_POST["rop"]), 2);
     $realop = round(($_POST["realop"]), 2);
     $rtp = round(($_POST["rtp"]), 2);
     $realtp = round(($_POST["realtp"]), 2);
+    $oh = round($_POST["oh"],2);*/
     $clearp = round($_POST["clearp"], 2);
     $wtr = round($_POST["wtr"], 2);
     $wtimeday = round($_POST["wtimeday"], 0);
     $obp = round(($_POST["obp"]), 2);
-    $oh = round($_POST["oh"],2);
     $price = round($_POST["price"],3);
     $rent = round(($_POST["rent"]), 2);
 
     try{
         $sql = "INSERT INTO pricings(
-        positionid,tradeid,sellerid,zak,kol,tzr,wtime,fixed,op,tp,opr,tpr,firstobp,firstobpr,firstoh,marge,margek,rop,realop,rtp,realtp,clearp,obp,oh,price,rent,wtr,wtimeday)
-        VALUES(:positionid,:trade,:seller,:zak,:kol,:tzr,:wtime,:fixed,:op,:tp,:opr,:tpr,:firstobp,:firstobpr,:firstoh,:marge,:margek,:rop,:realop,:rtp,:realtp,:clearp,:obp,:oh,:price,:rent,:wtr,:wtimeday)";
+        positionid,tradeid,sellerid,zak,kol,tzr,tzrknam,tzrkpok,wtime,fixed,op,tp,opr,tpr,firstobp,firstobpr,firstoh,/*marge,margek,rop,realop,rtp,realtp,*/clearp,obp,/*oh,*/price,rent,wtr,wtimeday)
+        VALUES(:positionid,:trade,:seller,:zak,:kol,:tzr,:tzrknam,:tzrkpok,:wtime,:fixed,:op,:tp,:opr,:tpr,:firstobp,:firstobpr,:firstoh,/*:marge,:margek,:rop,:realop,:rtp,:realtp,*/:clearp,:obp,/*:oh,*/:price,:rent,:wtr,:wtimeday)";
         $statement = $pdo->prepare($sql);
         $statement->bindValue(':positionid', $positionid);
         $statement->bindValue(':trade', $trade);
@@ -72,6 +76,8 @@ if(
         $statement->bindValue(':zak', $zak);
         $statement->bindValue(':kol', $kol);
         $statement->bindValue(':tzr', $tzr);
+        $statement->bindValue(':tzrknam', $tzrknam);
+        $statement->bindValue(':tzrkpok', $tzrkpok);
         $statement->bindValue(':wtime', $wtime);
         $statement->bindValue(':fixed', $fixed);
         $statement->bindValue(':op', $op);
@@ -81,15 +87,15 @@ if(
         $statement->bindValue(':firstobp', $firstobp);
         $statement->bindValue(':firstoh', $firstoh);
         $statement->bindValue(':firstobpr', $firstobpr);
-        $statement->bindValue(':marge', $marge);
+        /*$statement->bindValue(':marge', $marge);
         $statement->bindValue(':margek', $margek);
         $statement->bindValue(':rop', $rop);
         $statement->bindValue(':realop', $realop);
         $statement->bindValue(':rtp', $rtp);
-        $statement->bindValue(':realtp', $realtp);
+        $statement->bindValue(':realtp', $realtp);*/
         $statement->bindValue(':clearp', $clearp);
         $statement->bindValue(':obp', $obp);
-        $statement->bindValue(':oh', $oh);
+        /*$statement->bindValue(':oh', $oh);*/
         $statement->bindValue(':price', $price);
         $statement->bindValue(':rent', $rent);
         $statement->bindValue(':wtr', $wtr);
@@ -115,6 +121,8 @@ if(
     isset($_POST["zak"]) &&
     isset($_POST["kol"]) &&
     isset($_POST["tzr"]) &&
+    isset($_POST["tzrknam"]) &&
+    isset($_POST["tzrkpok"]) &&
     isset($_POST["op"]) &&
     isset($_POST["tp"]) &&
     isset($_POST["firstobp"]) &&
@@ -126,14 +134,14 @@ if(
     isset($_POST["tpr"]) &&
     isset($_POST["opr"]) &&
     isset($_POST["fixed"]) &&
-    isset($_POST["firstobpr"]) &&
+    isset($_POST["firstobpr"]) &&/*
     isset($_POST["rop"]) &&
     isset($_POST["rtp"]) &&
     isset($_POST["realop"]) &&
     isset($_POST["realtp"]) &&
     isset($_POST["oh"]) &&
     isset($_POST["marge"]) &&
-    isset($_POST["margek"]) &&
+    isset($_POST["margek"]) &&*/
     isset($_POST["clearp"]) &&
     isset($_POST["wtr"]) &&
     isset($_POST["wtimeday"]) &&
@@ -146,6 +154,8 @@ if(
     $zak = round($_POST["zak"],2);
     $kol = (int)($_POST["kol"]);
     $tzr = round($_POST["tzr"],2);
+    $tzrknam = round($_POST["tzrknam"],2);
+    $tzrkpok = round($_POST["tzrkpok"],2);
     $wtime = round(($_POST["wtime"]), 2);
     $fixed = (int)($_POST["fixed"]);
     $op = round(($_POST["op"]), 2);
@@ -155,15 +165,15 @@ if(
     $firstobp = round(($_POST["firstobp"]), 2);
     $firstoh = round($_POST["firstoh"],2);
     $firstobpr = round($_POST["firstobpr"],2);
-    $marge = round(($_POST["margek"]), 2);
+    /*$marge = round(($_POST["margek"]), 2);
     $margek = round(($_POST["margek"]), 2);
     $rop = round(($_POST["rop"]), 2);
     $realop = round(($_POST["realop"]), 2);
     $rtp = round(($_POST["rtp"]), 2);
-    $realtp = round(($_POST["realtp"]), 2);
+    $realtp = round(($_POST["realtp"]), 2);*/
     $clearp = round($_POST["clearp"], 2);
     $obp = round(($_POST["obp"]), 2);
-    $oh = round($_POST["oh"],2);
+    /*$oh = round($_POST["oh"],2);*/
     $price = round($_POST["price"],3);
     $rent = round($_POST["rent"], 2);
     $wtr = round($_POST["wtr"], 2);
@@ -177,6 +187,8 @@ if(
         zak = :zak,
         kol = :kol,
         tzr = :tzr,
+        tzrknam = :tzrknam,
+        tzrkpok = :tzrkpok,
         wtime = :wtime,
         fixed = :fixed,
         op = :op,
@@ -186,15 +198,15 @@ if(
         firstobp = :firstobp,
         firstobpr = :firstobpr,
         firstoh = :firstoh,
-        marge = :marge,
+        /*marge = :marge,
         margek = :margek,
         rop = :rop,
         realop = :realop,
         rtp = :rtp,
-        realtp = :realtp,
+        realtp = :realtp,*/
         clearp = :clearp,
         obp = :obp,
-        oh = :oh,
+        /*oh = :oh,*/
         price = :price,
         rent = :rent,
         wtr = :wtr,
@@ -207,6 +219,8 @@ if(
         $statement->bindValue(':zak', $zak);
         $statement->bindValue(':kol', $kol);
         $statement->bindValue(':tzr', $tzr);
+        $statement->bindValue(':tzrknam', $tzrknam);
+        $statement->bindValue(':tzrkpok', $tzrkpok);
         $statement->bindValue(':wtime', $wtime);
         $statement->bindValue(':fixed', $fixed);
         $statement->bindValue(':op', $op);
@@ -216,15 +230,15 @@ if(
         $statement->bindValue(':firstobp', $firstobp);
         $statement->bindValue(':firstoh', $firstoh);
         $statement->bindValue(':firstobpr', $firstobpr);
-        $statement->bindValue(':marge', $marge);
+        /*$statement->bindValue(':marge', $marge);
         $statement->bindValue(':margek', $margek);
         $statement->bindValue(':rop', $rop);
         $statement->bindValue(':realop', $realop);
         $statement->bindValue(':rtp', $rtp);
-        $statement->bindValue(':realtp', $realtp);
+        $statement->bindValue(':realtp', $realtp);*/
         $statement->bindValue(':clearp', $clearp);
         $statement->bindValue(':obp', $obp);
-        $statement->bindValue(':oh', $oh);
+        /*$statement->bindValue(':oh', $oh);*/
         $statement->bindValue(':price', $price);
         $statement->bindValue(':rent', $rent);
         $statement->bindValue(':wtr', $wtr);

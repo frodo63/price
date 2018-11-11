@@ -55,7 +55,7 @@ $(document).ready(function(){
                             },
                             complete: function() {
                                 $("a[href = \"#" + table + "\"]").trigger("click");
-                                addinput.focus();
+                                addinput.val('').focus();
                             }
                         });
                     } else {alert("Введите имя")};
@@ -868,14 +868,15 @@ $(document).ready(function(){
                     });
                 }
                 //Если мы в заявках/расценках
-                if($('#tab_requests').hasClass('ui-state-active')) {
-                    console.log('Мы в расценках/заявках');
+                if($('#tab_requests').hasClass('ui-state-active') || $('#tab_search').hasClass('ui-state-active')) {
+                    console.log('Мы в расценках/заявках или в результатах поиска');
                     $.ajax({
                         url: 'mysql_read.php',
                         method: 'POST',
                         data: {/*gt_table:'requests',gt_identifier:'requests_id',*/chng_number_1c:reqid/*,gt_attribute:'created'*/},
                         success: function (data) {
                             $('.req_header_'+reqid+' .1c_num').html(data);
+                            $('tr[requestid="'+reqid+'"] td.1c_num span').html(data);
                         }
                     });
                 }
@@ -914,14 +915,16 @@ $(document).ready(function(){
                     });
                 }
                 //Если мы в заявках/расценках
-                if($('#tab_requests').hasClass('ui-state-active')) {
-                    console.log('Мы в расценках/заявках');
+                if($('#tab_requests').hasClass('ui-state-active') || $('#tab_search').hasClass('ui-state-active')) {
+                    console.log('Мы в расценках/заявках или в результатах поиска');
                     $.ajax({
                         url: 'mysql_read.php',
                         method: 'POST',
                         data: {/*gt_table:'requests',gt_identifier:'requests_id',*/chng_number:reqid/*,gt_attribute:'created'*/},
                         success: function (data) {
                             $('.req_header_'+reqid+' .date').html(data);
+                            $('tr[requestid="'+reqid+'"] td.req_date span').html(data);
+
                         }
                     });
                 }

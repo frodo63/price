@@ -12,8 +12,11 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-'>
         <label for='trade'>Товар</label><input trade_id = 'blank' autocomplete='off' type='text' name='trade' id='trade' placeholder='Введите товар' size='70'/><div class='sres'></div>
         <label for='seller'>Поставщик:</label><input seller_id = 'blank' autocomplete='off' type='text' name='seller' id='seller' placeholder='Введите поставщика' size='70'/><div class='sres'></div><br />
         <label for='zakup'>ЗАКУП ЗА 1 ШТ:</label> <input type='number' name='zak' id='zak' min='1' step='1'/> руб.<br />
-        <label for='kol'>Кол-во:</label> <input type='number' name='kol' id='kol'  min='1'/><br />
-        <label for='tzr'>ТЗР на ШТУКЕ:</label> <input type='number' name='tzr' id='tzr'  min='0' step='1'/> руб. С обналом: <p id='obtzr'></p> руб.<br /><br />
+        <label for='kol'>Кол-во:</label> <input type='number' name='kol' id='kol'  min='1'/><br /><br />
+        <label for='tzrknam'>Довезти 1шт ДО НАС:</label> <input type='number' name='tzrknam' id='tzrknam'  min='0' step='1'/> руб. &nbsp&nbsp&nbspС обналом:&nbsp<p id='obtzrknam'></p> руб.<br />
+        <label for='tzrkpok'>Довезти 1шт ДО ПОКУПАТЕЛЯ:</label> <input type='number' name='tzrkpok' id='tzrkpok'  min='0' step='1'/> руб. &nbsp&nbsp&nbspС обналом:&nbsp<p id='obtzrkpok'></p> руб.<br /><br />
+        <!--<label for='tzr'>ТЗР на ШТУКЕ:</label> <input type='number' name='tzr' id='tzr'  min='0' step='1'/> руб. С обналом: <p id='obtzr'></p> руб.<br /><br />-->
+        <label for='tzr'>ТЗР на ШТУКЕ:</label> <span id='tzr'></span> руб.<br /><br />
         <div id='fcount'>
             <label for='wtime'>ОТСРОЧКА:</label> <input type='number' size='2' name='wtime' id='wtime'  min='0' step='0.03'/> мес. <p id='wtimeday'></p> дней.&nbsp(От поставщика + От покупателя)&nbsp<span id='wtr'></span>.руб<br />           
             <label for='op'>НАШ ПРОЦЕНТ:</label> <input type='number' size='4' name='op' id='op'  min='1' step='0.01'/>% / <p id='opr'></p> руб.<br />

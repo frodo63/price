@@ -442,7 +442,7 @@ $(document).ready(function() {
         $('#button_history').attr('hist_trade', '');//Убираем идентификатор товара из Кнопки по истории
         $('#pricingwindow input[type="number"]').val('');
         $('#pricingwindow input[type="text"]').text('');
-        $('#cases p,#obtzr,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
+        $('#cases p,#obtzr,#tzr,#obtzrknam,#obtzrkpok,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
         $('#pricingwindow').attr({'positionid': '-', 'pricingid': '-', 'preditposid':'-'});
         $('.history').html('');
         $('#button_history').attr({'hist_byer': '-', 'hist_trade': '-'});
@@ -490,7 +490,7 @@ $(document).ready(function() {
                 $('#seller').attr('seller_id', '').val('');
                 $('#pricingwindow input[type="number"]').val('');
                 $('#pricingwindow input[type="text"]').text('');
-                $('#cases p,#obtzr,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday').text('');
+                $('#cases p,#obtzr,#tzr,#obtzrknam,#obtzrkpok,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
                 $('#pricingwindow').attr({'positionid': '-', 'pricingid': '-'});
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                 console.log($('#trade').attr('trade_id'),$('#seller').attr('seller_id'));
@@ -514,7 +514,9 @@ $(document).ready(function() {
 
                         $('#zak').val(json.zak);
                         $('#kol').val(json.kol);
-                        $('#tzr').val(json.tzr);
+                        $('#tzr').text(json.tzr);
+                        $('#tzrknam').val(json.tzrknam);
+                        $('#tzrkpok').val(json.tzrkpok);
                         $('#wtime').val(json.wtime);
                         $('#wtimeday').text(json.wtimeday);
                         $('#wtr').text(json.wtr);
@@ -524,7 +526,7 @@ $(document).ready(function() {
 
                         console.log(json.fixed);
                         if (json.fixed == 0){
-                            /*Косметика*/
+                            //Косметика
                             $('#fixate').removeClass('active').attr('value', 'Закрепить');
                             $('#pr').css({'font-weight': "normal", 'border': '2px solid white'});
                             $('#go').slideUp().animate({top:'10vh', right:'1vw'}).slideDown();
@@ -534,9 +536,7 @@ $(document).ready(function() {
                             $('#rop, #rtp').val("");
                             $('#realop, #realtp').text("");
                             console.log('Цена отпущена');
-                            /*//Косметика*/
-
-
+                            //Косметика
                             $('#op').val(json.op);
                             $('#tp').val(json.tp);
                             $('#firstobp').val(json.firstobp);
@@ -545,8 +545,8 @@ $(document).ready(function() {
                             $('#firstoh').text(json.firstoh);
                             $('#clearp').text(json.clearp);
                         }
-                        if (json.fixed == 1){
-                            /*Косметика*/
+                        /*if (json.fixed == 1){
+                            //Косметика
                             $('#fixate').addClass('active').attr('value', 'Отпустить').slideDown();
                             $('#pr').css({'font-weight': "bold", 'border': '1px solid red'});
                             $('#go').slideUp().animate({top:'90vh', right:'56.5vw'}).slideDown();
@@ -554,7 +554,7 @@ $(document).ready(function() {
                             $('#margediv').slideDown();
                             $('#fcount').css('opacity', '0.2');
                             console.log('Цена закреплена');
-                            /*//Косметика*/
+                            //Косметика
 
                             $('#op').val(json.op);
                             $('#tp').val(json.tp);
@@ -572,7 +572,7 @@ $(document).ready(function() {
                             $('#oh').text(json.oh);
                             $('#realop').text(json.realop + '%, от маржи');
                             $('#realtp').text(json.realtp + '%, от маржи');
-                        }
+                        }*/
                     },/*История*/
                     complete: function(){
                         $('#button_history').attr('hist_byer', byerid);//Добавляем идентификатор Покупателя в инпут по истории

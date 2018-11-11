@@ -17,7 +17,7 @@ p {
     font-size: 3vh;
     width: 15vw;
 }
-#clearp, #obtzr, #firstobp, #margek, #rop, #rtp {
+#clearp, #obtzrknam, #obtzrkpok, #firstobp, #margek, #rop, #rtp {
     color: red;
 }
 
@@ -74,7 +74,7 @@ p {
     font-weight: bold;
 }
 
-#zak, #kol, #tzr, #rop, #rtp
+#zak, #kol, #tzr, #tzrknam, #tzrkpok, #rop, #rtp
 {
     width: 10vw;
 }
@@ -84,7 +84,7 @@ p {
     width: 7vw;
 }
 
-#obtzr, #op+p, #tp+p, #obp+p, #marge, #margek, #obpr, #firstobp+p, #id, p#byer, p#seller, p#trade, #onhands, #cases p, #realop, #realtp, #firstoh, #realop, #realtp, #wtimeday, #clearp, #oh, #wtr, #clearpnar
+#obtzr, #obtzrknam, #obtzrkpok, #op+p, #tp+p, #obp+p, #marge, #margek, #obpr, #firstobp+p, #id, p#byer, p#seller, p#trade, #onhands, #cases p, #realop, #realtp, #firstoh, #realop, #realtp, #wtimeday, #clearp, #oh, #wtr, #clearpnar
 {
     display: inline;    
 }
