@@ -507,6 +507,33 @@ if(isset($_POST['table'])){
         }
         /**//////////////////////////////////////////////////////////////ЧТЕНИЕ СПИСКА ЗАЯВОК
     }
+    else if ($table == 'trades'){
+        try {
+
+            $statement = $pdo->prepare("SELECT `trades_id`,`nameid`,`name`,`tare` FROM `trades` LEFT JOIN `allnames` ON allnames.nameid=`trades`.`trades_nameid`");
+            $statement->execute();
+            $result = "<table><thead><tr><th>Наименование</th><th>Тип тары</th><th></th></tr></thead>";
+            foreach ($statement as $row)
+            {
+                $result .= "<tr><td category='trades' name =" . $row['nameid'] . ">";
+                $result .= "<span class='trade_name' tradeid=" . $row['trades_id'] . " name =" . $row['nameid'] . ">" . $row['name'] . "</span></td>
+                                <td class='trade_tare'><span>" . $row['tare'] . "<span/></td>
+                <td class = 'item_buttons'>
+         <input type='button' name =" . $row['nameid'] . " value='Rename' class='edit'>
+         <input type='button' name =" . $row['nameid'] . " tradeid =" . $row['trades_id'] . " value='E' class='edit_options_trade'>
+         <input type='button' name =" . $row['nameid'] . " value='X' class='delete'></td></tr>";
+            }
+            $result.="</table>";
+
+            print $result;
+
+
+
+        } catch(PDOExecption $e) {
+            $pdo->rollback();
+            print "Error!: " . $e->getMessage() . "</br>";
+        }
+    }
     else {
         /**//////////////////////////////////////////////////////////////ЧТЕНИЕ ПОКУПАТЕЛИ/ПОСТАВЩИКИ/ТОВАРЫ
         try {

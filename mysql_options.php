@@ -97,3 +97,30 @@ if ( isset($_POST['minus_queen'])){
     }
 };
 /**/
+
+
+/*ЧТЕНИЕ ОПЦИЙ ТОВАРА*/
+
+
+
+    if (isset($_POST['trade_options'])){
+        $tradeid = $_POST['trade_options'];
+
+        $statement = $pdo->prepare("SELECT `trades_id`,`nameid`,`name`,`tare` FROM `trades` LEFT JOIN `allnames` ON allnames.nameid=`trades`.`trades_nameid` WHERE `trades_id` = ?");
+        try {
+            $pdo->beginTransaction();
+            $statement->execute(array($tradeid));
+            $pdo->commit();
+
+            $result = $statement->fetch();
+
+            print(json_encode(array('trades_id'=>$result['trades_id'],'tradenameid'=>$result['nameid'],'tradename'=>$result['name'],'tare'=>$result['tare'])));
+
+        } catch( PDOException $Exception ) {
+            // Note The Typecast To An Integer!
+            $pdo->rollback();
+            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        }
+    }
+
+/**/

@@ -534,6 +534,53 @@ $(document).ready(function(){
         /*///////////////////////////////*/
     });
 
+    //ВЫЗОВ ОКНА ОПЦИЙ ТОВАРА
+    $(document).off('click.cometradeoptions').on('click.cometradeoptions', '.edit_options_trade', function (event) {
+        $('#edit_options_trade>input[name=1]').val('');//Стираем все данные
+        $('#edit_options_trade>input[name=2]').val('');//Стираем все данные
+
+        var tradeid = $(event.target).attr('tradeid');
+
+        /*Запрос в базу для текущих опций*/
+        if($('#edit_options_trade').hasClass('come_here')){
+            return false;
+        }else{
+            $.ajax({
+                url: 'mysql_options.php',
+                method: 'POST',
+                dataType: 'json',
+                cache: false,
+                data: {trade_options:tradeid},
+                success: function (data) {
+
+                    $('#trade_options_name').text(data.tradename);
+
+                    $('#edit_trade_name').val(data.tradename);
+                    $('#edit_trade_tare').val(data.tare);
+
+                    $('#button_edit_trade_name').attr('nameid',data.tradenameid);
+                    $('#button_edit_trade_tare').attr('tradeid',data.trades_id);
+
+                }
+            });
+        }
+
+        $('#edit_options_trade').toggleClass('come_here', 1000);
+        /*///////////////////////////////*/
+    });
+
+    /*Закрытие окна редактирования опций товара*/
+    $(document).off('click.gotradeoptions').on('click.gotradeoptions', '.close_edit_options_trade', function () {
+        $('#edit_options_trade').removeClass('come_here', 1000);
+        $('#trade_options_name').text('');
+
+        $('#edit_trade_name').val('');
+        $('#edit_trade_tare').val('');
+
+        $('#button_edit_trade_name').attr('nameid', 'xxx');
+        $('#button_edit_trade_tare').attr('tradeid', 'xxx');
+    });
+
     /*ЗАКРЫТИЕ ОКНА ДОБАВЛЕНИЯ*/////////////////////////////////////////////////////////////////////////////////////////
     $(document).off('click.gopayment').on('click.gopayment', '.close_add_p', function (event) {
         $('#add_payment').toggleClass('come_here', 1000);
@@ -677,6 +724,7 @@ $(document).ready(function(){
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /*СОБСТВЕННО ДОБАВЛЕНИЕ*////////////////////////////////////////////////////////////////////////////////////////////
+
     //ДОБАВЛЕНИЕ ПЛАТЕЖКИ///////////////////////////////////////////////////////////////////////////////////////////////
     $(document).off('click.add_payment').on('click.add_payment', '#button_add_payment', function(event){
 
@@ -757,6 +805,7 @@ $(document).ready(function(){
 
     });
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     //ДОБАВЛЕНИЕ ВЫДАЧИ/////////////////////////////////////////////////////////////////////////////////////////////////
     $(document).off('click.add_giveaway').on('click.add_giveaway', '#button_add_giveaway', function(event){
         var reqid = $(event.target).attr("requestid");
@@ -833,7 +882,6 @@ $(document).ready(function(){
 
 
     });
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //ИЗМЕНЕНИЕ НОМЕРА ЗАКАЗА В 1С//////////////////////////////////////////////////////////////////////////////////////
@@ -883,11 +931,9 @@ $(document).ready(function(){
             }
         });
     });
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //ИЗМЕНЕНИЕ ДАТЫ ЗАЯВКИ/////////////////////////////////////////////////////////////////////////////////////////////
-
     $(document).off('click.edit_created').on('click.edit_created', '#button_edit_created', function(event){
         var reqid = Number($(event.target).attr("requestid"));
         /*Данные для заполнения выдачи*/
@@ -931,7 +977,6 @@ $(document).ready(function(){
             }
         });
     });
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //ИЗМЕНЕНИЕ ОПЦИЙ ЗАКАЗА////////////////////////////////////////////////////////////////////////////////////////////
@@ -975,7 +1020,6 @@ $(document).ready(function(){
             });
         }
     });
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //ИЗМЕНЕНИЕ ОПЦИЙ ПОЗИЦИИ///////////////////////////////////////////////////////////////////////////////////////////
@@ -1028,8 +1072,11 @@ $(document).ready(function(){
             });
         }
     });
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //ИЗМЕНЕНИЕ ОПЦИЙ ТОВАРА
+    //ИЗМЕНЕНИЕ НАИМЕНВАНИЯ
+    //TODO:! !!!
 
     /////////////////
     $('.from,.to,#add_created').datepicker({

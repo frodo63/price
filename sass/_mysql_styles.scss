@@ -574,6 +574,43 @@ tr[pricingid] td {border: 1px solid black}
   }
 }
 
+#edit_options_trade {
+  padding: 15px;
+  border-radius: 5px;
+  border: 2px solid black;
+  color: black;
+  font-size: 20px;
+  background: white;
+  left:calc(100%/2 - 350px);
+
+  #edit_trade_name{
+    font-size: 25px;
+  }
+
+  position: fixed;
+  top: -700px;
+  width: 700px;
+  height:315px;
+  span {
+    font-size: 25px;
+  }
+  &.come_here {
+    top: calc(100%/3);
+  }
+  input[cc]{
+    width:200px;
+    font-size: 20px;
+  }
+  .close_edit_options_trade{
+    position: absolute;
+    top:15px;
+    right:15px;
+  }
+  #edit_trade_tare{
+    font-size: 20px;
+  }
+}
+
 #button_add_giveaway,#button_add_payment{
   position: absolute;
   bottom: 10px;
