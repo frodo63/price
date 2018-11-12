@@ -12,7 +12,7 @@ function OutNewRename($pdo, $newname, $nameid, $table){
             $rename->execute(array(':newname' => $newname, ':nameid' => $nameid));
 
             $pdo->commit();
-            print $newname;
+            echo "<p>Наименование позиции изменено</p>";
         } catch( PDOException $Exception ) {
             // Note The Typecast To An Integer!
             $pdo->rollback();
@@ -27,7 +27,7 @@ function OutNewRename($pdo, $newname, $nameid, $table){
             $rename->execute(array(':newname' => $newname, ':nameid' => $nameid));
 
             $pdo->commit();
-            print $newname;
+            echo "<p>Наименование изменено</p>";
         } catch( PDOException $Exception ) {
             // Note The Typecast To An Integer!
             $pdo->rollback();

@@ -228,20 +228,21 @@ echo"
               <br>
               <span>Опции номенкларуты</span> <span id='trade_options_name'></span><br><br>
 
-                      <input id='edit_trade_name' type='text' name='1' type='text' size='55'>
-                      <br>
-                      <input cc='1' id='button_edit_trade_name' type='button' nameid='' value='Изменить наименование'><br><br><br>
-                                        
-                      <select id='edit_trade_tare' name='select_tare' size='1'>
-                          <option value='unit'>Штука (unit)</option>
-                          <option value='1 kg'>Баночка (1 kg)</option>
-                          <option value='20 litres'>Канистра (20 litres)</option>
-                          <option value='200 litres'>Бочка (200 litres)</option>
-                      </select>
+                  <input id='edit_trade_name' type='text' name='1' type='text' size='55'>
+                  <br>
+                  <input cc='1' id='button_edit_trade_name' type='button' nameid='' value='Изменить наименование'><br><br><span class='ready_comment'></span><br><br>
+                                         
+                  <select id='edit_trade_tare' name='select_tare' size='1'>
+                      <option value='unit'>Штука (unit)</option>
+                      <option value='1 kg'>Баночка (1 kg)</option>
+                      <option value='20 litres'>Канистра (20 litres)</option>
+                      <option value='200 litres'>Бочка (200 litres)</option>
+                  </select>
                       
-                      <input cc='2' id='button_edit_trade_tare' type='button' tradeid='' value='Задать тип тары'>
+                  <input cc='2' id='button_edit_trade_tare' type='button' tradeid='' value='Задать тип тары'>
                                                           
                   <input class='close_edit_options_trade' type='button' value='X'>
+                  
               </div> 
 
 <input type='button' value='▲' id='go_up'>";
