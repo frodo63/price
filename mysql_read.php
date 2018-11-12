@@ -517,9 +517,8 @@ if(isset($_POST['table'])){
             {
                 $result .= "<tr><td category='trades' name =" . $row['nameid'] . ">";
                 $result .= "<span class='trade_name' tradeid=" . $row['trades_id'] . " name =" . $row['nameid'] . ">" . $row['name'] . "</span></td>
-                                <td class='trade_tare'><span>" . $row['tare'] . "<span/></td>
+                                <td class='trade_tare' tradeid=" . $row['trades_id'] . "><span>" . $row['tare'] . "<span/></td>
                 <td class = 'item_buttons'>
-         <input type='button' name =" . $row['nameid'] . " value='Rename' class='edit'>
          <input type='button' name =" . $row['nameid'] . " tradeid =" . $row['trades_id'] . " value='E' class='edit_options_trade'>
          <input type='button' name =" . $row['nameid'] . " value='X' class='delete'></td></tr>";
             }

@@ -256,9 +256,7 @@ if(
 };
 
 /*РЕДАКТИРОВАНИЕ НОМЕРА ЗАКАЗА В 1С*/
-
 if(
-
     isset($_POST["reqid"]) && isset($_POST["new_1c_num"])
 )
 {
@@ -290,7 +288,6 @@ if(
 /*РЕДАКТИРОВАНИЕ Даты заявки*/
 
 if(
-
     isset($_POST["reqid"]) && isset($_POST["newdate"])
 )
 {
@@ -437,8 +434,6 @@ if(
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
 };
-
-
 /**/
 
 /*Редактирование статуса "Спрятан в Р-1 Изменение на 0*/
@@ -464,8 +459,6 @@ isset($_POST["r1_show_reqid"])
     }
 };
 /**/
-
-
 
 /////Редактирование ПЛАТЕЖКИ/////////////////////////////////////////////////
 if(isset($_POST['reqid']) && isset($_POST['payment_date']) && isset($_POST['num']) && isset($_POST['sum']) && isset($_POST['pay_id'])){
@@ -545,3 +538,32 @@ if(isset($_POST['reqid']) && isset($_POST['giveaway_date']) && isset($_POST['com
 
 };
 //////////////////////////////////////////////////////////////////////
+
+/*РЕДАКТИРОВАНИЕ ТИПА ТАРЫ ТОВАРА*/
+if(
+    isset($_POST["newtare"]) && isset($_POST["tradeid"])
+)
+{
+    $tradeid = ($_POST["tradeid"]);
+    $newtare = ($_POST["newtare"]);
+
+    try{
+
+        $sql = "UPDATE trades SET tare = :newtare WHERE trades_id = :tradeid";
+        $statement = $pdo->prepare($sql);
+
+        $statement->bindValue(':newtare', $newtare);
+        $statement->bindValue(':tradeid', $tradeid);
+
+        $pdo->beginTransaction();
+        $statement->execute();
+        $pdo->commit();
+
+        echo "<p>Номер тип тары обновлен</p>";
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        $pdo->rollback();
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+};
+/**/

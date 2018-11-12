@@ -554,6 +554,7 @@ $(document).ready(function(){
                 success: function (data) {
 
                     $('#trade_options_name').text(data.tradename);
+                    $('#trade_options_tare').text(data.tare);
 
                     $('#edit_trade_name').val(data.tradename);
                     $('#edit_trade_tare').val(data.tare);
@@ -565,7 +566,7 @@ $(document).ready(function(){
             });
         }
 
-        $('#edit_options_trade').toggleClass('come_here', 1000);
+        $('#edit_options_trade').toggleClass('come_here', "fast");
         /*///////////////////////////////*/
     });
 
@@ -725,20 +726,25 @@ $(document).ready(function(){
 
 
     /*Проверка текстовых значений*//////////////////////////////////////////////////////////////////////////////////////
-    $(document).off('keyup.input.text').on('keyup.input.text', '#edit_trade_name', function (event) {
+    $(document).off('keyup.input.tradename').on('keyup.input.tradename', '#edit_trade_name', function (event) {
         /*Данные для заполнения выдачи*/
         var newname = $('#edit_trade_name').val();
         var oldname = $('#trade_options_name').text();
         checkname(newname,oldname);
     });
+    $(document).off('change.input.tare').on('change.input.tare', '#edit_trade_tare', function (event) {
+        /*Данные для заполнения выдачи*/
+        var newtare = $('#edit_trade_tare').val();
+        var oldtare = $('#trade_options_tare').text();
+        checktare(newtare,oldtare);
+    });
     /*Проверка тестовых значений функцией*/
     /*ПРОВЕРКА ИМЕНИ ФУНКЦИЕЙ*/
-    /*Проверка текстовых значений*//////////////////////////////////////////////////////////////////////////////////////
+    /*Проверка текстовых наименования товара*///////////////////////////////////////////////////////////////////////////
     function checkname(newname,oldname){
         //Проверка, изменилось ли:
         if(newname === oldname){
-            console.log('Не изменилось.');
-            $('#edit_trade_name').siblings('.ready_comment').text('Ничего не изменилось.').switchClass('ok','not-ok');
+            //$('#edit_trade_name').siblings('.ready_comment').text('Ничего не изменилось.').switchClass('ok','not-ok');
             $('#button_edit_trade_name').prop('disabled', true);
             return false;
         }else{
@@ -749,10 +755,26 @@ $(document).ready(function(){
                 return false;
             } else{
                 $('#edit_trade_name').switchClass('not_ready','ready');
-                $('#edit_trade_name').siblings('.ready_comment').text('Можно сохранять.').switchClass('not-ok','ok');
+                $('#edit_trade_name').siblings('.ready_comment')/*.text('Можно сохранять.')*/.switchClass('not-ok','ok');
                 $('#button_edit_trade_name').prop('disabled', false);
                 return true;
             }
+        }
+    };
+
+    /*Проверка типа тары*///////////////////////////////////////////////////////////////////////////////////////////////
+    function checktare(newtare,oldtare){
+        //Проверка, изменилось ли:
+        if(newtare === oldtare){
+            console.log('Не изменилось.');
+            $('#edit_trade_tare').siblings('.ready_comment')/*.text('Ничего не изменилось.')*/.switchClass('ok','not-ok');
+            $('#button_edit_trade_tare').prop('disabled', true);
+            return false;
+        }else{
+                $('#edit_trade_tare').switchClass('not_ready','ready');
+                $('#edit_trade_tare').siblings('.ready_comment')/*.text('Можно сохранять.')*/.switchClass('not-ok','ok');
+                $('#button_edit_trade_tare').prop('disabled', false);
+                return true;
         }
     };
     /**/
@@ -1117,26 +1139,42 @@ $(document).ready(function(){
         /*Данные для заполнения выдачи*/
         var newname = $('#edit_trade_name').val();
         var oldname = $('#trade_options_name').text();
-        console.log(table+nameid+newname);
 
-        if(confirm("Изменить наименование товара в базе?")){
-            //Функция проверки
-            if(checkname(newname,oldname)){
-                $.ajax({
-                    url: 'mysql_rename.php',
-                    method: 'POST',
-                    data: {table:table, newname:newname, nameid:nameid},
-                    success: function (data) {
-                        $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
-                    }, complete: function () {//Нужно обновить данные
-                        $('#trade_options_name').text(newname);//Обновляем имя в самой менюшке
-                        $('.trades_list td[category="trades"][name='+nameid+']>span').text(newname);//Обновляем имя в списке
-                    }
-                });
-            }
-
+        //Функция проверки
+        if(checkname(newname,oldname)){
+            $.ajax({
+                url: 'mysql_rename.php',
+                method: 'POST',
+                data: {table:table, newname:newname, nameid:nameid},
+                success: function (data) {
+                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                }, complete: function () {//Нужно обновить данные
+                    $('#trade_options_name').text(newname);//Обновляем имя в самой менюшке
+                    $('.trades_list td[category="trades"][name='+nameid+']>span').text(newname);//Обновляем имя в списке
+                }
+            });
         }
-
+    });
+    //ИЗМЕНЕНИЕ ТАРЫ
+    $(document).off('click.edit_trade_tare').on('click.edit_trade_tare', '#button_edit_trade_tare', function(event){
+        var oldtare = $('#trade_options_tare').text();
+        var newtare = $('#edit_trade_tare').val();
+        var tradeid = $(event.target).attr("tradeid");
+        console.log(oldtare+'---'+newtare);
+        if(checktare(newtare,oldtare)){
+            console.log("Пошел аякс");
+            $.ajax({
+                url: 'mysql_save.php',
+                method: 'POST',
+                data: {newtare:newtare, tradeid:tradeid},
+                success: function (data) {
+                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                }, complete: function () {//Нужно обновить данные
+                    $('#trade_options_tare').text(newtare);//Обновляем имя в самой менюшке
+                    $('.trades_list td[tradeid='+tradeid+']>span').text(newtare);//Обновляем имя в списке
+                }
+            });
+        }
     });
 
     /////////////////
