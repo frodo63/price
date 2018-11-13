@@ -2,7 +2,6 @@ $(document).ready(function(){
 
     //Показываем базе покупателя и товар, чтобы посмотреть старые цены
     $(document).off('click.give_hist_price').on('click.give_hist_price', '#button_history', function (event) {
-        console.log('ujuj');
         var trade = $(event.target).attr('hist_trade');
         var byer = $(event.target).attr('hist_byer');
         var prid = $('#pricingwindow').attr('pricingid');
@@ -15,8 +14,16 @@ $(document).ready(function(){
                 $('.history').html(data);
             },complete:function () {
                 $('.hystory-list tr[post_prid='+prid+']').addClass('current_pricing');
-                $('.history').toggle();
-
+                if($('.history:visible').length > 0){
+                    console.log(1);
+                    $('.history').hide();
+                    $(event.target).toggleClass('pushed');
+                }else{
+                    console.log(2);
+                    $('.history_kpok, .history_knam').hide();
+                    $('.history').show();
+                    $(event.target).toggleClass('pushed');
+                }
             }
         });
     });
@@ -33,7 +40,16 @@ $(document).ready(function(){
             success: function(data){
                 $('.history_knam').html(data);
             },complete:function () {
-                $('.history_knam').toggle();
+                if($('.history_knam:visible').length > 0){
+                    console.log(1);
+                    $('.history_knam').hide();
+                    $(event.target).toggleClass('pushed');
+                }else{
+                    console.log(2);
+                    $('.history_kpok, .history').hide();
+                    $('.history_knam').show();
+                    $(event.target).toggleClass('pushed');
+                }
             }
         });
     });
@@ -50,7 +66,16 @@ $(document).ready(function(){
             success: function(data){
                 $('.history_kpok').html(data);
             },complete:function () {
-                $('.history_kpok').toggle();
+                if($('.history_kpok:visible').length > 0){
+                    console.log(1);
+                    $('.history_kpok').hide();
+                    $(event.target).toggleClass('pushed');
+                }else{
+                    console.log(2);
+                    $('.history_kpok, .history_knam, .history').hide();
+                    $('.history_kpok').toggle();
+                    $(event.target).toggleClass('pushed');
+                }
             }
         });
     });

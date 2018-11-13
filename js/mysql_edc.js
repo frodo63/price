@@ -358,11 +358,14 @@ $(document).ready(function() {
         var reqid = $(event.target).parents('tr[requestid]').attr('requestid');
         var posid = $(event.target).attr('positionid');
         var byerid = $(event.target).parents('tr[byerid]').attr('byerid');
+        var byername = $('tr[requestid="'+reqid+'"] td[byerid] span').text();
 
                 $('#pricingwindow').slideDown().attr({ positionid:posid, byerid:byerid })
                 $('#trade').attr('trade_id', '').val('');
                 $('#seller').attr('seller_id', '').val('');
                 $('#button_history').attr('hist_byer', byerid);//Дбавляем идентификатор ПОкупателя в инпут по истории
+        console.log(byername);
+        $('#byer_name').text(byername);
 
                 //Запрос в базу за опциями покупателя
         //Проверка на QUEEN
@@ -443,6 +446,7 @@ $(document).ready(function() {
         $('#pricingwindow input[type="text"]').text('');
         $('#cases p,#obtzr,#tzr,#obtzrknam,#obtzrkpok,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
         $('#pricingwindow').attr({positionid: '-', pricingid: '-', preditposid:'-', byerid:'-'});
+        $('#byer_name').text('');
         $('.history').html('');
         $('.history_knam').html('');
         $('.history_kpok').html('');
@@ -463,7 +467,7 @@ $(document).ready(function() {
         {
             $('html, body').animate({scrollTop: $('#' + thetab + ' .widen').offset().top}, 1000);
         }
-        //TODO:СДелать условие скролла и открытия для выдач (Р-1)
+        //Сделать условие скролла и открытия для выдач (Р-1)
     });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -476,6 +480,7 @@ $(document).ready(function() {
         var trade = $(event.target).parents('td').siblings('.pr-trade-name').text();
         var tare = $(event.target).parents('td').siblings('.pr-trade-name').attr('tare');
         var byerid = $(event.target).parents('tr[byerid]').attr('byerid');
+        var byername = $('tr[requestid="'+reqid+'"] td[byerid] span').text();
 
                 window.scrollTo(0, 0);
                 $('#pricingwindow').slideDown(200);
@@ -492,12 +497,15 @@ $(document).ready(function() {
                 $('#pricingwindow input[type="text"]').text('');
                 $('#cases p,#obtzr,#tzr,#obtzrknam,#obtzrkpok,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
                 $('#pricingwindow').attr({positionid: '-', pricingid: '-', preditposid:'-', byerid:'-'});
+                $('#byer_name').text('');
                 $('.history').html('');
                 $('.history_knam').html('');
                 $('.history_kpok').html('');
 
                 /*Вставим прайсингайди в прайсингвиндоу ПРОБНОЕ!!!*/
                 $('#pricingwindow').attr({pricingid: prid, byerid:byerid, preditposid:posid});
+                console.log(byername);
+                $('#byer_name').text(byername);
                 /**/
 
                 //АЯКС на едитпрайсинг

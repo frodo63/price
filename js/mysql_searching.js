@@ -10,19 +10,35 @@ $(document).ready(function(){
     });
 
     /*Поведение ВЕЛИКОЙ СТРОКИ ПОИСКА ВСЕГО (ВСПВ)*/
-    $(document).off('mouseenter.sres').on('mouseenter.sres', '#sres ul li', function (event) {
+    /*$(document).off('mouseenter.sres').on('mouseenter.sres', '#sres ul li', function (event) {
+        //После выпадения списка в бпс при клике попадает текст итема.
+        $('#thesearch').val($(event.target).children('span').text());
+        //А атрибуты - категория и айдишник
+        $('#thesearch').attr('category', $(event.target).attr('category'));
+        $('#thesearch').attr('theid', $(event.target).attr('theid'));
+
+        console.log('Категория: '+$('#thesearch').attr('category')+', ID: '+$('#thesearch').attr('theID'));
+        //Мы готовы для аякса
+    });*/
+
+
+    /*Клик на элементе выпадающего списка из ВСПВ*/
+    /*На клике отключено событие скрывания списка по нажатию на что-либо*/
+
+    $(document).off('click.sres').on('click.sres', '#sres ul li', function (event) {
+        ///////////////////////////////////////ДОБАВЛЕНО ЭКСПЕРИМЕНТАЛЬНО
+
         /*После выпадения списка в бпс при клике попадает текст итема.*/
         $('#thesearch').val($(event.target).children('span').text());
         /*А атрибуты - категория и айдишник*/
         $('#thesearch').attr('category', $(event.target).attr('category'));
         $('#thesearch').attr('theid', $(event.target).attr('theid'));
+
         console.log('Категория: '+$('#thesearch').attr('category')+', ID: '+$('#thesearch').attr('theID'));
         /*Мы готовы для аякса*/
-    });
-    /*Клик на элементе выпадающего списка из ВСПВ*/
-    /*На клике отключено событие скрывания списка по нажатию на что-либо*/
 
-    $(document).off('click.sres').on('click.sres', '#sres ul li', function (event) {
+        ///////////////////////////////////////ДОБАВЛЕНО ЭКСПЕРИМЕНТАЛЬНО
+
         var category = $(event.target).attr('category');
         var theid = $(event.target).attr('theid');
         var table = 'requests';

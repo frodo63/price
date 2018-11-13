@@ -706,13 +706,31 @@ tr[pricingid] td {border: 1px solid black}
 .current_pricing{
   color: green;
 }
+#button_history, #button_history_tzrkpok, #button_history_tzrknam{
+  &.pushed{
+    color: white;
+    background: green;
+  }
+}
+
 .history, .history_knam, .history_kpok{
   display: none;
   width: 60vw;
   td{
     text-align: center;
+    font-size: 20px;
   }
+  border: 1px solid black;
+  border-top: none;
 }
+
+.history_knam, .history_kpok{
+  th:nth-child(1){width: 10%}
+  th:nth-child(2){width: 70%}
+  th:nth-child(3){width: 10%}
+  th:nth-child(4){width: 10%}
+}
+
 
 #fcount {
   border:1px solid black;

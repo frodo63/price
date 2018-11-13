@@ -13,8 +13,8 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         <label for='seller'>Поставщик:</label><input seller_id = 'blank' autocomplete='off' type='text' name='seller' id='seller' placeholder='Введите поставщика' size='70'/><div class='sres'></div><br />
         <label for='zakup'>ЗАКУП ЗА 1 ШТ:</label> <input type='number' name='zak' id='zak' min='1' step='1'/> руб.<br />
         <label for='kol'>Кол-во:</label> <input type='number' name='kol' id='kol'  min='1'/><br /><br />
-        <input id='button_history_tzrknam' type='button' value='i'><label for='tzrknam'>Довезти 1шт ДО НАС:</label> <input type='number' name='tzrknam' id='tzrknam'  min='0' step='1'/> руб. &nbsp&nbsp&nbspС обналом:&nbsp<p id='obtzrknam'></p> руб.<br />
-        <input id='button_history_tzrkpok' type='button' value='i'><label for='tzrkpok'>Довезти 1шт ДО ПОКУПАТЕЛЯ:</label> <input type='number' name='tzrkpok' id='tzrkpok'  min='0' step='1'/> руб. &nbsp&nbsp&nbspС обналом:&nbsp<p id='obtzrkpok'></p> руб.<br /><br />
+        <label for='tzrknam'>Довезти 1шт ДО НАС:</label><input id='button_history_tzrknam' type='button' value='i'><input type='number' name='tzrknam' id='tzrknam'  min='0' step='1'/> руб. &nbsp&nbsp&nbspС обналом:&nbsp<p id='obtzrknam'></p> руб.<br />
+        <label for='tzrkpok'>Довезти 1шт ДО <span id='byer_name'></span>:</label><input id='button_history_tzrkpok' type='button' value='i'><input type='number' name='tzrkpok' id='tzrkpok'  min='0' step='1'/> руб. &nbsp&nbsp&nbspС обналом:&nbsp<p id='obtzrkpok'></p> руб.<br /><br />
         <label for='tzr'>ТЗР на ШТУКЕ:</label> <span id='tzr'></span> руб.<br /><br />
         <div id='fcount'>
             <label for='wtime'>ОТСРОЧКА:</label> <input type='number' size='2' name='wtime' id='wtime'  min='0' step='0.03'/> мес. <p id='wtimeday'></p> дней.&nbsp(От поставщика + От покупателя)&nbsp<span id='wtr'></span>.руб<br />           
@@ -37,10 +37,10 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         <div id='result'>
         <h2>Итоговая цена:</h2>
         <input type='number' name='price' id='pr' value='0' min='0' step='0.001'/>
+        <input id='button_history' hist_byer='' hist_trade='' type='button' value='i'>
         <input name='fixate' id='fixate' type='button' value='Закрепить'/>
         </div>
-        <div id='rent'><h2>Рентабельность:</h2><h1>0</h1></div>
-        <input id='button_history' hist_byer='' hist_trade='' type='button' value='i'>
+        <div id='rent'><h2>Рентабельность:</h2><h1>0</h1></div>        
         <div class='history'></div>
         <div class='history_knam'></div>
         <div class='history_kpok'></div>
