@@ -359,7 +359,7 @@ $(document).ready(function() {
         var posid = $(event.target).attr('positionid');
         var byerid = $(event.target).parents('tr[byerid]').attr('byerid');
 
-                $('#pricingwindow').slideDown().attr('positionid', posid);
+                $('#pricingwindow').slideDown().attr({ positionid:posid, byerid:byerid })
                 $('#trade').attr('trade_id', '').val('');
                 $('#seller').attr('seller_id', '').val('');
                 $('#button_history').attr('hist_byer', byerid);//Дбавляем идентификатор ПОкупателя в инпут по истории
@@ -436,16 +436,17 @@ $(document).ready(function() {
         };
 
         //Очищаем окно расценки
-        $('#trade').attr('trade_id', '').val('');
+        $('#trade').attr({trade_id: '', tare:''}).val('');
         $('#seller').attr('seller_id', '').val('');
-        $('#button_history').attr('hist_byer', '');//Убираем идентификатор покупателя из Кнопки по истории
-        $('#button_history').attr('hist_trade', '');//Убираем идентификатор товара из Кнопки по истории
+        $('#button_history').attr({hist_byer: '-', hist_trade: '-'});
         $('#pricingwindow input[type="number"]').val('');
         $('#pricingwindow input[type="text"]').text('');
         $('#cases p,#obtzr,#tzr,#obtzrknam,#obtzrkpok,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
-        $('#pricingwindow').attr({'positionid': '-', 'pricingid': '-', 'preditposid':'-'});
+        $('#pricingwindow').attr({positionid: '-', pricingid: '-', preditposid:'-', byerid:'-'});
         $('.history').html('');
-        $('#button_history').attr({'hist_byer': '-', 'hist_trade': '-'});
+        $('.history_knam').html('');
+        $('.history_kpok').html('');
+
 
         /*Скроллимся к только что открытой завяке*/
         /*Надо понять, откуда была открыта расценка. То есть, из заявок или из результатов поиска, или из Р-1*/
@@ -465,7 +466,6 @@ $(document).ready(function() {
         //TODO:СДелать условие скролла и открытия для выдач (Р-1)
     });
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*ЧТЕНИЕ/ИЗМЕНЕНИЕ РАСЦЕНКИ*/
     $(document).off('click.editpricing').on('click.editpricing', '.editpricing', function(event){
@@ -474,29 +474,30 @@ $(document).ready(function() {
         var prid = $(event.target).attr('pricing');
         var seller = $(event.target).parents('td').siblings('.pr-seller-name').text();
         var trade = $(event.target).parents('td').siblings('.pr-trade-name').text();
+        var tare = $(event.target).parents('td').siblings('.pr-trade-name').attr('tare');
         var byerid = $(event.target).parents('tr[byerid]').attr('byerid');
 
-                console.log('рыба не видна');
                 window.scrollTo(0, 0);
-                $('#pricingwindow').attr({'preditposid':'-'});//Сначала все равно очищаем, потом - ставим
-                $('#pricingwindow').slideDown(200).attr({'pricingid': prid, 'preditposid':posid});
+                $('#pricingwindow').slideDown(200);
                 if($(event.target).parents('#reads')){
                     console.log('Мы в общем списке заявок, надо бы скрыть Результаты поиска');
                 }
 
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////
                 //Очищаем окно расценки
-                $('#trade').attr('trade_id', '').val('');
+                $('#trade').attr({trade_id: '', tare:''}).val('');
                 $('#seller').attr('seller_id', '').val('');
+                $('#button_history').attr({hist_byer: '-', hist_trade: '-'});
                 $('#pricingwindow input[type="number"]').val('');
                 $('#pricingwindow input[type="text"]').text('');
                 $('#cases p,#obtzr,#tzr,#obtzrknam,#obtzrkpok,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
-                $('#pricingwindow').attr({'positionid': '-', 'pricingid': '-'});
-                ////////////////////////////////////////////////////////////////////////////////////////////////////////
-                console.log($('#trade').attr('trade_id'),$('#seller').attr('seller_id'));
+                $('#pricingwindow').attr({positionid: '-', pricingid: '-', preditposid:'-', byerid:'-'});
+                $('.history').html('');
+                $('.history_knam').html('');
+                $('.history_kpok').html('');
 
                 /*Вставим прайсингайди в прайсингвиндоу ПРОБНОЕ!!!*/
-                $('#pricingwindow').attr({'pricingid': prid});
+                $('#pricingwindow').attr({pricingid: prid, byerid:byerid, preditposid:posid});
                 /**/
 
                 //АЯКС на едитпрайсинг
@@ -507,7 +508,7 @@ $(document).ready(function() {
                     success: function (data) {
                         var json = $.parseJSON(data);
                         /*ШАПКА*/
-                        $('#trade').attr('trade_id', json.tradeid).val(trade);
+                        $('#trade').attr({trade_id : json.tradeid, tare : tare}).val(trade);
                         $('#seller').attr('seller_id', json.sellerid).val(seller);
                         $('#button_history').attr('hist_trade', json.tradeid);//Дбавляем идентификатор Товара в инпут по истории
                         console.log(json.tradeid);
@@ -756,14 +757,12 @@ $(document).ready(function() {
             };
         };
     });
-
 //Чтобы можно было кликать на зэинпут без схлопываний
     $(document).off('click.theinput').on('click.theinput', '#theinput', function (event) {
         console.log("Клик на зэинпут без схлопываний");
         event.stopImmediatePropagation();
         event.preventDefault();
     });
-
 //Чтобы зэинпут скрывался, когда кликаешь мимо ++Если у соответствующейго инпут баттона класс - сайвнейм - меняем вал и класс на эдит
     $(document).off('click.thebody').on('click.thebody', 'body', function (event) {
         if ($('#theinput').length > 0){
@@ -793,9 +792,7 @@ $(document).ready(function() {
             };
         };
     });
-
 //Чтобы сохранение запускалось, только если имя действительно было изменено
-
     $(document).off('keyup.theinput').on('keyup.theinput', '#theinput', function (event) {
         event.stopImmediatePropagation();
         if($('#theinput').val() != $('#theinput').attr('placeholder')){
@@ -881,7 +878,6 @@ $(document).ready(function() {
             $('input.savename[type="button"][name="'+$('#theinput').attr('name')+'"][value="Save"]').val('R').removeClass('savename').addClass('edit');
         };
     });
-
 //Добавление ЛУЗЕРА И ВИННЕРА
     $(document).off('click.losewin').on('click.losewin', '.winner', function (event) {
         var winid = $(event.target).attr('pricing'); // ID расценки, где нажато было
@@ -989,8 +985,6 @@ $(document).ready(function() {
 
 
     });
-
-
     /*РАСЧЕТ РЕНТАБЕЛЬНОСТИ по КНОПКЕ ВНУТРИ ЗАЯВКИ*/
     $(document).off('click.check_rent').on('click.check_rent', '.check_rent', function (event) {
         var reqid = $(event.target).attr('requestid'); //ID заявки, где есть позиция, где выбирается победитель
@@ -1010,7 +1004,6 @@ $(document).ready(function() {
 
     });
     /**/
-
 });
 
 

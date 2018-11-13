@@ -211,13 +211,14 @@ table{
   &>table>thead>tr>th:nth-child(7){width: 5%}
   &>table>thead>tr{border-bottom: 1px black solid;}
 
-  /*Таблица второго уровня (позциии)*/
+  /*Таблица второго уровня (позиции)*/
   & .positions th:nth-child(1){width: 2%}
-  & .positions th:nth-child(2){width: 76%}
+  & .positions th:nth-child(2){width: 71%}
   & .positions th:nth-child(3){width: 8%}
   & .positions th:nth-child(4){width: 8%}
   & .positions th:nth-child(5){width: 5%}
   & .positions th:nth-child(6){width: 5%}
+  & .positions th:nth-child(7){width: 5%}
 
   /*Таблица  третьего уровня (расценки) */
   & .pricing-list th:nth-child(1){width: 20%}
@@ -705,7 +706,7 @@ tr[pricingid] td {border: 1px solid black}
 .current_pricing{
   color: green;
 }
-.history{
+.history, .history_knam, .history_kpok{
   display: none;
   width: 60vw;
   td{

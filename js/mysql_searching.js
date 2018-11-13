@@ -44,7 +44,7 @@ $(document).ready(function(){
         }
     });
 
-    /*При изменении текста должен меняться атрибут #byer - byer_id, #seller - seller_id, #trade - trade_id*/
+    /*При изменении текста должен меняться атрибут #byer - byer_id, #seller - seller_id, #trade - trade_id и tare*/
     $(document).off('click.sresseller').on('click.sresseller', '#seller+div ul li p', function (event) {
         $('#seller').val($(event.target).text());
         $('#seller').attr('seller_id', $(event.target).parent().attr('sellers_id'));
@@ -58,8 +58,9 @@ $(document).ready(function(){
     $(document).off('click.srestrade').on('click.srestrade', '#trade+div ul li p', function (event) {
         $('#trade').val($(event.target).text());
         var tradeid = $(event.target).parent().attr('trades_id');
+        var tare = $(event.target).parent().attr('tare');
         console.log(tradeid);
-        $('#trade').attr('trade_id', tradeid);
+        $('#trade').attr({trade_id: tradeid, tare: tare});
         $('#button_history').attr('hist_trade', tradeid);//Добавление трейдайди в атрибут инфокнопки и стории для окончательного запроса
     });
 
@@ -123,14 +124,12 @@ $(document).ready(function(){
         };
 
     });
-
     /*ДОбавление нового в таблицы по нажатию на Enter*/
     $(document).off('keyup.addtab').on('keyup.addtab', '.creates input[type="text"]', function (event) {
         if(event.which === 13){
             $(event.target).next('input[type="button"]').trigger('click.addtab');
         };
-    })
-
+    });
     /*ПОИСКОВЫЕ СТРОКИ ПОКУПАТЕЛЬ, ТОВАР, ПОСТАВЩИК*/
     $(document).off('keyup.byer').on('keyup.byer', '#byer', function(event){
 
@@ -153,7 +152,6 @@ $(document).ready(function(){
         };
 
     });
-
     $(document).off('keyup.seller').on('keyup.seller', '#seller', function(event){
 
         var sseller = $('#seller').val();
@@ -175,7 +173,6 @@ $(document).ready(function(){
         };
 
     });
-
     $(document).off('keyup.trade').on('keyup.trade', '#trade', function(event){
 
         var strade = $('#trade').val();
@@ -197,7 +194,6 @@ $(document).ready(function(){
         };
 
     });
-
     /*СТРОКА НОМЕНКЛАТУРЫ В ИМЕНИ ПОЗИЦИИ*/
     $(document).off('keyup.tradeclass').on('keyup.tradeclass', '.trade', function(event){
 

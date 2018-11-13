@@ -669,9 +669,10 @@ if (isset($_POST['positionid'])){
                                             c.sellers_id AS sellers_id,
                                             c.name AS seller_name,
                                             d.name AS trade_name,
+                                            d.tare AS trade_tare,
                                             d.trades_id AS trades_id
                                              FROM (SELECT * FROM (SELECT `pricingid`, `firstoh`, `rop`, `oh`, `tradeid`, `sellerid`, `zak`, `kol`, `fixed`, `tzr`, `opr`, `tpr`,
-        `clearp`, `price`, `rent`, `winner` FROM `pricings` WHERE `positionid`=?) AS a LEFT JOIN (SELECT `name`, `sellers_id`, `sellers_nameid` FROM `allnames` LEFT JOIN `sellers` ON `allnames`.`nameid`=`sellers`.`sellers_nameid`) AS b ON a.sellerid=b.sellers_id) as c LEFT JOIN (SELECT `name`, `trades_id`, `trades_nameid` FROM `allnames` LEFT JOIN `trades` ON `allnames`.`nameid`=`trades`.`trades_nameid`) AS d ON c.tradeid=d.trades_id");
+        `clearp`, `price`, `rent`, `winner` FROM `pricings` WHERE `positionid`=?) AS a LEFT JOIN (SELECT `name`, `sellers_id`, `sellers_nameid` FROM `allnames` LEFT JOIN `sellers` ON `allnames`.`nameid`=`sellers`.`sellers_nameid`) AS b ON a.sellerid=b.sellers_id) as c LEFT JOIN (SELECT `name`, `tare`, `trades_id`, `trades_nameid` FROM `allnames` LEFT JOIN `trades` ON `allnames`.`nameid`=`trades`.`trades_nameid`) AS d ON c.tradeid=d.trades_id");
         $statement->execute(array($pos_id));
         if($statement->rowCount() == 0) {$result = "Здесь еще нет расценок.<input class ='addpricing' positionid='".$pos_id."' value='Расценить новое?' type ='button'><script src='js/mysql_edc.js'></script>";
         } else{
@@ -710,7 +711,7 @@ if (isset($_POST['positionid'])){
                     $result .= "<tr pricingid =". $row['pricingid'] .">";
                 };
                 $result .="<td class=pr-seller-name>" . $row['seller_name'] . "</td>
-                <td class=pr-trade-name>" . $row['trade_name'] . "</td>                
+                <td class='pr-trade-name' tare='" . $row['trade_tare'] . "'>" . $row['trade_name'] . "</td>                
                 <td>" . number_format($row['zak'], 2, '.', ' ') . "</td>
                 <td>" . $row['kol'] . "</td>
                 <!--УБРАНО Сумма закупа для экономии места 14.06.17<td>--><!--</td>-->

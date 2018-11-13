@@ -20,16 +20,16 @@ SELECT name, nameid, byers_id, sellers_id, trades_id, requests_id  FROM `allname
     foreach ($statement as $row){
 
         if($row['byers_id']){
-        $byers .= "<li tabindex=0 category='byer' theid=".$row['byers_id']." nameid=" . $row['nameid'] . "><span>" . $row['name'] . "</span><div class='note'>Покупатель</div></li>";
+        $byers .= "<li tabindex=0 category='byer' theid=".$row['byers_id']." nameid=" . $row['nameid'] . "><span>" . $row['name'] . "</span><div class='note'>клиент</div></li>";
         };
         if($row['sellers_id']){
-        $sellers .= "<li tabindex=0 category='seller' theid=".$row['sellers_id']." nameid=" . $row['nameid'] . "><span>" . $row['name'] . "</span><div class='note'>Поставщик</div></li>";
+        $sellers .= "<li tabindex=0 category='seller' theid=".$row['sellers_id']." nameid=" . $row['nameid'] . "><span>" . $row['name'] . "</span><div class='note'>поставщик</div></li>";
         };
         if($row['trades_id']){
-        $trades .= "<li tabindex=0 category='trade' theid=".$row['trades_id']." nameid=" . $row['nameid'] . "><span>" . $row['name'] . "</span><div class='note'>Номенклатура</div></li>";
+        $trades .= "<li tabindex=0 category='trade' theid=".$row['trades_id']." nameid=" . $row['nameid'] . "><span>" . $row['name'] . "</span><div class='note'>товар</div></li>";
         };
         if($row['requests_id']){
-        $requests .= "<li tabindex=0 category='request' theid=".$row['requests_id']." nameid=" . $row['nameid'] . "><span>" . $row['name'] . "</span><div class='note'>Заявка</div></li>";
+        $requests .= "<li tabindex=0 category='request' theid=".$row['requests_id']." nameid=" . $row['nameid'] . "><span>" . $row['name'] . "</span><div class='note'>заявка</div></li>";
         };
     };
 
@@ -54,7 +54,7 @@ if (isset($_POST['sbyer'])){
     $result ='<ul>';
     $byers='';
     foreach ($statement as $row){
-        $byers .= "<li category='byer' byers_id=".$row['byers_id']." nameid=" . $row['nameid'] . "><p>" . $row['name'] . "</p><div class='note'>Покупатель</div></li>";
+        $byers .= "<li category='byer' byers_id=".$row['byers_id']." nameid=" . $row['nameid'] . "><p>" . $row['name'] . "</p><div class='note'>клиент</div></li>";
     };
     $result .= $byers;
     $result .= "</ul><!--<script src='js/mysql_searching.js'>-->";
@@ -67,7 +67,7 @@ if (isset($_POST['strade'])){
     $sline = $_POST['strade'];
 
     $statement = $pdo->prepare("
-        SELECT name, nameid, trades_id FROM `allnames`
+        SELECT name, nameid, trades_id,tare FROM `allnames`
         INNER JOIN `trades` ON nameid=trades_nameid  
         WHERE name LIKE '%{$sline}%' GROUP BY nameid");
 
@@ -75,7 +75,7 @@ if (isset($_POST['strade'])){
     $result ='<ul>';
     $trades='';
     foreach ($statement as $row){
-        $trades .= "<li category='trade' trades_id=".$row['trades_id']." nameid=" . $row['nameid'] . "><p>" . $row['name'] . "</p><div class='note'>Номенклатура</div></li>";
+        $trades .= "<li category='trade' trades_id=".$row['trades_id']." nameid=" . $row['nameid'] . " tare=" . $row['tare'] . "><p>" . $row['name'] . "</p><div class='note'>товар</div></li>";
     };
     $result .= $trades;
     $result .= "</ul><!--<script src='js/mysql_searching.js'>-->";
@@ -96,7 +96,7 @@ if (isset($_POST['sseller'])){
     $result ='<ul>';
     $sellers='';
     foreach ($statement as $row){
-        $sellers .= "<li category='seller' sellers_id=".$row['sellers_id']." nameid=" . $row['nameid'] . "><p>" . $row['name'] . "</p><div class='note'>Поставщик</div></li>";
+        $sellers .= "<li category='seller' sellers_id=".$row['sellers_id']." nameid=" . $row['nameid'] . "><p>" . $row['name'] . "</p><div class='note'>поставщик</div></li>";
     };
     $result .= $sellers;
     $result .= "</ul><!--<script src='js/mysql_searching.js'>-->";
