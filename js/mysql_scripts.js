@@ -572,14 +572,16 @@ $(document).ready(function(){
 
     /*Закрытие окна редактирования опций товара*/
     $(document).off('click.gotradeoptions').on('click.gotradeoptions', '.close_edit_options_trade', function () {
-        $('#edit_options_trade').removeClass('come_here', 1000);
+        $('#edit_options_trade').removeClass('come_here', 'fast');
         $('#trade_options_name').text('');
 
-        $('#edit_trade_name').val('');
-        $('#edit_trade_tare').val('');
+        $('#edit_trade_name, #edit_trade_tare').val('').removeClass('ready not_ready');
+        $('.ready_comment').text('').removeClass('ok not-ok');
 
-        $('#button_edit_trade_name').attr('nameid', 'xxx');
-        $('#button_edit_trade_tare').attr('tradeid', 'xxx');
+        $('#button_edit_trade_name').attr('nameid', 'xxx').prop('disabled', true);;
+        $('#button_edit_trade_tare').attr('tradeid', 'xxx').prop('disabled', true);;
+
+
     });
 
     /*ЗАКРЫТИЕ ОКНА ДОБАВЛЕНИЯ*/////////////////////////////////////////////////////////////////////////////////////////
@@ -745,6 +747,8 @@ $(document).ready(function(){
         //Проверка, изменилось ли:
         if(newname === oldname){
             //$('#edit_trade_name').siblings('.ready_comment').text('Ничего не изменилось.').switchClass('ok','not-ok');
+            $('#edit_trade_name').switchClass('not_ready','ready');
+            $('#edit_trade_name').siblings('.ready_comment').text('Ничего не изменилось.').switchClass('not-ok','ok');
             $('#button_edit_trade_name').prop('disabled', true);
             return false;
         }else{
@@ -766,8 +770,7 @@ $(document).ready(function(){
     function checktare(newtare,oldtare){
         //Проверка, изменилось ли:
         if(newtare === oldtare){
-            console.log('Не изменилось.');
-            $('#edit_trade_tare').siblings('.ready_comment')/*.text('Ничего не изменилось.')*/.switchClass('ok','not-ok');
+            $('#edit_trade_tare').siblings('.ready_comment').text('Ничего не изменилось.').switchClass('not-ok','ok');
             $('#button_edit_trade_tare').prop('disabled', true);
             return false;
         }else{

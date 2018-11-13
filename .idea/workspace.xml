@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dfa4bab3-6ca8-4122-b16e-58238fa4669e" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/prices-6-10-18.sql" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/prices_11-11-18.sql" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/mysql_scripts.js" afterPath="$PROJECT_DIR$/js/mysql_scripts.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,7 +18,7 @@
       <file leaf-file-name="pdo_face_page.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pdo_face_page.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
+            <state relative-caret-position="3944">
               <caret line="232" column="68" lean-forward="false" selection-start-line="232" selection-start-column="68" selection-end-line="232" selection-end-column="68" />
               <folding>
                 <marker date="1542022463192" expanded="true" signature="17:261" ph="..." />
@@ -65,11 +64,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mysql_scripts.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="mysql_scripts.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/mysql_scripts.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
-              <caret line="568" column="63" lean-forward="false" selection-start-line="568" selection-start-column="63" selection-end-line="568" selection-end-column="63" />
+            <state relative-caret-position="344">
+              <caret line="751" column="64" lean-forward="false" selection-start-line="751" selection-start-column="64" selection-end-line="751" selection-end-column="64" />
               <folding>
                 <element signature="e#170#207#0" expanded="false" />
                 <element signature="e#296#333#0" expanded="false" />
@@ -86,34 +85,33 @@
                 <element signature="e#21655#22139#0" expanded="false" />
                 <element signature="e#22272#23896#0" expanded="false" />
                 <element signature="e#24040#28248#0" expanded="false" />
-                <element signature="e#29746#30062#0" expanded="false" />
-                <element signature="e#30281#30822#0" expanded="false" />
-                <element signature="e#30917#31394#0" expanded="false" />
-                <element signature="e#31545#31994#0" expanded="false" />
-                <element signature="e#32144#33203#0" expanded="false" />
-                <element signature="e#33364#34555#0" expanded="false" />
-                <element signature="e#34778#36045#0" expanded="false" />
-                <element signature="e#36561#37969#0" expanded="false" />
-                <element signature="e#38326#38516#0" expanded="false" />
-                <element signature="e#38621#38811#0" expanded="false" />
-                <element signature="e#39050#40068#0" expanded="false" />
-                <element signature="e#40231#40881#0" expanded="false" />
-                <element signature="e#41360#45712#0" expanded="false" />
-                <element signature="e#46064#50215#0" expanded="false" />
-                <element signature="e#50564#52615#0" expanded="false" />
-                <element signature="e#52967#54932#0" expanded="false" />
-                <element signature="e#55336#57037#0" expanded="false" />
-                <element signature="e#57465#59508#0" expanded="false" />
-                <element signature="e#59806#60735#0" expanded="false" />
-                <element signature="e#61830#62400#0" expanded="false" />
-                <element signature="e#62759#63083#0" expanded="false" />
-                <element signature="e#63558#63781#0" expanded="false" />
-                <element signature="e#64035#65158#0" expanded="false" />
-                <element signature="e#65301#66305#0" expanded="false" />
-                <element signature="e#66465#66637#0" expanded="false" />
-                <element signature="e#66777#66955#0" expanded="false" />
-                <element signature="e#67119#68193#0" expanded="false" />
-                <element signature="e#68306#68776#0" expanded="false" />
+                <element signature="e#28397#29580#0" expanded="false" />
+                <element signature="e#30406#30947#0" expanded="false" />
+                <element signature="e#31042#31519#0" expanded="false" />
+                <element signature="e#31670#32119#0" expanded="false" />
+                <element signature="e#32269#33328#0" expanded="false" />
+                <element signature="e#33489#34680#0" expanded="false" />
+                <element signature="e#34903#36170#0" expanded="false" />
+                <element signature="e#36686#38094#0" expanded="false" />
+                <element signature="e#38451#38641#0" expanded="false" />
+                <element signature="e#38746#38936#0" expanded="false" />
+                <element signature="e#41625#45977#0" expanded="false" />
+                <element signature="e#46329#50480#0" expanded="false" />
+                <element signature="e#50829#52880#0" expanded="false" />
+                <element signature="e#53232#55197#0" expanded="false" />
+                <element signature="e#55601#57302#0" expanded="false" />
+                <element signature="e#57730#59773#0" expanded="false" />
+                <element signature="e#60071#61000#0" expanded="false" />
+                <element signature="e#61139#62026#0" expanded="false" />
+                <element signature="e#62095#62665#0" expanded="false" />
+                <element signature="e#63024#63348#0" expanded="false" />
+                <element signature="e#63823#64046#0" expanded="false" />
+                <element signature="e#64300#65423#0" expanded="false" />
+                <element signature="e#65566#66570#0" expanded="false" />
+                <element signature="e#66730#66902#0" expanded="false" />
+                <element signature="e#67042#67220#0" expanded="false" />
+                <element signature="e#67384#68458#0" expanded="false" />
+                <element signature="e#68571#69041#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -122,18 +120,18 @@
       <file leaf-file-name="_mysql_styles.scss" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sass/_mysql_styles.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="665" column="26" lean-forward="true" selection-start-line="665" selection-start-column="26" selection-end-line="665" selection-end-column="26" />
+            <state relative-caret-position="17">
+              <caret line="665" column="26" lean-forward="false" selection-start-line="665" selection-start-column="26" selection-end-line="665" selection-end-column="26" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_price.scss" pinned="false" current-in-tab="true">
+      <file leaf-file-name="_price.scss" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sass/_price.scss">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="228">
-              <caret line="23" column="6" lean-forward="true" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
+              <caret line="23" column="6" lean-forward="false" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -142,7 +140,7 @@
       <file leaf-file-name="mysql_save.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mysql_save.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
+            <state relative-caret-position="2601">
               <caret line="551" column="76" lean-forward="false" selection-start-line="551" selection-start-column="16" selection-end-line="551" selection-end-column="76" />
               <folding>
                 <element signature="e#39#4496#0#PHP" expanded="false" />
@@ -334,6 +332,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -361,7 +360,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -481,12 +479,13 @@
       <workItem from="1539951720620" duration="1033000" />
       <workItem from="1540984497328" duration="1000" />
       <workItem from="1541918260692" duration="20907000" />
-      <workItem from="1542002273772" duration="18223000" />
+      <workItem from="1542002273772" duration="18893000" />
+      <workItem from="1542086293531" duration="1599000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="768927000" />
+    <option name="totallyTimeSpent" value="771196000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -499,15 +498,16 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1023" y="10" width="1682" height="1051" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25397795" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25703794" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39719626" sideWeight="0.50408995" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24908201" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18939394" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18939394" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47943723" sideWeight="0.49591002" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -627,7 +627,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="456" />
+      <option name="time" value="457" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="mysql_read.php">
@@ -867,28 +867,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3349">
           <caret line="197" column="0" lean-forward="false" selection-start-line="197" selection-start-column="0" selection-end-line="197" selection-end-column="0" />
-          <folding>
-            <marker date="1534492710595" expanded="true" signature="333:597" ph="SELECT `name... sellerid" />
-            <marker date="1534492710595" expanded="true" signature="374:448" ph="SELECT selle... pricings" />
-            <marker date="1534492710595" expanded="true" signature="466:562" ph="SELECT selle... sellers" />
-            <marker date="1534492710595" expanded="true" signature="636:704" ph="UPDATE `req_... " />
-            <marker date="1534492710595" expanded="true" signature="740:812" ph="UPDATE `pric... " />
-            <marker date="1534492710595" expanded="true" signature="849:903" ph="UPDATE `pric... " />
-            <marker date="1534492710595" expanded="true" signature="1802:1870" ph="UPDATE `req_... " />
-            <marker date="1534492710595" expanded="true" signature="1906:1961" ph="UPDATE `pric... " />
-            <marker date="1534492710595" expanded="true" signature="2614:2878" ph="SELECT `name... sellerid" />
-            <marker date="1534492710595" expanded="true" signature="2655:2729" ph="SELECT selle... pricings" />
-            <marker date="1534492710595" expanded="true" signature="2747:2843" ph="SELECT selle... sellers" />
-            <marker date="1534492710595" expanded="true" signature="3583:3674" ph="SELECT `req_... req_positions" />
-            <marker date="1534492710595" expanded="true" signature="3792:4197" ph="SELECT * FRO... winnerid" />
-            <marker date="1534492710595" expanded="true" signature="3807:3887" ph="SELECT `winn... req_positions" />
-            <marker date="1534492710595" expanded="true" signature="3906:4159" ph="SELECT `kol`... pricings" />
-            <marker date="1534492710595" expanded="true" signature="4016:4124" ph="SELECT `trad... trades" />
-            <marker date="1534492710595" expanded="true" signature="4233:4289" ph="UPDATE `requ... " />
-            <marker date="1534492710595" expanded="true" signature="4324:4379" ph="UPDATE `requ... " />
-            <marker date="1534492710595" expanded="true" signature="5080:5345" ph="..." />
-            <marker date="1534492710595" expanded="true" signature="5104:5345" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -896,12 +874,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
           <caret line="30" column="32" lean-forward="true" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
-          <folding>
-            <marker date="1497362427593" expanded="true" signature="169:483" ph="SELECT name,... allnames" />
-            <marker date="1497362427593" expanded="true" signature="1903:2053" ph="SELECT name,... allnames" />
-            <marker date="1497362427593" expanded="true" signature="2645:2798" ph="SELECT name,... allnames" />
-            <marker date="1497362427593" expanded="true" signature="3404:3560" ph="SELECT name,... allnames" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -978,22 +950,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="613">
           <caret line="807" column="55" lean-forward="true" selection-start-line="807" selection-start-column="55" selection-end-line="807" selection-end-column="55" />
-          <folding>
-            <element signature="e#877#1829#0" expanded="false" />
-            <element signature="e#2100#3026#0" expanded="false" />
-            <element signature="e#3301#4372#0" expanded="false" />
-            <element signature="e#4652#5806#0" expanded="false" />
-            <element signature="e#6082#7525#0" expanded="false" />
-            <element signature="e#7803#9200#0" expanded="false" />
-            <element signature="e#9441#10927#0" expanded="false" />
-            <element signature="e#11141#14612#0" expanded="false" />
-            <element signature="e#15071#17125#0" expanded="false" />
-            <element signature="e#17545#20307#0" expanded="false" />
-            <element signature="e#39598#39735#0" expanded="false" />
-            <element signature="e#39955#41395#0" expanded="false" />
-            <element signature="e#46071#51463#0" expanded="false" />
-            <element signature="e#51617#52278#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1010,7 +966,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pdo_face_page.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
+        <state relative-caret-position="3944">
           <caret line="232" column="68" lean-forward="false" selection-start-line="232" selection-start-column="68" selection-end-line="232" selection-end-column="68" />
           <folding>
             <marker date="1542022463192" expanded="true" signature="17:261" ph="..." />
@@ -1057,7 +1013,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mysql_save.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
+        <state relative-caret-position="2601">
           <caret line="551" column="76" lean-forward="false" selection-start-line="551" selection-start-column="16" selection-end-line="551" selection-end-column="76" />
           <folding>
             <element signature="e#39#4496#0#PHP" expanded="false" />
@@ -1295,10 +1251,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/sass/_price.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="23" column="6" lean-forward="false" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sass/_mysql_styles.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="665" column="26" lean-forward="false" selection-start-line="665" selection-start-column="26" selection-end-line="665" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/mysql_scripts.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="568" column="63" lean-forward="false" selection-start-line="568" selection-start-column="63" selection-end-line="568" selection-end-column="63" />
+        <state relative-caret-position="344">
+          <caret line="751" column="64" lean-forward="false" selection-start-line="751" selection-start-column="64" selection-end-line="751" selection-end-column="64" />
           <folding>
             <element signature="e#170#207#0" expanded="false" />
             <element signature="e#296#333#0" expanded="false" />
@@ -1315,51 +1287,34 @@
             <element signature="e#21655#22139#0" expanded="false" />
             <element signature="e#22272#23896#0" expanded="false" />
             <element signature="e#24040#28248#0" expanded="false" />
-            <element signature="e#29746#30062#0" expanded="false" />
-            <element signature="e#30281#30822#0" expanded="false" />
-            <element signature="e#30917#31394#0" expanded="false" />
-            <element signature="e#31545#31994#0" expanded="false" />
-            <element signature="e#32144#33203#0" expanded="false" />
-            <element signature="e#33364#34555#0" expanded="false" />
-            <element signature="e#34778#36045#0" expanded="false" />
-            <element signature="e#36561#37969#0" expanded="false" />
-            <element signature="e#38326#38516#0" expanded="false" />
-            <element signature="e#38621#38811#0" expanded="false" />
-            <element signature="e#39050#40068#0" expanded="false" />
-            <element signature="e#40231#40881#0" expanded="false" />
-            <element signature="e#41360#45712#0" expanded="false" />
-            <element signature="e#46064#50215#0" expanded="false" />
-            <element signature="e#50564#52615#0" expanded="false" />
-            <element signature="e#52967#54932#0" expanded="false" />
-            <element signature="e#55336#57037#0" expanded="false" />
-            <element signature="e#57465#59508#0" expanded="false" />
-            <element signature="e#59806#60735#0" expanded="false" />
-            <element signature="e#61830#62400#0" expanded="false" />
-            <element signature="e#62759#63083#0" expanded="false" />
-            <element signature="e#63558#63781#0" expanded="false" />
-            <element signature="e#64035#65158#0" expanded="false" />
-            <element signature="e#65301#66305#0" expanded="false" />
-            <element signature="e#66465#66637#0" expanded="false" />
-            <element signature="e#66777#66955#0" expanded="false" />
-            <element signature="e#67119#68193#0" expanded="false" />
-            <element signature="e#68306#68776#0" expanded="false" />
+            <element signature="e#28397#29580#0" expanded="false" />
+            <element signature="e#30406#30947#0" expanded="false" />
+            <element signature="e#31042#31519#0" expanded="false" />
+            <element signature="e#31670#32119#0" expanded="false" />
+            <element signature="e#32269#33328#0" expanded="false" />
+            <element signature="e#33489#34680#0" expanded="false" />
+            <element signature="e#34903#36170#0" expanded="false" />
+            <element signature="e#36686#38094#0" expanded="false" />
+            <element signature="e#38451#38641#0" expanded="false" />
+            <element signature="e#38746#38936#0" expanded="false" />
+            <element signature="e#41625#45977#0" expanded="false" />
+            <element signature="e#46329#50480#0" expanded="false" />
+            <element signature="e#50829#52880#0" expanded="false" />
+            <element signature="e#53232#55197#0" expanded="false" />
+            <element signature="e#55601#57302#0" expanded="false" />
+            <element signature="e#57730#59773#0" expanded="false" />
+            <element signature="e#60071#61000#0" expanded="false" />
+            <element signature="e#61139#62026#0" expanded="false" />
+            <element signature="e#62095#62665#0" expanded="false" />
+            <element signature="e#63024#63348#0" expanded="false" />
+            <element signature="e#63823#64046#0" expanded="false" />
+            <element signature="e#64300#65423#0" expanded="false" />
+            <element signature="e#65566#66570#0" expanded="false" />
+            <element signature="e#66730#66902#0" expanded="false" />
+            <element signature="e#67042#67220#0" expanded="false" />
+            <element signature="e#67384#68458#0" expanded="false" />
+            <element signature="e#68571#69041#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sass/_mysql_styles.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="665" column="26" lean-forward="true" selection-start-line="665" selection-start-column="26" selection-end-line="665" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sass/_price.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="23" column="6" lean-forward="true" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
