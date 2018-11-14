@@ -20,9 +20,6 @@ if(isset($_POST['table_c']) && isset($_POST['thename'])){
             case 2:
                 $table = 'sellers';
                 break;
-            case 3:
-                $table = 'trades';
-                break;
         }
 
         $theID = $pdo->lastInsertId();
@@ -42,6 +39,35 @@ if(isset($_POST['table_c']) && isset($_POST['thename'])){
     echo "Получилось! Добавлена запись $thename в таблицу $table.";
 
 };
+
+//ДОБАВЛЕНИЕ ТОВАРА////////////////////////////////////////////////////
+if(isset($_POST['trade_name']) && isset($_POST['trade_tare'])){
+
+    $trade_name = $_POST['trade_name'];
+    $trade_tare = $_POST['trade_tare'];
+
+    /**//////////////////////////////////////////////////////////////
+    $statement = $pdo->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
+    try {
+        $pdo->beginTransaction();
+        $statement->execute(array($trade_name));
+
+        $theID = $pdo->lastInsertId();
+
+        $statement = $pdo->prepare("INSERT INTO `trades`(`trades_nameid`,`tare`) VALUES(?,?)");
+        $statement->execute(array($theID,$trade_tare));
+        $pdo->commit();
+
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        $pdo->rollback();
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+    /**//////////////////////////////////////////////////////////////
+
+    echo "Получилось! Добавлен товар $thename в таблицу trades.";
+};
+///////////////////////////////////////////////////////////////////////
 
 //ДОБАВЛЕНИЕ заявки ///////////////////////////////////////////////////
 if(isset($_POST['byer']) && isset($_POST['thename'])){
@@ -152,7 +178,6 @@ if(isset($_POST['reqid']) && isset($_POST['payment_date']) && isset($_POST['num'
 
 };
 //////////////////////////////////////////////////////////////////////
-
 
 //ДОБАВЛЕНИЕ ВЫДАЧИ///////////////////////////////////////////////////
 if(isset($_POST['reqid']) && isset($_POST['giveaway_date']) && isset($_POST['comment']) && isset($_POST['sum'])){

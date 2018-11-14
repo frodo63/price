@@ -15,11 +15,10 @@ $(document).ready(function(){
             },complete:function () {
                 $('.hystory-list tr[post_prid='+prid+']').addClass('current_pricing');
                 if($('.history:visible').length > 0){
-                    console.log(1);
                     $('.history').hide();
                     $(event.target).toggleClass('pushed');
                 }else{
-                    console.log(2);
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history').removeClass('pushed');
                     $('.history_kpok, .history_knam').hide();
                     $('.history').show();
                     $(event.target).toggleClass('pushed');
@@ -41,11 +40,10 @@ $(document).ready(function(){
                 $('.history_knam').html(data);
             },complete:function () {
                 if($('.history_knam:visible').length > 0){
-                    console.log(1);
                     $('.history_knam').hide();
                     $(event.target).toggleClass('pushed');
                 }else{
-                    console.log(2);
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history').removeClass('pushed');
                     $('.history_kpok, .history').hide();
                     $('.history_knam').show();
                     $(event.target).toggleClass('pushed');
@@ -67,11 +65,10 @@ $(document).ready(function(){
                 $('.history_kpok').html(data);
             },complete:function () {
                 if($('.history_kpok:visible').length > 0){
-                    console.log(1);
                     $('.history_kpok').hide();
                     $(event.target).toggleClass('pushed');
                 }else{
-                    console.log(2);
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history').removeClass('pushed');
                     $('.history_kpok, .history_knam, .history').hide();
                     $('.history_kpok').toggle();
                     $(event.target).toggleClass('pushed');

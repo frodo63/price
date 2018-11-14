@@ -300,8 +300,7 @@ $(document).ready(function() {
     });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-//Чтение позиции. Строится список расценок. Айди берется из инпута плюса///////////////////////////////////////////////////////////////////////
+//Чтение позиции. Строится список расценок. Айди берется из инпута плюса////////////////////////////////////////////
     /*$('input.collapsepos').off('click.collapsepos').on('click.collapsepos', function(){*/
     $(document).off('click.collapsepos').on('click.collapsepos', 'input.collapsepos', function(event){
 
@@ -352,7 +351,7 @@ $(document).ready(function() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Добавление расценки.
-//Расширение дива/////////////////////////////////////////////////////////////////////////////////////////////////
+//Расширение дива///////////////////////////////////////////////////////////////////////////////////////////////////
     /*Добавление расценки Всплывающее окно прайсинговой рыбы*/
     $(document).off('click.addpricing').on('click.addpricing', 'input.addpricing', function(event){
         var reqid = $(event.target).parents('tr[requestid]').attr('requestid');
@@ -551,7 +550,7 @@ $(document).ready(function() {
                             $('#firstobp').val(json.firstobp);
                             $('#opr').text(json.opr);
                             $('#tpr').text(json.tpr);
-                            $('#firstoh').text(json.firstoh);
+                            $('#firstoh').val(json.firstoh);
                             $('#clearp').text(json.clearp);
                         }
                         /*if (json.fixed == 1){
@@ -570,7 +569,7 @@ $(document).ready(function() {
                             $('#firstobp').val(json.firstobp);
                             $('#opr').text(json.opr);
                             $('#tpr').text(json.tpr);
-                            $('#firstoh').text(json.firstoh);
+                            $('#firstoh').val(json.firstoh);
                             $('#clearp').text(json.clearp);
 
                             $('#rtp').val(json.rtp);

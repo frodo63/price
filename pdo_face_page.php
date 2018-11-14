@@ -19,7 +19,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         <div id='fcount'>
             <label for='wtime'>ОТСРОЧКА:</label> <input type='number' size='2' name='wtime' id='wtime'  min='0' step='0.03'/> мес. <p id='wtimeday'></p> дней.&nbsp(От поставщика + От покупателя)&nbsp<span id='wtr'></span>.руб<br />           
             <label for='op'>НАШ ПРОЦЕНТ:</label> <input type='number' size='4' name='op' id='op'  min='1' step='0.01'/>% / <p id='opr'></p> руб.<br />
-            <label for='tp'>ЕНОТ:</label> <input type='number' size='2' name='tp' id='tp'  min='0' step='0.01'/>% / <p id='tpr'></p> руб.(<p id='clearp'></p>&nbspот цены) НА РУКИ : <p id='firstoh'></p> руб.(<p id='clearpnar'></p>&nbspот цены) <br/>
+            <label for='tp'>ЕНОТ:</label> <input type='number' size='2' name='tp' id='tp'  min='0' step='0.01'/>% / <p id='tpr'></p> руб.(<p id='clearp'></p>&nbspот цены) НА РУКИ : <input id='firstoh' type='number' step='0.01' min='0'></input> руб.(<p id='clearpnar'></p>&nbspот цены) <br/>
             <label for='firstobp'>ОБНАЛ:</label> <input type='number' size='2' name='firstobp' id='firstobp'  min='0' step='0.1'/>% / <p id='firstobpr'></p> руб.<br />
         </div>
                 
@@ -33,7 +33,6 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         <label for='obp'>Обнал:</label> <input type='number' size='2' name='obp' id='obp'  min='0' step='0.1'/>%,<br/><p id='onhands'>ИТОГО НА РУКИ:</p><p id='oh'></p>
         </div><br />
         </div>
-        <input type='submit' name='submit' value='Посчитать' id='go' />
         <div id='result'>
         <h2>Итоговая цена:</h2>
         <input type='number' name='price' id='pr' value='0' min='0' step='0.001'/>
@@ -117,10 +116,21 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
       <div id='trades'>
       <input type='button' class='show_list' value='НОМЕНКЛАТУРА⏎'><br><br>
       <input type='button' class='addnew' value='+'> Добавить номенклатуру
-          <div class ='creates add_ramk'>
+          <div class ='creates'>
           <br>
-              <input type='text' placeholder='Введите наименование Товара' size='70'>
-              <input type='button' tc='3' name='trades' value='Добавить'>
+              <input id='add_trade_name' type='text' placeholder='Введите наименование Товара' size='70'>              
+              
+              <br><span>Тара:</span><span class='trade_options_tare'></span><br>
+              
+              <select id='add_trade_tare' size='1'>
+                  <option value='штука'>штука (по умолчанию)</option>
+                  <option value='банка'>банка (до 5кг)</option>
+                  <option value='канистра'>канистра (5-50л)</option>
+                  <option value='бочка'>бочка(200л)</option>
+              </select>
+              <br>
+              <span class='ready_comment'></span><br>
+              <input  type='button' name='trades' value='Добавить' disabled>
           <br>
           <br>
           </div>
@@ -238,8 +248,8 @@ echo"
               
                   <select id='edit_trade_tare' name='select_tare' size='1'>
                       <option value='штука'>штука (по умолчанию)</option>
-                      <option value='банка'>банка (до 2кг)</option>
-                      <option value='канистра'>канистра (20-30л)</option>
+                      <option value='банка'>банка (до 5кг)</option>
+                      <option value='канистра'>канистра (5-50л)</option>
                       <option value='бочка'>бочка(200л)</option>
                   </select>
                       

@@ -88,6 +88,7 @@ $(document).ready(function(){
     /*Описан выпадающий список*/
     $(document).off('keyup.sline').on('keyup.sline', '#thesearch', function (event) {
         var sline = $('#thesearch').val();
+        /*ЕСЛИ НАЖАТЫ ВНИЗ или ВПРАВО*/
         if(event.which === 40||event.which === 39) {
             if($('#sres ul li').length > 0) {
                 if ($('#sres ul li.sreslihover').length > 0) {
@@ -96,12 +97,13 @@ $(document).ready(function(){
                     $('#sres ul li:eq(' + slh + ')').removeClass('sreslihover');
                     slh++;
                     console.log(slh);
-                    $('#sres ul li:eq(' + slh + ')').trigger('mouseenter.sres').addClass('sreslihover');
+                    $('#sres ul li:eq(' + slh + ')').addClass('sreslihover');
                 } else {
-                    $('#sres ul li:eq(0)').trigger('mouseenter.sres').addClass('sreslihover');
+                    $('#sres ul li:eq(0)').addClass('sreslihover');
                 }
                 ;
             };
+            /*ЕСЛИ НАЖАТЫ ВВЕРХ или ВЛЕВО*/
         } else if(event.which === 38||event.which === 37) {
             if($('#sres ul li').length > 0){
                 if($('#sres ul li.sreslihover').length > 0){
@@ -110,18 +112,21 @@ $(document).ready(function(){
                     $('#sres ul li:eq('+slh+')').removeClass('sreslihover');
                     slh--;
                     console.log(slh);
-                    $('#sres ul li:eq('+slh+')').trigger('mouseenter.sres').addClass('sreslihover');
+                    $('#sres ul li:eq('+slh+')').addClass('sreslihover');
                 }else{
-                    $('#sres ul li:eq(0)').trigger('mouseenter.sres').addClass('sreslihover');
+                    $('#sres ul li:eq(0)').addClass('sreslihover');
                 };
             };
+            //ЕСЛИ НАЖАТ ENTER
         } else if(event.which === 13){
             $('#sres ul li.sreslihover').trigger('click.sres').bind('click.out').trigger('click.out');
             /*Как-то закрыть список результатов поиска*/
 
+            //ЕСЛИ НАЖАТ ESCAPE
         } else if (event.which === 27){
             $('#thesearch').trigger('click.out');
         } else{
+            //ВО ВСЕХ ОСТАЛЬНЫХ СЛУЧАЯХ  - ПРОСТО ПРОДОЛЖАЕМ ЗАПРОСЫ К БАЗЕ И ПОИСК
             if (sline.length > 0) {
 
                 console.log(sline);

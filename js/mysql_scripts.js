@@ -12,6 +12,80 @@ $(document).ready(function(){
     });
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /*Проверка тестовых значений функцией*/
+    /*ПРОВЕРКА ИМЕНИ ФУНКЦИЕЙ*/
+    /*Проверка текстовых наименования товара*///////////////////////////////////////////////////////////////////////////
+    function checkname(newname,oldname){
+        //Проверка, изменилось ли:
+        if(newname === oldname){
+            //$('#edit_trade_name').siblings('.ready_comment').text('Ничего не изменилось.').switchClass('ok','not-ok');
+            $('#edit_trade_name').switchClass('not_ready','ready');
+            $('#edit_trade_name').siblings('.ready_comment').text('Ничего не изменилось.').switchClass('not-ok','ok');
+            $('#button_edit_trade_name').prop('disabled', true);
+            return false;
+        }else{
+            if(newname.indexOf("'") >= 0 || newname.indexOf("\"") >= 0){
+                $('#edit_trade_name').switchClass('ready','not_ready');
+                $('#edit_trade_name').siblings('.ready_comment').text('Ковычки уберите.База их не любит.').switchClass('ok','not-ok');
+                $('#button_edit_trade_name').prop('disabled', true);
+                return false;
+            } else{
+                $('#edit_trade_name').switchClass('not_ready','ready');
+                $('#edit_trade_name').siblings('.ready_comment')/*.text('Можно сохранять.')*/.switchClass('not-ok','ok');
+                $('#button_edit_trade_name').prop('disabled', false);
+                return true;
+            }
+        }
+    };
+    function check_one_name(newname){
+        if(newname.length > 0){
+            if(newname.indexOf("'") >= 0 || newname.indexOf("\"") >= 0){
+                //Есть ковычки
+                return 1;
+            }else{
+                return 3;
+            }
+        }else{
+            //Пустое значение
+            return 2;
+        }
+
+
+    }
+
+    //ПРОВЕРКА ТЕКСТОВОГО ЗНАЧЕНИЯ ИМЕНИ, ВВОДИМОГ О В БАЗУ
+    $(document).off('keyup.checkname').on('keyup.checkname', '#add_trade_name', function(event){
+        var checkname = $(event.target).val();
+
+        if(check_one_name(checkname) == 3){
+            $(event.target).siblings('input[type="button"]').prop('disabled',false);
+            $('.ready_comment').text('Можно сохранять.').switchClass('not-ok','ok');
+        }else if(check_one_name(checkname) == 1){
+            $(event.target).siblings('input[type="button"]').prop('disabled',true);
+            $('.ready_comment').text('Ковычки уберите.База их не любит.').switchClass('ok','not-ok');
+        }else if(check_one_name(checkname) == 2){
+            $(event.target).siblings('input[type="button"]').prop('disabled',true);
+            $('.ready_comment').text('Пустое поле \"Наименование\".').switchClass('ok','not-ok');
+        }
+    });
+
+
+    /*Проверка типа тары*///////////////////////////////////////////////////////////////////////////////////////////////
+    function checktare(newtare,oldtare){
+        //Проверка, изменилось ли:
+        if(newtare === oldtare){
+            $('#edit_trade_tare').siblings('.ready_comment').text('Ничего не изменилось.').switchClass('not-ok','ok');
+            $('#button_edit_trade_tare').prop('disabled', true);
+            return false;
+        }else{
+            $('#edit_trade_tare').switchClass('not_ready','ready');
+            $('#edit_trade_tare').siblings('.ready_comment')/*.text('Можно сохранять.')*/.switchClass('not-ok','ok');
+            $('#button_edit_trade_tare').prop('disabled', false);
+            return true;
+        }
+    };
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
     //ДОБАВЛЕНИЕ в Таблицу. Имя талицы берется из атрибута инпута ('name')//////////////////////////////////////////////
@@ -20,10 +94,6 @@ $(document).ready(function(){
         if($(event.target).attr('name') == 'requests'){
             var byer = $('#byer').attr("byer_id");
             var thename = $('#req_name').val();
-
-            console.log("Добавляем заявку");
-            console.log(byer);
-            console.log(thename);
 
             if(thename!='' && byer > 0){
                 $.ajax({
@@ -39,6 +109,27 @@ $(document).ready(function(){
                     }
                 });
             } else {alert("Чето вы не то ввели. Там же две графы всего, разве это так сложно?")}
+        //Добавляем товар?
+        }
+        //Добавляем товар?
+        else if($(event.target).attr('name') == 'trades'){
+            var trade_name = $('#add_trade_name').val();
+            var trade_tare = $('#add_trade_tare').val();
+            console.log(trade_name +'     '+trade_tare);
+
+            $.ajax({
+                url: 'mysql_insert.php',
+                method: 'POST',
+                data: {trade_name:trade_name, trade_tare:trade_tare},
+                success: function (data) {
+                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                    $('#add_trade_name').val('').focus();
+                    $(event.target).prop('disabled',true);
+                }
+            });
+
+
+
         }else{
             var table = $(event.target).attr("name");
             var table_c = $(event.target).attr("tc");
@@ -578,8 +669,16 @@ $(document).ready(function(){
         $('#edit_trade_name, #edit_trade_tare').val('').removeClass('ready not_ready');
         $('.ready_comment').text('').removeClass('ok not-ok');
 
-        $('#button_edit_trade_name').attr('nameid', 'xxx').prop('disabled', true);;
-        $('#button_edit_trade_tare').attr('tradeid', 'xxx').prop('disabled', true);;
+        //Надо как-то подсветить товар, который только что изменили
+        var tradeid = $('#button_edit_trade_tare').attr('tradeid');
+        $('.trade_tare[tradeid='+tradeid+']').parent('tr').addClass('flash');
+        console.log(tradeid);
+
+        $('#button_edit_trade_name').attr('nameid', 'xxx').prop('disabled', true);
+        $('#button_edit_trade_tare').attr('tradeid', 'xxx').prop('disabled', true);
+
+
+
 
 
     });
@@ -726,7 +825,6 @@ $(document).ready(function(){
     });
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
     /*Проверка текстовых значений*//////////////////////////////////////////////////////////////////////////////////////
     $(document).off('keyup.input.tradename').on('keyup.input.tradename', '#edit_trade_name', function (event) {
         /*Данные для заполнения выдачи*/
@@ -740,48 +838,6 @@ $(document).ready(function(){
         var oldtare = $('#trade_options_tare').text();
         checktare(newtare,oldtare);
     });
-    /*Проверка тестовых значений функцией*/
-    /*ПРОВЕРКА ИМЕНИ ФУНКЦИЕЙ*/
-    /*Проверка текстовых наименования товара*///////////////////////////////////////////////////////////////////////////
-    function checkname(newname,oldname){
-        //Проверка, изменилось ли:
-        if(newname === oldname){
-            //$('#edit_trade_name').siblings('.ready_comment').text('Ничего не изменилось.').switchClass('ok','not-ok');
-            $('#edit_trade_name').switchClass('not_ready','ready');
-            $('#edit_trade_name').siblings('.ready_comment').text('Ничего не изменилось.').switchClass('not-ok','ok');
-            $('#button_edit_trade_name').prop('disabled', true);
-            return false;
-        }else{
-            if(newname.indexOf("'") >= 0 || newname.indexOf("\"") >= 0){
-                $('#edit_trade_name').switchClass('ready','not_ready');
-                $('#edit_trade_name').siblings('.ready_comment').text('Ковычки уберите.База их не любит.').switchClass('ok','not-ok');
-                $('#button_edit_trade_name').prop('disabled', true);
-                return false;
-            } else{
-                $('#edit_trade_name').switchClass('not_ready','ready');
-                $('#edit_trade_name').siblings('.ready_comment')/*.text('Можно сохранять.')*/.switchClass('not-ok','ok');
-                $('#button_edit_trade_name').prop('disabled', false);
-                return true;
-            }
-        }
-    };
-
-    /*Проверка типа тары*///////////////////////////////////////////////////////////////////////////////////////////////
-    function checktare(newtare,oldtare){
-        //Проверка, изменилось ли:
-        if(newtare === oldtare){
-            $('#edit_trade_tare').siblings('.ready_comment').text('Ничего не изменилось.').switchClass('not-ok','ok');
-            $('#button_edit_trade_tare').prop('disabled', true);
-            return false;
-        }else{
-                $('#edit_trade_tare').switchClass('not_ready','ready');
-                $('#edit_trade_tare').siblings('.ready_comment')/*.text('Можно сохранять.')*/.switchClass('not-ok','ok');
-                $('#button_edit_trade_tare').prop('disabled', false);
-                return true;
-        }
-    };
-    /**/
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /*СОБСТВЕННО ДОБАВЛЕНИЕ*////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1175,6 +1231,11 @@ $(document).ready(function(){
                 }, complete: function () {//Нужно обновить данные
                     $('#trade_options_tare').text(newtare);//Обновляем имя в самой менюшке
                     $('.trades_list td[tradeid='+tradeid+']>span').text(newtare);//Обновляем имя в списке
+
+                    //TODO: ВРЕМЕННО !!! ВЕШАЮ ТРИГГЕР НА ЗАКРЫТИЕ окна опций, чтобы все заполнить ,scnhj. Потом уберу
+                    $('.close_edit_options_trade').trigger('click.gotradeoptions');
+
+
                 }
             });
         }
@@ -1335,7 +1396,5 @@ $(document).ready(function(){
     $(document).off('click.r1span').on('click.r1span', '.green span, .lightgreen span, .yellow span, .lightblue span, .red span', function(event){
         $(event.target).next('input').trigger('click.show_hr1');
     });
-
-
 
 });
