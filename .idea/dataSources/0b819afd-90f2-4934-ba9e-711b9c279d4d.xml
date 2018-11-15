@@ -377,124 +377,116 @@
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="95" parent="16" name="req_comment">
+    <column id="95" parent="16" name="requests_nameid">
       <Position>3</Position>
-      <DataType>varchar(255)|0</DataType>
-    </column>
-    <column id="96" parent="16" name="requests_nameid">
-      <Position>4</Position>
       <DataType>mediumint(8) unsigned|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="97" parent="16" name="req_rent">
-      <Position>5</Position>
+    <column id="96" parent="16" name="req_rent">
+      <Position>4</Position>
       <DataType>float unsigned|0</DataType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <column id="98" parent="16" name="byersid">
-      <Position>6</Position>
+    <column id="97" parent="16" name="byersid">
+      <Position>5</Position>
       <DataType>smallint(5) unsigned|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="99" parent="16" name="payment">
-      <Position>7</Position>
-      <DataType>tinyint(1)|0</DataType>
-    </column>
-    <column id="100" parent="16" name="req_sum">
-      <Position>8</Position>
+    <column id="98" parent="16" name="req_sum">
+      <Position>6</Position>
       <DataType>float(14,2)|0</DataType>
     </column>
-    <column id="101" parent="16" name="1c_num">
-      <Position>9</Position>
+    <column id="99" parent="16" name="1c_num">
+      <Position>7</Position>
       <DataType>tinytext|0</DataType>
     </column>
-    <column id="102" parent="16" name="ov_op">
+    <column id="100" parent="16" name="ov_op">
+      <Position>8</Position>
+      <DataType>float(5,2) unsigned|0</DataType>
+    </column>
+    <column id="101" parent="16" name="ov_firstobp">
+      <Position>9</Position>
+      <DataType>float(5,2) unsigned|0</DataType>
+    </column>
+    <column id="102" parent="16" name="ov_tp">
       <Position>10</Position>
       <DataType>float(5,2) unsigned|0</DataType>
     </column>
-    <column id="103" parent="16" name="ov_firstobp">
+    <column id="103" parent="16" name="ov_wt">
       <Position>11</Position>
-      <DataType>float(5,2) unsigned|0</DataType>
-    </column>
-    <column id="104" parent="16" name="ov_tp">
-      <Position>12</Position>
-      <DataType>float(5,2) unsigned|0</DataType>
-    </column>
-    <column id="105" parent="16" name="ov_wt">
-      <Position>13</Position>
       <DataType>float(4,2) unsigned|0</DataType>
     </column>
-    <column id="106" parent="16" name="r1_hidden">
-      <Position>14</Position>
+    <column id="104" parent="16" name="r1_hidden">
+      <Position>12</Position>
       <DataType>tinyint(1) unsigned|0</DataType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <index id="107" parent="16" name="req_nameid">
+    <index id="105" parent="16" name="req_nameid">
       <ColNames>requests_nameid</ColNames>
     </index>
-    <key id="108" parent="16" name="PRIMARY">
+    <key id="106" parent="16" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>requests_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="109" parent="16" name="requests_ibfk_1">
+    <foreign-key id="107" parent="16" name="requests_ibfk_1">
       <ColNames>requests_nameid</ColNames>
       <RefSchemaName>prices</RefSchemaName>
       <RefTableName>allnames</RefTableName>
       <RefColNames>nameid</RefColNames>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <column id="110" parent="17" name="sellers_id">
+    <column id="108" parent="17" name="sellers_id">
       <Position>1</Position>
       <DataType>smallint(5) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="111" parent="17" name="sellers_nameid">
+    <column id="109" parent="17" name="sellers_nameid">
       <Position>2</Position>
       <DataType>mediumint(8) unsigned|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="112" parent="17" name="seller_nameid">
+    <index id="110" parent="17" name="seller_nameid">
       <ColNames>sellers_nameid</ColNames>
     </index>
-    <key id="113" parent="17" name="PRIMARY">
+    <key id="111" parent="17" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>sellers_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="114" parent="17" name="sellers_ibfk_1">
+    <foreign-key id="112" parent="17" name="sellers_ibfk_1">
       <ColNames>sellers_nameid</ColNames>
       <RefSchemaName>prices</RefSchemaName>
       <RefTableName>allnames</RefTableName>
       <RefColNames>nameid</RefColNames>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <column id="115" parent="18" name="trades_id">
+    <column id="113" parent="18" name="trades_id">
       <Position>1</Position>
       <DataType>smallint(5) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="116" parent="18" name="trades_nameid">
+    <column id="114" parent="18" name="trades_nameid">
       <Position>2</Position>
       <DataType>mediumint(8) unsigned|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="117" parent="18" name="tare">
+    <column id="115" parent="18" name="tare">
       <Position>3</Position>
       <DataType>enum(&apos;штука&apos;, &apos;банка&apos;, &apos;канистра&apos;, &apos;бочка&apos;)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="118" parent="18" name="trade_nameid">
+    <index id="116" parent="18" name="trade_nameid">
       <ColNames>trades_nameid</ColNames>
     </index>
-    <key id="119" parent="18" name="PRIMARY">
+    <key id="117" parent="18" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>trades_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="120" parent="18" name="trades_ibfk_1">
+    <foreign-key id="118" parent="18" name="trades_ibfk_1">
       <ColNames>trades_nameid</ColNames>
       <RefSchemaName>prices</RefSchemaName>
       <RefTableName>allnames</RefTableName>

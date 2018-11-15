@@ -60,6 +60,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         <li id='tab_sellers'><a href='#sellers'>Поставщики</a></li>
         <li id='tab_trades'><a href='#trades'>Товары</a></li>
         <li id='tab_giveaways'><a href='#givaways'>Р-1</a></li>
+        <li id='tab_payments'><a href='#payments'>Платежки</a></li>
         <li id='tab_vidachi'><a href='#vidachi'>Выдачи</a></li>
         <li id='tab_totals'><a href='#totals'>Долги</a></li>
         <li id='tab_search'><a href='#search'>Результаты поиска</a></li>
@@ -172,6 +173,12 @@ echo"
       <input type='button' class='show_list' value='ВЫДАЧИ⏎'><br><br>
           <div class='vidachi_list'></div>      
       </div>
+      
+      <div id='payments'>
+      <input type='button' class='show_list' value='ПЛАТЕЖКИ⏎'><br><br>
+          <div class='payments_list'></div>      
+      </div>
+      
       <div id='totals'>
       <input type='button' class='show_list' value='ДОЛГИ⏎'><br><br>
           <div class='totals_list'></div>
@@ -270,5 +277,6 @@ echo"
 <script src='js/mysql_searching.js'></script>
 <script src='js/mysql_history.js'></script>
 <script src='js/mysql_thunderclap.js'></script>
+<script src='js/orders.js'></script>
 
 ";

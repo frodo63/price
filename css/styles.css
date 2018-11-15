@@ -1249,6 +1249,18 @@ tr[pricingid] td {
   animation: flashss 2s;
 }
 
+/* line 861, ../sass/_mysql_styles.scss */
+.payments_list table tbody tr:hover {
+  background: green;
+  color: white;
+}
+/* line 865, ../sass/_mysql_styles.scss */
+.payments_list table td {
+  text-align: center;
+  border: 1px solid black;
+  font-size: 21px;
+}
+
 /* line 1, ../sass/_price.scss */
 h2 {
   margin: 0;

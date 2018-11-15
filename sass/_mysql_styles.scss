@@ -857,3 +857,15 @@ tr[pricingid] td {border: 1px solid black}
 }
 
 
+.payments_list table{
+  tbody tr:hover{
+    background: green;
+    color:white;
+  }
+  td{
+    text-align: center;
+    border: 1px solid black;
+    font-size: 21px;
+  }
+}
+

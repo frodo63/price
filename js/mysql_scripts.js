@@ -173,7 +173,6 @@ $(document).ready(function(){
                 method: 'POST',
                 data: {table:table},
                 success: function (data) {
-                    //$('#reads .' + table + '_list').html(data);
                     $(event.target).siblings('.' + table + '_list').html(data);
                 },
                 complete: function(){

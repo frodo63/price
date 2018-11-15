@@ -294,6 +294,102 @@ if(isset($_POST['table'])){
         }
         /**//////////////////////////////////////////////////////////////ЧТЕНИЕ СПИСКА ЗАЯВОК
     }
+    else if ($table == 'payments') {
+        if(isset($_POST['order'])){
+            $order = ($_POST['order']);
+            switch ($order) {
+                case 1:
+                    $sql="
+                        SELECT
+                         payed,number,sum,name,created,`1c_num`,req_sum 
+                         FROM requests 
+                         LEFT JOIN payments ON requests.requests_id = payments.requestid 
+                         LEFT JOIN byers ON byersid=byers_id 
+                         LEFT JOIN allnames ON byers.byers_nameid = allnames.nameid 
+                         ORDER BY payed DESC";
+                    break;
+                case 2:
+                    $sql="
+                        SELECT
+                         payed,number,sum,name,created,`1c_num`,req_sum 
+                         FROM requests 
+                         LEFT JOIN payments ON requests.requests_id = payments.requestid 
+                         LEFT JOIN byers ON byersid=byers_id 
+                         LEFT JOIN allnames ON byers.byers_nameid = allnames.nameid 
+                         ORDER BY name DESC";
+                    break;
+                case 3:
+                    $sql="
+                        SELECT
+                         payed,number,sum,name,created,`1c_num`,req_sum 
+                         FROM requests 
+                         LEFT JOIN payments ON requests.requests_id = payments.requestid 
+                         LEFT JOIN byers ON byersid=byers_id 
+                         LEFT JOIN allnames ON byers.byers_nameid = allnames.nameid 
+                         ORDER BY created DESC";
+                    break;
+                case 4:
+                    $sql="
+                        SELECT
+                         payed,number,sum,name,created,`1c_num`,req_sum 
+                         FROM requests 
+                         LEFT JOIN payments ON requests.requests_id = payments.requestid 
+                         LEFT JOIN byers ON byersid=byers_id 
+                         LEFT JOIN allnames ON byers.byers_nameid = allnames.nameid 
+                         ORDER BY 1c_num DESC";
+                    break;
+            }
+        }else{
+            $sql="
+                SELECT
+                payed,number,sum,name,created,`1c_num`,req_sum 
+                FROM requests 
+                LEFT JOIN payments ON requests.requests_id = payments.requestid 
+                LEFT JOIN byers ON byersid=byers_id 
+                LEFT JOIN allnames ON byers.byers_nameid = allnames.nameid 
+                ORDER BY payed DESC";
+        }
+
+        try {
+            $statement = $pdo->prepare($sql);
+            $statement->execute();
+            $result = "
+                <table><thead>
+                <th id='payments_order_payed'>Дата платежа</th>
+                <th>Номер платежа</th>
+                <th>Сумма платежа</th>
+                <th id='payments_order_name'>Плательщик</th>
+                <th id='payments_order_created'>Дата заказа</th>
+                <th id='payments_order_1c_number'>Номер в 1С</th>
+                <th>Сумма заказа</th>
+                </thead><tbody>";
+
+            foreach ($statement as $row) {
+                $phpdate = strtotime( $row['payed'] );
+                $payed= date( 'd.m.y', $phpdate );
+
+                $phpdate = strtotime( $row['created'] );
+                $created = date( 'd.m.y', $phpdate );
+
+
+
+                $result .= "<tr>
+                                <td>$payed</td>
+                                <td>".$row['number']."</td>
+                                <td>".$row['sum']."</td>
+                                <td>".$row['name']."</td>
+                                <td>$created</td>
+                                <td>".$row['1c_num']."</td>
+                                <td>".$row['req_sum']."</td>
+                            </tr>";          }
+            $result .= "</tbody></table>";
+            print $result;
+        } catch( PDOException $Exception ) {
+            // Note The Typecast To An Integer!
+            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        }
+        /**//////////////////////////////////////////////////////////////ЧТЕНИЕ СПИСКА ЗАЯВОК
+    }
     else if(($table == 'byers')) {
         /**//////////////////////////////////////////////////////////////ЧТЕНИЕ ПОКУПАТЕЛИ/ПОСТАВЩИКИ/ТОВАРЫ
         try {

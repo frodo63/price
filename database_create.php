@@ -45,10 +45,9 @@ CREATE TABLE IF NOT EXISTS `requests` (
 `created` DATE NOT NULL,
 `requests_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 `requests_nameid` MEDIUMINT UNSIGNED NOT NULL,
-`req_comment` VARCHAR(255),
 `req_rent` FLOAT(3) UNSIGNED,
 `byersid` SMALLINT UNSIGNED NOT NULL,
-`payment` BOOLEAN NULL,
+`payment` BOOLEAN NULL,/*Under ?*/
 `req_sum` FLOAT(14,2) NULL UNSIGNED,
 `1c_num` TINYINT NULL,
 `ov_op` FLOAT(5,2) NULL UNSIGNED,
