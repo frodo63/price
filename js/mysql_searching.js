@@ -2,49 +2,33 @@ $(document).ready(function(){
 /*Описание поведения блоков поисковой строки*/
 
     $(document).off('click.out').on('click.out', 'body', function () {
+        console.log('Сработал click.out');
         $('#sres ul').html('');
         $('.sres ul').html('');
         $('#byer+div ul').html('');
         $('#trade+div ul').html('');
         $('#seller+div ul').html('');
+
     });
 
-    /*Поведение ВЕЛИКОЙ СТРОКИ ПОИСКА ВСЕГО (ВСПВ)*/
-    /*$(document).off('mouseenter.sres').on('mouseenter.sres', '#sres ul li', function (event) {
-        //После выпадения списка в бпс при клике попадает текст итема.
-        $('#thesearch').val($(event.target).children('span').text());
-        //А атрибуты - категория и айдишник
-        $('#thesearch').attr('category', $(event.target).attr('category'));
-        $('#thesearch').attr('theid', $(event.target).attr('theid'));
-
-        console.log('Категория: '+$('#thesearch').attr('category')+', ID: '+$('#thesearch').attr('theID'));
-        //Мы готовы для аякса
-    });*/
-
-
     /*Клик на элементе выпадающего списка из ВСПВ*/
-    /*На клике отключено событие скрывания списка по нажатию на что-либо*/
+    /*ПО клику на спан отключен клик.аут, как и по клику на ли. в событии про ли заместо event.target - this, так правильно*/
+    $(document).off('click.sres','click.out').on('click.sres', '#sres ul li span', function (event) {
+    });
 
-    $(document).off('click.sres').on('click.sres', '#sres ul li', function (event) {
-        ///////////////////////////////////////ДОБАВЛЕНО ЭКСПЕРИМЕНТАЛЬНО
-
+    $(document).off('click.sres', 'click.out').on('click.sres', '#sres ul li', function (event) {
+        console.log('Сработал click.sres');
         /*После выпадения списка в бпс при клике попадает текст итема.*/
-        $('#thesearch').val($(event.target).children('span').text());
+        $('#thesearch').val($(this).children('span').text());
         /*А атрибуты - категория и айдишник*/
-        $('#thesearch').attr('category', $(event.target).attr('category'));
-        $('#thesearch').attr('theid', $(event.target).attr('theid'));
+        $('#thesearch').attr('category', $(this).attr('category'));
+        $('#thesearch').attr('theid', $(this).attr('theid'));
 
-        console.log('Категория: '+$('#thesearch').attr('category')+', ID: '+$('#thesearch').attr('theID'));
         /*Мы готовы для аякса*/
-
-        ///////////////////////////////////////ДОБАВЛЕНО ЭКСПЕРИМЕНТАЛЬНО
-
-        var category = $(event.target).attr('category');
-        var theid = $(event.target).attr('theid');
+        var category = $(this).attr('category');
+        var theid = $(this).attr('theid');
         var table = 'requests';
-        //TODO: Вставить проверку, что айди и категория - not undefined
-        console.log('На аякс: категория: '+category+', ID: '+theid+'.');
-        if (!!category && !!theid){
+        if (typeof category != "undefined" && typeof theid != "undefined" ){
             $.ajax({
                 url: 'mysql_read.php',
                 method: 'POST',
@@ -65,12 +49,10 @@ $(document).ready(function(){
         $('#seller').val($(event.target).text());
         $('#seller').attr('seller_id', $(event.target).parent().attr('sellers_id'));
     });
-
     $(document).off('click.sresbyer').on('click.sresbyer', '#byer+div ul li p', function (event) {
         $('#byer').val($(event.target).text());
         $('#byer').attr('byer_id', $(event.target).parent().attr('byers_id'));
     });
-
     $(document).off('click.srestrade').on('click.srestrade', '#trade+div ul li p', function (event) {
         $('#trade').val($(event.target).text());
         var tradeid = $(event.target).parent().attr('trades_id');
@@ -128,9 +110,7 @@ $(document).ready(function(){
         } else{
             //ВО ВСЕХ ОСТАЛЬНЫХ СЛУЧАЯХ  - ПРОСТО ПРОДОЛЖАЕМ ЗАПРОСЫ К БАЗЕ И ПОИСК
             if (sline.length > 0) {
-
                 console.log(sline);
-
                 $.ajax({
                     context : $('#thesearch'),
                     url: 'mysql_search.php',
@@ -238,7 +218,7 @@ $(document).ready(function(){
 
     });
 
-    //TODO:код_тут. фак, кто это за код?
+    //Сокрытие выпадающего списка при нажатии куда -либо при добавлении номенклатуры в позицию
     $(document).off('click.addpostrade', 'click.out').on('click.addpostrade', '.add-pos-inputs .sres ul li p', function (event) {
         var txt = $(event.target).text();
         $(event.target).parents('.sres').siblings('input.trade').val(txt);
