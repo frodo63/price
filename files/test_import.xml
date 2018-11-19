@@ -1,0 +1,518 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Author>Сергей</Author>
+  <LastAuthor>Сергей</LastAuthor>
+  <Created>2018-11-16T06:15:21Z</Created>
+  <LastSaved>2018-11-16T06:26:46Z</LastSaved>
+  <Company>Microsoft</Company>
+  <Version>12.00</Version>
+ </DocumentProperties>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>6330</WindowHeight>
+  <WindowWidth>9540</WindowWidth>
+  <WindowTopX>400</WindowTopX>
+  <WindowTopY>40</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Calibri" x:CharSet="204" x:Family="Swiss" ss:Size="11"
+    ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s64" ss:Name="Обычный_Лист1">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Arial" x:Family="Swiss" ss:Size="8"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s68" ss:Parent="s64">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#993300"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#993300"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#993300"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#993300"/>
+   </Borders>
+   <Font ss:FontName="Arial" x:Family="Swiss" ss:Size="8" ss:Color="#333300"/>
+   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>
+   <NumberFormat/>
+  </Style>
+  <Style ss:ID="s69" ss:Parent="s64">
+   <Alignment ss:Horizontal="Right" ss:Vertical="Top"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#993300"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#993300"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#993300"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#993300"/>
+   </Borders>
+   <Font ss:FontName="Arial" x:Family="Swiss" ss:Size="8" ss:Color="#333300"/>
+   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>
+   <NumberFormat ss:Format="000000000"/>
+  </Style>
+  <Style ss:ID="s70" ss:Parent="s64">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#993300"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#993300"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#993300"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#993300"/>
+   </Borders>
+   <Font ss:FontName="Arial" x:Family="Swiss" ss:Size="8" ss:Color="#000000"/>
+   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>
+   <NumberFormat ss:Format="000000000"/>
+  </Style>
+  <Style ss:ID="s71" ss:Parent="s64">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#993300"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#993300"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#993300"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"
+     ss:Color="#993300"/>
+   </Borders>
+   <Font ss:FontName="Arial" x:Family="Swiss" ss:Size="8" ss:Color="#000000"/>
+   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>
+   <NumberFormat/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="Книга1">
+  <Table ss:ExpandedColumnCount="2" ss:ExpandedRowCount="90" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultRowHeight="14.5">
+   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="151"/>
+   <Row>
+    <Cell ss:StyleID="s69"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s68"><Data ss:Type="String">ПОКУПАТЕЛИ</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">НЕФТЕПРОМ</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Балашейские пески</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Сиб Трейд Сервис АО</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">ИНРоЛ-СТС</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">28</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Уральскстройинвест      КАЗАХСТАН</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">29</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Саминтех (Би Питрон)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">30</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Стройиндустрия</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">32</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">СЕРВИПРЕСС</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">33</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">ПРОМТЕХО НПО 231-45-47 Артем</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">34</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Дикомп-Классик филиал</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">37</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Нетч Пампс Рус</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">40</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Форш</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">41</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">КОМПАНЬОН</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">45</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Прогресс</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">46</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Стройсервис</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">48</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">УРАЛЭНЕРГОСЕРВИС</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">54</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Гидроком  АТП  давно ЗАКРЫТ</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">55</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Гидроком  К</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">56</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Лима-Сервис </Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">57</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">ЛАКТО</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">58</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">СПЗ-4</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">61</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Хлебозавод </Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">62</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Самарастрой-Холдинг</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">63</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Услада</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">64</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Самарская КК Филиал &quot;Самарский Кабельный Завод&quot;  228-24-90 - Надежда, </Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">65</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">СККМ_НОВЫЙ кпп грузополуч 631801001</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">66</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Сызранская Керамика</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">68</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">АВИАСТАР-СП</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">69</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">САМ-ПО</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">74</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Сервис</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">75</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Средневолжская трубно-механическая компания</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">77</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">ЭкоСистема</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">78</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Золушка-С Татьяна Викторовна 955-02-11</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">81</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Тяжмаш АО НОВЫЙ!</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">86</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">РосПлит</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">91</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Акрон</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">97</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Теплостар (до 10.03.2016 Электрус)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">99</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">АО СКК &quot;Самарский Кабельный Завод&quot; НЕ БРАТЬ С 1окт16</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">101</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">ЕПК Самара</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">103</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">СНН-Транспорт</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">106</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">ЭнерДжет Системс</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">111</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Бикор БМП</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">112</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Самарский завод слоистых пластиков</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">120</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Фриз-продукт Татьяна Викторовна, секретарь Ольга 955-02-11</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">122</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Адверс</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">126</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Тольяттимолоко</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">128</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">СТС-Люкс ООО</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">129</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Гелиос</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">133</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Ковротекс</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">135</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Посейдон Архипов Алексей Николаевич 8-927-700-55-94</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">136</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">ННК АО </Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">138</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Приволжскнефтепровод</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">140</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Пальмира СДК ООО</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">147</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Юнитерм</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">150</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">ИнженерМаркет</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">157</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">ПРИВОЛГА</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">160</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">НаДО 8(84661) 5-15-51</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">163</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">АЙС-ВОЛГА   ООО</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">169</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">ИП Незнамов И.И.</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">175</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Метком</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">178</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Альянс-Полимер </Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">181</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Стройторг</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">183</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">ТексИнвест</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">184</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Магелан</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">187</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">ООО Мясоптицекомбинат &quot;Поволжский&quot;</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">193</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Тройка</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">196</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">АО &quot;СКК&quot; НОВЫЙ с 01.10.16</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">197</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">СТМ</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">198</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Энергощит</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">199</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Техэнергопром</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">216</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Центр Строй </Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">224</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">ЧЛ-Покупатель</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">225</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">НОВОТЕКС главный офис</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">226</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">НОВОТЕКС димитровградский филиал</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">228</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Самарский  филиал АО Сиб Трейд Сервис</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">237</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">КИНЕЛЬСКАЯ ЦБГИР</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">246</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Салют</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">256</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Наш Партнер</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">262</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Бенчмарк</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">264</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">УСС</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">266</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">СИТ (Би Питрон)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">267</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Сервис Д</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">269</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">АгроГард</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">276</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">РТС</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">280</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Европринт</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">285</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">КВОиТ</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">287</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">Стройавтокран</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">314</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">АО &quot;НК НПЗ&quot;</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s70"><Data ss:Type="Number">324</Data></Cell>
+    <Cell ss:StyleID="s71"><Data ss:Type="String">ГК ТСК</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <Header x:Margin="0.3"/>
+    <Footer x:Margin="0.3"/>
+    <PageMargins x:Bottom="0.75" x:Left="0.7" x:Right="0.7" x:Top="0.75"/>
+   </PageSetup>
+   <Selected/>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>8</ActiveRow>
+     <ActiveCol>1</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+ <Worksheet ss:Name="Лист2">
+  <Table ss:ExpandedColumnCount="1" ss:ExpandedRowCount="1" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultRowHeight="14.5">
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <Header x:Margin="0.3"/>
+    <Footer x:Margin="0.3"/>
+    <PageMargins x:Bottom="0.75" x:Left="0.7" x:Right="0.7" x:Top="0.75"/>
+   </PageSetup>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+ <Worksheet ss:Name="Лист3">
+  <Table ss:ExpandedColumnCount="1" ss:ExpandedRowCount="1" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultRowHeight="14.5">
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <Header x:Margin="0.3"/>
+    <Footer x:Margin="0.3"/>
+    <PageMargins x:Bottom="0.75" x:Left="0.7" x:Right="0.7" x:Top="0.75"/>
+   </PageSetup>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+</Workbook>
