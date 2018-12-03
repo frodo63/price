@@ -1,6 +1,7 @@
 $(document).ready(function(){
 /*Описание поведения блоков поисковой строки*/
 
+
     $(document).off('click.out').on('click.out', 'body', function () {
         console.log('Сработал click.out');
         $('#sres ul').html('');
@@ -131,8 +132,10 @@ $(document).ready(function(){
             $(event.target).next('input[type="button"]').trigger('click.addtab');
         };
     });
+
+
     /*ПОИСКОВЫЕ СТРОКИ ПОКУПАТЕЛЬ, ТОВАР, ПОСТАВЩИК*/
-    $(document).off('keyup.byer').on('keyup.byer', '#byer', function(event){
+    $(document).off('keyup.byer').on('keyup.byer', '#byer, #sync_byer', function(event){
 
         var sbyer = $('#byer').val();
 
@@ -153,7 +156,7 @@ $(document).ready(function(){
         };
 
     });
-    $(document).off('keyup.seller').on('keyup.seller', '#seller', function(event){
+    $(document).off('keyup.seller').on('keyup.seller', '#seller, #sync_seller', function(event){
 
         var sseller = $('#seller').val();
 
@@ -174,7 +177,7 @@ $(document).ready(function(){
         };
 
     });
-    $(document).off('keyup.trade').on('keyup.trade', '#trade', function(event){
+    $(document).off('keyup.trade').on('keyup.trade', '#trade, #sync_trade', function(event){
 
         var strade = $('#trade').val();
 

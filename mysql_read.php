@@ -303,7 +303,7 @@ if(isset($_POST['table'])){
                         SELECT
                          payed,number,sum,name,created,`1c_num`,req_sum 
                          FROM requests 
-                         LEFT JOIN payments ON requests.requests_id = payments.requestid 
+                         INNER JOIN payments ON requests.requests_id = payments.requestid 
                          LEFT JOIN byers ON byersid=byers_id 
                          LEFT JOIN allnames ON byers.byers_nameid = allnames.nameid 
                          ORDER BY payed DESC";
@@ -313,7 +313,7 @@ if(isset($_POST['table'])){
                         SELECT
                          payed,number,sum,name,created,`1c_num`,req_sum 
                          FROM requests 
-                         LEFT JOIN payments ON requests.requests_id = payments.requestid 
+                         INNER JOIN payments ON requests.requests_id = payments.requestid 
                          LEFT JOIN byers ON byersid=byers_id 
                          LEFT JOIN allnames ON byers.byers_nameid = allnames.nameid 
                          ORDER BY name DESC";
@@ -323,7 +323,7 @@ if(isset($_POST['table'])){
                         SELECT
                          payed,number,sum,name,created,`1c_num`,req_sum 
                          FROM requests 
-                         LEFT JOIN payments ON requests.requests_id = payments.requestid 
+                         INNER JOIN payments ON requests.requests_id = payments.requestid 
                          LEFT JOIN byers ON byersid=byers_id 
                          LEFT JOIN allnames ON byers.byers_nameid = allnames.nameid 
                          ORDER BY created DESC";
@@ -344,7 +344,7 @@ if(isset($_POST['table'])){
                 SELECT
                 payed,number,sum,name,created,`1c_num`,req_sum 
                 FROM requests 
-                LEFT JOIN payments ON requests.requests_id = payments.requestid 
+                INNER JOIN payments ON requests.requests_id = payments.requestid 
                 LEFT JOIN byers ON byersid=byers_id 
                 LEFT JOIN allnames ON byers.byers_nameid = allnames.nameid 
                 ORDER BY payed DESC";

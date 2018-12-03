@@ -64,6 +64,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         <li id='tab_vidachi'><a href='#vidachi'>Выдачи</a></li>
         <li id='tab_totals'><a href='#totals'>Долги</a></li>
         <li id='tab_search'><a href='#search'>Результаты поиска</a></li>
+        <li id='tab_sync'><a href='#sync'>Синхронизация</a></li>
       </ul>
   
       <div id='requests'>
@@ -186,6 +187,19 @@ echo"
       <div id='search'>
           <div class='search_list'></div>
       </div>
+      
+      <div id='sync'>
+          <div class='sync_list'>
+              <p>Синхронизировать: </p>
+              <input type='button' id='sync_requests' value='Заказы'>
+              <input type='button' id='sync_payments' value='Платежки'>
+              <input type='button' id='sync_byers' value='Покупателей'>
+              <input type='button' id='sync_sellers' value='Поставщиков'>
+              <input type='button' id='sync_trades' value='Товары'>
+              <div id='sync_info'></div>          
+          </div>
+      </div>
+      
 </div>
               <div id='edit_1c_num'>
                   <span>Изменить номер заказа в 1С</span>
@@ -278,5 +292,6 @@ echo"
 <script src='js/mysql_history.js'></script>
 <script src='js/mysql_thunderclap.js'></script>
 <script src='js/orders.js'></script>
+<script src='js/mysql_sync.js'></script>
 
 ";
