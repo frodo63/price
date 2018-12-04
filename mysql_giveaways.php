@@ -178,7 +178,11 @@ if (isset($_POST['the_request'])){
         }else {
             $result1.="<h2>Платежи</h2><table><thead><tr><th>Дата</th><th>Номер п/п</th><th>Сумма платежки</th><th></th></tr></thead><tbody>";
             foreach ($get_payments as $row) {
-                $result1 .= "<tr><td>" . $row['payed'] . "</td><td>" . $row['number'] . "</td><td>" . $row['sum'] . "</td><td><input class='delpayment' type='button' value='X' pay_id='".$row['payments_id']."' req_id='".$row['requestid']."'><input class='editpayment' type='button' value='E' pay_id='".$row['payments_id']."' req_id='".$row['requestid']."'></td></tr>";
+
+                $phpdate = strtotime( $row['payed'] );
+                $mysqldate = date( 'd.m.y', $phpdate );
+
+                $result1 .= "<tr><td>" . $mysqldate . "</td><td>" . $row['number'] . "</td><td>" . $row['sum'] . "</td><td><input class='delpayment' type='button' value='X' pay_id='".$row['payments_id']."' req_id='".$row['requestid']."'><input class='editpayment' type='button' value='E' pay_id='".$row['payments_id']."' req_id='".$row['requestid']."'></td></tr>";
             };
             $result1 .= "</tbody></table>";
         };
@@ -205,7 +209,11 @@ if (isset($_POST['the_request'])){
         }else {
             $result3.="<h2>Выдачи</h2><table><thead><tr><th>Дата</th><th>Комментарий</th><th>Сумма</th><th></th></tr></thead><tbody>";
             foreach ($get_giveaways as $row) {
-                $result3 .= "<tr><td>" . $row['given_away'] . "</td><td>" . $row['comment'] . "</td><td>" . $row['giveaway_sum'] . "</td><td><input class='delgiveaway' type='button' value='X' give_id='".$row['giveaways_id']."' req_id='".$row['requestid']."'><input class='editgiveaway' type='button' value='E' give_id='".$row['giveaways_id']."' req_id='".$row['requestid']."'></td></tr>";
+
+                $phpdate = strtotime( $row['given_away'] );
+                $mysqldate = date( 'd.m.y', $phpdate );
+
+                $result3 .= "<tr><td>" . $mysqldate . "</td><td>" . $row['comment'] . "</td><td>" . $row['giveaway_sum'] . "</td><td><input class='delgiveaway' type='button' value='X' give_id='".$row['giveaways_id']."' req_id='".$row['requestid']."'><input class='editgiveaway' type='button' value='E' give_id='".$row['giveaways_id']."' req_id='".$row['requestid']."'></td></tr>";
             };
             $result3 .= "</tbody></table>";
         };

@@ -428,6 +428,9 @@ tr[pricingid] td {border: 1px solid black}
   min-height: 99vh;
 }
 .ga_contents{
+  .ga_c_payments, .ga_c_giveaways{
+    border:1px solid #DCDCDC;
+  }
   .ga_c_payments, .ga_c_giveaways, .ga_c_positions{
     &.min-h{
       min-height: 250px;
@@ -868,7 +871,7 @@ tr[pricingid] td {border: 1px solid black}
 }
 
 
-.payments_list table{
+.payments_list table, .vidachi_list table{
   tbody tr:hover{
     background: green;
     color:white;

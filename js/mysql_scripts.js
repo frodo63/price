@@ -226,10 +226,6 @@ $(document).ready(function(){
         var to = $(event.target).siblings('.to').val();
         to = to.slice(6,10)+'-'+to.slice(3,5)+'-'+to.slice(0,2);
 
-        console.log(the_byer);
-        console.log(from);
-        console.log(to);
-
         if(from!='--' && to!='--'){
             $.ajax({
                 url: 'mysql_giveaways.php',

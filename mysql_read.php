@@ -254,19 +254,30 @@ if(isset($_POST['table'])){
     }
     else if ($table == 'givaways') {
         try {
-
+            //Сейчс скрипт берет всех покупателей просто из базы. Надо ,чтобы брал только тех, у кого есть заказы, не убранные из Р1
             $statement = $pdo->prepare("SELECT byers.byers_id AS b_id,byers.byers_nameid AS b_nid,allnames.name AS b_name FROM `byers` LEFT JOIN `allnames` ON byers.byers_nameid=allnames.nameid ORDER BY b_name");
+            $gotrequests = $pdo->prepare("SELECT requests_id FROM requests WHERE (requests.byersid = ? AND requests.r1_hidden = 0)");
             $statement->execute();
             $result = "<ul class='byer_req_list'>";
 
             foreach ($statement as $row) {
-                $result .= "<li byerid =" . $row['b_id'] . ">
-                                <input type='button' name =" . $row['b_nid'] . " ga_byer =" . $row['b_id'] . " value='♢' class='collapse_ga_byer w'>
+                $ga_bid = $row['b_id'];
+                //Проверка ан наличие заявок
+                $gotsome = array();
+                $gotrequests->execute(array($ga_bid));
+                $gotsome = $gotrequests->fetchall(PDO::FETCH_ASSOC);
+                if(count($gotsome)>0){
+
+                    $result .= "<li byerid =" . $row['b_id'] . "><input type='button' name =" . $row['b_nid'] . " ga_byer =" . $row['b_id'] . " value='♢' class='collapse_ga_byer w'>
                                 <span class='name'>" . $row['b_name'] . "</span>
                                 <div class='ga_byer_requests' ga_byer ='" . $row['b_id'] . "'></div>
-                            </li>";            }
+                            </li>";
+                }
+            }
             $result .= "</ul>";
             print $result;
+
+
         } catch( PDOException $Exception ) {
             // Note The Typecast To An Integer!
             throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
@@ -274,19 +285,94 @@ if(isset($_POST['table'])){
         /**//////////////////////////////////////////////////////////////ЧТЕНИЕ СПИСКА ЗАЯВОК
     }
     else if ($table == 'vidachi') {
-        try {
+        if(isset($_POST['order'])){
+            $order = ($_POST['order']);
+            switch ($order) {
+                case 1:
+                  $sql="
+                  SELECT
+                  given_away,`name`,`1c_num`,giveaway_sum,created,req_sum,g.`comment`,giveaways_id
+                  FROM giveaways g 
+                  LEFT JOIN requests r on g.requestid = r.requests_id
+                  INNER JOIN byers b on r.byersid=b.byers_id
+                  LEFT JOIN  allnames a on b.byers_nameid = a.nameid
+                  ORDER BY given_away DESC";
+                  break;
+                case 2:
+                  $sql="
+                  SELECT
+                  given_away,`name`,`1c_num`,giveaway_sum,created,req_sum,g.`comment`,giveaways_id
+                  FROM giveaways g 
+                  LEFT JOIN requests r on g.requestid = r.requests_id
+                  INNER JOIN byers b on r.byersid=b.byers_id
+                  LEFT JOIN  allnames a on b.byers_nameid = a.nameid
+                  ORDER BY name DESC";
+                  break;
+                case 3:
+                  $sql="
+                  SELECT
+                  given_away,`name`,`1c_num`,giveaway_sum,created,req_sum,g.`comment`,giveaways_id
+                  FROM giveaways g 
+                  LEFT JOIN requests r on g.requestid = r.requests_id
+                  INNER JOIN byers b on r.byersid=b.byers_id
+                  LEFT JOIN  allnames a on b.byers_nameid = a.nameid
+                  ORDER BY created DESC";
+                  break;
+                case 4:
+                  $sql="
+                  SELECT
+                  given_away,`name`,`1c_num`,giveaway_sum,created,req_sum,g.`comment`,giveaways_id
+                  FROM giveaways g 
+                  LEFT JOIN requests r on g.requestid = r.requests_id
+                  INNER JOIN byers b on r.byersid=b.byers_id
+                  LEFT JOIN  allnames a on b.byers_nameid = a.nameid
+                  ORDER BY 1c_num DESC";
+                  break;
+            }
+        }else{
+            $sql="
+                  SELECT
+                  given_away,`name`,`1c_num`,giveaway_sum,created,req_sum,g.`comment`,giveaways_id
+                  FROM giveaways g 
+                  LEFT JOIN requests r on g.requestid = r.requests_id
+                  INNER JOIN byers b on r.byersid=b.byers_id
+                  LEFT JOIN  allnames a on b.byers_nameid = a.nameid
+                  ";
+        }
 
-            $statement = $pdo->prepare("SELECT byers.byers_id AS b_id,byers.byers_nameid AS b_nid,allnames.name AS b_name FROM `byers` LEFT JOIN `allnames` ON byers.byers_nameid=allnames.nameid ORDER BY b_name");
+        try {
+            $statement = $pdo->prepare($sql);
             $statement->execute();
-            $result = "<ul class='byer_vid_list'>";
+            $result = "
+                <table><thead>
+                <th id='vidachi_order_given_away'>Дата выдачи</th>
+                <th>Сумма выдачи</th>
+                <th id='vidachi_order_name'>Плательщик</th>
+                <th id='vidachi_order_created'>Дата заказа</th>
+                <th id='vidachi_order_1c_number'>Номер в 1С</th>
+                <th>Коммент</th>
+                <th>Сумма заказа</th>
+                </thead><tbody>";
 
             foreach ($statement as $row) {
-                $result .= "<li byerid =" . $row['b_id'] . ">
-                                <input type='button' name =" . $row['b_nid'] . " vid_byer =" . $row['b_id'] . " value=♢ class='collapse_vid_byer'>
-                                <span class='name'>" . $row['b_name'] . "</span>
-                                <div class='vid_byer_requests' vid_byer ='" . $row['b_id'] . "'></div>
-                            </li>";            }
-            $result .= "</ul>";
+                $phpdate = strtotime( $row['given_away'] );
+                $given_away= date( 'd.m.y', $phpdate );
+
+                $phpdate = strtotime( $row['created'] );
+                $created = date( 'd.m.y', $phpdate );
+
+
+
+                $result .= "<tr g_id='".$row['giveaways_id']."'>
+                                <td>$given_away</td>
+                                <td>".$row['giveaway_sum']."</td>
+                                <td>".$row['name']."</td>
+                                <td>$created</td>
+                                <td>".$row['1c_num']."</td>
+                                <td>".$row['req_sum']."</td>
+                                <td>".$row['comment']."</td>
+                            </tr>";          }
+            $result .= "</tbody></table>";
             print $result;
         } catch( PDOException $Exception ) {
             // Note The Typecast To An Integer!
