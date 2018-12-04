@@ -137,36 +137,17 @@ if(isset($_POST['sync_file'])){
                 echo"<p>Файл найден</p>";
                 $file_array = file($path); // Считывание файла в массив $file_array
                 if (count($file_array) > 0);
-                echo"<p>Файл выгружен в массив</p>";
+                echo"<p>Файл выгружен в массив: </p>";
+                echo"<input type='button' value='Пройти по массиву' id = 'sync_byers_list'>";
 
-                /*foreach ($file_array as $row){
 
-                    //Кидаем данные во временный массив
-                    $temp_array = explode(';',$row);
-                    //Что-то делаем с каждым вэлью из временного массива:
-
-                    //Номер в 1С. надо отрезать нули в начале
-                    $temp_array[0] = ltrim($temp_array[0],'0');
-
-                    //Дата. Надо отрезать время в конце:
-                    $temp_array[1] = substr($temp_array[1], 0, 10);
-
-                    //Айдишник покупателя. отрезаем в начале нолики
-                    $temp_array[2] = ltrim($temp_array[2],'0');
-
-                    //Создаем запись для информирования
-                    $temp_array[3] = "Будет создан заказ. Номер в 1С: ".$temp_array[0]." Дата: ".$temp_array[1]." Покупатель: ".$temp_array[2];
-
-                    //Заносим результат
-                    $requests_list[] = $temp_array;
-                }*/
                 //Выводим божеский вид
-
+                echo"<ul>";
                 foreach ($file_array as $row){
-                    echo"<pre>";
-                    print_r($row);
-                    echo"</pre>";
+                    $temp_array = explode(';',$row);
+                    echo"<li>$temp_array[1]<input type='text' class='sync_byer'><div class='sres'></div><input type='button' class='sync_to_base' value='Соотнести' table innerid uid=$temp_array[3] dataver=$temp_array[2]></li>";
                 }
+                echo"</ul>";
             }else{
                 echo"<p>Файл НЕ найден</p>";
             }
@@ -176,36 +157,16 @@ if(isset($_POST['sync_file'])){
                 echo"<p>Файл найден</p>";
                 $file_array = file($path); // Считывание файла в массив $file_array
                 if (count($file_array) > 0);
-                echo"<p>Файл выгружен в массив</p>";
+                echo"<p>Файл выгружен в массив: </p>";
+                echo"<input type='button' value='Пройти по массиву' id = 'sync_sellers_list'>";
 
-                /*foreach ($file_array as $row){
-
-                    //Кидаем данные во временный массив
-                    $temp_array = explode(';',$row);
-                    //Что-то делаем с каждым вэлью из временного массива:
-
-                    //Номер в 1С. надо отрезать нули в начале
-                    $temp_array[0] = ltrim($temp_array[0],'0');
-
-                    //Дата. Надо отрезать время в конце:
-                    $temp_array[1] = substr($temp_array[1], 0, 10);
-
-                    //Айдишник покупателя. отрезаем в начале нолики
-                    $temp_array[2] = ltrim($temp_array[2],'0');
-
-                    //Создаем запись для информирования
-                    $temp_array[3] = "Будет создан заказ. Номер в 1С: ".$temp_array[0]." Дата: ".$temp_array[1]." Покупатель: ".$temp_array[2];
-
-                    //Заносим результат
-                    $requests_list[] = $temp_array;
-                }*/
                 //Выводим божеский вид
-
+                echo"<ul>";
                 foreach ($file_array as $row){
-                    echo"<pre>";
-                    print_r($row);
-                    echo"</pre>";
+                    $temp_array = explode(';',$row);
+                    echo"<li>$temp_array[1]<input type='text' class='sync_seller'><div class='sres'></div><input type='button' class='sync_to_base' value='Соотнести' table innerid uid=$temp_array[3] dataver=$temp_array[2]></li>";
                 }
+                echo"</ul>";
             }else{
                 echo"<p>Файл НЕ найден</p>";
             }
@@ -215,36 +176,16 @@ if(isset($_POST['sync_file'])){
                 echo"<p>Файл найден</p>";
                 $file_array = file($path); // Считывание файла в массив $file_array
                 if (count($file_array) > 0);
-                echo"<p>Файл выгружен в массив</p>";
+                echo"<p>Файл выгружен в массив: </p>";
+                echo"<input type='button' value='Пройти по массиву' id = 'sync_trades_list'>";
 
-                /*foreach ($file_array as $row){
-
-                    //Кидаем данные во временный массив
-                    $temp_array = explode(';',$row);
-                    //Что-то делаем с каждым вэлью из временного массива:
-
-                    //Номер в 1С. надо отрезать нули в начале
-                    $temp_array[0] = ltrim($temp_array[0],'0');
-
-                    //Дата. Надо отрезать время в конце:
-                    $temp_array[1] = substr($temp_array[1], 0, 10);
-
-                    //Айдишник покупателя. отрезаем в начале нолики
-                    $temp_array[2] = ltrim($temp_array[2],'0');
-
-                    //Создаем запись для информирования
-                    $temp_array[3] = "Будет создан заказ. Номер в 1С: ".$temp_array[0]." Дата: ".$temp_array[1]." Покупатель: ".$temp_array[2];
-
-                    //Заносим результат
-                    $requests_list[] = $temp_array;
-                }*/
                 //Выводим божеский вид
-
+                echo"<ul>";
                 foreach ($file_array as $row){
-                    echo"<pre>";
-                    print_r($row);
-                    echo"</pre>";
+                    $temp_array = explode(';',$row);
+                    echo"<li>$temp_array[1]<input type='text' class='sync_trade'><div class='sres'></div><input type='button' class='sync_to_base' value='Соотнести' table innerid uid=$temp_array[4] dataver=$temp_array[3]></li>";
                 }
+                echo"</ul>";
             }else{
                 echo"<p>Файл НЕ найден</p>";
             }

@@ -186,9 +186,9 @@ echo"
       </div>
       <div id='search'>
           <div class='search_list'></div>
-      </div>
+      </div>";
       
-      <div id='sync'>
+echo "    <div id='sync'>
           <div class='sync_list'>
               <p>Синхронизировать: </p>
               <input type='button' id='sync_requests' value='Заказы'>

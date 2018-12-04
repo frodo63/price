@@ -16,6 +16,31 @@ $(document).ready(function(){
     });
 
 
+    //Проходы по списку:
+    $(document).off('click.sync_list').on('click.sync_list', '#sync_info .sres li', function (event) {
+        console.log('сработал клик на лист итеме');
+        var category = $(event.target).parents('li').attr('category')+"s";
+        switch (category){
+            case 'byers':
+                var theID = $(event.target).parents('li').attr('byers_id');
+                break;
+            case 'sellers':
+                var theID = $(event.target).parents('li').attr('sellers_id');
+                break;
+            case 'trades':
+                var theID = $(event.target).parents('li').attr('trades_id');
+                break;
+        }
+        console.log(theID);
+        console.log(category);
+        $(event.target).parents('.sres').next('input.sync_to_base').attr({innerid:theID,table:category});
+
+
+
+
+    })
+
+
 
 
 });

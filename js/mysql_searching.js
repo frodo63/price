@@ -135,16 +135,15 @@ $(document).ready(function(){
 
 
     /*ПОИСКОВЫЕ СТРОКИ ПОКУПАТЕЛЬ, ТОВАР, ПОСТАВЩИК*/
-    $(document).off('keyup.byer').on('keyup.byer', '#byer, #sync_byer', function(event){
+    $(document).off('keyup.byer').on('keyup.byer', '#byer, .sync_byer', function(event){
 
-        var sbyer = $('#byer').val();
+        var sbyer = $(event.target).val();
 
         if (sbyer.length > 0) {
 
             console.log(sbyer);
 
             $.ajax({
-                context : $('#byer'),
                 url: 'mysql_search.php',
                 method: 'POST',
                 data: {sbyer:sbyer},
@@ -156,16 +155,15 @@ $(document).ready(function(){
         };
 
     });
-    $(document).off('keyup.seller').on('keyup.seller', '#seller, #sync_seller', function(event){
+    $(document).off('keyup.seller').on('keyup.seller', '#seller, .sync_seller', function(event){
 
-        var sseller = $('#seller').val();
+        var sseller = $(event.target).val();
 
         if (sseller.length > 0) {
 
             console.log(sseller);
 
             $.ajax({
-                context : $('#seller'),
                 url: 'mysql_search.php',
                 method: 'POST',
                 data: {sseller:sseller},
@@ -177,16 +175,15 @@ $(document).ready(function(){
         };
 
     });
-    $(document).off('keyup.trade').on('keyup.trade', '#trade, #sync_trade', function(event){
+    $(document).off('keyup.trade').on('keyup.trade', '#trade, .sync_trade', function(event){
 
-        var strade = $('#trade').val();
+        var strade = $(event.target).val();
 
         if (strade.length > 0) {
 
             console.log(strade);
 
             $.ajax({
-                context : $('#trade'),
                 url: 'mysql_search.php',
                 method: 'POST',
                 data: {strade:strade},
