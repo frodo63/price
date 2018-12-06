@@ -37,15 +37,15 @@
 3)если и в базе есть, и в 1с есть, и вд совпадает, то ничего не делаем.
 
 */
-?>
 
-<?php
+
+
 include_once 'pdo_connect.php';
 
 
 if(isset($_POST['sync_file'])){
     $sync = $_POST['sync_file'];
-
+    $uid_column = $sync."_uid";
     $path = 'files/sync_'.$sync.'.txt';
     $file = fopen($path,'r');
 
@@ -179,11 +179,23 @@ if(isset($_POST['sync_file'])){
                 echo"<p>Файл выгружен в массив: </p>";
                 echo"<input type='button' value='Пройти по массиву' id = 'sync_trades_list'>";
 
+                $gotuid = $pdo->prepare("SELECT trades_uid FROM trades WHERE trades_uid = ?");
+
                 //Выводим божеский вид
                 echo"<ul>";
                 foreach ($file_array as $row){
                     $temp_array = explode(';',$row);
-                    echo"<li>$temp_array[1]<input type='text' class='sync_trade'><div class='sres'></div><input type='button' class='sync_to_base' value='Соотнести' table innerid uid=$temp_array[4] dataver=$temp_array[3]></li>";
+
+                    //Проверка на наличие такого uid  в базе
+                    $gotuid->execute(array($temp_array[4]));
+                    $gotsome = $gotuid->fetchAll();
+                    //Если такой uid есть - ничего не делаем
+                    if(count($gotsome)>0){
+                        echo"Уже в базе";
+                    }else{
+                        //Выводим возможность соотнести и записать в базу
+                        echo"<li>$temp_array[1]<input type='text' class='sync_trade'><div class='sres'></div><input type='button' class='sync_to_base' value='Соотнести' table innerid uid=$temp_array[4] dataver=$temp_array[3]></li>";
+                    }
                 }
                 echo"</ul>";
             }else{
@@ -195,4 +207,18 @@ if(isset($_POST['sync_file'])){
     $file = "files/sync_requests.txt";
     $requests_list = array();
     $temp_array = array();
+}
+
+if (isset($_POST['innerid']) && isset($_POST['uid']) && isset($_POST['dataver'])){
+    try {
+        $innerid = $_POST['innerid'];
+        $uid = $_POST['uid'];
+        $dataver = $_POST['dataver'];
+
+
+
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
 }

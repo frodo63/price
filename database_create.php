@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS `trades` (
 `tradeid` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
 `trades_nameid` MEDIUMINT UNSIGNED NOT NULL,
 `tare` ENUM('штука','банка','канистра','бочка') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+`trades_uid` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL AFTER `trades_id`,
+ ADD UNIQUE (`trades_uid`),
  PRIMARY KEY (`tradeid`),
  FOREIGN KEY (`trades_nameid`) REFERENCES `allnames`(`nameid`)
  ON UPDATE CASCADE

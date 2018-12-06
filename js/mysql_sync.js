@@ -34,11 +34,35 @@ $(document).ready(function(){
         console.log(theID);
         console.log(category);
         $(event.target).parents('.sres').next('input.sync_to_base').attr({innerid:theID,table:category});
-
-
-
-
     })
+
+    //Соотнесение по кнопке
+    $(document).off('click.sync_to_base').on('click.sync_to_base', '.sync_to_base', function (event) {
+        var innerid = $(event.target).attr('innerid');
+        var uid = $(event.target).attr('uid');
+        var dataver = $(event.target).attr('dataver');
+
+        if(!innerid){
+            console.log('innerid is undefined');
+        }else{
+            console.log(innerid);
+            console.log(uid);
+            console.log(dataver);
+
+            $.ajax({
+                url: 'mysql_sync.php',
+                method: 'POST',
+                data: {innerid:innerid,uid:uid,dataver:dataver},
+                success: function (data) {
+                    $('#sync_info').html(data);
+                }
+            });
+
+        }
+
+
+
+    });
 
 
 
