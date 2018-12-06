@@ -512,7 +512,7 @@ if(isset($_POST['reqid']) && isset($_POST['giveaway_date']) && isset($_POST['com
 
     try{
 
-        $sql = "UPDATE giveaways SET given_away = :given_away,comment = :comment,giveaway_sum = :giveaway_sum WHERE giveaways_id = :giveaways_id AND giveaways_id = :giveaways_id";
+        $sql = "UPDATE giveaways SET given_away = :given_away,comment = :comment,giveaway_sum = :giveaway_sum WHERE giveaways_id = :giveaways_id";
         $statement = $pdo->prepare($sql);
 
         $statement->bindValue(':given_away', $giveaway_date);

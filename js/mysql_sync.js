@@ -40,19 +40,21 @@ $(document).ready(function(){
     $(document).off('click.sync_to_base').on('click.sync_to_base', '.sync_to_base', function (event) {
         var innerid = $(event.target).attr('innerid');
         var uid = $(event.target).attr('uid');
-        var dataver = $(event.target).attr('dataver');
+        //var dataver = $(event.target).attr('dataver');
+        var table = $(event.target).attr('table');
 
         if(!innerid){
             console.log('innerid is undefined');
         }else{
             console.log(innerid);
             console.log(uid);
-            console.log(dataver);
+            //console.log(dataver);
+            console.log(table);
 
             $.ajax({
                 url: 'mysql_sync.php',
                 method: 'POST',
-                data: {innerid:innerid,uid:uid,dataver:dataver},
+                data: {innerid:innerid,uid:uid,/*dataver:dataver,*/table:table},
                 success: function (data) {
                     $('#sync_info').html(data);
                 }

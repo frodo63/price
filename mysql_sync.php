@@ -1,47 +1,6 @@
 <?php
-/*Синхронизация
-
-Синхронизируем справочники.
-Справочники - Покупатели, Поставщики, Товары. Какие тут данные могут измениться?
-Товар могут создать - тогда такого уид не будет и мы его создаем.
-Товар могут удалить - тогда мы не удаляем из базы, а сохраняем для истории и ставим флаг "удален из 1с". Но там возможно будет создан новый же...
-Может, товары с флагом "Удален из 1с" просто не участвуют в выдаче?
-
-
-
-
-Синхронизируем заказы.
-есть весия данных вд, она записывается в базу и является первичным идентификатором, что изменений не было в 1с.
-
-Идентифицировать заказы надо по уид.
-Для начала к существующим в базе заказам надо добавить уиды, это отдельный разовый скрипт,
-чтобы можно было работать со старой базой. На случай, если заказ создавался вручную, можно
-сохранить такую функцию присоединения заказа к заказу в 1с. запускать при начале скрипта
-синхронизации.
-Проверить по покупателю и дате. если не совпадает - вывести форму для ручного соотнесения
-внести дату и покупателя и создать заказ с введенными данными.
-
-1)если в базе уид есть, а в массиве1с нет - то заказ был типа удалён, это бывает редко и
-наверное надо не удалять из базы, оставить для истории, но поставить флаг "из 1с удален".
-
-2)если в базе уид такого нет, то значит надо создать заказ, берем номер, уид, покупателя,
-создаём заявку, берем таблицу товаров и первый товар выносим в название заявки. добавляем
-" и пр.", если товаров больше 1.
-На каждый товар создаем позицию, и в каждой позиции добавляем расценку, заносим информацию.
-Надо зафиксировать цену и количество и при обращении к расценке вывести сообщение типа
-"привести к цене такой-то".
-Обойти ограничение скрипта в отсутстви поставщика, хотя там ограничений скриптовых нет,
-могут быть лишь констреинты в базе майскул, в таблице pricings, типа невозможности создать
-расценку без поставщика.
-
-3)если и в базе есть, и в 1с есть, и вд совпадает, то ничего не делаем.
-
-*/
-
-
 
 include_once 'pdo_connect.php';
-
 
 if(isset($_POST['sync_file'])){
     $sync = $_POST['sync_file'];
@@ -185,16 +144,22 @@ if(isset($_POST['sync_file'])){
                 echo"<ul>";
                 foreach ($file_array as $row){
                     $temp_array = explode(';',$row);
+                    $uid_trimmed = substr($temp_array[4],0,-2);
 
                     //Проверка на наличие такого uid  в базе
-                    $gotuid->execute(array($temp_array[4]));
-                    $gotsome = $gotuid->fetchAll();
+                    $gotuid->execute(array($uid_trimmed));
+                    $gotsome = $gotuid->fetch(PDO::FETCH_ASSOC);
                     //Если такой uid есть - ничего не делаем
-                    if(count($gotsome)>0){
-                        echo"Уже в базе";
+                    if(is_string($gotsome['trades_uid'])){
+                        echo"UID Для ".$temp_array[1]." уже в базе";
+
                     }else{
                         //Выводим возможность соотнести и записать в базу
-                        echo"<li>$temp_array[1]<input type='text' class='sync_trade'><div class='sres'></div><input type='button' class='sync_to_base' value='Соотнести' table innerid uid=$temp_array[4] dataver=$temp_array[3]></li>";
+                        echo"<li>$temp_array[1]
+                                 <input type='text' class='sync_trade'>
+                                 <div class='sres'></div>
+                                 <input type='button' table=$sync class='sync_to_base' value='Соотнести' table innerid uid=$temp_array[4] dataver=$temp_array[3]>
+                             </li>";
                     }
                 }
                 echo"</ul>";
@@ -209,12 +174,42 @@ if(isset($_POST['sync_file'])){
     $temp_array = array();
 }
 
-if (isset($_POST['innerid']) && isset($_POST['uid']) && isset($_POST['dataver'])){
+if (isset($_POST['innerid']) && isset($_POST['uid']) && isset($_POST['table'])){
     try {
+
+        switch ($_POST['table']) {
+            case "requests":
+                $table = "requests";
+                break;
+            case "byers":
+                $table = "byers";
+                break;
+            case "sellers":
+                $table = "sellers";
+                break;
+            case "trades":
+                $table = "trades";
+                $innerid_column = "trades_id";
+                $uid_column = "trades_uid";
+                break;
+        }
+
+
+
         $innerid = $_POST['innerid'];
         $uid = $_POST['uid'];
-        $dataver = $_POST['dataver'];
 
+
+        $statement=$pdo->prepare("UPDATE $table SET $uid_column=:uid WHERE $innerid_column=:innerid");
+        $statement->bindValue(':uid', $uid);
+        $statement->bindValue(':innerid', $innerid);
+
+
+        $pdo->beginTransaction();
+        $statement->execute();
+        $pdo->commit();
+
+        echo "получилось";
 
 
     } catch( PDOException $Exception ) {

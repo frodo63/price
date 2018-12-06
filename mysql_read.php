@@ -1083,6 +1083,7 @@ if(isset($_POST['pay_reqid']) && isset($_POST['pay_id'])){
         $pdo->beginTransaction();
         $statement = $pdo->prepare("SELECT * FROM `payments` WHERE payments_id=? AND requestid=?");
         $statement->execute(array($paymentid,$requestid));
+        $pdo->commit();
         $result = $statement->fetch();
         echo json_encode($result);/*Перевели массив расценки в формат JSON*/
     } catch( PDOException $Exception ) {
@@ -1101,6 +1102,7 @@ if(isset($_POST['give_reqid']) && isset($_POST['give_id'])){
         $pdo->beginTransaction();
         $statement = $pdo->prepare("SELECT * FROM `giveaways` WHERE giveaways_id=? AND requestid=?");
         $statement->execute(array($giveawayid,$requestid));
+        $pdo->commit();
         $result = $statement->fetch();
         echo json_encode($result);/*Перевели массив расценки в формат JSON*/
     } catch( PDOException $Exception ) {

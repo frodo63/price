@@ -68,23 +68,33 @@ if (isset($_POST['sbyer'])){
 
 //ПОИСК ТОВАРА///////////////////////////////////////////////////////////////////////////////////
 if (isset($_POST['strade'])){
-    $sline = $_POST['strade'];
+    try {
+        $sline = $_POST['strade'];
 
-    $statement = $pdo->prepare("
-        SELECT name, nameid, trades_id,tare FROM `allnames`
+        $statement = $pdo->prepare("
+        SELECT name,nameid,trades_id,tare FROM `allnames`
         INNER JOIN `trades` ON nameid=trades_nameid  
         WHERE name LIKE '%{$sline}%' GROUP BY nameid");
 
-    $statement->execute();
-    $result ='<ul>';
-    $trades='';
-    foreach ($statement as $row){
-        $trades .= "<li category='trade' trades_id=".$row['trades_id']." nameid=" . $row['nameid'] . " tare=" . $row['tare'] . "><p>" . $row['name'] . "</p><div class='note'>товар</div></li>";
-    };
-    $result .= $trades;
-    $result .= "</ul><!--<script src='js/mysql_searching.js'>-->";
+        $pdo->beginTransaction();
+        $statement->execute();
+        $pdo->commit();
+        $result ='<ul>';
+        $trades='';
+        foreach ($statement as $row){
+            $trades .= "<li category='trade' trades_id=".$row['trades_id']." nameid=" . $row['nameid'] . " tare=" . $row['tare'] . "><p>" . $row['name'] . "</p><div class='note'>товар</div></li>";
+        };
+        $result .= $trades;
+        $result .= "</ul><!--<script src='js/mysql_searching.js'>-->";
 
-    print $result;
+        print $result;
+    } catch( PDOException $Exception ) {
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+
+
+
+
 };
 
 //ПОИСК ПОСТАВЩИКА///////////////////////////////////////////////////////////////////////////////////
@@ -110,7 +120,7 @@ if (isset($_POST['sseller'])){
 
 //ПОИСК номера в 1С
 //ПОИСК номера в 1С///////////////////////////////////////////////////////////////////////////////////
-if (isset($_POST['1c_num'])){
+/*if (isset($_POST['1c_num'])){
     $sline = $_POST['1c_num'];
 
     $statement = $pdo->prepare("
@@ -140,4 +150,4 @@ if (isset($_POST['1c_num'])){
     $result .= "</ul><!--<script src='js/mysql_searching.js'>-->";
 
     print $result;
-};
+};*/
