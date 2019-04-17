@@ -7,6 +7,7 @@ $(document).ready(function(){
         $('#sres ul').html('');
         $('.sres ul').html('');
         $('#byer+div ul').html('');
+        $('#byer_interval+div ul').html('');
         $('#trade+div ul').html('');
         $('#seller+div ul').html('');
 
@@ -53,6 +54,11 @@ $(document).ready(function(){
     $(document).off('click.sresbyer').on('click.sresbyer', '#byer+div ul li p', function (event) {
         $('#byer').val($(event.target).text());
         $('#byer').attr('byer_id', $(event.target).parent().attr('byers_id'));
+    });
+
+    $(document).off('click.sresbyerinterval').on('click.sresbyerinterval', '#byer_interval+div ul li p', function (event) {
+        $('#byer_interval').val($(event.target).text());
+        $('#byer_interval').attr('byer_id', $(event.target).parent().attr('byers_id'));
     });
     $(document).off('click.srestrade').on('click.srestrade', '#trade+div ul li p', function (event) {
         $('#trade').val($(event.target).text());
@@ -135,7 +141,7 @@ $(document).ready(function(){
 
 
     /*ПОИСКОВЫЕ СТРОКИ ПОКУПАТЕЛЬ, ТОВАР, ПОСТАВЩИК*/
-    $(document).off('keyup.byer').on('keyup.byer', '#byer, .sync_byer', function(event){
+    $(document).off('keyup.byer').on('keyup.byer', '#byer, .sync_byer, #byer_interval', function(event){
 
         var sbyer = $(event.target).val();
 

@@ -198,11 +198,21 @@ $(document).ready(function(){
         to = to.slice(6,10)+'-'+to.slice(3,5)+'-'+to.slice(0,2);
         console.log(to);
 
+        var filterbyer = "none";
+
+
+        if($('#filter_byer').prop('checked')){
+            var filterbyer = $('#byer_interval').attr('byer_id');
+            console.log(filterbyer);
+        }else{
+            $('#byer_interval').val();
+        }
+
         if(from!='--' && to!='--'){
             $.ajax({
                 url: 'mysql_read.php',
                 method: 'POST',
-                data: {table:'requests', from:from, to:to},
+                data: {table:'requests', from:from, to:to, filterbyer:filterbyer},
                 success: function (data) {
                     $('#reads .requests_list').html(data);
                 },

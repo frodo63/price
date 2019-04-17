@@ -81,8 +81,12 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
           </div>
           <div id='requests_date_range'>
               <span>Выберите временной интервал</span><br>
-              <!--<input class='from' type='date'><input class='to' type='date'>-->
-              <input class='from' size='10' placeholder='От'><input class='to' size='10' placeholder='До'>
+
+              ОТ:<input class='from' size='10' placeholder='От'>
+              ДО:<input class='to' size='10' placeholder='До'>
+              <label for='filter_byer'>Учитывать Покупателя</label><input type='checkbox' id='filter_byer'>
+              <input type='text' placeholder='' size='30' id ='byer_interval' byer_id='' autocomplete='off'><div class='sres'></div>
+              
 
               <input class='filter_date' type='button' value='Отобразить'>
           </div>

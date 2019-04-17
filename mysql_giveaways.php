@@ -7,14 +7,14 @@ if (isset($_POST['the_byer'])){
     try {
         $the_byer = $_POST['the_byer'];
         if(isset($_POST['from']) && isset($_POST['to'])){
-            $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE (requests.byersid = ? AND requests.created BETWEEN ? AND ? AND requests.r1_hidden = 0)");
+            $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE (requests.byersid = ? AND requests.created BETWEEN ? AND ? AND requests.r1_hidden = 0) ORDER BY created");
             $from = $_POST['from'];
             $to = $_POST['to'];
 
             $from_norm = substr($from,8,2).'-'.substr($from,5,2).'-'.substr($from,0,4);
             $to_norm = substr($to,8,2).'-'.substr($to,5,2).'-'.substr($to,0,4);
         }else{
-            $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE (requests.byersid = ? AND requests.r1_hidden = 0)");
+            $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE (requests.byersid = ? AND requests.r1_hidden = 0) ORDER BY created");
         }
         $req_payments = $pdo->prepare("SELECT requests_id,payments_id,number,payed,sum,req_sum FROM requests LEFT JOIN payments ON requests.requests_id=payments.requestid WHERE requests_id = ? ORDER BY payed");
         $req_giveaways = $pdo->prepare("SELECT requests_id,given_away,giveaways_id,giveaway_sum FROM requests LEFT JOIN giveaways ON requests.requests_id=giveaways.requestid WHERE requests_id=? ORDER BY given_away");
@@ -47,7 +47,7 @@ if (isset($_POST['the_byer'])){
             $mysqldate = date( 'd.m.y', $phpdate );
             $result.="<td>".$mysqldate."</td>";
             /*/////////////////////////////////////////////////*/
-            $result.="<td>".$row['requests_id']."</td>";
+            $result.="<td></td>";
             $result.="<td>".$row['1c_num']."</td>";
             $result.="<td><input class='collapse_ga_request' ga_request='". $row['requests_id'] ."' type='button' value='♢'><span>".$row['name']."</span>
 <div class='ga_contents' ga_request='". $row['requests_id'] ."'><div class='ga_options'></div><div class='ga_c_payments'></div><div class='ga_c_positions'></div><div class='ga_c_giveaways'></div></div></td>";
@@ -97,7 +97,7 @@ if (isset($_POST['the_byer'])){
             if(round($req_sum,2) == round($req_pay,2) && round($req_sum,2) !=0 && round($req_pay,2) != 0 && $req_give_ostatok == 0 && $req_give != 0){
                 $result .="<td>
                                <div class='green'>
-                                   <span>Оплата 100%. Выдача 100%.</span>
+                                   <span>Оплата 100% Выдача 100%</span>
                                    <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$the_byer."'>
                                        
                                </div>
@@ -105,7 +105,7 @@ if (isset($_POST['the_byer'])){
             }elseif (round($req_sum,2) == round($req_pay,2) && round($req_sum,2) !=0 && round($req_pay,2) != 0 && $req_give_ostatok == 0 && $req_give == 0){
                 $result .="<td>
                                <div class='green'>
-                                   <span>Оплата 100%. Начислений не было.</span>
+                                   <span>Оплата 100% Начислений не было</span>
                                    <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$the_byer."'>
                                        
                                </div>
@@ -113,28 +113,28 @@ if (isset($_POST['the_byer'])){
             }elseif(round($req_sum,2) == round($req_pay,2) && round($req_sum,2) !=0 && round($req_pay,2) !=0){
                 $result .="<td>
                                <div class='lightgreen'>
-                                   <span>Оплата 100%. К выдаче: ".$req_give_ostatok.".</span>
+                                   <span>Оплата 100% К выдаче: ".$req_give_ostatok."</span>
                                    <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$the_byer."'>                                       
                                </div>
                            </td>";
             }elseif (round($req_sum,2) == 0){
                 $result .="<td>
                                <div class='red'>
-                                   <span>Назначьте победителя.</span>
+                                   <span>Назначьте победителя</span>
                                    <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$the_byer."'>                                       
                                </div>
                            </td>";
             }elseif (round($req_pay,2) == 0){
                 $result .="<td>
                                <div class='lightblue'>
-                                   <span>Оплат не поступало.</span>
+                                   <span>Оплат не поступало</span>
                                    <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$the_byer."'>
                                </div>
                            </td>";
             }else{
                 $result .="<td>
                                <div class='yellow'>
-                                   <span>Оплата < 100%. К оплате :".$req_pay_ostatok.".</span>
+                                   <span>Оплата < 100% К оплате :".$req_pay_ostatok."</span>
                                    <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$the_byer."'>                                       
                                </div>
                            </td>";

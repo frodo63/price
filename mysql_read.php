@@ -169,9 +169,12 @@ if(isset($_POST['table'])){
         }/*Временной интервал*/else if(isset($_POST['from']) && isset($_POST['to'])) {
             $from = $_POST['from'];
             $to = $_POST['to'];
-            try {
+            $filterbyer = $_POST['filterbyer'];
 
-                $statement = $pdo->prepare("SELECT                                       
+            if($filterbyer == 'none'){
+                try {
+
+                    $statement = $pdo->prepare("SELECT                                       
                                         a.created AS req_date,
                                         a.requests_id AS req_id,
                                         a.requests_nameid AS req_nameid,
@@ -185,15 +188,49 @@ if(isset($_POST['table'])){
                                         FROM (SELECT * FROM (SELECT * FROM requests WHERE `created` BETWEEN ? AND ?) AS x LEFT JOIN allnames ON x.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
                                         ORDER BY `b`.`name` ASC");
 
-                $pdo->beginTransaction();
-                $statement->execute(array($from,$to));
-                $pdo->commit();
+                    $pdo->beginTransaction();
+                    $statement->execute(array($from,$to));
+                    $pdo->commit();
 
-            } catch( PDOException $Exception ) {
-                // Note The Typecast To An Integer!
-                $pdo->rollback();
-                throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                }catch( PDOException $Exception ) {
+                    // Note The Typecast To An Integer!
+                    $pdo->rollback();
+                    throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                }
+            }else{
+                try {
+
+                    $statement = $pdo->prepare("SELECT                                       
+                                        a.created AS req_date,
+                                        a.requests_id AS req_id,
+                                        a.requests_nameid AS req_nameid,
+                                        a.name AS req_name,
+                                        a.req_rent AS rent,
+                                        a.req_sum AS sum,
+                                        b.byers_id AS b_id,
+                                        b.byers_nameid AS b_nameid,
+                                        b.name AS b_name
+                                        FROM (SELECT * FROM 
+                                              
+                                              (SELECT * FROM requests) AS x LEFT JOIN allnames ON x.requests_nameid=allnames.nameid)AS a 
+                                              
+                                              LEFT JOIN 
+                                              
+                                              (SELECT * FROM byers AS t LEFT JOIN allnames ON t.byers_nameid=allnames.nameid) AS b 
+                                              
+                                              ON b.byers_id=a.byersid WHERE (a.created BETWEEN ? AND ?) AND (`b`.`byers_id` = ?)");
+
+                    $pdo->beginTransaction();
+                    $statement->execute(array($from,$to,$filterbyer));
+                    $pdo->commit();
+
+                }catch( PDOException $Exception ) {
+                    // Note The Typecast To An Integer!
+                    $pdo->rollback();
+                    throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                }
             }
+
         }/*Общий список заявок*/else{
             try {
                 $statement = $pdo->prepare("SELECT 
