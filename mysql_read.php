@@ -207,6 +207,7 @@ if(isset($_POST['table'])){
                                         a.name AS req_name,
                                         a.req_rent AS rent,
                                         a.req_sum AS sum,
+                                        a.1c_num AS 1c_num,
                                         b.byers_id AS b_id,
                                         b.byers_nameid AS b_nameid,
                                         b.name AS b_name
