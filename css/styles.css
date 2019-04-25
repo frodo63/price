@@ -1274,6 +1274,26 @@ tr[pricingid] td {
   font-size: 21px;
 }
 
+/* line 888, ../sass/_mysql_styles.scss */
+#sync_info ul, #sync_info li {
+  list-style: none;
+}
+
+/* line 893, ../sass/_mysql_styles.scss */
+#sync_add_to_base {
+  z-index: 10000;
+  height: 30px;
+  width: 30px;
+  background: green;
+  position: absolute;
+  top: 100px;
+  right: 700px;
+}
+/* line 902, ../sass/_mysql_styles.scss */
+#sync_add_to_base.up {
+  display: none;
+}
+
 /* line 1, ../sass/_price.scss */
 h2 {
   margin: 0;

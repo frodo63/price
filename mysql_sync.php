@@ -38,9 +38,7 @@ if(isset($_POST['sync_file'])){
                     $requests_list[] = $temp_array;
                 }*/
                 //Выводим божеский вид
-                echo"<span>НомерЗаказа</span>
-                     <span>Дата</span>
-                     <span>КодПокупателя</span>
+                echo"<span>НомерЗаказа</span><span>Дата</span><span>КодПокупателя</span>
                      <span>УИДЗаказа</span>";
                 foreach ($file_array as $row){
                     echo"<pre>";
@@ -81,11 +79,14 @@ if(isset($_POST['sync_file'])){
                 }*/
                 //Выводим божеский вид
 
+                echo"<ul id='sinchronize_payments'>";
                 foreach ($file_array as $row){
-                    echo"<pre>";
-                    print_r($row);
-                    echo"</pre>";
+                    $temp_array = explode(';',$row);
+                    echo"<li>
+                             $row;
+                         </li>";
                 }
+                echo"</ul>";
             }else{
                 echo"<p>Файл НЕ найден</p>";
             }
@@ -101,10 +102,11 @@ if(isset($_POST['sync_file'])){
 
 
                 //Выводим божеский вид
-                echo"<ul>";
+                echo"<ul id='sinchronize_byers'>";
                 foreach ($file_array as $row){
                     $temp_array = explode(';',$row);
-                    echo"<li>$temp_array[1]<input type='text' class='sync_byer'><div class='sres'></div><input type='button' class='sync_to_base' value='Соотнести' table innerid uid=$temp_array[3] dataver=$temp_array[2]></li>";
+                    echo"<li>$temp_array[1]<input type='text' class='sync_byer'><div class='sres'></div><input type='button' class='sync_to_base' value='Соотнести' table innerid uid=$temp_array[3] dataver=$temp_array[2]>
+                    <input type='checkbox'><input class='sync_add_to_base' type='button' value='Занести в программу'></li>";
                 }
                 echo"</ul>";
             }else{
@@ -117,13 +119,15 @@ if(isset($_POST['sync_file'])){
                 $file_array = file($path); // Считывание файла в массив $file_array
                 if (count($file_array) > 0);
                 echo"<p>Файл выгружен в массив: </p>";
-                echo"<input type='button' value='Пройти по массиву' id = 'sync_sellers_list'>";
 
                 //Выводим божеский вид
-                echo"<ul>";
+                echo"<ul id='sinchronize_sellers'>";
                 foreach ($file_array as $row){
                     $temp_array = explode(';',$row);
-                    echo"<li>$temp_array[1]<input type='text' class='sync_seller'><div class='sres'></div><input type='button' class='sync_to_base' value='Соотнести' table innerid uid=$temp_array[3] dataver=$temp_array[2]></li>";
+                    echo"<li><input type='text' class='sync_seller'><div class='sres'></div>
+                             <span>$temp_array[1]</span><input type='button' class='sync_to_base' value='Соотнести' table innerid uid=$temp_array[3] dataver=$temp_array[2]>
+                             <input type='checkbox'><input class='sync_add_to_base' type='button' value='Занести в программу'>
+                         </li>";
                 }
                 echo"</ul>";
             }else{
@@ -136,12 +140,11 @@ if(isset($_POST['sync_file'])){
                 $file_array = file($path); // Считывание файла в массив $file_array
                 if (count($file_array) > 0);
                 echo"<p>Файл выгружен в массив: </p>";
-                echo"<input type='button' value='Пройти по массиву' id = 'sync_trades_list'>";
 
                 $gotuid = $pdo->prepare("SELECT trades_uid FROM trades WHERE trades_uid = ?");
 
                 //Выводим божеский вид
-                echo"<ul>";
+                echo"<ul id='sinchronize_trades'>";
                 foreach ($file_array as $row){
                     $temp_array = explode(';',$row);
                     $uid_trimmed = substr($temp_array[4],0,-2);
@@ -149,16 +152,17 @@ if(isset($_POST['sync_file'])){
                     //Проверка на наличие такого uid  в базе
                     $gotuid->execute(array($uid_trimmed));
                     $gotsome = $gotuid->fetch(PDO::FETCH_ASSOC);
+
                     //Если такой uid есть - ничего не делаем
-                    if(is_string($gotsome['trades_uid'])){
-                        echo"UID Для ".$temp_array[1]." уже в базе";
+                    if(is_string($gotsome['trades_uid']) && $uid_trimmed == $gotsome['trades_uid']){
+                        echo"<li> Уже в базе --- ".$temp_array[1]."</li>";
+                        /*ничего не выводим*/
 
                     }else{
                         //Выводим возможность соотнести и записать в базу
-                        echo"<li>$temp_array[1]
-                                 <input type='text' class='sync_trade'>
-                                 <div class='sres'></div>
+                        echo"<li><input type='text' class='sync_trade'><div class='sres'></div>                                 
                                  <input type='button' table=$sync class='sync_to_base' value='Соотнести' table innerid uid=$temp_array[4] dataver=$temp_array[3]>
+                                 <span>$temp_array[1]</span><input type='checkbox'><input class='sync_add_to_base' type='button' value='Занести в программу'>
                              </li>";
                     }
                 }
@@ -174,6 +178,8 @@ if(isset($_POST['sync_file'])){
     $temp_array = array();
 }
 
+
+/*Собственно соотнесение*/
 if (isset($_POST['innerid']) && isset($_POST['uid']) && isset($_POST['table'])){
     try {
 
@@ -188,9 +194,7 @@ if (isset($_POST['innerid']) && isset($_POST['uid']) && isset($_POST['table'])){
                 $table = "sellers";
                 break;
             case "trades":
-                $table = "trades";
-                $innerid_column = "trades_id";
-                $uid_column = "trades_uid";
+                $statement=$pdo->prepare("UPDATE trades SET `trades_uid`=:uid WHERE `trades_id`=:innerid");
                 break;
         }
 
@@ -200,7 +204,6 @@ if (isset($_POST['innerid']) && isset($_POST['uid']) && isset($_POST['table'])){
         $uid = $_POST['uid'];
 
 
-        $statement=$pdo->prepare("UPDATE $table SET $uid_column=:uid WHERE $innerid_column=:innerid");
         $statement->bindValue(':uid', $uid);
         $statement->bindValue(':innerid', $innerid);
 

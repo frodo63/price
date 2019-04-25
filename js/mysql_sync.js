@@ -48,22 +48,57 @@ $(document).ready(function(){
         }else{
             console.log(innerid);
             console.log(uid);
-            //console.log(dataver);
             console.log(table);
 
             $.ajax({
                 url: 'mysql_sync.php',
                 method: 'POST',
-                data: {innerid:innerid,uid:uid,/*dataver:dataver,*/table:table},
+                data: {innerid:innerid,uid:uid,table:table},
                 success: function (data) {
-                    $('#sync_info').html(data);
+                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                 }
             });
+        }
+    });
 
+
+    $(document).off('click.syncaddnew').on('click.syncaddnew', '.sync_add_to_base', function(){
+        $('#sync_add_to_base').toggleClass('up', 500);
+        if($('#sinchronize_trades').length > 0){
+            $('#sync_add_to_base').html("<div class ='creates'>" +
+                "<br><input class='add_trade_name' type='text' placeholder='Введите наименование Товара' size='70'>" +
+                "<br><span>Тара:</span><span class='trade_options_tare'></span><br>" +
+                "<select id='add_trade_tare' size='1'>" +
+                "<option value='штука'>штука (по умолчанию)</option>" +
+                "<option value='банка'>банка (до 5кг)</option>" +
+                "<option value='канистра'>канистра (5-50л)</option>" +
+                "<option value='бочка'>бочка(200л)</option>" +
+                "</select><br>" +
+                "<span class='ready_comment'></span><br>" +
+                "<input  type='button' name='trades' value='Добавить' disabled><br><br></div>");
+            $('#sync_add_to_base .creates').css('display','block');
         }
 
+        if($('#sinchronize_byers').length > 0){
+            $('#sync_add_to_base').html("<div class='creates add_ramk'><br>" +
+                "<input type='text' placeholder='Введите наименование Покупателя' size='70'>" +
+                "<input type='button' tc='1' name='byers' value='Добавить'>" +
+                "<br>" +
+                "<br>" +
+                "</div>");
+            $('#sync_add_to_base .creates').css('display','block');
+        }
 
-
+        if($('#sinchronize_sellers').length > 0){
+            $('#sync_add_to_base').html("<div class='creates'>" +
+                "<br>" +
+                "<input type='text' placeholder='Введите наименование Поставщика' size='70'>" +
+                "<input type='button' tc='2' name='sellers' value='Добавить'>" +
+                "<br>" +
+                "<br>" +
+                "</div>");
+            $('#sync_add_to_base .creates').css('display','block');
+        }
     });
 
 

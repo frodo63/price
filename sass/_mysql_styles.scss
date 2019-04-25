@@ -884,3 +884,23 @@ tr[pricingid] td {border: 1px solid black}
   }
 }
 
+#sync_info{
+  ul, li {
+    list-style: none;
+  }
+}
+
+#sync_add_to_base{
+  z-index: 10000;
+  height:30px;
+  width:30px;
+  background: green;
+
+  position: absolute;
+  top:100px;
+  right: 700px;
+  &.up{
+    display: none;
+  }
+}
+

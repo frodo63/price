@@ -124,7 +124,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
       <input type='button' class='addnew' value='+'> Добавить номенклатуру
           <div class ='creates'>
           <br>
-              <input id='add_trade_name' type='text' placeholder='Введите наименование Товара' size='70'>              
+              <input class='add_trade_name' type='text' placeholder='Введите наименование Товара' size='70'>              
               
               <br><span>Тара:</span><span class='trade_options_tare'></span><br>
               
@@ -174,6 +174,7 @@ echo"
           <div class='givaways_list'>          
           </div>      
       </div>
+      
       <div id='vidachi'>
       <input type='button' class='show_list' value='ВЫДАЧИ⏎'><br><br>
           <div class='vidachi_list'></div>      
@@ -188,6 +189,7 @@ echo"
       <input type='button' class='show_list' value='ДОЛГИ⏎'><br><br>
           <div class='totals_list'></div>
       </div>
+      
       <div id='search'>
           <div class='search_list'></div>
       </div>";
@@ -200,6 +202,10 @@ echo "    <div id='sync'>
               <input type='button' id='sync_byers' value='Покупателей'>
               <input type='button' id='sync_sellers' value='Поставщиков'>
               <input type='button' id='sync_trades' value='Товары'>
+              
+              <div id='sync_add_to_base' class='up'>              
+              </div>
+              
               <div id='sync_info'></div>          
           </div>
       </div>
@@ -218,7 +224,7 @@ echo "    <div id='sync'>
                   
                   <span class='ready_comment'></span><br>
                   <input class='close_edit_1c_num' type='button' value='X'>
-              </div> 
+              </div>
 
 
               <div id='edit_options'>
@@ -284,6 +290,8 @@ echo "    <div id='sync'>
                   
               <br><br><span class='ready_comment'></span>    
               </div> 
+              
+              
 
 <input type='button' value='▲' id='go_up'>";
 

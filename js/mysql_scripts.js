@@ -54,7 +54,7 @@ $(document).ready(function(){
     }
 
     //ПРОВЕРКА ТЕКСТОВОГО ЗНАЧЕНИЯ ИМЕНИ, ВВОДИМОГ О В БАЗУ
-    $(document).off('keyup.checkname').on('keyup.checkname', '#add_trade_name', function(event){
+    $(document).off('keyup.checkname').on('keyup.checkname', '.add_trade_name', function(event){
         var checkname = $(event.target).val();
 
         if(check_one_name(checkname) == 3){
@@ -113,8 +113,8 @@ $(document).ready(function(){
         }
         //Добавляем товар?
         else if($(event.target).attr('name') == 'trades'){
-            var trade_name = $('#add_trade_name').val();
-            var trade_tare = $('#add_trade_tare').val();
+            var trade_name = $('.add_trade_name').val();
+            var trade_tare = $('.add_trade_tare').val();
             console.log(trade_name +'     '+trade_tare);
 
             $.ajax({
@@ -123,7 +123,7 @@ $(document).ready(function(){
                 data: {trade_name:trade_name, trade_tare:trade_tare},
                 success: function (data) {
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
-                    $('#add_trade_name').val('').focus();
+                    $('.add_trade_name').val('').focus();
                     $(event.target).prop('disabled',true);
                 }
             });
@@ -1401,5 +1401,11 @@ $(document).ready(function(){
     $(document).off('click.r1span').on('click.r1span', '.green span, .lightgreen span, .yellow span, .lightblue span, .red span', function(event){
         $(event.target).next('input').trigger('click.show_hr1');
     });
+
+
+
+
+
+
 
 });
