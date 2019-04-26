@@ -13,6 +13,14 @@ $(document).ready(function(){
                 $('#sync_info').html(data);
             }
         });
+        $.ajax({
+            url: 'mysql_sync.php',
+            method: 'POST',
+            data: {sync_html:sync_file},
+            success: function (data) {
+                $('#sync_add_to_base').html(data);
+            }
+        });
     });
 
 
@@ -61,11 +69,11 @@ $(document).ready(function(){
         }
     });
 
-
+/*Добавление в базу из окна СИНХРОНИЗАЦИИ*/
     $(document).off('click.syncaddnew').on('click.syncaddnew', '.sync_add_to_base', function(){
         $('#sync_add_to_base').toggleClass('up', 500);
         if($('#sinchronize_trades').length > 0){
-            $('#sync_add_to_base').html("<div class ='creates'>" +
+           /* $('#sync_add_to_base').html("<div class ='creates'>" +
                 "<br><input class='add_trade_name' type='text' placeholder='Введите наименование Товара' size='70'>" +
                 "<br><span>Тара:</span><span class='trade_options_tare'></span><br>" +
                 "<select id='add_trade_tare' size='1'>" +
@@ -75,28 +83,28 @@ $(document).ready(function(){
                 "<option value='бочка'>бочка(200л)</option>" +
                 "</select><br>" +
                 "<span class='ready_comment'></span><br>" +
-                "<input  type='button' name='trades' value='Добавить' disabled><br><br></div>");
+                "<input  type='button' name='trades' value='Добавить' disabled><br><br></div>");*/
             $('#sync_add_to_base .creates').css('display','block');
         }
 
         if($('#sinchronize_byers').length > 0){
-            $('#sync_add_to_base').html("<div class='creates add_ramk'><br>" +
+           /* $('#sync_add_to_base').html("<div class='creates add_ramk'><br>" +
                 "<input type='text' placeholder='Введите наименование Покупателя' size='70'>" +
                 "<input type='button' tc='1' name='byers' value='Добавить'>" +
                 "<br>" +
                 "<br>" +
-                "</div>");
+                "</div>");*/
             $('#sync_add_to_base .creates').css('display','block');
         }
 
         if($('#sinchronize_sellers').length > 0){
-            $('#sync_add_to_base').html("<div class='creates'>" +
+            /*$('#sync_add_to_base').html("<div class='creates'>" +
                 "<br>" +
                 "<input type='text' placeholder='Введите наименование Поставщика' size='70'>" +
                 "<input type='button' tc='2' name='sellers' value='Добавить'>" +
                 "<br>" +
                 "<br>" +
-                "</div>");
+                "</div>");*/
             $('#sync_add_to_base .creates').css('display','block');
         }
     });

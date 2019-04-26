@@ -106,7 +106,7 @@ if(isset($_POST['sync_file'])){
                 foreach ($file_array as $row){
                     $temp_array = explode(';',$row);
                     echo"<li>$temp_array[1]<input type='text' class='sync_byer'><div class='sres'></div><input type='button' class='sync_to_base' value='Соотнести' table innerid uid=$temp_array[3] dataver=$temp_array[2]>
-                    <input type='checkbox'><input class='sync_add_to_base' type='button' value='Занести в программу'></li>";
+                    <input class='sync_add_to_base' type='button' value='+'></li>";
                 }
                 echo"</ul>";
             }else{
@@ -126,7 +126,7 @@ if(isset($_POST['sync_file'])){
                     $temp_array = explode(';',$row);
                     echo"<li><input type='text' class='sync_seller'><div class='sres'></div>
                              <span>$temp_array[1]</span><input type='button' class='sync_to_base' value='Соотнести' table innerid uid=$temp_array[3] dataver=$temp_array[2]>
-                             <input type='checkbox'><input class='sync_add_to_base' type='button' value='Занести в программу'>
+                             <input class='sync_add_to_base' type='button' value='+'>
                          </li>";
                 }
                 echo"</ul>";
@@ -162,7 +162,7 @@ if(isset($_POST['sync_file'])){
                         //Выводим возможность соотнести и записать в базу
                         echo"<li><input type='text' class='sync_trade'><div class='sres'></div>                                 
                                  <input type='button' table=$sync class='sync_to_base' value='Соотнести' table innerid uid=$temp_array[4] dataver=$temp_array[3]>
-                                 <span>$temp_array[1]</span><input type='checkbox'><input class='sync_add_to_base' type='button' value='Занести в программу'>
+                                 <span>$temp_array[1]</span><input class='sync_add_to_base' type='button' value='+'>
                              </li>";
                     }
                 }
@@ -176,6 +176,47 @@ if(isset($_POST['sync_file'])){
     $file = "files/sync_requests.txt";
     $requests_list = array();
     $temp_array = array();
+}
+if(isset($_POST['sync_html'])){
+    $sync = $_POST['sync_html'];
+
+    switch ($sync){
+        case "requests":
+            echo"";
+            break;
+        case "payments":
+            echo"";
+            break;
+        case "byers":
+            echo"<div class='creates add_ramk'><br>
+                <input type='text' placeholder='Введите наименование Покупателя' size='40'>
+                <input type='button' tc='1' name='byers' value='Добавить'>
+                <br>
+                <br>
+                </div>";
+            break;
+        case "sellers":
+            echo"<div class='creates'>
+                <br>
+                <input type='text' placeholder='Введите наименование Поставщика' size='40'>
+                <input type='button' tc='2' name='sellers' value='Добавить'>
+                <br>
+                <br>
+                </div>";
+            break;
+        case "trades":
+            echo"<div class ='creates'>
+                <br><input class='add_trade_name' type='text' placeholder='Введите наименование Товара' size='70'>
+                <br><span>Тара:</span><span class='trade_options_tare'></span><br>
+                <select id='add_trade_tare' size='1'>
+                <option value='штука'>штука (по умолчанию)</option>
+                <option value='банка'>банка (до 5кг)</option>
+                <option value='канистра'>канистра (5-50л)</option>
+                <option value='бочка'>бочка(200л)</option>
+                </select><br>
+                <span class='ready_comment'></span><br>
+                <input  type='button' name='trades' value='Добавить' disabled><br><br></div>";
+            break;}
 }
 
 
