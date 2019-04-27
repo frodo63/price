@@ -201,6 +201,29 @@ $(document).ready(function(){
         };
 
     });
+
+    /*СТРОКА ПОИСКА ЗАКАЗА ПО НОМЕРУ В1С*/
+
+    $(document).off('keyup.request1c').on('keyup.request1c', '.sync_request', function(event){
+
+        var srequest = $(event.target).val();
+
+        if (srequest.length > 0) {
+
+            console.log(srequest);
+
+            $.ajax({
+                url: 'mysql_search.php',
+                method: 'POST',
+                data: {srequest:srequest},
+                success: function (data) {
+                    $(event.target).next().html(data);
+                }
+
+            });
+        };
+
+    });
     /*СТРОКА НОМЕНКЛАТУРЫ В ИМЕНИ ПОЗИЦИИ*/
     $(document).off('keyup.tradeclass').on('keyup.tradeclass', '.trade', function(event){
 

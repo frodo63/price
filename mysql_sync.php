@@ -16,36 +16,44 @@ if(isset($_POST['sync_file'])){
                 if (count($file_array) > 0);
                 echo"<p>Файл выгружен в массив</p>";
 
-                /*foreach ($file_array as $row){
+                $gotuid = $pdo->prepare("SELECT requests_uid FROM requests WHERE requests_uid = ?");
+                $getbyer_name = $pdo->prepare("SELECT name FROM byers LEFT JOIN allnames ON byers.byers_nameid = allnames.nameid WHERE byers_uid = ?");
 
-                    //Кидаем данные во временный массив
-                    $temp_array = explode(';',$row);
-                    //Что-то делаем с каждым вэлью из временного массива:
-
-                    //Номер в 1С. надо отрезать нули в начале
-                    $temp_array[0] = ltrim($temp_array[0],'0');
-
-                    //Дата. Надо отрезать время в конце:
-                    $temp_array[1] = substr($temp_array[1], 0, 10);
-
-                    //Айдишник покупателя. отрезаем в начале нолики
-                    $temp_array[2] = ltrim($temp_array[2],'0');
-
-                    //Создаем запись для информирования
-                    $temp_array[3] = "Будет создан заказ. Номер в 1С: ".$temp_array[0]." Дата: ".$temp_array[1]." Покупатель: ".$temp_array[2];
-
-                    //Заносим результат
-                    $requests_list[] = $temp_array;
-                }*/
                 //Выводим божеский вид
-                echo"<span>onec_id Заказа</span>  |||  <span>created</span>  |||  <span>dataver</span>  |||  <span>onec_id Покупателя</span>  |||  <span>УИДПокупателя</span>  |||  <span>УИДЗаказа</span>";
+                echo"<ul id='sinchronize_requests'>";
 
                 foreach ($file_array as $row){
                     $temp_array = explode(';',$row);
-                    echo"<li>
-                              $temp_array[0] ||| $temp_array[1] ||| $temp_array[2] ||| $temp_array[3] ||| $temp_array[4] ||| $temp_array[5]
-                             <input class='sync_add_to_base' type='button' value='+'>
-                         </li>";
+                    $uid_trimmed = substr($temp_array[5],0,-2);
+                    $created_trimmed = substr($temp_array[1],0,-9);
+
+                    try{
+
+                        //Проверка на наличие такого uid  в базе
+                        $gotuid->execute(array($uid_trimmed));
+                        $getbyer_name->execute(array($temp_array[4]));
+                        $gotsome = $gotuid->fetch(PDO::FETCH_ASSOC);
+                        $gotname = $getbyer_name->fetch(PDO::FETCH_ASSOC);
+
+
+                    } catch( PDOException $Exception ) {
+                        // Note The Typecast To An Integer!
+                        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                    }
+
+
+                    //Если такой uid есть - ничего не делаем
+                    if(is_string($gotsome['requests_uid']) && $uid_trimmed == $gotsome['requests_uid']){
+                        echo"<li> Уже в базе --- Заказ № ".$temp_array[0]." от ".$created_trimmed."</li>";
+                        /*ничего не выводим*/
+
+                    }else{
+                        //Выводим возможность соотнести и записать в базу
+                        echo"<li><input type='text' class='sync_request'><div class='sres'></div>                                 
+                                 <input type='button' table=$sync class='sync_to_base' value='Соотнести' innerid onec_id=$temp_array[0] uid=$temp_array[5]>
+                                 <span class='sync_add_name'>Заказ ".$gotname['name']." № ".$temp_array[0]." от ".$created_trimmed."</span><input class='sync_add_to_base' type='button' value='+'>
+                             </li>";
+                    }
                 }
 
             }else{
@@ -198,7 +206,7 @@ if(isset($_POST['sync_file'])){
                     }else{
                         //Выводим возможность соотнести и записать в базу
                         echo"<li><input type='text' class='sync_trade'><div class='sres'></div>                                 
-                                 <input type='button' table=$sync class='sync_to_base' value='Соотнести' table innerid  onec_id=$temp_array[0] uid=$temp_array[4]>
+                                 <input type='button' table=$sync class='sync_to_base' value='Соотнести' innerid  onec_id=$temp_array[0] uid=$temp_array[4]>
                                  <span class='sync_add_name'>$temp_array[1]</span><input class='sync_add_to_base' type='button' value='+'>
                              </li>";
                     }

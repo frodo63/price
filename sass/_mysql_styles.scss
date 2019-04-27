@@ -59,10 +59,10 @@ input {
     width: 90vw;
     margin-left: 4.5vw;
 }
-#byer+div ul, #byer_interval+div ul, #trade+div ul, #seller+div ul, .sync_byer+div ul, .sync_trade+div ul, .sync_seller+div ul {
+#byer+div ul, #byer_interval+div ul, #trade+div ul, #seller+div ul, .sync_byer+div ul, .sync_trade+div ul, .sync_seller+div ul, .sync_request+div ul {
     margin: 0;
     padding: 0;
-    width: 25vw;
+    width: 40vw;
     margin-left: 5vw;
 }
 
@@ -75,7 +75,7 @@ input {
 
 /*при наведении цвет под тогглящийся класс*/
 #sres ul li:hover, #byer+div ul li:hover, #byer_interval+div ul li:hover, #trade+div ul li:hover, #seller+div ul li:hover, #sres ul li .sres li:hover,
-.sync_byer+div ul li:hover, .sync_trade+div ul li:hover, .sync_seller+div ul li:hover, #sres ul li .sres li:hover {
+.sync_byer+div ul li:hover, .sync_trade+div ul li:hover, .sync_seller+div ul li:hover, #sres ul li .sres li:hover, .sync_request+div ul li:hover {
     background-color: green;
     color: white;
     border-color: grey;
@@ -83,9 +83,9 @@ input {
 
 
 /*точечки списковые убраны*/
-#sres ul, #byer+div ul, #byer_interval+div ul, #trade+div ul, #seller+div ul, .sync_byer+div ul, .sync_trade+div ul, .sync_seller+div ul {list-style: none}
+#sres ul, #byer+div ul, #byer_interval+div ul, #trade+div ul, #seller+div ul, .sync_byer+div ul, .sync_trade+div ul, .sync_seller+div ul, .sync_request+div ul {list-style: none}
 /*границы элементов*/
-#sres ul li, #byer+div ul li, #byer_interval+div ul li, #trade+div ul li, #seller+div ul li, .sync_byer+div ul li, .sync_trade+div ul li, .sync_seller+div ul li {
+#sres ul li, #byer+div ul li, #byer_interval+div ul li, #trade+div ul li, #seller+div ul li, .sync_byer+div ul li, .sync_trade+div ul li, .sync_seller+div ul li, .sync_request+div ul li {
   border: 1px solid grey;
   border-bottom: none;
 }
@@ -96,6 +96,7 @@ input {
 #seller+div ul li:last-child,
 .sync_byer+div ul li:last-child,
 .sync_trade+div ul li:last-child,
+.sync_request+div ul li:last-child,
 .sync_seller+div ul li:last-child{border: 1px solid grey}
 
 /*Цветовая дифференциация выдачи*/
@@ -122,7 +123,7 @@ li[category="request"] {
     font-size: 1.5vh;
 }
 /*Позиционирование лист итема*/
-#sres ul li, #byer+div ul li, #byer_interval+div ul li, #trade+div ul li, #seller+div ul li {position: relative}
+#sres ul li, #byer+div ul li, #byer_interval+div ul li, #trade+div ul li, #seller+div ul li, .sync_seller+div ul li, .sync_byer+div ul li, .sync_trade+div ul li, .sync_request+div ul li  {position: relative}
 
 /*Абзац из выпадающего списка */
 #sres ul li span {
@@ -130,7 +131,7 @@ li[category="request"] {
     padding: 0;
 }
 
-#byer+div ul li p, #byer_interval+div ul li p, #trade+div ul li p, #seller+div ul li p, .sync_byer+div ul li p, .sync_trade+div ul li p, .sync_seller+div ul li p {
+#byer+div ul li p, #byer_interval+div ul li p, #trade+div ul li p, #seller+div ul li p, .sync_byer+div ul li p, .sync_trade+div ul li p, .sync_seller+div ul li p, .sync_request+div ul li p {
     z-index: 1;
     line-height: 3vh;
     margin: 0;
