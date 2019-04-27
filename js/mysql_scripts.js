@@ -18,7 +18,6 @@ $(document).ready(function(){
     function checkname(newname,oldname){
         //Проверка, изменилось ли:
         if(newname === oldname){
-            //$('#edit_trade_name').siblings('.ready_comment').text('Ничего не изменилось.').switchClass('ok','not-ok');
             $('#edit_trade_name').switchClass('not_ready','ready');
             $('#edit_trade_name').siblings('.ready_comment').text('Ничего не изменилось.').switchClass('not-ok','ok');
             $('#button_edit_trade_name').prop('disabled', true);
@@ -54,18 +53,18 @@ $(document).ready(function(){
     }
 
     //ПРОВЕРКА ТЕКСТОВОГО ЗНАЧЕНИЯ ИМЕНИ, ВВОДИМОГ О В БАЗУ
-    $(document).off('keyup.checkname').on('keyup.checkname', '.add_trade_name', function(event){
+    $(document).off('keyup.checkname').on('keyup.checkname', '.add_trade_name, .add_byer_name, .add_seller_name', function(event){
         var checkname = $(event.target).val();
 
         if(check_one_name(checkname) == 3){
             $(event.target).siblings('input[type="button"]').prop('disabled',false);
-            $('.ready_comment').text('Можно сохранять.').switchClass('not-ok','ok');
+            $(event.target).siblings('.ready_comment').text('Можно сохранять.').switchClass('not-ok','ok');
         }else if(check_one_name(checkname) == 1){
             $(event.target).siblings('input[type="button"]').prop('disabled',true);
-            $('.ready_comment').text('Ковычки уберите.База их не любит.').switchClass('ok','not-ok');
+            $(event.target).siblings('.ready_comment').text('Ковычки уберите.База их не любит.').switchClass('ok','not-ok');
         }else if(check_one_name(checkname) == 2){
             $(event.target).siblings('input[type="button"]').prop('disabled',true);
-            $('.ready_comment').text('Пустое поле \"Наименование\".').switchClass('ok','not-ok');
+            $(event.target).siblings('.ready_comment').text('Пустое поле \"Наименование\".').switchClass('ok','not-ok');
         }
     });
 
@@ -90,8 +89,10 @@ $(document).ready(function(){
 
     //ДОБАВЛЕНИЕ в Таблицу. Имя талицы берется из атрибута инпута ('name')//////////////////////////////////////////////
     $(document).off('click.addtab').on('click.addtab', '.creates input[type="button"]', function(event){
+
+        var table_name = $(event.target).attr('name');
         //Добавляем заявку?
-        if($(event.target).attr('name') == 'requests'){
+        if(table_name == 'requests'){
             var byer = $('#byer').attr("byer_id");
             var thename = $('#req_name').val();
 
@@ -105,52 +106,70 @@ $(document).ready(function(){
                         $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                         $('#creates input[type=\'text\']').val('');
                     },
-                    complete: function() {$('a[href = "#requests"]').trigger('click');
+                    complete: function() {
+                        if($(event.target).parents('#sync_add_to_base')){
+                            $('#sync_'+table_name).trigger("click");
+                        }
                     }
                 });
             } else {alert("Чето вы не то ввели. Там же две графы всего, разве это так сложно?")}
         //Добавляем товар?
         }
         //Добавляем товар?
-        else if($(event.target).attr('name') == 'trades'){
-            var trade_name = $('.add_trade_name').val();
-            var trade_tare = $('.add_trade_tare').val();
-            console.log(trade_name +'     '+trade_tare);
+        else if(table_name == 'trades'){
+            var trade_name = $(event.target).siblings('.add_trade_name').val();
+            var trade_tare = $(event.target).siblings('.add_trade_tare').val();
+            var uid = $(event.target).attr('uid');
+            var onec_id = $(event.target).attr('onec_id');
+            console.log(trade_name+'     '+trade_tare+'     '+uid+'     '+onec_id);
 
             $.ajax({
                 url: 'mysql_insert.php',
                 method: 'POST',
-                data: {trade_name:trade_name, trade_tare:trade_tare},
+                data: {trade_name:trade_name, trade_tare:trade_tare, uid:uid, onec_id:onec_id},
                 success: function (data) {
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                     $('.add_trade_name').val('').focus();
+                    $('.add_trade_tare').val('штука');
                     $(event.target).prop('disabled',true);
+                    $(event.target).attr('uid','');
+                    $(event.target).attr('onec_id','');
+                },
+                complete: function() {
+                    if($(event.target).parents('#sync_add_to_base')){
+                        $('#sync_'+table_name).trigger("click");
+                    }
                 }
             });
 
 
-
-        }else{
-            var table = $(event.target).attr("name");
+        }
+        else{
+            //var table = $(event.target).attr("name");
             var table_c = $(event.target).attr("tc");
-            var thename = $(event.target).prev().val();
-            var addinput = $(event.target).prev('input[type="text"]');
+            var thename = $(event.target).siblings('input[type=\'text\']').val();
+            //var addinput = $(event.target).prev('input[type="text"]');
+            var uid = $(event.target).attr('uid');
+            var onec_id = $(event.target).attr('onec_id');
+            console.log(thename+'     '+table_c+'     '+uid+'     '+onec_id);
                     if(thename!=''){
                         $.ajax({
                             url: 'mysql_insert.php',
                             method: 'POST',
-                            data: {table_c:table_c, thename:thename},
+                            data: {table_c:table_c, thename:thename, uid:uid, onec_id:onec_id},
                             success: function (data) {
                                 $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                                 $('#creates input[type=\'text\']').val('');
                             },
                             complete: function() {
-                                $("a[href = \"#" + table + "\"]").trigger("click");
-                                addinput.val('').focus();
+                                if($(event.target).parents('#sync_add_to_base')){
+                                    $('#sync_'+table_name).trigger("click");
+                                }
                             }
                         });
                     } else {alert("Введите имя")};
         };
+
     });
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -48,7 +48,7 @@ $(document).ready(function(){
     $(document).off('click.sync_to_base').on('click.sync_to_base', '.sync_to_base', function (event) {
         var innerid = $(event.target).attr('innerid');
         var uid = $(event.target).attr('uid');
-        //var dataver = $(event.target).attr('dataver');
+        var onec_id = $(event.target).attr('onec_id');
         var table = $(event.target).attr('table');
 
         if(!innerid){
@@ -56,56 +56,90 @@ $(document).ready(function(){
         }else{
             console.log(innerid);
             console.log(uid);
+            console.log(onec_id);
             console.log(table);
 
             $.ajax({
                 url: 'mysql_sync.php',
                 method: 'POST',
-                data: {innerid:innerid,uid:uid,table:table},
+                data: {innerid:innerid,uid:uid,table:table,onec_id:onec_id},
                 success: function (data) {
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                    $('#sync_'+table).trigger("click");
                 }
             });
         }
     });
 
 /*Добавление в базу из окна СИНХРОНИЗАЦИИ*/
-    $(document).off('click.syncaddnew').on('click.syncaddnew', '.sync_add_to_base', function(){
-        $('#sync_add_to_base').toggleClass('up', 500);
+    $(document).off('click.syncaddnew').on('click.syncaddnew', '.sync_add_to_base', function(event){
+        if ($('#sync_add_to_base').hasClass('up')){
+            $('#sync_add_to_base').removeClass('up');
+        };
+        //$('#sync_add_to_base').toggleClass('up', 500);
+
+        if($('#sinchronize_payments').length > 0){
+            //Добавляем в форму добавления данные итема
+        }
+
         if($('#sinchronize_trades').length > 0){
-           /* $('#sync_add_to_base').html("<div class ='creates'>" +
-                "<br><input class='add_trade_name' type='text' placeholder='Введите наименование Товара' size='70'>" +
-                "<br><span>Тара:</span><span class='trade_options_tare'></span><br>" +
-                "<select id='add_trade_tare' size='1'>" +
-                "<option value='штука'>штука (по умолчанию)</option>" +
-                "<option value='банка'>банка (до 5кг)</option>" +
-                "<option value='канистра'>канистра (5-50л)</option>" +
-                "<option value='бочка'>бочка(200л)</option>" +
-                "</select><br>" +
-                "<span class='ready_comment'></span><br>" +
-                "<input  type='button' name='trades' value='Добавить' disabled><br><br></div>");*/
-            $('#sync_add_to_base .creates').css('display','block');
+            var name = $(event.target).siblings('.sync_add_name').text();
+            var uid = $(event.target).siblings('input[type="button"]').attr('uid');
+            var dataver = $(event.target).siblings('input[type="button"]').attr('dataver');
+            var onec_id = $(event.target).siblings('input[type="button"]').attr('onec_id');
+
+            console.log(name);
+            console.log(uid);
+            console.log(dataver);
+            console.log(onec_id);
+
+            $('#sync_add_to_base .add_trade_name').val(name);
+            $('#sync_add_to_base .add_trade_name').trigger('keyup.checkname');
+            $('#sync_add_to_base input[type="button"]').attr('uid', uid);
+            $('#sync_add_to_base input[type="button"]').attr('dataver', dataver);
+            $('#sync_add_to_base input[type="button"]').attr('onec_id', onec_id);
+            $('#sync_add_to_base input[type="button"]').prop( "disabled", false );
+            $('#sync_add_to_base select').focus();
+
+
         }
 
         if($('#sinchronize_byers').length > 0){
-           /* $('#sync_add_to_base').html("<div class='creates add_ramk'><br>" +
-                "<input type='text' placeholder='Введите наименование Покупателя' size='70'>" +
-                "<input type='button' tc='1' name='byers' value='Добавить'>" +
-                "<br>" +
-                "<br>" +
-                "</div>");*/
-            $('#sync_add_to_base .creates').css('display','block');
+
+            var name = $(event.target).siblings('.sync_add_name').text();
+            var uid = $(event.target).siblings('input[type="button"]').attr('uid');
+            var dataver = $(event.target).siblings('input[type="button"]').attr('dataver');
+            var onec_id = $(event.target).siblings('input[type="button"]').attr('onec_id');
+
+            console.log(name);
+            console.log(uid);
+            console.log(dataver);
+            console.log(onec_id);
+
+            $('#sync_add_to_base .add_byer_name').val(name);
+            $('#sync_add_to_base .add_byer_name').trigger('keyup.checkname');
+            $('#sync_add_to_base input[type="button"]').attr('uid', uid);
+            $('#sync_add_to_base input[type="button"]').attr('dataver', dataver);
+            $('#sync_add_to_base input[type="button"]').attr('onec_id', onec_id);
         }
 
         if($('#sinchronize_sellers').length > 0){
-            /*$('#sync_add_to_base').html("<div class='creates'>" +
-                "<br>" +
-                "<input type='text' placeholder='Введите наименование Поставщика' size='70'>" +
-                "<input type='button' tc='2' name='sellers' value='Добавить'>" +
-                "<br>" +
-                "<br>" +
-                "</div>");*/
-            $('#sync_add_to_base .creates').css('display','block');
+
+            var name = $(event.target).siblings('.sync_add_name').text();
+            var uid = $(event.target).siblings('input[type="button"]').attr('uid');
+            var dataver = $(event.target).siblings('input[type="button"]').attr('dataver');
+            var onec_id = $(event.target).siblings('input[type="button"]').attr('onec_id');
+
+            console.log(name);
+            console.log(uid);
+            console.log(dataver);
+            console.log(onec_id);
+
+            $('#sync_add_to_base .add_seller_name').val(name);
+            $('#sync_add_to_base .add_seller_name').trigger('keyup.checkname');
+            $('#sync_add_to_base input[type="button"]').attr('uid', uid);
+            $('#sync_add_to_base input[type="button"]').attr('dataver', dataver);
+            $('#sync_add_to_base input[type="button"]').attr('onec_id', onec_id);
         }
     });
 

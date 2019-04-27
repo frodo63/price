@@ -4,33 +4,43 @@ include_once 'pdo_connect.php';
 if(isset($_POST['table_c']) && isset($_POST['thename'])){
 
     $table_c = $_POST['table_c'];
+    switch($table_c){
+        case 1:
+            $table = 'byers';
+            break;
+        case 2:
+            $table = 'sellers';
+            break;
+    }
+    $nameid_column = $table . '_nameid';
+
     $thename = $_POST['thename'];
+    if(isset($_POST['uid']) && isset($_POST['onec_id'])){
+        $uid = $_POST['uid'];
+        $uid_column = $table . '_uid';
+        $onec_id = $_POST['onec_id'];
+    }
 
     /**//////////////////////////////////////////////////////////////
     $statement = $pdo->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
     try {
         $pdo->beginTransaction();
         $statement->execute(array($thename));
+        $theID = $pdo->lastInsertId();
 
-        switch($table_c)
-        {
-            case 1:
-                $table = 'byers';
-                break;
-            case 2:
-                $table = 'sellers';
-                break;
+
+        if(isset($_POST['uid']) && isset($_POST['onec_id'])){
+            $statement = $pdo->prepare("INSERT INTO `$table`(`$nameid_column`,`$uid_column`,`onec_id`) VALUES(?,?,?)");
+            $statement->execute(array($theID,$uid,$onec_id));
+            $pdo->commit();
+        }else{
+            $statement = $pdo->prepare("INSERT INTO `$table`(`$nameid_column`) VALUES(?)");
+            $statement->execute(array($theID));
+            $pdo->commit();
         }
 
-        $theID = $pdo->lastInsertId();
-        $thecolumn = $table . '_nameid';
-
-        $statement = $pdo->prepare("INSERT INTO `$table`(`$thecolumn`) VALUES(?)");
-        $statement->execute(array($theID));
-        $pdo->commit();
 
     } catch( PDOException $Exception ) {
-        // Note The Typecast To An Integer!
         $pdo->rollback();
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
@@ -45,8 +55,13 @@ if(isset($_POST['trade_name']) && isset($_POST['trade_tare'])){
 
     $trade_name = $_POST['trade_name'];
     $trade_tare = $_POST['trade_tare'];
+    if(isset($_POST['uid']) && isset($_POST['onec_id'])){
+        $uid = $_POST['uid'];
+        $onec_id = $_POST['onec_id'];
+    }
 
-    /**//////////////////////////////////////////////////////////////
+
+
     $statement = $pdo->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
     try {
         $pdo->beginTransaction();
@@ -54,18 +69,28 @@ if(isset($_POST['trade_name']) && isset($_POST['trade_tare'])){
 
         $theID = $pdo->lastInsertId();
 
-        $statement = $pdo->prepare("INSERT INTO `trades`(`trades_nameid`,`tare`) VALUES(?,?)");
-        $statement->execute(array($theID,$trade_tare));
+
+        if(isset($uid) && isset($onec_id)){
+            $statement = $pdo->prepare("INSERT INTO `trades`(`trades_nameid`,`tare`,`trades_uid`,`onec_id`) VALUES(?,?,?,?)");
+            $statement->execute(array($theID,$trade_tare,$uid,$onec_id));
+            unset($uid, $onec_id);
+        }else{
+            $statement = $pdo->prepare("INSERT INTO `trades`(`trades_nameid`,`tare`) VALUES(?,?)");
+            $statement->execute(array($theID,$trade_tare));
+        }
+
+
         $pdo->commit();
 
+
+
     } catch( PDOException $Exception ) {
-        // Note The Typecast To An Integer!
         $pdo->rollback();
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
-    /**//////////////////////////////////////////////////////////////
 
-    echo "Получилось! Добавлен товар $thename в таблицу trades.";
+
+    echo "Добавлен товар $thename.";
 };
 ///////////////////////////////////////////////////////////////////////
 

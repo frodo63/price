@@ -98,8 +98,9 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
       <input type='button' class='addnew' value='+'> Добавить покупателя
               <div class='creates add_ramk'>
           <br>
-                  <input type='text' placeholder='Введите наименование Покупателя' size='70'>
-                  <input type='button' tc='1' name='byers' value='Добавить'>
+                  <input type='text' class='add_byer_name' placeholder='Введите наименование Покупателя' size='70'>
+                  <br><span class='ready_comment'></span><br>
+                  <input type='button' tc='1' name='byers' value='Добавить' disabled>
           <br>
           <br>
               </div>
@@ -111,8 +112,9 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
       <input type='button' class='addnew' value='+'> Добавить поставщика
           <div class='creates add_ramk'>
           <br>
-              <input type='text' placeholder='Введите наименование Поставщика' size='70'>
-              <input type='button' tc='2' name='sellers' value='Добавить'>  
+              <input type='text' class='add_seller_name' placeholder='Введите наименование Поставщика' size='70'>
+              <br><span class='ready_comment'></span><br>  
+              <input type='button' tc='2' name='sellers' value='Добавить' disabled>  
           <br>
           <br>
           </div>
@@ -128,7 +130,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
               
               <br><span>Тара:</span><span class='trade_options_tare'></span><br>
               
-              <select id='add_trade_tare' size='1'>
+              <select class='add_trade_tare' size='1'>
                   <option value='штука'>штука (по умолчанию)</option>
                   <option value='банка'>банка (до 5кг)</option>
                   <option value='канистра'>канистра (5-50л)</option>
