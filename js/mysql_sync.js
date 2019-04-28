@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
 
-    //ЗАказы
+    //Вывод содержания файлов
     $(document).off('click.sync').on('click.sync', '#sync_requests, #sync_payments, #sync_byers, #sync_sellers, #sync_trades', function(event){
         var sync_file = ($(event.target).attr("id")).substring(5);
         console.log(sync_file);
@@ -38,6 +38,12 @@ $(document).ready(function(){
             case 'trades':
                 var theID = $(event.target).parents('li').attr('trades_id');
                 break;
+            case 'requests':
+                var theID = $(event.target).parents('li').attr('requests_id');
+                break;
+            case 'payments':
+                var theID = $(event.target).parents('li').attr('payments_id');
+                break;
         }
         console.log(theID);
         console.log(category);
@@ -51,7 +57,7 @@ $(document).ready(function(){
         var onec_id = $(event.target).attr('onec_id');
         var table = $(event.target).attr('table');
 
-        if(!innerid){
+        if(typeof innerid === 'undefined'){
             console.log('innerid is undefined');
         }else{
             console.log(innerid);
@@ -76,10 +82,72 @@ $(document).ready(function(){
         if ($('#sync_add_to_base').hasClass('up')){
             $('#sync_add_to_base').removeClass('up');
         };
-        //$('#sync_add_to_base').toggleClass('up', 500);
 
         if($('#sinchronize_payments').length > 0){
-            //Добавляем в форму добавления данные итема
+            var payed = $(event.target).siblings('input[type="button"]').attr('payed');
+            var number = $(event.target).siblings('input[type="button"]').attr('number');
+            var onec_id = $(event.target).siblings('input[type="button"]').attr('onec_id');
+            var uid = $(event.target).siblings('input[type="button"]').attr('uid');
+            var sum = $(event.target).siblings('input[type="button"]').attr('sum');
+            var requestid = $(event.target).siblings('input[type="button"]').attr('requestid');
+
+            console.log(payed);
+            console.log(number);
+            console.log(onec_id);
+            console.log(uid);
+            console.log(sum);
+            console.log(requestid);
+
+            $('#sync_add_to_base .sync_pay_payed').text(payed);
+            $('#sync_add_to_base .sync_pay_num').text(number);
+            $('#sync_add_to_base .sync_pay_onec_id').text(onec_id);
+            $('#sync_add_to_base .sync_pay_uid').text(uid);
+            $('#sync_add_to_base .sync_pay_sum').text(sum);
+            $('#sync_add_to_base .sync_pay_rid').text(requestid);
+            $('#sync_add_to_base input[type="button"]').attr({
+                payed:payed,
+                number:number,
+                onec_id:onec_id,
+                uid:uid,
+                sum:sum,
+                requestid:requestid
+            });
+            $('#sync_add_to_base input[type="button"]').prop( "disabled", false ).focus();
+
+
+
+
+
+
+
+
+        }
+
+        if($('#sinchronize_requests').length > 0){
+
+        var created = $(event.target).siblings('input[type="button"]').attr('created');
+        var uid = $(event.target).siblings('input[type="button"]').attr('uid');
+        var bid = $(event.target).siblings('input[type="button"]').attr('byersid');
+        var onec_id = $(event.target).siblings('input[type="button"]').attr('onec_id');
+
+            console.log(created);
+            console.log(uid);
+            console.log(bid);
+            console.log(onec_id);
+
+            $('#sync_add_to_base .sync_req_created').text(created);
+            $('#sync_add_to_base .sync_req_uid').text(uid);
+            $('#sync_add_to_base .sync_req_byers_id').text(bid);
+            $('#sync_add_to_base .sync_req_onec_id').text(onec_id);
+            $('#sync_add_to_base input[type="button"]').attr({
+                created:created,
+                uid:uid,
+                bid:bid,
+                onec_id:onec_id
+            });
+            $('#sync_add_to_base input[type="button"]').prop( "disabled", false ).focus();
+
+
         }
 
         if($('#sinchronize_trades').length > 0){
@@ -142,8 +210,4 @@ $(document).ready(function(){
             $('#sync_add_to_base input[type="button"]').attr('onec_id', onec_id);
         }
     });
-
-
-
-
 });

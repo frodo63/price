@@ -202,8 +202,7 @@ $(document).ready(function(){
 
     });
 
-    /*СТРОКА ПОИСКА ЗАКАЗА ПО НОМЕРУ В1С*/
-
+    /*СТРОКА ПОИСКА ЗАКАЗА ПО НОМЕРУ В 1С*/
     $(document).off('keyup.request1c').on('keyup.request1c', '.sync_request', function(event){
 
         var srequest = $(event.target).val();
@@ -222,8 +221,25 @@ $(document).ready(function(){
 
             });
         };
-
     });
+
+    /*СТРОКА ПОИСКА ПЛАТЕЖКИ */
+    $(document).off('keyup.payment').on('keyup.payment', '.sync_payment', function(event){
+
+        var spayment = $(event.target).val();
+        if (spayment.length > 0) {
+            console.log(spayment);
+            $.ajax({
+                url: 'mysql_search.php',
+                method: 'POST',
+                data: {spayment:spayment},
+                success: function (data) {
+                    $(event.target).next().html(data);
+                }
+            });
+        };
+    });
+
     /*СТРОКА НОМЕНКЛАТУРЫ В ИМЕНИ ПОЗИЦИИ*/
     $(document).off('keyup.tradeclass').on('keyup.tradeclass', '.trade', function(event){
 

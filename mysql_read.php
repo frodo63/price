@@ -265,9 +265,10 @@ if(isset($_POST['table'])){
             <td class='req_date'><span>" . $mysqldate . "</span></td>
             <td class='1c_num'><span>" . $row['1c_num'] . "</span></td>
             <td byerid=" . $row['b_id'] . " name=" . $row['b_nameid'] . "><span>". $row['b_name'] ."</span></td>
-            <td category='requests' name =" . $row['req_nameid'] . "><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value=♢ class='collapse'><span class='name'>" . $row['req_name'] . "</span>
+            <td category='requests' name =".$row['req_nameid']."><input type='button' requestid =".$row['req_id']." value=♢ class='collapse' name =".$row['req_nameid']."><span class='name'>&nbsp ".$row['req_name']."</span>
             
-            <div id=" . $row['req_nameid'] . " class='contents'>
+
+            <div class='contents' id=".$row['req_nameid'].">
                 <h3 class='req_header_".$row['req_id']."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму <span class='reqsumma'>".number_format($row['sum'],2,'.',' ')."&nbsp</span><br> Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h3/><br>
                 <input type='button' class='edit_options' value='Опции' requestid='".$row['req_id']."'>
                 <input type='button' class='edit_1c_num' value='Номер в 1С и дата' requestid='".$row['req_id']."'>  
@@ -284,8 +285,8 @@ if(isset($_POST['table'])){
             </td>
                 <td class = 'rent_whole'>".round($row['rent'], 2)."</td>
                 <td class = 'sum_whole'>" .number_format(round($row['sum'], 2), 2, '.', ' '). "</td>
-            <td class = 'req_buttons'><input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='R' class='edit'>
-         <input type='button' name =" . $row['req_nameid'] . " requestid =" . $row['req_id'] . " value='X' class='delete'></td></tr>";
+            <td class = 'req_buttons'><input type='button' requestid =" . $row['req_id'] . " value='R' class='edit' name =".$row['req_nameid'].">
+         <input type='button' requestid =" . $row['req_id'] . " value='X' class='reqdelete' name =".$row['req_nameid']."></td></tr>";
             }
             $result .= "</table>";
             print $result;

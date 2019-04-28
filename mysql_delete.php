@@ -41,7 +41,7 @@ function delete($pdo,$tablenameid,$id,$table){
 
 
 
-/*УДАЛЕНИЕ ЗАЯВКИ*/
+/*УДАЛЕНИЕ ЗАЯВКИ С НАЗВАНИЕМ*/
 if(isset($_POST['delrequestid']) && isset($_POST['delnameid']))
 {
         $delrequestid  = $_POST['delrequestid'];
@@ -66,6 +66,32 @@ function deleterequest($pdo,$delrequestid,$delnameid)
             $pdo->rollback();
             throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
         }
+
+};
+
+/*УДАЛЕНИЕ ЗАЯВКИ БЕЗ НАЗВАНИЯ*/
+
+if(isset($_POST['delrequestid_no_nameid']))
+{
+    $delrequestid  = $_POST['delrequestid_no_nameid'];
+    deleterequest_no_nameid($pdo, $delrequestid);
+};
+
+function deleterequest_no_nameid($pdo,$delrequestid)
+{
+
+    $deltable = $pdo->prepare("DELETE FROM `requests` WHERE `requests_id` = ?");
+
+    try{
+        $pdo->beginTransaction();
+        $deltable->execute(array($delrequestid));
+        $pdo->commit();
+
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        $pdo->rollback();
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
 
 };
 /*////УДАЛЕНИЕ ЗАЯВКИ*/

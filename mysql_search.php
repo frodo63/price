@@ -94,10 +94,6 @@ if (isset($_POST['strade'])){
     } catch( PDOException $Exception ) {
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
-
-
-
-
 };
 
 //ПОИСК ПОСТАВЩИКА///////////////////////////////////////////////////////////////////////////////////
@@ -150,6 +146,26 @@ if (isset($_POST['srequest'])){
         $requests .= "<li category='request' byersid=".$row['byersid']." requests_id=".$row['requests_id']." requests_nameid=" . $row['requests_nameid'] . "><p>Заказ № ".$row['1c_num']." от ".$mysqldate." для ". $row['byers_name'] . "</p><div class='note'>заявка</div></li>";
     };
     $result .= $requests;
+    $result .= "</ul><!--<script src='js/mysql_searching.js'>-->";
+
+    print $result;
+};
+
+//ПОИСК ПЛАТЕЖКИ///////////////////////////////////////////////////////////////////////////////////
+if (isset($_POST['spayment'])){
+    $sline = $_POST['spayment'];
+
+    $statement = $pdo->prepare("
+        SELECT payments_id, number, payed, sum, requestid FROM `payments`
+        WHERE number LIKE '%{$sline}%' GROUP BY payed");
+
+    $statement->execute();
+    $result ='<ul>';
+    $payments='';
+    foreach ($statement as $row){
+        $payments .= "<li category='payment' payments_id=".$row['payments_id']."><p>Платеж № ".$row['number']." от ".$row['payed']." : ".$row['sum']."</p><div class='note'>платежка</div></li>";
+    };
+    $result .= $payments;
     $result .= "</ul><!--<script src='js/mysql_searching.js'>-->";
 
     print $result;

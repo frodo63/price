@@ -93,18 +93,22 @@ $(document).ready(function(){
         var table_name = $(event.target).attr('name');
         //Добавляем заявку?
         if(table_name == 'requests'){
-            var byer = $('#byer').attr("byer_id");
-            var thename = $('#req_name').val();
+            if(
+                $(event.target).parents('#sync_add_to_base')
+            ){
+                //Добавление из окна синхронизации
+                var created = $(event.target).attr('created');
+                var bid = $(event.target).attr('bid');
+                var uid = $(event.target).attr('uid');
+                var onec_id = $(event.target).attr('onec_id');
 
-            if(thename!='' && byer > 0){
                 $.ajax({
                     url: 'mysql_insert.php',
                     method: 'POST',
-                    data: {byer:byer, thename:thename},
+                    data: {byer:bid, created:created, uid:uid, onec_id:onec_id},
                     success: function (data) {
                         console.log("Добавлена заявка");
                         $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
-                        $('#creates input[type=\'text\']').val('');
                     },
                     complete: function() {
                         if($(event.target).parents('#sync_add_to_base')){
@@ -112,7 +116,32 @@ $(document).ready(function(){
                         }
                     }
                 });
-            } else {alert("Чето вы не то ввели. Там же две графы всего, разве это так сложно?")}
+
+
+            }else{
+                //Добавление из окна списка заявок
+                var byer = $('#byer').attr("byer_id");
+                var thename = $('#req_name').val();
+
+                if(thename!='' && byer > 0){
+                    $.ajax({
+                        url: 'mysql_insert.php',
+                        method: 'POST',
+                        data: {byer:byer, thename:thename},
+                        success: function (data) {
+                            console.log("Добавлена заявка");
+                            $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                            $('#creates input[type=\'text\']').val('');
+                        },
+                        complete: function() {
+                            if($(event.target).parents('#sync_add_to_base')){
+                                $('#sync_'+table_name).trigger("click");
+                            }
+                        }
+                    });
+                } else {alert("Чето вы не то ввели. Там же две графы всего, разве это так сложно?")}
+            }
+
         //Добавляем товар?
         }
         //Добавляем товар?
@@ -141,6 +170,45 @@ $(document).ready(function(){
                     }
                 }
             });
+        }
+        //Добавляем платежку?
+        else if(table_name == 'payments'){
+            //Добавление из окна синхронизации
+            var payed = $(event.target).attr('payed');
+            var number = $(event.target).attr('number');
+            var uid = $(event.target).attr('uid');
+            var onec_id = $(event.target).attr('onec_id');
+            var sum = $(event.target).attr('sum');
+            var requestid = $(event.target).attr('requestid');
+
+            console.log(payed);
+            console.log(number);
+            console.log(uid);
+            console.log(onec_id);
+            console.log(sum);
+            console.log(requestid);
+
+            if (requestid=="")
+            {
+                console.log("Не все переменные определены");
+                return false;
+            }else{
+                console.log("Все переменные определены");
+                $.ajax({
+                    url: 'mysql_insert.php',
+                    method: 'POST',
+                    data: {number:number, payed:payed, uid:uid, onec_id:onec_id, sum:sum, requestid:requestid},
+                    success: function (data) {
+                        console.log("Добавлена платежка");
+                        $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                    },
+                    complete: function() {
+                        if($(event.target).parents('#sync_add_to_base')){
+                            $('#sync_'+table_name).trigger("click");
+                        }
+                    }
+                });
+            }
 
 
         }

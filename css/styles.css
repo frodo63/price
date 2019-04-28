@@ -79,14 +79,15 @@ input {
 }
 
 /* line 62, ../sass/_mysql_styles.scss */
-#byer + div ul, #byer_interval + div ul, #trade + div ul, #seller + div ul, .sync_byer + div ul, .sync_trade + div ul, .sync_seller + div ul, .sync_request + div ul {
+#byer + div ul, #byer_interval + div ul, #trade + div ul, #seller + div ul, .sync_byer + div ul,
+.sync_trade + div ul, .sync_seller + div ul, .sync_request + div ul, .sync_payment + div ul {
   margin: 0;
   padding: 0;
   width: 40vw;
   margin-left: 5vw;
 }
 
-/* line 69, ../sass/_mysql_styles.scss */
+/* line 70, ../sass/_mysql_styles.scss */
 #sres ul li, .sres ul li {
   z-index: 100;
   min-height: 3vh;
@@ -95,28 +96,28 @@ input {
 }
 
 /*при наведении цвет под тогглящийся класс*/
-/* line 77, ../sass/_mysql_styles.scss */
+/* line 78, ../sass/_mysql_styles.scss */
 #sres ul li:hover, #byer + div ul li:hover, #byer_interval + div ul li:hover, #trade + div ul li:hover, #seller + div ul li:hover, #sres ul li .sres li:hover,
-.sync_byer + div ul li:hover, .sync_trade + div ul li:hover, .sync_seller + div ul li:hover, #sres ul li .sres li:hover, .sync_request + div ul li:hover {
+.sync_byer + div ul li:hover, .sync_trade + div ul li:hover, .sync_seller + div ul li:hover, #sres ul li .sres li:hover, .sync_request + div ul li:hover, .sync_payment + div ul li:hover {
   background-color: green;
   color: white;
   border-color: grey;
 }
 
 /*точечки списковые убраны*/
-/* line 86, ../sass/_mysql_styles.scss */
-#sres ul, #byer + div ul, #byer_interval + div ul, #trade + div ul, #seller + div ul, .sync_byer + div ul, .sync_trade + div ul, .sync_seller + div ul, .sync_request + div ul {
+/* line 87, ../sass/_mysql_styles.scss */
+#sres ul, #byer + div ul, #byer_interval + div ul, #trade + div ul, #seller + div ul, .sync_byer + div ul, .sync_trade + div ul, .sync_seller + div ul, .sync_request + div ul, .sync_payment + div ul {
   list-style: none;
 }
 
 /*границы элементов*/
-/* line 88, ../sass/_mysql_styles.scss */
-#sres ul li, #byer + div ul li, #byer_interval + div ul li, #trade + div ul li, #seller + div ul li, .sync_byer + div ul li, .sync_trade + div ul li, .sync_seller + div ul li, .sync_request + div ul li {
+/* line 89, ../sass/_mysql_styles.scss */
+#sres ul li, #byer + div ul li, #byer_interval + div ul li, #trade + div ul li, #seller + div ul li, .sync_byer + div ul li, .sync_trade + div ul li, .sync_seller + div ul li, .sync_request + div ul li, .sync_payment + div ul li {
   border: 1px solid grey;
   border-bottom: none;
 }
 
-/* line 92, ../sass/_mysql_styles.scss */
+/* line 94, ../sass/_mysql_styles.scss */
 #sres ul li:last-child,
 #byer + div ul li:last-child,
 #byer_interval + div ul li:last-child,
@@ -125,33 +126,39 @@ input {
 .sync_byer + div ul li:last-child,
 .sync_trade + div ul li:last-child,
 .sync_request + div ul li:last-child,
+.sync_payment + div ul li:last-child,
 .sync_seller + div ul li:last-child {
   border: 1px solid grey;
 }
 
 /*Цветовая дифференциация выдачи*/
-/* line 103, ../sass/_mysql_styles.scss */
+/* line 106, ../sass/_mysql_styles.scss */
 li[category="byer"] {
   background-color: lightyellow;
 }
 
-/* line 106, ../sass/_mysql_styles.scss */
+/* line 109, ../sass/_mysql_styles.scss */
 li[category="seller"] {
   background-color: lightsalmon;
 }
 
-/* line 109, ../sass/_mysql_styles.scss */
+/* line 112, ../sass/_mysql_styles.scss */
 li[category="trade"] {
   background-color: lightgreen;
 }
 
-/* line 112, ../sass/_mysql_styles.scss */
+/* line 115, ../sass/_mysql_styles.scss */
 li[category="request"] {
   background-color: lightblue;
 }
 
+/* line 118, ../sass/_mysql_styles.scss */
+li[category="payment"] {
+  background-color: ghostwhite;
+}
+
 /*Маленькая пометочка в углу выдачи о категории*/
-/* line 117, ../sass/_mysql_styles.scss */
+/* line 123, ../sass/_mysql_styles.scss */
 .note {
   position: absolute;
   height: 2vh;
@@ -162,20 +169,20 @@ li[category="request"] {
 }
 
 /*Позиционирование лист итема*/
-/* line 126, ../sass/_mysql_styles.scss */
-#sres ul li, #byer + div ul li, #byer_interval + div ul li, #trade + div ul li, #seller + div ul li, .sync_seller + div ul li, .sync_byer + div ul li, .sync_trade + div ul li, .sync_request + div ul li {
+/* line 132, ../sass/_mysql_styles.scss */
+#sres ul li, #byer + div ul li, #byer_interval + div ul li, #trade + div ul li, #seller + div ul li, .sync_seller + div ul li, .sync_byer + div ul li, .sync_trade + div ul li, .sync_request + div ul li, .sync_payment + div ul li {
   position: relative;
 }
 
 /*Абзац из выпадающего списка */
-/* line 129, ../sass/_mysql_styles.scss */
+/* line 135, ../sass/_mysql_styles.scss */
 #sres ul li span {
   margin: 0;
   padding: 0;
 }
 
-/* line 134, ../sass/_mysql_styles.scss */
-#byer + div ul li p, #byer_interval + div ul li p, #trade + div ul li p, #seller + div ul li p, .sync_byer + div ul li p, .sync_trade + div ul li p, .sync_seller + div ul li p, .sync_request + div ul li p {
+/* line 140, ../sass/_mysql_styles.scss */
+#byer + div ul li p, #byer_interval + div ul li p, #trade + div ul li p, #seller + div ul li p, .sync_byer + div ul li p, .sync_trade + div ul li p, .sync_seller + div ul li p, .sync_request + div ul li p, .sync_payment + div ul li p {
   z-index: 1;
   line-height: 3vh;
   margin: 0;
@@ -185,17 +192,18 @@ li[category="request"] {
 /*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /*Инпуты поиска в прайсформе*/
 /*Позиционирование лист итема*/
-/* line 148, ../sass/_mysql_styles.scss */
-#byer div ul li, #byer_interval div ul li, #trade div ul li, #seller div ul li, .sync_byer div ul li, .sync_trade div ul li, .sync_seller div ul li {
+/* line 154, ../sass/_mysql_styles.scss */
+#byer div ul li, #byer_interval div ul li, #trade div ul li, #seller div ul li, .sync_byer div ul li,
+.sync_trade div ul li, .sync_seller div ul li, .sync_payment div ul li {
   position: relative;
 }
 
-/* line 149, ../sass/_mysql_styles.scss */
-.sync_byer, .sync_seller, .sync_trade {
+/* line 157, ../sass/_mysql_styles.scss */
+.sync_byer, .sync_seller, .sync_trade, .sync_payment {
   float: left;
 }
 
-/* line 152, ../sass/_mysql_styles.scss */
+/* line 160, ../sass/_mysql_styles.scss */
 #byer + .sres ul, #byer_interval + .sres ul {
   position: absolute;
   top: 9.05vh;
@@ -203,7 +211,7 @@ li[category="request"] {
 }
 
 /*Таблица расценок*/
-/* line 160, ../sass/_mysql_styles.scss */
+/* line 168, ../sass/_mysql_styles.scss */
 .pricings td {
   border: 1px solid grey;
   text-align: center;
@@ -212,7 +220,7 @@ li[category="request"] {
 
 /**/
 /*ОКНО РАСЦЕНОК ЕДИНОЕ ДЛЯ ВСЕХ ВВЕРХУ ЭКРАНА*/
-/* line 168, ../sass/_mysql_styles.scss */
+/* line 176, ../sass/_mysql_styles.scss */
 #pricingwindow {
   display: none;
   height: 99vh;
@@ -221,13 +229,13 @@ li[category="request"] {
 }
 
 /**/
-/* line 176, ../sass/_mysql_styles.scss */
+/* line 184, ../sass/_mysql_styles.scss */
 #reads {
   min-height: 85vh;
   width: 98vw;
 }
 
-/* line 183, ../sass/_mysql_styles.scss */
+/* line 191, ../sass/_mysql_styles.scss */
 #pricingwindow .closepricing {
   position: absolute;
   top: 1vw;
@@ -236,7 +244,7 @@ li[category="request"] {
   width: 2vw;
 }
 
-/* line 191, ../sass/_mysql_styles.scss */
+/* line 199, ../sass/_mysql_styles.scss */
 #pricingwindow .minimizepricing {
   position: absolute;
   top: 1vw;
@@ -245,19 +253,19 @@ li[category="request"] {
   width: 2vw;
 }
 
-/* line 199, ../sass/_mysql_styles.scss */
+/* line 207, ../sass/_mysql_styles.scss */
 .add-pos-inputs {
   display: none;
 }
 
 /*Таблица заявок*/
-/* line 205, ../sass/_mysql_styles.scss */
+/* line 213, ../sass/_mysql_styles.scss */
 table, td, tr, thead, th {
   border-collapse: collapse;
   vertical-align: top;
 }
 
-/* line 209, ../sass/_mysql_styles.scss */
+/* line 217, ../sass/_mysql_styles.scss */
 table {
   table-layout: fixed;
   width: 100%;
@@ -265,7 +273,7 @@ table {
 
 /*Класс - таблица из результатов поиска. айдишник - таблица из табов*/
 /*Таблица первого уровня (заявки)*/
-/* line 217, ../sass/_mysql_styles.scss */
+/* line 225, ../sass/_mysql_styles.scss */
 .requests_list, .search_list {
   /*Таблица второго уровня (позиции)*/
   /*Таблица  третьего уровня (расценки) */
@@ -278,225 +286,225 @@ table {
   /*граница низ-прав для Ряда заявки*/
   /*Таблица второго уровня*/
 }
-/* line 218, ../sass/_mysql_styles.scss */
+/* line 226, ../sass/_mysql_styles.scss */
 .requests_list > table > thead > tr > th:nth-child(1), .search_list > table > thead > tr > th:nth-child(1) {
   width: 7%;
 }
-/* line 219, ../sass/_mysql_styles.scss */
+/* line 227, ../sass/_mysql_styles.scss */
 .requests_list > table > thead > tr > th:nth-child(2), .search_list > table > thead > tr > th:nth-child(2) {
-  width: 4%;
+  width: 11%;
 }
-/* line 220, ../sass/_mysql_styles.scss */
+/* line 228, ../sass/_mysql_styles.scss */
 .requests_list > table > thead > tr > th:nth-child(3), .search_list > table > thead > tr > th:nth-child(3) {
   width: 11%;
 }
-/* line 221, ../sass/_mysql_styles.scss */
+/* line 229, ../sass/_mysql_styles.scss */
 .requests_list > table > thead > tr > th:nth-child(4), .search_list > table > thead > tr > th:nth-child(4) {
-  width: 56%;
+  width: 48%;
 }
-/* line 222, ../sass/_mysql_styles.scss */
+/* line 230, ../sass/_mysql_styles.scss */
 .requests_list > table > thead > tr > th:nth-child(5), .search_list > table > thead > tr > th:nth-child(5) {
   width: 7%;
 }
-/* line 223, ../sass/_mysql_styles.scss */
+/* line 231, ../sass/_mysql_styles.scss */
 .requests_list > table > thead > tr > th:nth-child(6), .search_list > table > thead > tr > th:nth-child(6) {
   width: 10%;
 }
-/* line 224, ../sass/_mysql_styles.scss */
+/* line 232, ../sass/_mysql_styles.scss */
 .requests_list > table > thead > tr > th:nth-child(7), .search_list > table > thead > tr > th:nth-child(7) {
   width: 5%;
 }
-/* line 225, ../sass/_mysql_styles.scss */
+/* line 233, ../sass/_mysql_styles.scss */
 .requests_list > table > thead > tr, .search_list > table > thead > tr {
   border-bottom: 1px black solid;
 }
-/* line 228, ../sass/_mysql_styles.scss */
+/* line 236, ../sass/_mysql_styles.scss */
 .requests_list .positions th:nth-child(1), .search_list .positions th:nth-child(1) {
   width: 2%;
 }
-/* line 229, ../sass/_mysql_styles.scss */
+/* line 237, ../sass/_mysql_styles.scss */
 .requests_list .positions th:nth-child(2), .search_list .positions th:nth-child(2) {
   width: 71%;
 }
-/* line 230, ../sass/_mysql_styles.scss */
+/* line 238, ../sass/_mysql_styles.scss */
 .requests_list .positions th:nth-child(3), .search_list .positions th:nth-child(3) {
   width: 8%;
 }
-/* line 231, ../sass/_mysql_styles.scss */
+/* line 239, ../sass/_mysql_styles.scss */
 .requests_list .positions th:nth-child(4), .search_list .positions th:nth-child(4) {
   width: 8%;
 }
-/* line 232, ../sass/_mysql_styles.scss */
+/* line 240, ../sass/_mysql_styles.scss */
 .requests_list .positions th:nth-child(5), .search_list .positions th:nth-child(5) {
   width: 5%;
 }
-/* line 233, ../sass/_mysql_styles.scss */
+/* line 241, ../sass/_mysql_styles.scss */
 .requests_list .positions th:nth-child(6), .search_list .positions th:nth-child(6) {
   width: 5%;
 }
-/* line 234, ../sass/_mysql_styles.scss */
+/* line 242, ../sass/_mysql_styles.scss */
 .requests_list .positions th:nth-child(7), .search_list .positions th:nth-child(7) {
   width: 5%;
 }
-/* line 237, ../sass/_mysql_styles.scss */
+/* line 245, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list th:nth-child(1), .search_list .pricing-list th:nth-child(1) {
   width: 20%;
 }
-/* line 238, ../sass/_mysql_styles.scss */
+/* line 246, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list th:nth-child(2), .search_list .pricing-list th:nth-child(2) {
   width: 20%;
 }
-/* line 239, ../sass/_mysql_styles.scss */
+/* line 247, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list th:nth-child(3), .search_list .pricing-list th:nth-child(3) {
   width: 7%;
 }
-/* line 240, ../sass/_mysql_styles.scss */
+/* line 248, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list th:nth-child(4), .search_list .pricing-list th:nth-child(4) {
   width: 5%;
 }
-/* line 241, ../sass/_mysql_styles.scss */
+/* line 249, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list th:nth-child(5), .search_list .pricing-list th:nth-child(5) {
   width: 5%;
 }
-/* line 242, ../sass/_mysql_styles.scss */
+/* line 250, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list th:nth-child(6), .search_list .pricing-list th:nth-child(6) {
   width: 5%;
 }
-/* line 243, ../sass/_mysql_styles.scss */
+/* line 251, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list th:nth-child(7), .search_list .pricing-list th:nth-child(7) {
   width: 4%;
 }
-/* line 244, ../sass/_mysql_styles.scss */
+/* line 252, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list th:nth-child(8), .search_list .pricing-list th:nth-child(8) {
   width: 10%;
 }
-/* line 245, ../sass/_mysql_styles.scss */
+/* line 253, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list th:nth-child(9), .search_list .pricing-list th:nth-child(9) {
   width: 5%;
 }
-/* line 246, ../sass/_mysql_styles.scss */
+/* line 254, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list th:nth-child(10), .search_list .pricing-list th:nth-child(10) {
   width: 14%;
 }
-/* line 250, ../sass/_mysql_styles.scss */
+/* line 258, ../sass/_mysql_styles.scss */
 .requests_list td, .search_list td {
   text-align: center;
 }
-/* line 251, ../sass/_mysql_styles.scss */
+/* line 259, ../sass/_mysql_styles.scss */
 .requests_list td:nth-child(4), .search_list td:nth-child(4) {
   text-align: left;
 }
-/* line 253, ../sass/_mysql_styles.scss */
+/* line 261, ../sass/_mysql_styles.scss */
 .requests_list .positions td:nth-child(1), .search_list .positions td:nth-child(1) {
   text-align: center;
 }
-/* line 254, ../sass/_mysql_styles.scss */
+/* line 262, ../sass/_mysql_styles.scss */
 .requests_list .positions td:nth-child(2), .search_list .positions td:nth-child(2) {
   text-align: left;
 }
-/* line 255, ../sass/_mysql_styles.scss */
+/* line 263, ../sass/_mysql_styles.scss */
 .requests_list .positions td:nth-child(3), .search_list .positions td:nth-child(3) {
   text-align: center;
   vertical-align: middle;
 }
-/* line 256, ../sass/_mysql_styles.scss */
+/* line 264, ../sass/_mysql_styles.scss */
 .requests_list .positions td:nth-child(4), .search_list .positions td:nth-child(4) {
   text-align: left;
   vertical-align: middle;
 }
-/* line 257, ../sass/_mysql_styles.scss */
+/* line 265, ../sass/_mysql_styles.scss */
 .requests_list .positions td:nth-child(5), .search_list .positions td:nth-child(5) {
   text-align: center;
 }
-/* line 259, ../sass/_mysql_styles.scss */
+/* line 267, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list td:nth-child(1), .search_list .pricing-list td:nth-child(1) {
   text-align: center;
 }
-/* line 260, ../sass/_mysql_styles.scss */
+/* line 268, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list td:nth-child(2), .search_list .pricing-list td:nth-child(2) {
   text-align: center;
 }
-/* line 261, ../sass/_mysql_styles.scss */
+/* line 269, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list td:nth-child(3), .search_list .pricing-list td:nth-child(3) {
   text-align: center;
 }
-/* line 262, ../sass/_mysql_styles.scss */
+/* line 270, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list td:nth-child(4), .search_list .pricing-list td:nth-child(4) {
   text-align: center;
 }
-/* line 263, ../sass/_mysql_styles.scss */
+/* line 271, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list td:nth-child(5), .search_list .pricing-list td:nth-child(5) {
   text-align: center;
 }
-/* line 264, ../sass/_mysql_styles.scss */
+/* line 272, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list td:nth-child(6), .search_list .pricing-list td:nth-child(6) {
   text-align: center;
 }
-/* line 265, ../sass/_mysql_styles.scss */
+/* line 273, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list td:nth-child(7), .search_list .pricing-list td:nth-child(7) {
   text-align: center;
 }
-/* line 266, ../sass/_mysql_styles.scss */
+/* line 274, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list td:nth-child(8), .search_list .pricing-list td:nth-child(8) {
   text-align: center;
 }
-/* line 267, ../sass/_mysql_styles.scss */
+/* line 275, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list td:nth-child(9), .search_list .pricing-list td:nth-child(9) {
   text-align: center;
 }
-/* line 268, ../sass/_mysql_styles.scss */
+/* line 276, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list td:nth-child(10), .search_list .pricing-list td:nth-child(10) {
   text-align: center;
 }
-/* line 269, ../sass/_mysql_styles.scss */
+/* line 277, ../sass/_mysql_styles.scss */
 .requests_list .pricing-list td:nth-child(11), .search_list .pricing-list td:nth-child(11) {
   text-align: center;
 }
-/* line 273, ../sass/_mysql_styles.scss */
+/* line 281, ../sass/_mysql_styles.scss */
 .requests_list .rentcount .rent-table td, .search_list .rentcount .rent-table td {
   text-align: center;
 }
-/* line 280, ../sass/_mysql_styles.scss */
+/* line 288, ../sass/_mysql_styles.scss */
 .requests_list tr, .search_list tr {
   border-bottom: 1px black solid;
   border-right: 1px black solid;
 }
-/* line 285, ../sass/_mysql_styles.scss */
+/* line 293, ../sass/_mysql_styles.scss */
 .requests_list tr td:nth-child(1), .requests_list tr td:nth-child(2), .requests_list tr td:nth-child(3), .requests_list tr td:nth-child(4), .requests_list tr td:nth-child(5), .requests_list tr td:nth-child(6), .requests_list tr td:nth-child(7), .search_list tr td:nth-child(1), .search_list tr td:nth-child(2), .search_list tr td:nth-child(3), .search_list tr td:nth-child(4), .search_list tr td:nth-child(5), .search_list tr td:nth-child(6), .search_list tr td:nth-child(7) {
   border-right: 1px black solid;
 }
-/* line 296, ../sass/_mysql_styles.scss */
+/* line 304, ../sass/_mysql_styles.scss */
 .requests_list tr td:last-child, .search_list tr td:last-child {
   border-right: none;
 }
-/* line 302, ../sass/_mysql_styles.scss */
+/* line 310, ../sass/_mysql_styles.scss */
 .requests_list tr td .contents .positions td, .search_list tr td .contents .positions td {
   border: none;
 }
-/* line 303, ../sass/_mysql_styles.scss */
+/* line 311, ../sass/_mysql_styles.scss */
 .requests_list tr td .contents .positions .pricings table.pricing-list tbody tr, .search_list tr td .contents .positions .pricings table.pricing-list tbody tr {
   border-bottom: 1px solid black;
 }
-/* line 304, ../sass/_mysql_styles.scss */
+/* line 312, ../sass/_mysql_styles.scss */
 .requests_list tr td .contents .positions .pricings table.pricing-list tbody tr:nth-last-of-type(1), .search_list tr td .contents .positions .pricings table.pricing-list tbody tr:nth-last-of-type(1) {
   border: none;
 }
 
 /*Таблица отображения циферок рентабельности*/
-/* line 314, ../sass/_mysql_styles.scss */
+/* line 322, ../sass/_mysql_styles.scss */
 .rentcount .rent-table td {
   text-align: center;
 }
 
 /**/
 /*граница низ-прав для Ряда заявки*/
-/* line 321, ../sass/_mysql_styles.scss */
+/* line 329, ../sass/_mysql_styles.scss */
 .requests_list tr {
   border-bottom: 1px black solid;
   border-right: 1px black solid;
 }
 
-/* line 326, ../sass/_mysql_styles.scss */
+/* line 334, ../sass/_mysql_styles.scss */
 .requests_list tr td:nth-child(1),
 .requests_list tr td:nth-child(2),
 .requests_list tr td:nth-child(3),
@@ -507,59 +515,59 @@ table {
   border-right: 1px black solid;
 }
 
-/* line 337, ../sass/_mysql_styles.scss */
+/* line 345, ../sass/_mysql_styles.scss */
 .requests_list tr td:last-child {
   border-right: none;
 }
 
 /*Таблица второго уровня*/
-/* line 343, ../sass/_mysql_styles.scss */
+/* line 351, ../sass/_mysql_styles.scss */
 .requests_list tr td .contents .positions td {
   border: none;
 }
 
-/* line 344, ../sass/_mysql_styles.scss */
+/* line 352, ../sass/_mysql_styles.scss */
 .requests_list tr td .contents .positions .pricings table.pricing-list tbody tr {
   border-bottom: 1px solid black;
 }
 
-/* line 345, ../sass/_mysql_styles.scss */
+/* line 353, ../sass/_mysql_styles.scss */
 .requests_list tr td .contents .positions .pricings table.pricing-list tbody tr:nth-last-of-type(1) {
   border: none;
 }
 
 /*шрифты таблицы*/
-/* line 348, ../sass/_mysql_styles.scss */
+/* line 356, ../sass/_mysql_styles.scss */
 td[category="requests"], td[byerid], td[category="positions"], .pricings {
   font-size: 21px;
   font-family: Arial;
 }
 
-/* line 352, ../sass/_mysql_styles.scss */
+/* line 360, ../sass/_mysql_styles.scss */
 tr[position]:hover {
   border-bottom: 1px solid black;
 }
 
-/* line 356, ../sass/_mysql_styles.scss */
+/* line 364, ../sass/_mysql_styles.scss */
 .pricing-list th, .pricing-list td {
   font-weight: normal;
   font-size: 2vh;
 }
 
-/* line 357, ../sass/_mysql_styles.scss */
+/* line 365, ../sass/_mysql_styles.scss */
 .pricing-list tbody tr:hover {
   background-color: white;
   font-weight: bold;
 }
 
 /*ПОБЕДИТЕЛИ*/
-/* line 360, ../sass/_mysql_styles.scss */
+/* line 368, ../sass/_mysql_styles.scss */
 tr.win[pricingid], tr.win[pricingid]:hover {
   background-color: green;
   color: white;
 }
 
-/* line 365, ../sass/_mysql_styles.scss */
+/* line 373, ../sass/_mysql_styles.scss */
 td.rent_whole, td.sum_whole {
   text-align: center;
   vertical-align: middle;
@@ -567,13 +575,13 @@ td.rent_whole, td.sum_whole {
 }
 
 /*Резальтаты поиска при создании позиции(выпрыгивает список позиций*/
-/* line 372, ../sass/_mysql_styles.scss */
+/* line 380, ../sass/_mysql_styles.scss */
 .add-pos-inputs .sres ul {
   list-style: none;
   width: 40vw;
 }
 
-/* line 377, ../sass/_mysql_styles.scss */
+/* line 385, ../sass/_mysql_styles.scss */
 .add-pos-inputs .sres ul li {
   z-index: 100;
   min-height: 3vh;
@@ -582,155 +590,155 @@ td.rent_whole, td.sum_whole {
   position: relative;
 }
 
-/* line 385, ../sass/_mysql_styles.scss */
+/* line 393, ../sass/_mysql_styles.scss */
 .add-pos-inputs .sres ul li {
   border: 1px solid black;
   border-bottom: none;
 }
 
-/* line 390, ../sass/_mysql_styles.scss */
+/* line 398, ../sass/_mysql_styles.scss */
 .add-pos-inputs .sres ul li:last-child, .add-pos-inputs .sres ul li:last-child:hover {
   border: 1px solid black;
 }
 
-/* line 394, ../sass/_mysql_styles.scss */
+/* line 402, ../sass/_mysql_styles.scss */
 .add-pos-inputs .sres ul li:hover {
   background-color: green;
   color: white;
   border-color: white;
 }
 
-/* line 400, ../sass/_mysql_styles.scss */
+/* line 408, ../sass/_mysql_styles.scss */
 .add-pos-inputs .sres ul li span, .add-pos-inputs .sres ul li p {
   margin: 0;
   padding: 0;
 }
 
-/* line 404, ../sass/_mysql_styles.scss */
+/* line 412, ../sass/_mysql_styles.scss */
 #requests {
   padding: 0.5vw;
 }
 
-/* line 405, ../sass/_mysql_styles.scss */
+/* line 413, ../sass/_mysql_styles.scss */
 tr[pricingid] td {
   border: 1px solid black;
 }
 
 /**/
 /*Таблица расшифровки расчет рентабельности*/
-/* line 409, ../sass/_mysql_styles.scss */
+/* line 417, ../sass/_mysql_styles.scss */
 .requests_list .demo, .requests_list .demo tr, .requests_list .demo td, .requests_list .demo tr td:nth-child(1) {
   border-bottom: none;
   border-right: none;
   border-left: none;
 }
 
-/* line 410, ../sass/_mysql_styles.scss */
+/* line 418, ../sass/_mysql_styles.scss */
 .requests_list .demo tr:first-child td {
   border-bottom: 1px solid black;
 }
 
-/* line 411, ../sass/_mysql_styles.scss */
+/* line 419, ../sass/_mysql_styles.scss */
 .demo {
   font-size: 20px;
   font-weight: 600;
 }
 
-/* line 416, ../sass/_mysql_styles.scss */
+/* line 424, ../sass/_mysql_styles.scss */
 .rentcount {
   display: none;
 }
 
 /*Закончилась Таблица расшифровки расчет рентабельности*/
 /*Класс для редактирования материала*/
-/* line 423, ../sass/_mysql_styles.scss */
+/* line 431, ../sass/_mysql_styles.scss */
 .widen {
   height: 95vh;
   width: 95vw;
   background: #F5FFFA;
 }
 
-/* line 429, ../sass/_mysql_styles.scss */
+/* line 437, ../sass/_mysql_styles.scss */
 .ga_widen {
   min-height: 99vh;
 }
 
-/* line 433, ../sass/_mysql_styles.scss */
+/* line 441, ../sass/_mysql_styles.scss */
 .ga_contents .ga_c_payments, .ga_contents .ga_c_giveaways {
   border: 1px solid #DCDCDC;
 }
-/* line 437, ../sass/_mysql_styles.scss */
+/* line 445, ../sass/_mysql_styles.scss */
 .ga_contents .ga_c_payments.min-h, .ga_contents .ga_c_giveaways.min-h, .ga_contents .ga_c_positions.min-h {
   min-height: 250px;
 }
-/* line 442, ../sass/_mysql_styles.scss */
+/* line 450, ../sass/_mysql_styles.scss */
 .ga_contents table tr:hover {
   background-color: green;
   color: white;
 }
-/* line 448, ../sass/_mysql_styles.scss */
+/* line 456, ../sass/_mysql_styles.scss */
 .ga_contents .ga_c_payments table th:nth-child(1), .ga_contents .ga_c_giveaways table th:nth-child(1) {
   width: 15vw;
 }
-/* line 449, ../sass/_mysql_styles.scss */
+/* line 457, ../sass/_mysql_styles.scss */
 .ga_contents .ga_c_payments table th:nth-child(2), .ga_contents .ga_c_giveaways table th:nth-child(2) {
   width: 15vw;
 }
-/* line 450, ../sass/_mysql_styles.scss */
+/* line 458, ../sass/_mysql_styles.scss */
 .ga_contents .ga_c_payments table th:nth-child(3), .ga_contents .ga_c_giveaways table th:nth-child(3) {
   width: 15vw;
 }
-/* line 451, ../sass/_mysql_styles.scss */
+/* line 459, ../sass/_mysql_styles.scss */
 .ga_contents .ga_c_payments table th:nth-child(4), .ga_contents .ga_c_giveaways table th:nth-child(4) {
   width: 15vw;
 }
-/* line 457, ../sass/_mysql_styles.scss */
+/* line 465, ../sass/_mysql_styles.scss */
 .ga_contents .ga_c_positions table th:nth-child(1) {
   width: 15vw;
 }
-/* line 458, ../sass/_mysql_styles.scss */
+/* line 466, ../sass/_mysql_styles.scss */
 .ga_contents .ga_c_positions table th:nth-child(2) {
   width: 5vw;
 }
-/* line 459, ../sass/_mysql_styles.scss */
+/* line 467, ../sass/_mysql_styles.scss */
 .ga_contents .ga_c_positions table th:nth-child(3) {
   width: 5vw;
 }
-/* line 460, ../sass/_mysql_styles.scss */
+/* line 468, ../sass/_mysql_styles.scss */
 .ga_contents .ga_c_positions table th:nth-child(4) {
   width: 5vw;
 }
 
-/* line 465, ../sass/_mysql_styles.scss */
+/* line 473, ../sass/_mysql_styles.scss */
 .shrinken > table > thead > tr > th:nth-child(1), .shrinken > table > tbody > tr > td:nth-child(1) {
   display: none;
 }
-/* line 466, ../sass/_mysql_styles.scss */
+/* line 474, ../sass/_mysql_styles.scss */
 .shrinken > table > thead > tr > th:nth-child(2), .shrinken > table > tbody > tr > td:nth-child(2) {
   display: none;
 }
-/* line 467, ../sass/_mysql_styles.scss */
+/* line 475, ../sass/_mysql_styles.scss */
 .shrinken > table > thead > tr > th:nth-child(3), .shrinken > table > tbody > tr > td:nth-child(3) {
   display: none;
 }
-/* line 468, ../sass/_mysql_styles.scss */
+/* line 476, ../sass/_mysql_styles.scss */
 .shrinken > table > thead > tr > th:nth-child(4), .shrinken > table > tbody > tr > td:nth-child(4) {
   width: 100%;
 }
-/* line 469, ../sass/_mysql_styles.scss */
+/* line 477, ../sass/_mysql_styles.scss */
 .shrinken > table > thead > tr > th:nth-child(5), .shrinken > table > tbody > tr > td:nth-child(5) {
   display: none;
 }
-/* line 470, ../sass/_mysql_styles.scss */
+/* line 478, ../sass/_mysql_styles.scss */
 .shrinken > table > thead > tr > th:nth-child(6), .shrinken > table > tbody > tr > td:nth-child(6) {
   display: none;
 }
-/* line 471, ../sass/_mysql_styles.scss */
+/* line 479, ../sass/_mysql_styles.scss */
 .shrinken > table > thead > tr > th:nth-child(7), .shrinken > table > tbody > tr > td:nth-child(7) {
   display: none;
 }
 
-/* line 479, ../sass/_mysql_styles.scss */
+/* line 487, ../sass/_mysql_styles.scss */
 #add_giveaway {
   padding: 10px;
   border-radius: 5px;
@@ -742,12 +750,12 @@ tr[pricingid] td {
   height: 200px;
   width: 300px;
 }
-/* line 490, ../sass/_mysql_styles.scss */
+/* line 498, ../sass/_mysql_styles.scss */
 #add_giveaway.come_here {
   top: 150px;
 }
 
-/* line 494, ../sass/_mysql_styles.scss */
+/* line 502, ../sass/_mysql_styles.scss */
 #add_payment {
   padding: 10px;
   border-radius: 5px;
@@ -759,12 +767,12 @@ tr[pricingid] td {
   height: 200px;
   width: 300px;
 }
-/* line 505, ../sass/_mysql_styles.scss */
+/* line 513, ../sass/_mysql_styles.scss */
 #add_payment.come_here {
   top: 150px;
 }
 
-/* line 509, ../sass/_mysql_styles.scss */
+/* line 517, ../sass/_mysql_styles.scss */
 #edit_1c_num {
   padding: 10px;
   border-radius: 5px;
@@ -776,12 +784,12 @@ tr[pricingid] td {
   height: 200px;
   width: 250px;
 }
-/* line 520, ../sass/_mysql_styles.scss */
+/* line 528, ../sass/_mysql_styles.scss */
 #edit_1c_num.come_here {
   top: 133px;
 }
 
-/* line 525, ../sass/_mysql_styles.scss */
+/* line 533, ../sass/_mysql_styles.scss */
 #edit_options {
   padding: 10px;
   border-radius: 5px;
@@ -792,31 +800,31 @@ tr[pricingid] td {
   top: -700px;
   width: 220px;
 }
-/* line 535, ../sass/_mysql_styles.scss */
+/* line 543, ../sass/_mysql_styles.scss */
 #edit_options span {
   font-size: 25px;
 }
-/* line 538, ../sass/_mysql_styles.scss */
+/* line 546, ../sass/_mysql_styles.scss */
 #edit_options.come_here {
   top: 133px;
 }
-/* line 541, ../sass/_mysql_styles.scss */
+/* line 549, ../sass/_mysql_styles.scss */
 #edit_options #req_op_op, #edit_options #req_op_tp, #edit_options #req_op_firstobp, #edit_options #req_op_wt {
   font-size: 25px;
 }
-/* line 544, ../sass/_mysql_styles.scss */
+/* line 552, ../sass/_mysql_styles.scss */
 #edit_options #edit_op, #edit_options #edit_tp, #edit_options #edit_firstobp, #edit_options #edit_wt {
   font-size: 20px;
   width: 200px;
   text-align: center;
 }
-/* line 549, ../sass/_mysql_styles.scss */
+/* line 557, ../sass/_mysql_styles.scss */
 #edit_options input[cc] {
   width: 200px;
   font-size: 20px;
 }
 
-/* line 555, ../sass/_mysql_styles.scss */
+/* line 563, ../sass/_mysql_styles.scss */
 #edit_options_pos {
   padding: 10px;
   border-radius: 5px;
@@ -827,41 +835,41 @@ tr[pricingid] td {
   top: -700px;
   width: 220px;
 }
-/* line 565, ../sass/_mysql_styles.scss */
+/* line 573, ../sass/_mysql_styles.scss */
 #edit_options_pos span {
   font-size: 25px;
 }
-/* line 568, ../sass/_mysql_styles.scss */
+/* line 576, ../sass/_mysql_styles.scss */
 #edit_options_pos.come_here {
   top: 0;
 }
-/* line 571, ../sass/_mysql_styles.scss */
+/* line 579, ../sass/_mysql_styles.scss */
 #edit_options_pos #pos_op_op, #edit_options_pos #pos_op_tp, #edit_options_pos #pos_op_firstobp, #edit_options_pos #pos_op_wt {
   font-size: 25px;
 }
-/* line 574, ../sass/_mysql_styles.scss */
+/* line 582, ../sass/_mysql_styles.scss */
 #edit_options_pos #edit_op_pos, #edit_options_pos #edit_tp_pos, #edit_options_pos #edit_firstobp_pos, #edit_options_pos #edit_wt_pos {
   font-size: 20px;
   width: 200px;
   text-align: center;
 }
-/* line 579, ../sass/_mysql_styles.scss */
+/* line 587, ../sass/_mysql_styles.scss */
 #edit_options_pos input[cc] {
   width: 200px;
   font-size: 20px;
 }
-/* line 584, ../sass/_mysql_styles.scss */
+/* line 592, ../sass/_mysql_styles.scss */
 #edit_options_pos label[for="queen"] {
   font-size: 22px;
 }
-/* line 587, ../sass/_mysql_styles.scss */
+/* line 595, ../sass/_mysql_styles.scss */
 #edit_options_pos #add_queen {
   height: 20px;
   width: 20px;
   vertical-align: middle;
 }
 
-/* line 594, ../sass/_mysql_styles.scss */
+/* line 602, ../sass/_mysql_styles.scss */
 #edit_options_trade {
   padding: 15px;
   border-radius: 5px;
@@ -875,36 +883,36 @@ tr[pricingid] td {
   width: 700px;
   height: 315px;
 }
-/* line 603, ../sass/_mysql_styles.scss */
+/* line 611, ../sass/_mysql_styles.scss */
 #edit_options_trade #edit_trade_name {
   font-size: 25px;
 }
-/* line 611, ../sass/_mysql_styles.scss */
+/* line 619, ../sass/_mysql_styles.scss */
 #edit_options_trade span {
   font-size: 25px;
 }
-/* line 614, ../sass/_mysql_styles.scss */
+/* line 622, ../sass/_mysql_styles.scss */
 #edit_options_trade.come_here {
   top: calc(100%/3);
 }
-/* line 617, ../sass/_mysql_styles.scss */
+/* line 625, ../sass/_mysql_styles.scss */
 #edit_options_trade input[cc] {
   width: 200px;
   font-size: 20px;
 }
-/* line 621, ../sass/_mysql_styles.scss */
+/* line 629, ../sass/_mysql_styles.scss */
 #edit_options_trade .close_edit_options_trade {
   position: absolute;
   top: 15px;
   right: 15px;
   padding: 10px;
 }
-/* line 627, ../sass/_mysql_styles.scss */
+/* line 635, ../sass/_mysql_styles.scss */
 #edit_options_trade #edit_trade_tare {
   font-size: 20px;
 }
 
-/* line 632, ../sass/_mysql_styles.scss */
+/* line 640, ../sass/_mysql_styles.scss */
 #button_add_giveaway, #button_add_payment {
   position: absolute;
   bottom: 10px;
@@ -912,7 +920,7 @@ tr[pricingid] td {
   width: 150px;
 }
 
-/* line 638, ../sass/_mysql_styles.scss */
+/* line 646, ../sass/_mysql_styles.scss */
 .close_add_g,
 .close_add_p, .close_edit_1c_num, .close_edit_options, .close_edit_options_pos {
   position: absolute;
@@ -920,94 +928,94 @@ tr[pricingid] td {
   right: 10px;
 }
 
-/* line 645, ../sass/_mysql_styles.scss */
+/* line 653, ../sass/_mysql_styles.scss */
 #add_payment, #add_giveaway, #edit_1c_num, #edit_options, #edit_options_pos {
   background-color: white;
 }
-/* line 648, ../sass/_mysql_styles.scss */
+/* line 656, ../sass/_mysql_styles.scss */
 #add_payment input:focus, #add_giveaway input:focus, #edit_1c_num input:focus, #edit_options input:focus, #edit_options_pos input:focus {
   background-color: lightblue;
 }
 
-/* line 653, ../sass/_mysql_styles.scss */
+/* line 661, ../sass/_mysql_styles.scss */
 .ga_byer_requests {
   display: none;
 }
-/* line 655, ../sass/_mysql_styles.scss */
+/* line 663, ../sass/_mysql_styles.scss */
 .ga_byer_requests table {
   text-align: center;
 }
-/* line 657, ../sass/_mysql_styles.scss */
+/* line 665, ../sass/_mysql_styles.scss */
 .ga_byer_requests table th:nth-child(4), .ga_byer_requests table td:nth-child(4) {
   text-align: left;
 }
-/* line 658, ../sass/_mysql_styles.scss */
+/* line 666, ../sass/_mysql_styles.scss */
 .ga_byer_requests table th:nth-child(1) {
   width: 10%;
 }
-/* line 659, ../sass/_mysql_styles.scss */
+/* line 667, ../sass/_mysql_styles.scss */
 .ga_byer_requests table th:nth-child(2) {
   width: 5%;
 }
-/* line 660, ../sass/_mysql_styles.scss */
+/* line 668, ../sass/_mysql_styles.scss */
 .ga_byer_requests table th:nth-child(3) {
   width: 5%;
 }
-/* line 661, ../sass/_mysql_styles.scss */
+/* line 669, ../sass/_mysql_styles.scss */
 .ga_byer_requests table th:nth-child(4) {
   width: 25%;
 }
-/* line 662, ../sass/_mysql_styles.scss */
+/* line 670, ../sass/_mysql_styles.scss */
 .ga_byer_requests table th:nth-child(5) {
   width: 10%;
 }
-/* line 663, ../sass/_mysql_styles.scss */
+/* line 671, ../sass/_mysql_styles.scss */
 .ga_byer_requests table th:nth-child(6) {
   width: 10%;
 }
-/* line 664, ../sass/_mysql_styles.scss */
+/* line 672, ../sass/_mysql_styles.scss */
 .ga_byer_requests table th:nth-child(7) {
   width: 20%;
 }
 
-/* line 668, ../sass/_mysql_styles.scss */
+/* line 676, ../sass/_mysql_styles.scss */
 .byer_req_list {
   list-style: none;
 }
-/* line 670, ../sass/_mysql_styles.scss */
+/* line 678, ../sass/_mysql_styles.scss */
 .byer_req_list .collapse_ga_byer {
   width: 40px;
 }
-/* line 674, ../sass/_mysql_styles.scss */
+/* line 682, ../sass/_mysql_styles.scss */
 .byer_req_list .ga_contents td {
   text-align: center;
 }
 
-/* line 679, ../sass/_mysql_styles.scss */
+/* line 687, ../sass/_mysql_styles.scss */
 .not_ready {
   border: 2px solid red;
   background-color: pink;
 }
 
-/* line 683, ../sass/_mysql_styles.scss */
+/* line 691, ../sass/_mysql_styles.scss */
 .ready {
   border: 2px solid green;
   background-color: white;
 }
 
-/* line 687, ../sass/_mysql_styles.scss */
+/* line 695, ../sass/_mysql_styles.scss */
 .ok {
   background-color: green;
   color: white;
 }
 
-/* line 688, ../sass/_mysql_styles.scss */
+/* line 696, ../sass/_mysql_styles.scss */
 .not-ok {
   background-color: red;
   color: white;
 }
 
-/* line 690, ../sass/_mysql_styles.scss */
+/* line 698, ../sass/_mysql_styles.scss */
 .ga_requests_date_range {
   margin: 3vh 0;
   border-bottom: 1px solid black;
@@ -1015,12 +1023,12 @@ tr[pricingid] td {
 }
 
 /*Список покупателей*/
-/* line 700, ../sass/_mysql_styles.scss */
+/* line 708, ../sass/_mysql_styles.scss */
 .byers_list table {
   text-align: center;
 }
 
-/* line 706, ../sass/_mysql_styles.scss */
+/* line 714, ../sass/_mysql_styles.scss */
 #go_up {
   position: fixed;
   left: -5px;
@@ -1032,139 +1040,139 @@ tr[pricingid] td {
   width: 17px;
   padding: 0;
 }
-/* line 716, ../sass/_mysql_styles.scss */
+/* line 724, ../sass/_mysql_styles.scss */
 #go_up:hover {
   background-color: green;
   color: white;
 }
 
-/* line 723, ../sass/_mysql_styles.scss */
+/* line 731, ../sass/_mysql_styles.scss */
 .current_pricing {
   color: green;
 }
 
-/* line 727, ../sass/_mysql_styles.scss */
+/* line 735, ../sass/_mysql_styles.scss */
 #button_history.pushed, #button_history_tzrkpok.pushed, #button_history_tzrknam.pushed {
   color: white;
   background: green;
 }
 
-/* line 733, ../sass/_mysql_styles.scss */
+/* line 741, ../sass/_mysql_styles.scss */
 .history, .history_knam, .history_kpok {
   display: none;
   width: 60vw;
   border: 1px solid black;
   border-top: none;
 }
-/* line 736, ../sass/_mysql_styles.scss */
+/* line 744, ../sass/_mysql_styles.scss */
 .history td, .history_knam td, .history_kpok td {
   text-align: center;
   font-size: 20px;
 }
 
-/* line 745, ../sass/_mysql_styles.scss */
+/* line 753, ../sass/_mysql_styles.scss */
 .history_knam th:nth-child(1), .history_kpok th:nth-child(1) {
   width: 10%;
 }
-/* line 746, ../sass/_mysql_styles.scss */
+/* line 754, ../sass/_mysql_styles.scss */
 .history_knam th:nth-child(2), .history_kpok th:nth-child(2) {
   width: 70%;
 }
-/* line 747, ../sass/_mysql_styles.scss */
+/* line 755, ../sass/_mysql_styles.scss */
 .history_knam th:nth-child(3), .history_kpok th:nth-child(3) {
   width: 10%;
 }
-/* line 748, ../sass/_mysql_styles.scss */
+/* line 756, ../sass/_mysql_styles.scss */
 .history_knam th:nth-child(4), .history_kpok th:nth-child(4) {
   width: 10%;
 }
 
-/* line 752, ../sass/_mysql_styles.scss */
+/* line 760, ../sass/_mysql_styles.scss */
 #fcount {
   border: 1px solid black;
 }
 
-/* line 756, ../sass/_mysql_styles.scss */
+/* line 764, ../sass/_mysql_styles.scss */
 #search_reads {
   min-height: 100vh;
   display: none;
 }
 
-/* line 762, ../sass/_mysql_styles.scss */
+/* line 770, ../sass/_mysql_styles.scss */
 .totals_list table {
   font-size: 20px;
 }
 
-/* line 767, ../sass/_mysql_styles.scss */
+/* line 775, ../sass/_mysql_styles.scss */
 .shrinken_totals {
   display: none;
 }
 
-/* line 768, ../sass/_mysql_styles.scss */
+/* line 776, ../sass/_mysql_styles.scss */
 .widen_totals {
   height: 70vh;
 }
 
-/* line 771, ../sass/_mysql_styles.scss */
+/* line 779, ../sass/_mysql_styles.scss */
 .byer_req_list_totals tr td:nth-child(2), .byer_req_list_totals tr td:nth-child(3), .byer_req_list_totals tr td:nth-child(4) {
   text-align: center;
 }
-/* line 773, ../sass/_mysql_styles.scss */
+/* line 781, ../sass/_mysql_styles.scss */
 .byer_req_list_totals .totals_byer_requests {
   display: none;
   padding-left: 2vw;
 }
-/* line 776, ../sass/_mysql_styles.scss */
+/* line 784, ../sass/_mysql_styles.scss */
 .byer_req_list_totals .totals_byer_requests li {
   list-style: none;
 }
 
-/* line 780, ../sass/_mysql_styles.scss */
+/* line 788, ../sass/_mysql_styles.scss */
 .totals_requests_list th {
   width: 10vw;
 }
-/* line 783, ../sass/_mysql_styles.scss */
+/* line 791, ../sass/_mysql_styles.scss */
 .totals_requests_list th:nth-child(5) {
   width: 20vw;
 }
-/* line 786, ../sass/_mysql_styles.scss */
+/* line 794, ../sass/_mysql_styles.scss */
 .totals_requests_list td {
   text-align: center;
 }
 
-/* line 790, ../sass/_mysql_styles.scss */
+/* line 798, ../sass/_mysql_styles.scss */
 .totals_g_list {
   display: none;
 }
-/* line 793, ../sass/_mysql_styles.scss */
+/* line 801, ../sass/_mysql_styles.scss */
 .totals_g_list table tr:hover {
   color: white;
   background: green;
 }
 
-/* line 800, ../sass/_mysql_styles.scss */
+/* line 808, ../sass/_mysql_styles.scss */
 .vid_byer_requests td {
   text-align: center;
 }
-/* line 803, ../sass/_mysql_styles.scss */
+/* line 811, ../sass/_mysql_styles.scss */
 .vid_byer_requests tr:hover {
   background: green;
   color: white;
 }
 
 /*Статус заказа в Р-1*/
-/* line 811, ../sass/_mysql_styles.scss */
+/* line 819, ../sass/_mysql_styles.scss */
 #requests, #requests table, #byers, #byers table, #sellers, #sellers table, #trades, #trades table, #givaways, #givaways table, #vidachi, #vidachi table, #totals, #totals table, #search, #search table {
   font-size: 21px;
 }
 
-/* line 815, ../sass/_mysql_styles.scss */
+/* line 823, ../sass/_mysql_styles.scss */
 .green, .lightgreen, .yellow, .lightblue, .red {
   border-radius: 5px;
   border: 1px solid white;
   position: relative;
 }
-/* line 819, ../sass/_mysql_styles.scss */
+/* line 827, ../sass/_mysql_styles.scss */
 .green input, .lightgreen input, .yellow input, .lightblue input, .red input {
   display: none;
   position: absolute;
@@ -1173,65 +1181,65 @@ tr[pricingid] td {
   font-size: 16px;
 }
 
-/* line 828, ../sass/_mysql_styles.scss */
+/* line 836, ../sass/_mysql_styles.scss */
 .w {
   background: white;
   color: black;
 }
 
-/* line 832, ../sass/_mysql_styles.scss */
+/* line 840, ../sass/_mysql_styles.scss */
 .x {
   background: red;
   color: white;
 }
 
-/* line 837, ../sass/_mysql_styles.scss */
+/* line 845, ../sass/_mysql_styles.scss */
 .green {
   background-color: green;
   color: white;
 }
 
-/* line 838, ../sass/_mysql_styles.scss */
+/* line 846, ../sass/_mysql_styles.scss */
 .lightgreen {
   background-color: lightgreen;
   color: black;
 }
 
-/* line 839, ../sass/_mysql_styles.scss */
+/* line 847, ../sass/_mysql_styles.scss */
 .yellow {
   background-color: yellow;
   color: black;
 }
 
-/* line 840, ../sass/_mysql_styles.scss */
+/* line 848, ../sass/_mysql_styles.scss */
 .lightblue {
   background-color: lightblue;
   color: blue;
 }
 
-/* line 841, ../sass/_mysql_styles.scss */
+/* line 849, ../sass/_mysql_styles.scss */
 .red {
   background-color: red;
   color: white;
 }
 
-/* line 844, ../sass/_mysql_styles.scss */
+/* line 852, ../sass/_mysql_styles.scss */
 .trades_list table {
   width: 50%;
 }
-/* line 847, ../sass/_mysql_styles.scss */
+/* line 855, ../sass/_mysql_styles.scss */
 .trades_list th:nth-child(1) {
   width: 30%;
 }
-/* line 848, ../sass/_mysql_styles.scss */
+/* line 856, ../sass/_mysql_styles.scss */
 .trades_list th:nth-child(2) {
   width: 5%;
 }
-/* line 849, ../sass/_mysql_styles.scss */
+/* line 857, ../sass/_mysql_styles.scss */
 .trades_list th:nth-child(3) {
   width: 5%;
 }
-/* line 851, ../sass/_mysql_styles.scss */
+/* line 859, ../sass/_mysql_styles.scss */
 .trades_list tr:hover td {
   background: green;
   color: white;
@@ -1255,7 +1263,7 @@ tr[pricingid] td {
     background: orange;
   }
 }
-/* line 868, ../sass/_mysql_styles.scss */
+/* line 876, ../sass/_mysql_styles.scss */
 .flash {
   -webkit-animation: flashss 2s;
   -moz-animation: flashss 2s;
@@ -1263,34 +1271,34 @@ tr[pricingid] td {
   animation: flashss 2s;
 }
 
-/* line 877, ../sass/_mysql_styles.scss */
+/* line 885, ../sass/_mysql_styles.scss */
 .payments_list table tbody tr:hover, .vidachi_list table tbody tr:hover {
   background: green;
   color: white;
 }
-/* line 881, ../sass/_mysql_styles.scss */
+/* line 889, ../sass/_mysql_styles.scss */
 .payments_list table td, .vidachi_list table td {
   text-align: center;
   border: 1px solid black;
   font-size: 21px;
 }
 
-/* line 889, ../sass/_mysql_styles.scss */
+/* line 897, ../sass/_mysql_styles.scss */
 #sync_info ul, #sync_info li {
   list-style: none;
 }
 
-/* line 894, ../sass/_mysql_styles.scss */
+/* line 902, ../sass/_mysql_styles.scss */
 #sync_add_to_base {
   position: fixed;
   top: 150px;
   right: 0;
 }
-/* line 899, ../sass/_mysql_styles.scss */
+/* line 907, ../sass/_mysql_styles.scss */
 #sync_add_to_base.up {
   display: none;
 }
-/* line 902, ../sass/_mysql_styles.scss */
+/* line 910, ../sass/_mysql_styles.scss */
 #sync_add_to_base .creates {
   display: block;
   width: 25vw;

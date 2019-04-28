@@ -94,7 +94,7 @@ if(isset($_POST['trade_name']) && isset($_POST['trade_tare'])){
 };
 ///////////////////////////////////////////////////////////////////////
 
-//ДОБАВЛЕНИЕ заявки ///////////////////////////////////////////////////
+//ДОБАВЛЕНИЕ заявки из окна списка заявок///////////////////////////////////////////////////
 if(isset($_POST['byer']) && isset($_POST['thename'])){
 
     $byer = $_POST['byer'];
@@ -136,6 +136,50 @@ if(isset($_POST['byer']) && isset($_POST['thename'])){
     /**//////////////////////////////////////////////////////////////
 
     echo "Получилось! Добавлена Заявка  " . $thename . " .";
+
+};
+/////////////////////////////////////////////////////////////////////
+
+//ДОБАВЛЕНИЕ заявки из окна синхронизации///////////////////////////////////////////////////
+if(isset($_POST['byer']) && isset($_POST['created']) && isset($_POST['uid']) && isset($_POST['onec_id'])){
+
+    $byer = $_POST['byer'];
+    $created = $_POST['created'];
+    $uid = $_POST['uid'];
+    $onec_id = $_POST['onec_id'];
+
+    /**//////////////////////////////////////////////////////////////
+
+
+    try {
+
+        //Запросы
+        $request_options = $pdo->prepare("SELECT byers.ov_tp,byers.ov_firstobp,byers.ov_wt FROM byers where byers.byers_id=?");//Опции заявки из Покупателя
+        $stmt = $pdo->prepare("INSERT INTO `requests`(`created`,`byersid`,`ov_op`,`ov_firstobp`,`ov_tp`,`ov_wt`,`requests_uid`,`1c_num`) VALUES(?,?,?,?,?,?,?,?)");//Сама заявка
+
+
+        $pdo->beginTransaction();
+
+        $request_options->execute(array($byer));
+        $result = $request_options->fetch();
+
+        //Опции заявки
+        $ov_op = 21; //Наша дефолтная наценка
+        $ov_tp = $result['ov_tp'];
+        $ov_firstobp = $result['ov_firstobp'];
+        $ov_wt = $result['ov_wt'];
+
+        $stmt->execute(array($created, $byer, $ov_op, $ov_firstobp, $ov_tp, $ov_wt, $uid, $onec_id));
+        $pdo->commit();
+
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        $pdo->rollback();
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+    /**//////////////////////////////////////////////////////////////
+
+    echo "Получилось! Добавлена Заявка из 1C.";
 
 };
 /////////////////////////////////////////////////////////////////////
@@ -200,6 +244,45 @@ if(isset($_POST['reqid']) && isset($_POST['payment_date']) && isset($_POST['num'
     /**//////////////////////////////////////////////////////////////
 
     echo "Получилось! Добавлена платежка  на сумму $sum в заявку $reqid.";
+
+};
+//////////////////////////////////////////////////////////////////////
+
+
+//ДОБАВЛЕНИЕ ПЛАТЕЖКИ ИЗ ОКНА СИНХРОНИЗАЦИИ/////////////////////////////////////////////////
+if(isset($_POST['number']) && isset($_POST['payed']) && isset($_POST['uid']) && isset($_POST['onec_id']) && isset($_POST['sum']) && isset($_POST['requestid'])){
+
+    $number = $_POST['number'];
+    $payed = $_POST['payed'];
+    $uid = $_POST['uid'];
+    $onec_id = $_POST['onec_id'];
+    $sum = $_POST['sum'];
+    $requestid = $_POST['requestid'];
+
+    /**//////////////////////////////////////////////////////////////
+
+    try {
+        $statement = $pdo->prepare("INSERT INTO `payments`(`number`,`payed`,`payments_uid`,`onec_id`,`sum`,`requestid`) VALUES(?,?,?,?,?,?)");
+
+        $statement->bindParam(1, $number);
+        $statement->bindParam(2, $payed);
+        $statement->bindParam(3, $uid);
+        $statement->bindParam(4, $onec_id);
+        $statement->bindParam(5, $sum);
+        $statement->bindParam(6, $requestid);
+
+        $pdo->beginTransaction();
+        $statement->execute();
+        $pdo->commit();
+
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        $pdo->rollback();
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+    /**//////////////////////////////////////////////////////////////
+
+    echo "Получилось! Добавлена платежка  на сумму $sum в заявку $requestid.";
 
 };
 //////////////////////////////////////////////////////////////////////

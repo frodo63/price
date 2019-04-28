@@ -42,17 +42,36 @@ $(document).ready(function() {
         var delrequestid = $(event.target).attr("requestid"); //id заявки
         var delnameid = $(event.target).attr("nameid"); //nameid заявки
         if (confirm("Удалить саму запись из базы данных ? Может, вы хотите просто переименовать? Тогда кликайте \"Отмена\".")) {
-            $.ajax({
-                url: 'mysql_delete.php',
-                method: 'POST',
-                data: {delrequestid:delrequestid, delnameid:delnameid},
-                success: function(){
-                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Заявка "+ delrequestid +" удалена.");
-                },
-                complete: function() {
-                    $("a[href = '#requests']").trigger("click");
-                }
-            });
+            console.log(delrequestid);
+            console.log(delnameid);
+            //Значит в allnames ничего нет, надо прост удалить запись из requests
+            if(typeof delnameid === 'undefined'){
+                $.ajax({
+                    url: 'mysql_delete.php',
+                    method: 'POST',
+                    data: {delrequestid_no_nameid:delrequestid},
+                    success: function(){
+                        $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Заявка без названия"+ delrequestid +" удалена.");
+                    },
+                    complete: function() {
+                        $("#requests input.show_list").trigger("click");
+                    }
+                });
+            }else{
+                //Удаляем как положено, с названием из обеих таблиц
+                $.ajax({
+                    url: 'mysql_delete.php',
+                    method: 'POST',
+                    data: {delrequestid:delrequestid, delnameid:delnameid},
+                    success: function(){
+                        $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Заявка "+ delrequestid +" удалена.");
+                    },
+                    complete: function() {
+                        $("#requests input.show_list").trigger("click");
+                    }
+                });
+            }
+
         } else { alert("Аккуратнее, блин! Чуть не удалил... Понадобится еще.") }
         return true;
     });
