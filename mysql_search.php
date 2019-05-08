@@ -77,7 +77,7 @@ if (isset($_POST['strade'])){
         $statement = $pdo->prepare("
         SELECT name,nameid,trades_id,tare FROM `allnames`
         INNER JOIN `trades` ON nameid=trades_nameid  
-        WHERE name LIKE '%{$sline}%' GROUP BY nameid");
+        WHERE name LIKE '%{$sline}%' GROUP BY name");
 
         $pdo->beginTransaction();
         $statement->execute();
@@ -132,7 +132,7 @@ if (isset($_POST['srequest'])){
                 LEFT JOIN 
                 allnames ON byers_nameid=allnames.nameid
         ) 
-        AS a ON nameid=a.requests_nameid WHERE `1c_num`LIKE '%{$sline}%' GROUP BY created DESC");
+        AS a ON nameid=a.requests_nameid WHERE `1c_num`LIKE '%{$sline}%' GROUP BY byers_name ASC");
         
 
     $statement->execute(array($sline));

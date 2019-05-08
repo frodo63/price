@@ -87,20 +87,26 @@ if(isset($_POST['sync_file'])){
 
                     $gotrequestid->execute(array($temp_array[5]));
                     $gotrid = $gotrequestid->fetch(PDO::FETCH_ASSOC);
-                    $rid = $gotrid['requests_id'];
+                    if( ! $gotrid){
+                        $rid = 'none';
+                        $status = "<span style='color: red'>Заказ не определен</span>";
+                    }else{
+                        $rid = $gotrid['requests_id'];
+                        $status = "<span style='color: green'>Заказ найден</span>";
+                    }
 
                     //Дата
                     $payed_trimmed = substr($temp_array[2],0,-8);
                     $payed_trimmed_for_mysql = substr($temp_array[2],6,-8).".".substr($temp_array[2],3,-13).".".substr($temp_array[2],0,-16);
 
                     if (is_string($gotsome['payments_uid']) && $temp_array[6] == $gotsome['payments_uid']){
-                        echo"<span>Уже в базе № ".$temp_array[3]." от ".$payed_trimmed." на сумму ".$temp_array[4]." руб.</span>";
+                        echo"<li><span>Уже в базе № ".$temp_array[3]." от ".$payed_trimmed." на сумму ".$temp_array[4]." руб.</span>".$status."</li>";
 
                     }else{
                         echo"<li>
                              <input type='text' class='sync_payment'><div class='sres'></div>
                              <input type='button' table=$sync class='sync_to_base' value='Соотнести' innerid  onec_id=$temp_array[0] uid=$temp_array[6] payed=$payed_trimmed_for_mysql number=$temp_array[3] sum=$temp_array[4] requestid=$rid>
-                             <span>№ ".$temp_array[3]." от ".$payed_trimmed." на сумму ".$temp_array[4]." руб.</span>
+                             <span>№ ".$temp_array[3]." от ".$payed_trimmed." на сумму ".$temp_array[4]." руб.</span>".$status."
                              <input class='sync_add_to_base' type='button' value='+'>
                          </li>";
                     }
@@ -289,7 +295,6 @@ if(isset($_POST['sync_html'])){
 /*Собственно соотнесение*/
 if (isset($_POST['innerid']) && isset($_POST['uid']) && isset($_POST['table']) && isset($_POST['onec_id'])){
     try {
-
         switch ($_POST['table']) {
             case "requests":
                 $statement=$pdo->prepare("UPDATE requests SET `requests_uid`=:uid, `1c_num`=:onec_id WHERE `requests_id`=:innerid");
@@ -308,17 +313,13 @@ if (isset($_POST['innerid']) && isset($_POST['uid']) && isset($_POST['table']) &
                 break;
         }
 
-
-
         $innerid = $_POST['innerid'];
         $uid = $_POST['uid'];
         $onec_id = $_POST['onec_id'];
 
-
         $statement->bindValue(':uid', $uid);
         $statement->bindValue(':innerid', $innerid);
         $statement->bindValue(':onec_id', $onec_id);
-
 
         $pdo->beginTransaction();
         $statement->execute();

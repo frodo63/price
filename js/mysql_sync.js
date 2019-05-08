@@ -112,6 +112,9 @@ $(document).ready(function(){
                 sum:sum,
                 requestid:requestid
             });
+
+            //Тут добавить условие, что кнопка становится доступной, только если заполнен атрибут requestid
+
             $('#sync_add_to_base input[type="button"]').prop( "disabled", false ).focus();
 
 
