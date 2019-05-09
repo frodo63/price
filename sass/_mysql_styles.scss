@@ -354,7 +354,7 @@ table{
 
 /*шрифты таблицы*/
 td[category="requests"], td[byerid], td[category="positions"], .pricings {
-    font-size: 21px;
+    font-size: 16px;
     font-family: Arial;
 }
 tr[position]:hover {
@@ -817,7 +817,7 @@ tr[pricingid] td {border: 1px solid black}
 /*Статус заказа в Р-1*/
 #requests,#byers,#sellers,#trades,#givaways,#vidachi,#totals,#search{
   &,table{
-    font-size: 21px;
+    font-size: 16px;
   };
 }
 .green,.lightgreen,.yellow,.lightblue,.red {

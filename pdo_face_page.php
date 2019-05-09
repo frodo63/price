@@ -200,6 +200,7 @@ echo "    <div id='sync'>
           <div class='sync_list'>
               <p>Синхронизировать: </p>
               <input type='button' id='sync_requests' value='Заказы'>
+              <input type='button' id='sync_positions' value='Позиции в заказе'>
               <input type='button' id='sync_payments' value='Платежки'>
               <input type='button' id='sync_byers' value='Покупателей'>
               <input type='button' id='sync_sellers' value='Поставщиков'>

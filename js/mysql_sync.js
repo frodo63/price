@@ -2,7 +2,7 @@ $(document).ready(function(){
 
 
     //Вывод содержания файлов
-    $(document).off('click.sync').on('click.sync', '#sync_requests, #sync_payments, #sync_byers, #sync_sellers, #sync_trades', function(event){
+    $(document).off('click.sync').on('click.sync', '#sync_requests, #sync_payments, #sync_byers, #sync_sellers, #sync_trades, #sync_positions', function(event){
         var sync_file = ($(event.target).attr("id")).substring(5);
         console.log(sync_file);
         $.ajax({
@@ -77,7 +77,7 @@ $(document).ready(function(){
         }
     });
 
-/*Добавление в базу из окна СИНХРОНИЗАЦИИ*/
+    //Добавление в базу из окна СИНХРОНИЗАЦИИ
     $(document).off('click.syncaddnew').on('click.syncaddnew', '.sync_add_to_base', function(event){
         if ($('#sync_add_to_base').hasClass('up')){
             $('#sync_add_to_base').removeClass('up');
