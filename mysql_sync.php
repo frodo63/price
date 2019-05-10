@@ -2,6 +2,24 @@
 
 include_once 'pdo_connect.php';
 
+function is_array_empty($array, $check_all_elements = false)
+{
+    if (!is_array($array) || empty($array))
+        return true;
+
+    $elements = count($array);
+    foreach ($array as $element)
+    {
+        if (empty($element) || (is_array($element) && is_array_empty($element, $check_all_elements)))
+        {
+            if ($check_all_elements)
+                return true;
+            else $elements--;
+        }
+    }
+    return empty($elements);
+}
+
 if(isset($_POST['sync_file'])){
     $sync = $_POST['sync_file'];
     $uid_column = $sync."_uid";
@@ -230,6 +248,107 @@ if(isset($_POST['sync_file'])){
                 echo"<p>Файл НЕ найден</p>";
             }
             break;
+        case "positions":
+            if ($file){
+                echo"<p>Файл найден</p>";
+                $file_array = file($path); // Считывание файла в массив $file_array
+                if (count($file_array) > 0);
+                echo"<p>Файл выгружен в массив: </p>";
+
+                $req_positions = array();
+
+                $gettradename = $pdo->prepare("SELECT name FROM trades LEFT JOIN allnames a on trades.trades_nameid = a.nameid WHERE trades_uid = ?");
+                $getreqnum = $pdo->prepare("SELECT 1c_num, name, created, requests_id FROM requests LEFT JOIN byers ON requests.byersid = byers_id LEFT JOIN allnames on byers_nameid = allnames.nameid WHERE requests_uid = ?");
+                $getpositions = $pdo->prepare("SELECT pos_name FROM req_positions LEFT JOIN requests ON requestid = requests_id WHERE requests_uid = ?");
+
+
+                //Строку в массив
+                foreach ($file_array as $k => $v){
+                    $t_a = explode(';',$v);
+                    $file_array[$k]=[$t_a];
+                }
+
+                //Массив для дубрилующих элементво массива. Сюда удут стекаться ключи и он будет ограничивать проход по массиву
+                $a2del = array();
+
+                //Всякое с массивом
+                foreach($file_array as $k2 => $v2){
+                    //$gettradename->execute(array($v2[0][6]));
+                    //$gottradename = $gettradename->fetch(PDO::FETCH_ASSOC);
+
+                    //$getreqnum->execute(array($v2[0][1]));
+                    //$gotreqnum = $getreqnum->fetch(PDO::FETCH_ASSOC);
+
+
+
+
+                    //echo "<br>Заказ № " . $gotreqnum['1c_num'] . ". " . $gottradename['name'] . " в количестве  " . $v2[0][4] . $v2[0][3] . " по цене " . $v2[0][7] . " руб. на сумму " . $v2[0][8] . " руб.<br>";
+
+                    foreach ($file_array as $k2del => $v2del){
+                        if($k2 !== $k2del && !in_array($k2, $a2del)){
+                            if ($v2[0][1] == $v2del[0][1]){
+                                //echo "<br>" . $v2[0][1] . " из " . $k2 . " совпадает с " . $v2del[0][1] . " из " . $k2del . "<br>";
+
+                                //Тут действие замены
+                                $file_array[$k2][] = $v2del[0];
+
+                                //Копим ключи дублирующих элементов массива
+                                $a2del[]=$k2del;
+                            }
+                        }
+                    }
+                }
+
+
+                //echo"<pre>";
+                //print_r($a2del);
+                //echo"</pre>";
+
+                //Удаляем дублирующие элементы массива
+                foreach ($a2del as $a2del){
+                    unset($file_array[$a2del]);
+                }
+
+                //echo"<pre>";
+                //print_r($file_array);
+                //echo"</pre>";
+
+                //Выводим божеский вид
+                echo"<ul id='sinchronize_positions'>";
+
+                //Рисование из массива
+                foreach ($file_array as $k=>$v){
+                    echo "<li><ul>";
+                    $getreqnum->execute(array($v[0][1]));
+                    $gotreqnum = $getreqnum->fetch(PDO::FETCH_ASSOC);
+
+                    $phpdate = strtotime( $gotreqnum['created'] );
+                    $created = date( 'd.m.y', $phpdate );
+
+                    echo "<span><strong>Заказ № " . $gotreqnum['1c_num'] . "</strong> от " . $created . " для ".$gotreqnum['name']."</span>";
+                    foreach ($file_array[$k] as $inner_v){
+                        $gettradename->execute(array($inner_v[6]));
+                        $gottradename = $gettradename->fetch(PDO::FETCH_ASSOC);
+                        echo "<li><span>" . $gottradename['name'] . " в количестве  " . $inner_v[4] . $inner_v[3] . " по цене " . $inner_v[7] . " руб. на сумму " . $inner_v[8] . " руб.</span>";
+                        echo "<input class='sync_add_to_base' type='button' value='+' requests_id='" . $gotreqnum['requests_id'] . "'>";
+                        echo "</li>";
+                    }
+
+                    $getpositions->execute(array($v[0][1]));
+                    $gotpositions = $getpositions->fetchAll(PDO::FETCH_ASSOC);
+                    if(!is_array_empty($gotpositions)){
+                        echo "<li style='color: green'><span>А в базе уже есть: </span></li>";
+                        foreach ($gotpositions as $pos){
+                            echo "<li style='color: green'>" . $pos['pos_name'] . "</li>";
+                        }
+                    }
+                    echo "<br></ul></li>";
+                }
+                echo"</ul>";
+            }else{
+                echo"<p>Файл НЕ найден</p>";
+            }
+            break;
     }
 
     $file = "files/sync_requests.txt";
@@ -249,6 +368,13 @@ if(isset($_POST['sync_html'])){
                     <label for='srb'>Код Покупателя:</label><span class='sync_req_byers_id' name='srb'></span><br>                
                     <label for='srn'>Номер в 1С:</label><span class='sync_req_onec_id' name='srn'></span><br>                
                     <input type='button' name='requests' created bid uid onec_id value='Добавить заявку' disabled>
+                </div>";
+            break;
+        case "positions":
+            echo"<div>              
+                    <label for='spr'>Код Заказа:</label><span class='sync_pos_requestid' name='spr'></span><br>                
+                    <label for='spn'>Имя позиции:</label><span class='sync_pos_pos_name' name='spn'></span><br>                
+                    <input class='addpos' type='button' name='positions' requestid pos_name value='Добавить позицию' disabled>
                 </div>";
             break;
         case "payments":

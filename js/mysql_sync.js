@@ -23,7 +23,6 @@ $(document).ready(function(){
         });
     });
 
-
     //Проходы по списку:
     $(document).off('click.sync_list').on('click.sync_list', '#sync_info .sres li', function (event) {
         console.log('сработал клик на лист итеме');
@@ -82,7 +81,6 @@ $(document).ready(function(){
         if ($('#sync_add_to_base').hasClass('up')){
             $('#sync_add_to_base').removeClass('up');
         };
-
         if($('#sinchronize_payments').length > 0){
             var payed = $(event.target).siblings('input[type="button"]').attr('payed');
             var number = $(event.target).siblings('input[type="button"]').attr('number');
@@ -125,7 +123,6 @@ $(document).ready(function(){
 
 
         }
-
         if($('#sinchronize_requests').length > 0){
 
         var created = $(event.target).siblings('input[type="button"]').attr('created');
@@ -152,7 +149,21 @@ $(document).ready(function(){
 
 
         }
+        if($('#sinchronize_positions').length > 0){
 
+            console.log('asda');
+
+            var posname = $(event.target).siblings('span').text();
+            var requestid = $(event.target).attr('requests_id');
+
+            $('#sync_add_to_base .sync_pos_requestid').text(requestid);
+            $('#sync_add_to_base .sync_pos_pos_name').text(posname);
+            $('#sync_add_to_base input[type="button"]').attr({
+                posname:posname,
+                requestid:requestid
+            });
+            $('#sync_add_to_base input[type="button"]').prop( "disabled", false ).focus();
+        }
         if($('#sinchronize_trades').length > 0){
             var name = $(event.target).siblings('.sync_add_name').text();
             var uid = $(event.target).siblings('input[type="button"]').attr('uid');
@@ -174,7 +185,6 @@ $(document).ready(function(){
 
 
         }
-
         if($('#sinchronize_byers').length > 0){
 
             var name = $(event.target).siblings('.sync_add_name').text();
@@ -193,7 +203,6 @@ $(document).ready(function(){
             $('#sync_add_to_base input[type="button"]').attr('dataver', dataver);
             $('#sync_add_to_base input[type="button"]').attr('onec_id', onec_id);
         }
-
         if($('#sinchronize_sellers').length > 0){
 
             var name = $(event.target).siblings('.sync_add_name').text();

@@ -204,34 +204,59 @@ $(document).ready(function() {
 
 //Добавление позиции в таблицу positions
     $(document).off('click.ap').on('click.ap', 'input.addpos', function(event){
-        var reqid = $(event.target).attr("name");
-        var posname = $(event.target).siblings('input[type="text"]').val();
-        if(posname!=''){
-            $.ajax({
-                url: 'mysql_insert.php',
-                method: 'POST',
-                data: {reqid:reqid, posname:posname},
-                success: function (data) {
-                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
-                    $('td input[type=\'text\']').val('');
-                }, complete: function () {
-                    $.ajax({
-                        url: 'mysql_read.php',
-                        method: 'POST',
-                        data: {requestid:reqid},
-                        success: function (data) {
-                            $('input[requestid='+reqid+'] ~ div div.positions').html(data);
-                            $(event.target).siblings('input[type="text"]').focus();
-                        }/*,
-                         complete: function(){*/
-                        /*$('#editmsg').css('display', 'block'). delay(2000).slideUp(300).html('Содержимое заявки ' + reqid + ' получено.');*/
-                        /*$(event.target).parents("td[category='requests']").children("input.collapse").trigger("click").trigger("click");*///То же с позицией? НОч уть сложнее через родителя
 
-                        /*}*/
-                    });
-                }
-            });
-        } else {alert("Введите имя позиции")};
+        if(
+            $(event.target).parents('#sync_add_to_base')
+        ){
+            var reqid = $(event.target).siblings('.sync_pos_requestid').text();
+            var posname = $(event.target).siblings('.sync_pos_pos_name').text();
+
+            console.log(reqid);
+            console.log(posname);
+
+            if(posname!=''){
+                $.ajax({
+                    url: 'mysql_insert.php',
+                    method: 'POST',
+                    data: {reqid:reqid, posname:posname},
+                    success: function (data) {
+                        $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                    }, complete: function () {
+                        $('#sync_positions').trigger("click");
+                    }
+                });
+            } else {alert("Введите имя позиции")}
+
+        }else{
+            var reqid = $(event.target).attr("name");
+            var posname = $(event.target).siblings('input[type="text"]').val();
+            if(posname!=''){
+                $.ajax({
+                    url: 'mysql_insert.php',
+                    method: 'POST',
+                    data: {reqid:reqid, posname:posname},
+                    success: function (data) {
+                        $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                        $('td input[type=\'text\']').val('');
+                    }, complete: function () {
+                        $.ajax({
+                            url: 'mysql_read.php',
+                            method: 'POST',
+                            data: {requestid:reqid},
+                            success: function (data) {
+                                $('input[requestid='+reqid+'] ~ div div.positions').html(data);
+                                $(event.target).siblings('input[type="text"]').focus();
+                            }/*,
+                         complete: function(){*/
+                            /*$('#editmsg').css('display', 'block'). delay(2000).slideUp(300).html('Содержимое заявки ' + reqid + ' получено.');*/
+                            /*$(event.target).parents("td[category='requests']").children("input.collapse").trigger("click").trigger("click");*///То же с позицией? НОч уть сложнее через родителя
+
+                            /*}*/
+                        });
+                    }
+                });
+            } else {alert("Введите имя позиции")}
+        }
     });
 
 
