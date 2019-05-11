@@ -153,14 +153,26 @@ $(document).ready(function(){
 
             console.log('asda');
 
-            var posname = $(event.target).siblings('span').text();
+            var posname = $(event.target).siblings('span.pn').text();
             var requestid = $(event.target).attr('requests_id');
+            var linenum = $(event.target).attr('linenum');
+            var price = $(event.target).attr('price');
+            var kol = $(event.target).attr('kol');
+            var tradeid = $(event.target).attr('tradeid');
 
             $('#sync_add_to_base .sync_pos_requestid').text(requestid);
             $('#sync_add_to_base .sync_pos_pos_name').text(posname);
+            $('#sync_add_to_base .sync_pos_line_num').text(linenum);
+            $('#sync_add_to_base .sync_pos_price').text(price);
+            $('#sync_add_to_base .sync_pos_kol').text(kol);
+            $('#sync_add_to_base .sync_pos_tradeid').text(tradeid);
             $('#sync_add_to_base input[type="button"]').attr({
                 posname:posname,
-                requestid:requestid
+                requestid:requestid,
+                linenum:linenum,
+                price:price,
+                kol:kol,
+                tradeid:tradeid
             });
             $('#sync_add_to_base input[type="button"]').prop( "disabled", false ).focus();
         }
@@ -222,4 +234,46 @@ $(document).ready(function(){
             $('#sync_add_to_base input[type="button"]').attr('onec_id', onec_id);
         }
     });
+
+    //Добавление в базу расценки из окна СИНХРОНИЗАЦИИ
+    $(document).off('click.syncaddpricing').on('click.syncaddpricing', '.sync_addpricing', function(event){
+        //Для добавления расценки нужно:
+
+        var positionid = $(event.target).attr('req_positionid');
+        var tradeid = $(event.target).attr('tradeid');
+        var kol = $(event.target).attr('kol');
+        var price = $(event.target).attr('price');
+
+        console.log(positionid);
+        console.log(tradeid);
+        console.log(kol);
+        console.log(price);
+
+        $.ajax({
+            url: 'mysql_insert.php',
+            method: 'POST',
+            data: {positionid:positionid, tradeid:tradeid, kol:kol, price:price},
+            success: function (data) {
+                $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                $('#sync_positions').trigger("click");
+            }
+        });
+
+    });
+
+
+    //Добавление номеров позиции в базу ЕДИНИЧКИ
+    /*$(document).off('click.add1s').on('click.add1s', '.add1s', function (event) {
+        var dothe1s = 1;
+
+        $.ajax({
+            url: 'mysql_insert.php',
+            method: 'POST',
+            data: {dothe1s:dothe1s},
+            success: function (data) {
+                $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                $('#sync_positions').trigger("click");
+            }
+        });
+    })*/
 });

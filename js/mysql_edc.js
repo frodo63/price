@@ -208,17 +208,19 @@ $(document).ready(function() {
         if(
             $(event.target).parents('#sync_add_to_base')
         ){
-            var reqid = $(event.target).siblings('.sync_pos_requestid').text();
-            var posname = $(event.target).siblings('.sync_pos_pos_name').text();
-
-            console.log(reqid);
-            console.log(posname);
+            var reqid = $(event.target).attr('requestid');
+            var posname = $(event.target).attr('posname');
+            var linenum = $(event.target).attr('linenum');
 
             if(posname!=''){
                 $.ajax({
                     url: 'mysql_insert.php',
                     method: 'POST',
-                    data: {reqid:reqid, posname:posname},
+                    data: {
+                        sync_reqid:reqid,
+                        sync_posname:posname,
+                        sync_linenum:linenum
+                    },
                     success: function (data) {
                         $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                     }, complete: function () {

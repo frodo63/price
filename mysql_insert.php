@@ -184,7 +184,7 @@ if(isset($_POST['byer']) && isset($_POST['created']) && isset($_POST['uid']) && 
 };
 /////////////////////////////////////////////////////////////////////
 
-///ДОБАВЛЕНИЕ ПОЗИЦИИ////////////////////////////////////////////////
+///ДОБАВЛЕНИЕ ПОЗИЦИИ/////////////////////////////////////////////////
 if(isset($_POST['reqid']) && isset($_POST['posname'])){
 
     $reqid = $_POST['reqid'];
@@ -193,12 +193,23 @@ if(isset($_POST['reqid']) && isset($_POST['posname'])){
     /**//////////////////////////////////////////////////////////////
 
     try {
+        //Проверка номера строки
+
+
         $pdo->beginTransaction();
-        $statement = $pdo->prepare("INSERT INTO `req_positions`(`pos_name`,`requestid`) VALUES(?,?)");
+        $line_num_check = $pdo->prepare("SELECT COUNT(*) FROM `req_positions` WHERE requestid = ?");
+
+        $statement = $pdo->prepare("INSERT INTO `req_positions`(`pos_name`,`requestid`,`line_num`) VALUES(?,?,?)");
+
+        $line_num_check->execute(array($reqid));
+        $line_num_array = $line_num_check->fetch();
+        $line_num = ++$line_num_array['COUNT(*)'];
 
         $statement->bindParam(1, $posname);
         $statement->bindParam(2, $reqid);
+        $statement->bindParam(3, $line_num);
 
+        echo "Строк :" . $line_num;
         $statement->execute();
         $pdo->commit();
 
@@ -213,6 +224,78 @@ if(isset($_POST['reqid']) && isset($_POST['posname'])){
 
 };
 //////////////////////////////////////////////////////////////////////
+
+///ДОБАВЛЕНИЕ ПОЗИЦИИ ИЗ ОКНА СИНХРОНИЗАЦИИ
+if (
+    isset($_POST['sync_reqid']) &&
+    isset($_POST['sync_posname']) &&
+    isset($_POST['sync_linenum'])
+){
+    $reqid = $_POST['sync_reqid'];
+    $posname = $_POST['sync_posname'];
+    $linenum = $_POST['sync_linenum'];
+    /**//////////////////////////////////////////////////////////////
+
+    try {
+        $pdo->beginTransaction();
+        $statement = $pdo->prepare("INSERT INTO `req_positions`(`requestid`,`pos_name`,`line_num`) VALUES(?,?,?)");
+        $statement->execute(array($reqid,$posname,$linenum));
+
+        ///////////////////////////////////////////////
+        $pdo->commit();
+
+        echo "Позиция добавлена";
+
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        $pdo->rollback();
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+
+}
+
+
+/////////////////////////////////////////////////////////////////////
+
+//Развоое добавление единичек в таблицу позиций
+/*if (isset($_POST['dothe1s'])){
+
+    try{
+        $gettherids = $pdo->prepare("SELECT requests_id FROM requests");
+        $gettherids->execute();
+        $gottherids = $gettherids->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($gottherids as $gottherid){
+
+
+            $pdo->beginTransaction();
+            $the1 = $gottherid['requests_id'];
+
+            $statement = $pdo->prepare("SELECT COUNT(*) FROM req_positions WHERE requestid = ?");
+            $update_statement = $pdo->prepare("UPDATE req_positions SET line_num = 1 WHERE requestid = ?");
+
+            $statement->execute(array($the1));
+            $the1_array = $statement->fetch();
+            $thenum = $the1_array['COUNT(*)'];
+
+            if($thenum == 1){
+                $update_statement->execute(array($the1));
+            }
+            $pdo->commit();
+
+        }
+
+        echo"Done";
+
+
+
+    } catch( PDOException $Exception ) {
+    // Note The Typecast To An Integer!
+    $pdo->rollback();
+    throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+}
+
+}*/
 
 //ДОБАВЛЕНИЕ ПЛАТЕЖКИ/////////////////////////////////////////////////
 if(isset($_POST['reqid']) && isset($_POST['payment_date']) && isset($_POST['num']) && isset($_POST['sum'])){
@@ -320,3 +403,46 @@ if(isset($_POST['reqid']) && isset($_POST['giveaway_date']) && isset($_POST['com
 
 };
 //////////////////////////////////////////////////////////////////////
+
+
+/*Добавление расценки в окне СИНХРОНИЗАЦИИ*/
+
+if(
+    isset($_POST['positionid']) &&
+    isset($_POST['tradeid']) &&
+    isset($_POST['kol']) &&
+    isset($_POST['price'])
+){
+    //Переменные для добавления расценки
+    $positionid = $_POST['positionid'];//ID последнрей добавленной позиции
+    $tradeid = $_POST['tradeid'];
+    $sellerid = 0;
+    $zak = 0;
+    $kol = $_POST['kol'];
+    $price = $_POST['price'];
+    $winner = 1;
+    $fixed = 0;
+    $op = 0;
+    $opr = 0;
+    $rent = 0;
+
+    try{
+        $addpricing = $pdo->prepare("INSERT INTO `pricings`(`positionid`,`tradeid`,`sellerid`,`zak`,`kol`,`price`,`winner`,`fixed`,`op`,`opr`,`rent`) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+        $addpricing->execute(array($positionid,$tradeid,$sellerid,$zak,$kol,$price,$winner,$fixed,$op,$opr,$rent));
+
+        //Добавляем Победителя к только что добавленной позиции из только что добавленной расценки
+        $lastpricingid = $pdo->lastInsertId();
+
+        echo "Расценка № " . $lastpricingid . " добавлена";
+
+        $addwinner = $pdo->prepare("UPDATE req_positions SET winnerid = ? WHERE req_positionid = ?");
+        $addwinner->execute(array($lastpricingid,$positionid));
+
+        echo "Победитель назначен";
+
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        $pdo->rollback();
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+}
