@@ -281,7 +281,7 @@ echo "    <div id='sync'>
               <br><br><span>Тара:</span> <span id='trade_options_tare'></span><br><br>
               
                   <select id='edit_trade_tare' name='select_tare' size='1'>
-                      <option value='штука'>штука (по умолчанию)</option>
+                      <option value='штука'>штука (по умолчанию л/кг/тн)</option>
                       <option value='банка'>банка (до 5кг)</option>
                       <option value='канистра'>канистра (5-50л)</option>
                       <option value='бочка'>бочка(200л)</option>

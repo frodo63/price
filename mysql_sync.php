@@ -26,6 +26,11 @@ if(isset($_POST['sync_file'])){
     $path = 'files/sync_'.$sync.'.txt';
     $file = fopen($path,'r');
 
+
+
+    $synched = array();
+    $not_synched = array();
+
     switch ($sync){
         case "requests":
             if ($file){
@@ -36,9 +41,6 @@ if(isset($_POST['sync_file'])){
 
                 $gotuid = $pdo->prepare("SELECT requests_uid FROM requests WHERE requests_uid = ?");
                 $getbyer_name = $pdo->prepare("SELECT name, byers_id FROM byers LEFT JOIN allnames ON byers.byers_nameid = allnames.nameid WHERE byers_uid = ?");
-
-                //Выводим божеский вид
-                echo"<ul id='sinchronize_requests'>";
 
                 foreach ($file_array as $row){
                     $temp_array = explode(';',$row);
@@ -66,17 +68,33 @@ if(isset($_POST['sync_file'])){
 
                     //Если такой uid есть - ничего не делаем
                     if(is_string($gotsome['requests_uid']) && $uid_trimmed == $gotsome['requests_uid']){
-                        echo"<li> Уже в базе --- Заказ № ".$temp_array[0]." от ".$created_trimmed."</li>";
-                        /*ничего не выводим*/
+                        //echo"<li> Уже в базе --- Заказ № ".$temp_array[0]." от ".$created_trimmed."</li>";
+                        $synched[]="<li> Уже в базе --- Заказ № ".$temp_array[0]." от ".$created_trimmed."</li>";
 
                     }else{
                         //Выводим возможность соотнести и записать в базу
-                        echo"<li><input type='text' class='sync_request'><div class='sres'></div>                                 
+                        /*echo"<li><input type='text' class='sync_request'><div class='sres'></div>
+                                 <input type='button' table=$sync class='sync_to_base' value='Соотнести' innerid onec_id=$temp_array[0] uid=$temp_array[5] byersid=$byers_id created=$created_for_mysql>
+                                 <span class='sync_add_name'>Заказ ".$byers_name." № ".$temp_array[0]." от ".$created_trimmed."</span><input class='sync_add_to_base' type='button' value='+'>
+                             </li>";*/
+
+                        $not_synched[]="<li><input type='text' class='sync_request'><div class='sres'></div>                                 
                                  <input type='button' table=$sync class='sync_to_base' value='Соотнести' innerid onec_id=$temp_array[0] uid=$temp_array[5] byersid=$byers_id created=$created_for_mysql>
                                  <span class='sync_add_name'>Заказ ".$byers_name." № ".$temp_array[0]." от ".$created_trimmed."</span><input class='sync_add_to_base' type='button' value='+'>
                              </li>";
                     }
                 }
+
+                //Выводим божеский вид
+                echo"<ul id='sinchronize_requests'>";
+
+                foreach($not_synched as $n_s){echo $n_s;}
+                foreach($synched as $s){echo $s;}
+
+                echo "</ul>";
+
+                unset($synched);
+                unset($not_synched);
 
             }else{
                 echo"<p>Файл НЕ найден</p>";
@@ -91,8 +109,6 @@ if(isset($_POST['sync_file'])){
 
                 $gotuid = $pdo->prepare("SELECT payments_uid FROM payments WHERE payments_uid = ?");
                 $gotrequestid = $pdo->prepare("SELECT requests_id FROM requests WHERE requests_uid = ?");
-
-                echo"<ul id='sinchronize_payments'>";
 
                 foreach ($file_array as $row){
                     $temp_array = explode(';',$row);
@@ -109,8 +125,13 @@ if(isset($_POST['sync_file'])){
                     $gotrequestid->execute(array($temp_array[5]));
                     $gotrid = $gotrequestid->fetch(PDO::FETCH_ASSOC);
                     if( ! $gotrid){
-                        $rid = 'none';
-                        $status = "<span style='color: red'>Заказ не определен</span>";
+                        if($temp_array[5] == "Это не заказ"){
+                            $rid = 'none';
+                            $status = "<span style='color: blue'>Это не заказ</span>";
+                        }else{
+                            $rid = 'none';
+                            $status = "<span style='color: red'>Заказ не определен</span>";
+                        }
                     }else{
                         $rid = $gotrid['requests_id'];
                         $status = "<span style='color: green'>Заказ найден</span>";
@@ -121,10 +142,18 @@ if(isset($_POST['sync_file'])){
                     $payed_trimmed_for_mysql = substr($temp_array[2],6,-8).".".substr($temp_array[2],3,-13).".".substr($temp_array[2],0,-16);
 
                     if (is_string($gotsome['payments_uid']) && $temp_array[6] == $gotsome['payments_uid']){
-                        echo"<li><span>Уже в базе № ".$temp_array[3]." от ".$payed_trimmed." на сумму ".$temp_array[4]." руб.</span>".$status."</li>";
+                        //echo"<li><span>Уже в базе № ".$temp_array[3]." от ".$payed_trimmed." на сумму ".$temp_array[4]." руб.</span>".$status."</li>";
+                        $synched[]="<li><span>Уже в базе № ".$temp_array[3]." от ".$payed_trimmed." на сумму ".$temp_array[4]." руб.</span>".$status."</li>";
 
                     }else{
-                        echo"<li>
+                        /*echo"<li>
+                             <input type='text' class='sync_payment'><div class='sres'></div>
+                             <input type='button' table=$sync class='sync_to_base' value='Соотнести' innerid  onec_id=$temp_array[0] uid=$temp_array[6] payed=$payed_trimmed_for_mysql number=$temp_array[3] sum=$temp_array[4] requestid=$rid>
+                             <span>№ ".$temp_array[3]." от ".$payed_trimmed." на сумму ".$temp_array[4]." руб.</span>".$status."
+                             <input class='sync_add_to_base' type='button' value='+'>
+                         </li>";*/
+
+                        $not_synched[]="<li>
                              <input type='text' class='sync_payment'><div class='sres'></div>
                              <input type='button' table=$sync class='sync_to_base' value='Соотнести' innerid  onec_id=$temp_array[0] uid=$temp_array[6] payed=$payed_trimmed_for_mysql number=$temp_array[3] sum=$temp_array[4] requestid=$rid>
                              <span>№ ".$temp_array[3]." от ".$payed_trimmed." на сумму ".$temp_array[4]." руб.</span>".$status."
@@ -134,7 +163,17 @@ if(isset($_POST['sync_file'])){
 
 
                 }
+
+                echo"<ul id='sinchronize_payments'>";
+
+                foreach($not_synched as $n_s){echo $n_s;}
+                foreach($synched as $s){echo $s;}
+
                 echo"</ul>";
+
+                unset($synched);
+                unset($not_synched);
+
             }else{
                 echo"<p>Файл НЕ найден</p>";
             }
@@ -149,8 +188,7 @@ if(isset($_POST['sync_file'])){
 
                 $gotuid = $pdo->prepare("SELECT `byers_uid` FROM `byers` WHERE `byers_uid` = ?");
 
-                //Выводим божеский вид
-                echo"<ul id='sinchronize_byers'>";
+
                 foreach ($file_array as $row){
                     $temp_array = explode(';',$row);
                     $uid_trimmed = substr($temp_array[3],0,-2);
@@ -161,18 +199,35 @@ if(isset($_POST['sync_file'])){
 
                     //Если такой uid есть - ничего не делаем
                     if(is_string($gotsome['byers_uid']) && $uid_trimmed == $gotsome['byers_uid']){
-                        echo"<li> Уже в базе --- ".$temp_array[1]."</li>";
+                        //echo"<li> Уже в базе --- ".$temp_array[1]."</li>";
+                        $synched[]="<li> Уже в базе --- ".$temp_array[1]."</li>";
                         /*ничего не выводим*/
 
                     }else{
                         //Выводим возможность соотнести и записать в базу
-                        echo"<li><input type='text' class='sync_byer'><div class='sres'></div>                                 
+                        /*echo"<li><input type='text' class='sync_byer'><div class='sres'></div>
+                                 <input type='button' table=$sync class='sync_to_base' value='Соотнести' innerid  onec_id=$temp_array[0] uid=$temp_array[3]>
+                                 <span class='sync_add_name'>$temp_array[1]</span><input class='sync_add_to_base' type='button' value='+'>
+                             </li>";*/
+
+                        $not_synched[]="<li><input type='text' class='sync_byer'><div class='sres'></div>                                 
                                  <input type='button' table=$sync class='sync_to_base' value='Соотнести' innerid  onec_id=$temp_array[0] uid=$temp_array[3]>
                                  <span class='sync_add_name'>$temp_array[1]</span><input class='sync_add_to_base' type='button' value='+'>
                              </li>";
                     }
                 }
+
+                //Выводим божеский вид
+                echo"<ul id='sinchronize_byers'>";
+
+                foreach($not_synched as $n_s){echo $n_s;}
+                foreach($synched as $s){echo $s;}
+
                 echo"</ul>";
+
+                unset($synched);
+                unset($not_synched);
+
             }else{
                 echo"<p>Файл НЕ найден</p>";
             }
@@ -186,8 +241,7 @@ if(isset($_POST['sync_file'])){
 
                 $gotuid = $pdo->prepare("SELECT `sellers_uid` FROM `sellers` WHERE `sellers_uid` = ?");
 
-                //Выводим божеский вид
-                echo"<ul id='sinchronize_sellers'>";
+
                 foreach ($file_array as $row){
                     $temp_array = explode(';',$row);
                     $uid_trimmed = substr($temp_array[3],0,-2);
@@ -198,18 +252,34 @@ if(isset($_POST['sync_file'])){
 
                     //Если такой uid есть - ничего не делаем
                     if(is_string($gotsome['sellers_uid']) && $uid_trimmed == $gotsome['sellers_uid']){
-                        echo"<li> Уже в базе --- ".$temp_array[1]."</li>";
+                        //echo"<li> Уже в базе --- ".$temp_array[1]."</li>";
+                        $synched[]="<li> Уже в базе --- ".$temp_array[1]."</li>";
                         /*ничего не выводим*/
 
                     }else{
                         //Выводим возможность соотнести и записать в базу
-                        echo"<li><input type='text' class='sync_seller'><div class='sres'></div>                                 
+                        /*echo"<li><input type='text' class='sync_seller'><div class='sres'></div>
+                                 <input type='button' table=$sync class='sync_to_base' value='Соотнести' innerid  onec_id=$temp_array[0] uid=$temp_array[3]>
+                                 <span class='sync_add_name'>$temp_array[1]</span><input class='sync_add_to_base' type='button' value='+'>
+                             </li>";*/
+
+                        $not_synched[]="<li><input type='text' class='sync_seller'><div class='sres'></div>                                 
                                  <input type='button' table=$sync class='sync_to_base' value='Соотнести' innerid  onec_id=$temp_array[0] uid=$temp_array[3]>
                                  <span class='sync_add_name'>$temp_array[1]</span><input class='sync_add_to_base' type='button' value='+'>
                              </li>";
                     }
                 }
+                //Выводим божеский вид
+                echo"<ul id='sinchronize_sellers'>";
+
+                foreach($not_synched as $n_s){echo $n_s;}
+                foreach($synched as $s){echo $s;}
+
                 echo"</ul>";
+
+                unset($synched);
+                unset($not_synched);
+
             }else{
                 echo"<p>Файл НЕ найден</p>";
             }
@@ -221,10 +291,9 @@ if(isset($_POST['sync_file'])){
                 if (count($file_array) > 0);
                 echo"<p>Файл выгружен в массив: </p>";
 
-                $gotuid = $pdo->prepare("SELECT trades_uid FROM trades WHERE trades_uid = ?");
+                $gotuid = $pdo->prepare("SELECT trades_uid, tare FROM trades WHERE trades_uid = ?");
 
-                //Выводим божеский вид
-                echo"<ul id='sinchronize_trades'>";
+
                 foreach ($file_array as $row){
                     $temp_array = explode(';',$row);
                     $uid_trimmed = substr($temp_array[4],0,-2);
@@ -235,18 +304,33 @@ if(isset($_POST['sync_file'])){
 
                     //Если такой uid есть - ничего не делаем
                     if(is_string($gotsome['trades_uid']) && $uid_trimmed == $gotsome['trades_uid']){
-                        echo"<li> Уже в базе --- ".$temp_array[1]."</li>";
+                        //echo"<li> Уже в базе --- ".$temp_array[1]."</li>";
+                        $synched[]="<li> Уже в базе --- ".$temp_array[1]."(".$gotsome['tare'].") Ед. Изм.: ".$temp_array[2]." </li>";
                         /*ничего не выводим*/
 
                     }else{
                         //Выводим возможность соотнести и записать в базу
-                        echo"<li><input type='text' class='sync_trade'><div class='sres'></div>                                 
+                        /*echo"<li><input type='text' class='sync_trade'><div class='sres'></div>
                                  <input type='button' table=$sync class='sync_to_base' value='Соотнести' innerid  onec_id=$temp_array[0] uid=$temp_array[4]>
                                  <span class='sync_add_name'>$temp_array[1]</span><input class='sync_add_to_base' type='button' value='+'>
+                             </li>";*/
+
+                        $not_synched[]="<li><input type='text' class='sync_trade'><div class='sres'></div>                                 
+                                 <input type='button' table=$sync class='sync_to_base' value='Соотнести' innerid  onec_id=$temp_array[0] uid=$temp_array[4]>
+                                 <span class='sync_add_name'>$temp_array[1] в $temp_array[2]</span><input class='sync_add_to_base' type='button' value='+'>
                              </li>";
                     }
                 }
+                //Выводим божеский вид
+                echo"<ul id='sinchronize_trades'>";
+
+                foreach($not_synched as $n_s){echo $n_s;}
+                foreach($synched as $s){echo $s;}
+
                 echo"</ul>";
+
+                unset($synched);
+                unset($not_synched);
             }else{
                 echo"<p>Файл НЕ найден</p>";
             }
@@ -358,8 +442,6 @@ if(isset($_POST['sync_file'])){
                                 //И в кнопке должны быть все переменные для добавления расценки
                                 echo "<input type='button' req_positionid = '" . $pos['req_positionid'] . "' price = '" . $inner_v[7] . "' kol = '" . $inner_v[4] . "' tradeid = '" . $gottradename['trades_id'] . "'  class='sync_addpricing' value='+Превратить позицию в расценку'>";
                             }
-
-
                         }
                     };
                     echo "<br><br><br></ul></li>";
@@ -432,7 +514,7 @@ if(isset($_POST['sync_html'])){
                 <br><input class='add_trade_name' type='text' placeholder='Введите наименование Товара' size='40'>
                 <br><span>Тара:</span><span class='trade_options_tare'></span><br>
                 <select class='add_trade_tare' size='1'>
-                <option value='штука'>штука (по умолчанию)</option>
+                <option value='штука'>штука (по умолчанию л/кг/тн)</option>
                 <option value='банка'>банка (до 5кг)</option>
                 <option value='канистра'>канистра (5-50л)</option>
                 <option value='бочка'>бочка(200л)</option>

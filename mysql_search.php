@@ -85,7 +85,7 @@ if (isset($_POST['strade'])){
         $result ='<ul>';
         $trades='';
         foreach ($statement as $row){
-            $trades .= "<li category='trade' trades_id=".$row['trades_id']." nameid=" . $row['nameid'] . " tare=" . $row['tare'] . "><p>" . $row['name'] . "</p><div class='note'>товар</div></li>";
+            $trades .= "<li category='trade' trades_id=".$row['trades_id']." nameid=" . $row['nameid'] . " tare=" . $row['tare'] . "><p> -- " . $row['tare'] . " -- " . $row['name'] . "</p><div class='note'>товар</div></li>";
         };
         $result .= $trades;
         $result .= "</ul><!--<script src='js/mysql_searching.js'>-->";
