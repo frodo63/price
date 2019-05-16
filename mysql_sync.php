@@ -23,7 +23,8 @@ function is_array_empty($array, $check_all_elements = false)
 if(isset($_POST['sync_file'])){
     $sync = $_POST['sync_file'];
     $uid_column = $sync."_uid";
-    $path = 'files/sync_'.$sync.'.txt';
+    //$path = 'files/sync_'.$sync.'.txt';
+    $path = '/samba/allaccess/1111/sync_'.$sync.'.txt';
     $file = fopen($path,'r');
 
 
@@ -45,8 +46,8 @@ if(isset($_POST['sync_file'])){
                 foreach ($file_array as $row){
                     $temp_array = explode(';',$row);
                     $uid_trimmed = substr($temp_array[5],0,-2);
-                    $created_trimmed = substr($temp_array[1],0,-9);
-                    $created_for_mysql = substr($temp_array[1],6,-9).".".substr($temp_array[1],3,-14).".".substr($temp_array[1],0,-17);
+                    $created_trimmed = substr($temp_array[1],0,10);
+                    $created_for_mysql = substr($temp_array[1],6,4).".".substr($temp_array[1],3,2).".".substr($temp_array[1],0,2);
 
                     try{
 
@@ -107,8 +108,9 @@ if(isset($_POST['sync_file'])){
                 if (count($file_array) > 0);
                 echo"<p>Файл выгружен в массив</p>";
 
-                $gotuid = $pdo->prepare("SELECT payments_uid FROM payments WHERE payments_uid = ?");
-                $gotrequestid = $pdo->prepare("SELECT requests_id FROM requests WHERE requests_uid = ?");
+                $getuid = $pdo->prepare("SELECT payments_uid FROM payments WHERE payments_uid = ?");
+                $getrequestid = $pdo->prepare("SELECT requests_id, 1c_num, created, req_sum FROM requests WHERE requests_uid = ?");
+                $getpayments = $pdo->prepare("SELECT payed, onec_id, number, sum FROM payments WHERE requestid = ?");
 
                 foreach ($file_array as $row){
                     $temp_array = explode(';',$row);
@@ -119,15 +121,35 @@ if(isset($_POST['sync_file'])){
                         $row[4] = html_entity_decode($content);
                     }
 
-                    $gotuid->execute(array($temp_array[6]));
-                    $gotsome = $gotuid->fetch(PDO::FETCH_ASSOC);
+                    //Проверяем, есть ли платежка уже
+                    $getuid->execute(array($temp_array[6]));
+                    $gotsome = $getuid->fetch(PDO::FETCH_ASSOC);
 
-                    $gotrequestid->execute(array($temp_array[5]));
-                    $gotrid = $gotrequestid->fetch(PDO::FETCH_ASSOC);
+                    //Проверяем, найден ли заказ
+                    $getrequestid->execute(array($temp_array[5]));
+                    $gotrid = $getrequestid->fetch(PDO::FETCH_ASSOC);
+
+                    //Список платежек в заказе
+                    $getpayments->execute(array($gotrid['requests_id']));
+                    $gotpayments = $getpayments->fetchAll(PDO::FETCH_ASSOC);
+
+                    $phpdate = strtotime( $gotrid['created'] );
+                    $created_r = date( 'd.m.y', $phpdate );
+
+                    $pay_list = "<div style='display: none; font-weight: bold' class='show_payments_list'><br><span>Заказ № ".$gotrid['1c_num']." от ".$created_r." на сумму ".$gotrid['req_sum']."</span><ul>";
+                    foreach($gotpayments as $payment){
+
+                        $phpdate = strtotime( $payment['payed'] );
+                        $created = date( 'd.m.y', $phpdate );
+
+                        $pay_list.="<li>".$created." № в 1С ".$payment['onec_id']." номер ".$payment['number']." на сумму ".$payment['sum']."</li>";
+                    };
+                    $pay_list .= "</ul></div>";
+
                     if( ! $gotrid){
-                        if($temp_array[5] == "Это не заказ"){
+                        if($temp_array[5] == "ДокументОснование этой платежки не является заказом"){
                             $rid = 'none';
-                            $status = "<span style='color: blue'>Это не заказ</span>";
+                            $status = "<span style='color: blue'>ДокументОснование этой платежки не является заказом</span>";
                         }else{
                             $rid = 'none';
                             $status = "<span style='color: red'>Заказ не определен</span>";
@@ -139,7 +161,7 @@ if(isset($_POST['sync_file'])){
 
                     //Дата
                     $payed_trimmed = substr($temp_array[2],0,-8);
-                    $payed_trimmed_for_mysql = substr($temp_array[2],6,-8).".".substr($temp_array[2],3,-13).".".substr($temp_array[2],0,-16);
+                    $payed_trimmed_for_mysql = substr($temp_array[2],6,4).".".substr($temp_array[2],3,2).".".substr($temp_array[2],0,2);
 
                     if (is_string($gotsome['payments_uid']) && $temp_array[6] == $gotsome['payments_uid']){
                         //echo"<li><span>Уже в базе № ".$temp_array[3]." от ".$payed_trimmed." на сумму ".$temp_array[4]." руб.</span>".$status."</li>";
@@ -158,10 +180,11 @@ if(isset($_POST['sync_file'])){
                              <input type='button' table=$sync class='sync_to_base' value='Соотнести' innerid  onec_id=$temp_array[0] uid=$temp_array[6] payed=$payed_trimmed_for_mysql number=$temp_array[3] sum=$temp_array[4] requestid=$rid>
                              <span>№ ".$temp_array[3]." от ".$payed_trimmed." на сумму ".$temp_array[4]." руб.</span>".$status."
                              <input class='sync_add_to_base' type='button' value='+'>
+                             <input class='show_hide' type='button' value='?'>".$pay_list."
+                             <br>
                          </li>";
                     }
-
-
+                    unset($pay_list);
                 }
 
                 echo"<ul id='sinchronize_payments'>";
@@ -352,6 +375,9 @@ if(isset($_POST['sync_file'])){
                 $getpositions = $pdo->prepare("SELECT pos_name, line_num, req_positionid FROM req_positions LEFT JOIN requests ON requestid = requests_id WHERE requests_uid = ?");
                 $getpricings = $pdo->prepare("SELECT pricingid, tradeid, price, sellerid FROM pricings WHERE positionid = ?");
                 $getsellername = $pdo->prepare("SELECT name FROM pricings LEFT JOIN sellers on sellerid=sellers_id LEFT JOIN allnames a on sellers.sellers_nameid = a.nameid WHERE pricingid = ?");
+                $chk_pos=$pdo->prepare("SELECT line_num FROM req_positions WHERE (`requestid` = ? AND `line_num` = ?)");
+
+
 
 
                 //Строку в массив
@@ -365,10 +391,8 @@ if(isset($_POST['sync_file'])){
                     $t_a = explode(';',$v);
                     $file_array_trimmed[$k]=[$t_a];
                 }
-
                 //Массив для дубрилующих элементво массива. Сюда удут стекаться ключи и он будет ограничивать проход по массиву
                 $a2del = array();
-
                 //Всякое с массивом
                 foreach($file_array_trimmed as $k2 => $v2){
                     foreach ($file_array_trimmed as $k2del => $v2del){
@@ -383,14 +407,16 @@ if(isset($_POST['sync_file'])){
                         }
                     }
                 }
-
                 //Удаляем дублирующие элементы массива
                 foreach ($a2del as $a2del){
                     unset($file_array_trimmed[$a2del]);
                 }
-
                 //Выводим божеский вид
                 echo"<ul id='sinchronize_positions'>";
+
+                //echo "<pre>";
+                //print_r($file_array_trimmed);
+                //echo "</pre>";
 
                 //Рисование из массива
                 foreach ($file_array_trimmed as $k=>$v){
@@ -401,20 +427,27 @@ if(isset($_POST['sync_file'])){
                     $phpdate = strtotime( $gotreqnum['created'] );
                     $created = date( 'd.m.y', $phpdate );
 
+                    $getpositions->execute(array($v[0][1]));
+                    $gotpositions = $getpositions->fetchAll(PDO::FETCH_ASSOC);
+
                     echo "<span><strong>Заказ № " . $gotreqnum['1c_num'] . "</strong> от " . $created . " для ".$gotreqnum['name']."</span>";
+
                     foreach ($file_array_trimmed[$k] as $inner_v){
                         $gettradename->execute(array($inner_v[6]));
                         $gottradename = $gettradename->fetch(PDO::FETCH_ASSOC);
 
-                        echo "<li><span>" . $inner_v[2] . "</span><span class='pn'>" . $gottradename['name'] . " в количестве  " . $inner_v[4] . $inner_v[3] . " по цене " . $inner_v[7] . " руб. на сумму " . $inner_v[8] . " руб.</span>";
-                        echo "<input class='sync_add_to_base' price = '" . $inner_v[7] . "' kol = '" . $inner_v[4] . "' tradeid = '" . $gottradename['trades_id'] . "' type='button' value='+' linenum = '" . $inner_v[2] . "' requests_id='" . $gotreqnum['requests_id'] . "'>";
+                        echo "<li><span>" . $inner_v[2] . ". </span><span class='pn'>" . $gottradename['name'] . " в количестве  " . $inner_v[4] . $inner_v[3] . " по цене " . $inner_v[7] . " руб. на сумму " . $inner_v[8] . " руб.</span>";
+
+                        $chk_pos->execute(array($gotreqnum['requests_id'], $inner_v[2]));
+                        $checked = $chk_pos->fetch(PDO::FETCH_ASSOC);
+                        if(!$checked['line_num']){
+                            echo "<input class='sync_add_to_base' price = '" . $inner_v[7] . "' kol = '" . $inner_v[4] . "' tradeid = '" . $gottradename['trades_id'] . "' type='button' value='+' linenum = '" . $inner_v[2] . "' requests_id='" . $gotreqnum['requests_id'] . "'>";
+                        };
+
                         echo "</li>";
                     }
 
-                    $getpositions->execute(array($v[0][1]));
-                    $gotpositions = $getpositions->fetchAll(PDO::FETCH_ASSOC);
-
-
+                    //Тут проверка: Если в данной заявке ЕСТЬ позиции, мы их рисуем, "А в базе уже есть". Другого варианта не предусмотрено.
                     if(!is_array_empty($gotpositions)){
                         echo "<li style='color: green'><br><span>А в базе уже есть: </span></li>";
                         foreach ($gotpositions as $pos){
@@ -424,7 +457,6 @@ if(isset($_POST['sync_file'])){
                             echo "<li style='color: green'>".$pos['line_num'] . ". " . $pos['pos_name'] . "</li>";
 
                             //В зависимости от переменной $pricings выводим либо раценки, которые найдены в базе, либо плюсик для ввода расценки.
-
                             if(!is_array_empty($pricings)){
                                 //Выводим расценки
                                 echo "<ul>";
@@ -440,7 +472,7 @@ if(isset($_POST['sync_file'])){
                                 echo"</ul>";
                             }else{
                                 //И в кнопке должны быть все переменные для добавления расценки
-                                echo "<input type='button' req_positionid = '" . $pos['req_positionid'] . "' price = '" . $inner_v[7] . "' kol = '" . $inner_v[4] . "' tradeid = '" . $gottradename['trades_id'] . "'  class='sync_addpricing' value='+Превратить позицию в расценку'>";
+                                echo "<input type='button' requestid = '" . $gotreqnum['requests_id'] . "' req_positionid = '" . $pos['req_positionid'] . "' price = '" . $inner_v[7] . "' kol = '" . $inner_v[4] . "' tradeid = '" . $gottradename['trades_id'] . "'  class='sync_addpricing' value='+Превратить позицию в расценку'>";
                             }
                         }
                     };

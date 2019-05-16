@@ -239,25 +239,51 @@ $(document).ready(function(){
     $(document).off('click.syncaddpricing').on('click.syncaddpricing', '.sync_addpricing', function(event){
         //Для добавления расценки нужно:
 
+        var requestid = $(event.target).attr('requestid');
         var positionid = $(event.target).attr('req_positionid');
         var tradeid = $(event.target).attr('tradeid');
         var kol = $(event.target).attr('kol');
         var price = $(event.target).attr('price');
 
-        console.log(positionid);
-        console.log(tradeid);
-        console.log(kol);
-        console.log(price);
 
-        $.ajax({
-            url: 'mysql_insert.php',
+
+        //ЗАПРОС НА ОПЦИИ
+        $.ajax({//БЕРЕМ ИЗ ЗАЯВКИ
+            url: 'mysql_options.php',
             method: 'POST',
-            data: {positionid:positionid, tradeid:tradeid, kol:kol, price:price},
-            success: function (data) {
-                $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
-                $('#sync_positions').trigger("click");
+            dataType: 'json',
+            cache: false,
+            data: {req_options:requestid},
+            success: function(data){
+                var op = data.op;
+                var tp = data.tp;
+                var firstobp = data.firstobp;
+                var wt = data.wt;
+
+                console.log(op);
+                console.log(tp);
+                console.log(firstobp);
+                console.log(wt);
+                console.log(positionid);
+                console.log(tradeid);
+                console.log(kol);
+                console.log(price);
+
+                $.ajax({
+                    url: 'mysql_insert.php',
+                    method: 'POST',
+                    data: {positionid:positionid, tradeid:tradeid, kol:kol, price:price, op:op, tp:tp, firstobp:firstobp, wt:wt},
+                    success: function (data) {
+                        $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                        $('#sync_positions').trigger("click");
+                    }
+                });
             }
         });
+        //ЗАКОНЧИЛСЯ ЗАПРОС НА ОПЦИИ
+
+
+
 
     });
 
@@ -276,4 +302,12 @@ $(document).ready(function(){
             }
         });
     })*/
+
+
+
+    $(document).off('click.sh').on('click.sh', '.show_hide', function (event) {
+        console.log('s_h clicked');
+        $('.show_payments_list').hide();
+        $(event.target).next('.show_payments_list').toggle();
+    })
 });

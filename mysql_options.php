@@ -2,7 +2,6 @@
 include_once 'pdo_connect.php';
 
 //Чтение ОПЦИЙ ЗАЯВКИ все 4 для добавления в расценку
-
 if (isset($_POST['req_options'])){
     $reqid = $_POST['req_options'];
 
@@ -23,9 +22,7 @@ if (isset($_POST['req_options'])){
     }
 }
 
-
 //Чтение ОПЦИЙ ПОЗИЦИИ все 4 для добавления в расценку
-
 if ( isset($_POST['pos_options'])){
     try{
         $posid = ($_POST["pos_options"]);
@@ -46,11 +43,9 @@ if ( isset($_POST['pos_options'])){
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
 };
-
 /**/
 
 /*ЧТЕНИЕ Имени позиции и статуса королевы*/
-
 if ( isset($_POST['name_and_queen'])){
     try{
         $posid = ($_POST["name_and_queen"]);
@@ -74,7 +69,6 @@ if ( isset($_POST['name_and_queen'])){
 /**/
 
 /*УДАЛЕНИЕ статуса королевы*/
-
 if ( isset($_POST['minus_queen'])){
     try{
         $posid = ($_POST["minus_queen"]);
@@ -98,11 +92,7 @@ if ( isset($_POST['minus_queen'])){
 };
 /**/
 
-
 /*ЧТЕНИЕ ОПЦИЙ ТОВАРА*/
-
-
-
     if (isset($_POST['trade_options'])){
         $tradeid = $_POST['trade_options'];
 
@@ -122,5 +112,4 @@ if ( isset($_POST['minus_queen'])){
             throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
         }
     }
-
 /**/

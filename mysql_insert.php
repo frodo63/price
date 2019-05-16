@@ -60,15 +60,12 @@ if(isset($_POST['trade_name']) && isset($_POST['trade_tare'])){
         $onec_id = $_POST['onec_id'];
     }
 
-
-
     $statement = $pdo->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
     try {
         $pdo->beginTransaction();
         $statement->execute(array($trade_name));
 
         $theID = $pdo->lastInsertId();
-
 
         if(isset($uid) && isset($onec_id)){
             $statement = $pdo->prepare("INSERT INTO `trades`(`trades_nameid`,`tare`,`trades_uid`,`onec_id`) VALUES(?,?,?,?)");
@@ -79,16 +76,12 @@ if(isset($_POST['trade_name']) && isset($_POST['trade_tare'])){
             $statement->execute(array($theID,$trade_tare));
         }
 
-
         $pdo->commit();
-
-
 
     } catch( PDOException $Exception ) {
         $pdo->rollback();
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
-
 
     echo "Добавлен товар $thename.";
 };
@@ -331,7 +324,6 @@ if(isset($_POST['reqid']) && isset($_POST['payment_date']) && isset($_POST['num'
 };
 //////////////////////////////////////////////////////////////////////
 
-
 //ДОБАВЛЕНИЕ ПЛАТЕЖКИ ИЗ ОКНА СИНХРОНИЗАЦИИ/////////////////////////////////////////////////
 if(isset($_POST['number']) && isset($_POST['payed']) && isset($_POST['uid']) && isset($_POST['onec_id']) && isset($_POST['sum']) && isset($_POST['requestid'])){
 
@@ -404,14 +396,17 @@ if(isset($_POST['reqid']) && isset($_POST['giveaway_date']) && isset($_POST['com
 };
 //////////////////////////////////////////////////////////////////////
 
-
 /*Добавление расценки в окне СИНХРОНИЗАЦИИ*/
 
 if(
     isset($_POST['positionid']) &&
     isset($_POST['tradeid']) &&
     isset($_POST['kol']) &&
-    isset($_POST['price'])
+    isset($_POST['price']) &&
+    isset($_POST['op']) &&
+    isset($_POST['tp']) &&
+    isset($_POST['firstobp']) &&
+    isset($_POST['wt'])
 ){
     //Переменные для добавления расценки
     $positionid = $_POST['positionid'];//ID последнрей добавленной позиции
@@ -422,13 +417,16 @@ if(
     $price = $_POST['price'];
     $winner = 1;
     $fixed = 0;
-    $op = 0;
+    $op = $_POST['op'];
+    $tp = $_POST['tp'];
+    $firstobp = $_POST['firstobp'];
+    $wtime = $_POST['wt'];
     $opr = 0;
     $rent = 0;
 
     try{
-        $addpricing = $pdo->prepare("INSERT INTO `pricings`(`positionid`,`tradeid`,`sellerid`,`zak`,`kol`,`price`,`winner`,`fixed`,`op`,`opr`,`rent`) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
-        $addpricing->execute(array($positionid,$tradeid,$sellerid,$zak,$kol,$price,$winner,$fixed,$op,$opr,$rent));
+        $addpricing = $pdo->prepare("INSERT INTO `pricings`(`positionid`,`tradeid`,`sellerid`,`zak`,`kol`,`price`,`winner`,`fixed`,`op`,`tp`,`firstobp`,`wtime`,`opr`,`rent`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        $addpricing->execute(array($positionid,$tradeid,$sellerid,$zak,$kol,$price,$winner,$fixed,$op,$tp,$firstobp,$wtime,$opr,$rent));
 
         //Добавляем Победителя к только что добавленной позиции из только что добавленной расценки
         $lastpricingid = $pdo->lastInsertId();
