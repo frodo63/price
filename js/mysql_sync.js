@@ -245,8 +245,6 @@ $(document).ready(function(){
         var kol = $(event.target).attr('kol');
         var price = $(event.target).attr('price');
 
-
-
         //ЗАПРОС НА ОПЦИИ
         $.ajax({//БЕРЕМ ИЗ ЗАЯВКИ
             url: 'mysql_options.php',
@@ -260,14 +258,16 @@ $(document).ready(function(){
                 var firstobp = data.firstobp;
                 var wt = data.wt;
 
-                console.log(op);
-                console.log(tp);
-                console.log(firstobp);
-                console.log(wt);
-                console.log(positionid);
-                console.log(tradeid);
-                console.log(kol);
-                console.log(price);
+                //ВРЕМЕННО
+                /*$.ajax({
+                    url: 'mysql_sync.php',
+                    method: 'POST',
+                    data: {synched_request:requestid},
+                    success: function (data) {
+                        //$('li[rid='+requestid+']').html(data.markup);
+                        $('li[rid='+requestid+']').html(data);
+                    }
+                });*/
 
                 $.ajax({
                     url: 'mysql_insert.php',
@@ -275,7 +275,18 @@ $(document).ready(function(){
                     data: {positionid:positionid, tradeid:tradeid, kol:kol, price:price, op:op, tp:tp, firstobp:firstobp, wt:wt},
                     success: function (data) {
                         $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
-                        $('#sync_positions').trigger("click");
+                        //Тут надо обновить только изменившуюся позицию, а не весь файл
+                        //$('#sync_positions').trigger("click");
+                        //Поэтому мы не триггерим клик, а отправляем на mysql_sync.php requestid
+                        $.ajax({
+                            url: 'mysql_sync.php',
+                            method: 'POST',
+                            data: {synched_request:requestid},
+                            success: function (data) {
+                                //$('li[rid='+requestid+']').html(data.markup);
+                                $('li[rid='+requestid+']').html(data);
+                            }
+                        });
                     }
                 });
             }

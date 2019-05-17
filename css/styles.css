@@ -1292,13 +1292,18 @@ tr[pricingid] td {
 #sync_add_to_base {
   position: fixed;
   top: 150px;
+  width: 270px;
   right: 0;
 }
-/* line 907, ../sass/_mysql_styles.scss */
+/* line 908, ../sass/_mysql_styles.scss */
+#sync_add_to_base label {
+  font-weight: bold;
+}
+/* line 911, ../sass/_mysql_styles.scss */
 #sync_add_to_base.up {
   display: none;
 }
-/* line 910, ../sass/_mysql_styles.scss */
+/* line 914, ../sass/_mysql_styles.scss */
 #sync_add_to_base .creates {
   display: block;
   width: 25vw;

@@ -213,6 +213,19 @@ $(document).ready(function() {
             var linenum = $(event.target).attr('linenum');
 
             if(posname!=''){
+
+                //ВРЕМЕННО
+                /*$.ajax({
+                    url: 'mysql_sync.php',
+                    method: 'POST',
+                    data: {synched_request:reqid},
+                    success: function (data) {
+                        $('li[rid='+reqid+']').html(data);
+                    }
+                });*/
+
+
+
                 $.ajax({
                     url: 'mysql_insert.php',
                     method: 'POST',
@@ -223,8 +236,25 @@ $(document).ready(function() {
                     },
                     success: function (data) {
                         $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
-                    }, complete: function () {
-                        $('#sync_positions').trigger("click");
+                        //Тут надо обновить только изменившуюся позицию, а не весь файл
+                        //$('#sync_positions').trigger("click");
+                        //Поэтому мы не триггерим клик, а отправляем на mysql_sync.php requestid
+                        $.ajax({
+                            url: 'mysql_sync.php',
+                            method: 'POST',
+                            data: {synched_request:reqid},
+                            success: function (data) {
+                                $('li[rid='+reqid+']').html(data);
+                                $.ajax({
+                                    url: 'mysql_sync.php',
+                                    method: 'POST',
+                                    data: {sync_html:"positions"},
+                                    success: function (data) {
+                                        $('#sync_add_to_base').html(data);
+                                    }
+                                });
+                            }
+                        });
                     }
                 });
             } else {alert("Введите имя позиции")}

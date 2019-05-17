@@ -903,7 +903,11 @@ tr[pricingid] td {border: 1px solid black}
   position: fixed;
 
   top:150px;
+  width: 270px;
   right: 0;
+  label{
+    font-weight: bold;
+  }
   &.up{
     display: none;
   }
@@ -911,6 +915,5 @@ tr[pricingid] td {border: 1px solid black}
     display: block;
     width:25vw;
   }
-
 }
 
