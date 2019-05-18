@@ -385,7 +385,7 @@ if(isset($_POST['sync_file'])){
                 $gettradename = $pdo->prepare("SELECT name, trades_id FROM trades LEFT JOIN allnames a on trades.trades_nameid = a.nameid WHERE trades_uid = ?");
                 $gettradename_tradeid = $pdo->prepare("SELECT name FROM trades LEFT JOIN allnames a on trades.trades_nameid = a.nameid WHERE trades_id = ?");
                 $getreqnum = $pdo->prepare("SELECT 1c_num, name, created, requests_id FROM requests LEFT JOIN byers ON requests.byersid = byers_id LEFT JOIN allnames on byers_nameid = allnames.nameid WHERE requests_uid = ?");
-                $getpositions = $pdo->prepare("SELECT pos_name, line_num, req_positionid FROM req_positions LEFT JOIN requests ON requestid = requests_id WHERE requests_uid = ?");
+                $getpositions = $pdo->prepare("SELECT pos_name, line_num, req_positionid FROM req_positions LEFT JOIN requests ON requestid = requests_id WHERE requests_uid = ? ORDER BY line_num ASC");
                 $getpricings = $pdo->prepare("SELECT pricingid, tradeid, price, sellerid FROM pricings WHERE positionid = ?");
                 $getsellername = $pdo->prepare("SELECT name FROM pricings LEFT JOIN sellers on sellerid=sellers_id LEFT JOIN allnames a on sellers.sellers_nameid = a.nameid WHERE pricingid = ?");
                 $chk_pos=$pdo->prepare("SELECT line_num FROM req_positions WHERE (`requestid` = ? AND `line_num` = ?)");
@@ -631,7 +631,7 @@ if(isset($_POST['synched_request'])){
     $rid = $_POST['synched_request'];
 
     $getreqnum=$pdo->prepare("SELECT 1c_num, created, name, requests_uid FROM requests LEFT JOIN byers ON byersid=byers_id LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid WHERE requests_id=?");
-    $getpositions=$pdo->prepare("SELECT pos_name, line_num, req_positionid FROM req_positions WHERE requestid=?");
+    $getpositions=$pdo->prepare("SELECT pos_name, line_num, req_positionid FROM req_positions WHERE requestid=? ORDER BY line_num ASC");
     $gettradename = $pdo->prepare("SELECT name, trades_id FROM trades LEFT JOIN allnames a on trades.trades_nameid = a.nameid WHERE trades_uid = ?");
     $getpricings = $pdo->prepare("SELECT pricingid, tradeid, kol, price FROM pricings WHERE positionid = ?");
     $gettradename_tradeid = $pdo->prepare("SELECT name FROM trades LEFT JOIN allnames a on trades.trades_nameid = a.nameid WHERE trades_id = ?");
