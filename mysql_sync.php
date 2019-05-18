@@ -2,6 +2,25 @@
 
 include_once 'pdo_connect.php';
 
+//Скриптик для добавления byersid для всех выдач
+//Получить все выдачи
+/*$getg_a_s = $pdo->prepare("SELECT giveaways_id, requestid FROM giveaways");
+$getbyersid = $pdo->prepare("SELECT byersid FROM requests WHERE requests_id = ?");
+$setgabyersid = $pdo->prepare("UPDATE giveaways SET byersid=? WHERE requestid=?");
+
+$getg_a_s->execute();
+$getgas = $getg_a_s->fetchAll(PDO::FETCH_ASSOC);
+
+foreach($getgas as $giveaway){
+    //Получить byersid
+    $getbyersid->execute(array($giveaway['requestid']));
+    $byersid = $getbyersid->fetch(PDO::FETCH_ASSOC);
+    //Изменить byersid выдачи
+    $setgabyersid->execute(array($byersid['byersid'], $giveaway['requestid']));
+
+}*/
+//////////////////////////////////////////////////////////////////
+
 function is_array_empty($array, $check_all_elements = false)
 {
     if (!is_array($array) || empty($array))

@@ -30,7 +30,7 @@ if (isset($_POST['the_byer'])){
         $result="<div class='ga_requests_date_range'><input class='from' size='10' placeholder='От'><input class='to' size='10' placeholder='До'>
 <input class='filter_date' type='button' value='Отобразить'></div>";
         if(isset($_POST['from']) && isset($_POST['to'])){$result.="<span>Заявки за период c <b>".$from_norm."</b> по <b>".$to_norm."</b></span>.<br><br>";}
-        $result.="<table><thead><tr><th>Дата</th><th>Номер заявки</th><th>Номер заказа в 1С</th><th>Название</th><th>Сумма заявки</th><th>Начислено</th><th>Статус заявки</th></tr></thead><tbody>";
+        $result.="<table><thead><tr><th>Дата</th><th>Номер заказа в 1С</th><th>Название</th><th>Сумма заявки</th><th>Начислено</th><th>Статус заявки</th></tr></thead><tbody>";
 
         foreach ($reqlist as $row){
 
@@ -46,8 +46,6 @@ if (isset($_POST['the_byer'])){
             $phpdate = strtotime( $row['created'] );
             $mysqldate = date( 'd.m.y', $phpdate );
             $result.="<td>".$mysqldate."</td>";
-            /*/////////////////////////////////////////////////*/
-            $result.="<td></td>";
             $result.="<td>".$row['1c_num']."</td>";
             $result.="<td><input class='collapse_ga_request' ga_request='". $row['requests_id'] ."' type='button' value='♢'><span>".$row['name']."</span>
 <div class='ga_contents' ga_request='". $row['requests_id'] ."'><div class='ga_options'></div><div class='ga_c_payments'></div><div class='ga_c_positions'></div><div class='ga_c_giveaways'></div></div></td>";

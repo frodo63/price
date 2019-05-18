@@ -4,14 +4,21 @@ include_once 'pdo_connect.php';
 if (isset($_POST['sline'])){
     $sline = $_POST['sline'];
     try {
-        $statement = $pdo->prepare("
+        /*$statement = $pdo->prepare("
 SELECT name, nameid, byers_id, sellers_id, trades_id, requests_id, created, byersid, byers_name, 1c_num FROM `allnames`
   LEFT JOIN `byers` ON nameid=byers_nameid
   LEFT JOIN `sellers` ON nameid=sellers_nameid
   LEFT JOIN `trades` ON nameid=trades_nameid
   LEFT JOIN (SELECT requests_id,created,byersid,name as byers_name,requests_nameid, 1c_num FROM `requests` LEFT JOIN byers ON byersid=byers_id LEFT OUTER JOIN allnames ON byers_nameid=allnames.nameid) AS a ON nameid=a.requests_nameid
-WHERE name LIKE concat('%', ?, '%') OR `1c_num`LIKE '%{$sline}%' GROUP BY byers_name,name");
-        $statement->execute(array($sline));
+WHERE name LIKE concat('%', ?, '%') OR `1c_num`LIKE '%{$sline}%' GROUP BY byers_name,name");*/
+        $statement = $pdo->prepare("
+SELECT 1c_num, name, nameid, byers_id, sellers_id, trades_id, requests_id, created, byersid, byers_name FROM `allnames`
+  LEFT JOIN `byers` ON nameid=byers_nameid
+  LEFT JOIN `sellers` ON nameid=sellers_nameid
+  LEFT JOIN `trades` ON nameid=trades_nameid
+  LEFT JOIN (SELECT requests_id,created,byersid,name as byers_name,requests_nameid, 1c_num FROM `requests` LEFT JOIN byers ON byersid=byers_id LEFT OUTER JOIN allnames ON byers_nameid=allnames.nameid) AS a ON nameid=a.requests_nameid
+WHERE `1c_num`LIKE concat('%', ?, '%') OR name LIKE concat('%', ?, '%') GROUP BY byers_name,name");
+        $statement->execute(array($sline, $sline));
         $result = '<ul>';
         $byers = '';
         $sellers = '';
