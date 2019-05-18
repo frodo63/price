@@ -491,8 +491,16 @@ if(isset($_POST['sync_file'])){
                                 echo"</ul>";
                             }else{
                                 //И в кнопке должны быть все переменные для добавления расценки
-                                echo "<input type='button' requestid = '" . $gotreqnum['requests_id'] . "' req_positionid = '" . $pos['req_positionid'] . "' price = '" . $inner_v[7] . "' kol = '" . $inner_v[4] . "' tradeid = '" . $gottradename['trades_id'] . "'  class='sync_addpricing' value='+Превратить позицию в расценку'>";
+                                //Расценки нет, и все данные для добаления расценки надо взять откудато. Из позиции больше не от куда.
+
+                                $pos_lnum = $pos['line_num']-1;
+                                $pos_trade_uid = $v[$pos_lnum][6];
+                                $gettradename->execute(array($pos_trade_uid));
+                                $gottradename=$gettradename->fetch(PDO::FETCH_ASSOC);
+                                $thehtml .= "<input type='button' requestid = '" . $gotreqnum['requests_id'] . "' req_positionid = '" . $pos['req_positionid'] . "' price = '" . $v[$pos_lnum][7] . "' kol = '" . $v[$pos_lnum][4] . "' tradeid = '" . $gottradename['trades_id'] . "'  class='sync_addpricing' value='+Превратить позицию в расценку'>";
+
                             }
+
                         }
                     };
                     echo "<br><br><br></ul></li>";
@@ -731,7 +739,13 @@ if(isset($_POST['synched_request'])){
                             $thehtml .= "</ul>";
                         }else{
                             //И в кнопке должны быть все переменные для добавления расценки
-                            $thehtml .= "<input type='button' requestid = '" . $rid . "' req_positionid = '" . $pos['req_positionid'] . "' price = '" . $inner_v[7] . "' kol = '" . $inner_v[4] . "' tradeid = '" . $gottradename['trades_id'] . "'  class='sync_addpricing' value='+Превратить позицию в расценку'>";
+                            //Расценки нет, и все данные для добаления расценки надо взять откудато. Из позиции больше не от куда.
+
+                            $pos_lnum = $pos['line_num']-1;
+                            $pos_trade_uid = $v[$pos_lnum][6];
+                            $gettradename->execute(array($pos_trade_uid));
+                            $gottradename=$gettradename->fetch(PDO::FETCH_ASSOC);
+                            $thehtml .= "<input type='button' requestid = '" . $rid . "' req_positionid = '" . $pos['req_positionid'] . "' price = '" . $v[$pos_lnum][7] . "' kol = '" . $v[$pos_lnum][4] . "' tradeid = '" . $gottradename['trades_id'] . "'  class='sync_addpricing' value='+Превратить позицию в расценку'>";
                         }
                     }
                 };
