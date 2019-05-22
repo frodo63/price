@@ -5,6 +5,13 @@ include_once 'pdo_connect.php';
 
 if (isset($_POST['the_byer'])){
     try {
+
+        /*
+         * Для каждого покупателя рисуем:
+        Список Платежей
+        Список Начислений
+        Список Выдач
+        */
         $the_byer = $_POST['the_byer'];
         if(isset($_POST['from']) && isset($_POST['to'])){
             $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE (requests.byersid = ? AND requests.created BETWEEN ? AND ? AND requests.r1_hidden = 0) ORDER BY created");

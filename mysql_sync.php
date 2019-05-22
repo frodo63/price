@@ -498,9 +498,7 @@ if(isset($_POST['sync_file'])){
                                 $gettradename->execute(array($pos_trade_uid));
                                 $gottradename=$gettradename->fetch(PDO::FETCH_ASSOC);
                                 echo "<input type='button' requestid = '" . $gotreqnum['requests_id'] . "' req_positionid = '" . $pos['req_positionid'] . "' price = '" . $v[$pos_lnum][7] . "' kol = '" . $v[$pos_lnum][4] . "' tradeid = '" . $gottradename['trades_id'] . "'  class='sync_addpricing' value='+Превратить позицию в расценку'>";
-
                             }
-
                         }
                     };
                     echo "<br><br><br></ul></li>";
