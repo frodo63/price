@@ -293,7 +293,30 @@ if(isset($_POST['table'])){
     }
     else if ($table == 'givaways') {
         try {
-            //Сейчс скрипт берет всех покупателей просто из базы. Надо ,чтобы брал только тех, у кого есть заказы, не убранные из Р1
+
+            /*ОПЦИИ ДАТЫ*/
+            /*Смотрим, какой период сейчас выставлен по умолчанию*/
+            $ga_period = $pdo->prepare("SELECT * FROM `options` WHERE options_id = 'general'");
+            $ga_period->execute();
+            $ga_period_fetched = $ga_period->fetch(PDO::FETCH_ASSOC);
+            $ga_period_current = $ga_period_fetched['ga_period'];
+            $ga_periods = array(
+                array("year",'С начала года'),
+                array("quarter",'С начала квартала'),
+                array("month",'С начала месяца')
+            );
+            //ТЕКУЩУЮ ОПЦИЮ ВЫДЕЛИТЬ ЗЕЛЕНЫМ ЦВЕТОМ
+            foreach($ga_periods as $gap){
+                if($gap[0] == $ga_period_current){
+                    echo "<input type='button' class='date_option green' period='".$gap[0]."' value='".$gap[1]."'>";
+
+                }else{
+                    echo "<input type='button' class='date_option' period='".$gap[0]."' value='".$gap[1]."'>";
+                }
+            };
+            /*ОПЦИИ ДАТЫ*/
+
+            //Сейчс скрипт берет всех покупателей из базы
             $statement = $pdo->prepare("SELECT byers.byers_id AS b_id,byers.byers_nameid AS b_nid,allnames.name AS b_name FROM `byers` LEFT JOIN `allnames` ON byers.byers_nameid=allnames.nameid ORDER BY b_name");
             $gotrequests = $pdo->prepare("SELECT requests_id FROM requests WHERE (requests.byersid = ? AND requests.r1_hidden = 0)");
             $statement->execute();

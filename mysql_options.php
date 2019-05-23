@@ -1,6 +1,26 @@
 <?php
 include_once 'pdo_connect.php';
 
+//Опции по дате периода
+if (isset($_POST['period'])){
+    $period = $_POST['period'];
+
+    $statement = $pdo->prepare("UPDATE `options` SET `ga_period` = ? WHERE options_id = 'general'");
+    try {
+        $pdo->beginTransaction();
+        $statement->execute(array($period));
+        $pdo->commit();
+        echo "Опция общего периода изменена на ".$period;
+
+    } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        $pdo->rollback();
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+}
+
+
+
 //Чтение ОПЦИЙ ЗАЯВКИ все 4 для добавления в расценку
 if (isset($_POST['req_options'])){
     $reqid = $_POST['req_options'];

@@ -6,37 +6,71 @@ include_once 'pdo_connect.php';
 if (isset($_POST['the_byer'])){
     try {
 
-        /*
-         * Для каждого покупателя рисуем:
-        Список Платежей
-        Список Начислений
-        Список Выдач
-        */
+//Проверяем общую опцию даты
+        $ga_period = $pdo->prepare("SELECT * FROM `options` WHERE options_id = 'general'");
+        $ga_period->execute();
+        $ga_period_fetched = $ga_period->fetch(PDO::FETCH_ASSOC);
+        $ga_period_current = $ga_period_fetched['ga_period'];
+
+
+        switch ($ga_period_current){
+            case 'year':
+                $from = date("Y")."-01-01";
+                break;
+            case 'quarter':
+                //Найти начало квартала
+                $month = date("n");
+                $n = 12-$month;
+                //Первый кватал
+                if($n <= 11 && $n > 8){$from = date("Y")."-01-01";}
+                //Второй квартал
+                if($n <= 8 && $n > 5){$from = date("Y")."-04-01";}
+                //Третий квартал
+                if($n <= 5 && $n > 2){$from = date("Y")."-07-01";}
+                //Четвертый квартал
+                if($n < 3){$from = date("Y")."-10-01";}
+                break;
+            case 'month':
+                $from = date("Y-m")."-01";
+                break;
+        }
+        $to = date("Y-m-d");
+
+        //Приводим к читаемому виду
+        $to_norm = substr($to,8,2).'-'.substr($to,5,2).'-'.substr($to,0,4);
+        $from_norm = substr($from,8,2).'-'.substr($from,5,2).'-'.substr($from,0,4);
+
+        //Определилилсь с $from и $to
+
         $the_byer = $_POST['the_byer'];
+        $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE (requests.byersid = ? AND requests.created BETWEEN ? AND ? AND requests.r1_hidden = 0) ORDER BY created");
         if(isset($_POST['from']) && isset($_POST['to'])){
-            $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE (requests.byersid = ? AND requests.created BETWEEN ? AND ? AND requests.r1_hidden = 0) ORDER BY created");
             $from = $_POST['from'];
             $to = $_POST['to'];
 
             $from_norm = substr($from,8,2).'-'.substr($from,5,2).'-'.substr($from,0,4);
             $to_norm = substr($to,8,2).'-'.substr($to,5,2).'-'.substr($to,0,4);
-        }else{
+        }/*else{
             $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE (requests.byersid = ? AND requests.r1_hidden = 0) ORDER BY created");
-        }
+        }*/
         $req_payments = $pdo->prepare("SELECT requests_id,payments_id,number,payed,sum,req_sum FROM requests LEFT JOIN payments ON requests.requests_id=payments.requestid WHERE requests_id = ? ORDER BY payed");
         $req_giveaways = $pdo->prepare("SELECT requests_id,given_away,giveaways_id,giveaway_sum FROM requests LEFT JOIN giveaways ON requests.requests_id=giveaways.requestid WHERE requests_id=? ORDER BY given_away");
         $req_countings = $pdo->prepare("SELECT requestid,req_positionid,winnerid,oh,firstoh,kol FROM req_positions LEFT JOIN pricings on winnerid=pricings.pricingid WHERE requestid=?");
+
+        //Дополничельные запросы
+        //Дается byersid и и выводится картина сразу.
+        //Платежки
+        $total_payments = $pdo->prepare("SELECT * FROM payments where");
+
+
         $pdo->beginTransaction();
-        if(isset($_POST['from']) && isset($_POST['to'])){
-            $reqlist->execute(array($the_byer,$from,$to));
-        }else{
-            $reqlist->execute(array($the_byer));
-        }
+        $reqlist->execute(array($the_byer,$from,$to));
         $pdo->commit();
 
         $result="<div class='ga_requests_date_range'><input class='from' size='10' placeholder='От'><input class='to' size='10' placeholder='До'>
 <input class='filter_date' type='button' value='Отобразить'></div>";
-        if(isset($_POST['from']) && isset($_POST['to'])){$result.="<span>Заявки за период c <b>".$from_norm."</b> по <b>".$to_norm."</b></span>.<br><br>";}
+        $result.="<span>Заявки за период c <b>".$from_norm."</b> по <b>".$to_norm."</b></span>.<br><br>";
+
         $result.="<table><thead><tr><th>Дата</th><th>Номер заказа в 1С</th><th>Название</th><th>Сумма заявки</th><th>Начислено</th><th>Статус заявки</th></tr></thead><tbody>";
 
         foreach ($reqlist as $row){

@@ -1,4 +1,5 @@
 <?php
+
 echo"
 <head>
         <link rel='stylesheet' href='js/jquery_ui/jquery-ui.css'>
@@ -146,10 +147,10 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
           </div>
           
       </div>";
-echo"      
-      <div id='givaways'> 
-      <input type='button' class='show_list' value='РАСЧЕТЫ⏎'><br><br>    
-      <!--Добавить Платежку -->  
+
+echo"<div id='givaways'><input type='button' class='show_list' value='РАСЧЕТЫ⏎'><br><br>";
+         
+echo"       <!--Добавить Платежку -->  
               <div id='add_payment'>
                   <span>Вводим платежку</span>
                   <br>

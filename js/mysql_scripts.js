@@ -418,9 +418,6 @@ $(document).ready(function(){
 
         if ($('.ga_byer_requests:visible').length > 0){
             if ($(event.target).val() == 'X') {
-                  //$(event.target).switchClass('x','w').val('W');
-                  //$(event.target).next('span').css({'font-size' : '1em'});
-                  //$(event.target).siblings('.ga_byer_requests').slideUp();
                 //Скрытие открытых
                 $('li[byerid].ga_widen .ga_byer_requests').html('');//Очищаем html аякса
                 $('li[byerid].ga_widen').removeClass('ga_widen');//Сужаем высоту
@@ -1013,6 +1010,24 @@ $(document).ready(function(){
 
     });
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //ОПЦИИ ВЫБОРА ПО ДАТЕ
+    $(document).off('click.date_option').on('click.date_option', '.date_option', function(event){
+        var period = $(event.target).attr("period");
+        $.ajax({
+            url: 'mysql_options.php',
+            method: 'POST',
+            data: {period:period},
+            success:function (data) {
+                //По идее, нужно не клик триггерить, а просто менять цвет кнопки.
+                //$(event.target).parent().siblings('.show_list').trigger('click');
+                $(event.target).addClass('green');
+                $(event.target).siblings('.date_option').removeClass('green');
+                $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+            },
+        });
+    });
+
 
     //ДОБАВЛЕНИЕ ВЫДАЧИ/////////////////////////////////////////////////////////////////////////////////////////////////
     $(document).off('click.add_giveaway').on('click.add_giveaway', '#button_add_giveaway', function(event){
