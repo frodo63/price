@@ -4,28 +4,29 @@ include_once 'pdo_connect.php';
 if (isset($_POST['sline'])){
     $sline = $_POST['sline'];
     try {
-        /*21.05.19$statement = $pdo->prepare("
-SELECT 1c_num, name, nameid, byers_id, sellers_id, trades_id, requests_id, created, byersid, byers_name FROM `allnames`
+        $names = $pdo->prepare("
+SELECT name, nameid, byers_id, sellers_id, trades_id FROM `allnames`
   LEFT JOIN `byers` ON nameid=byers_nameid
   LEFT JOIN `sellers` ON nameid=sellers_nameid
   LEFT JOIN `trades` ON nameid=trades_nameid
-  LEFT JOIN (SELECT requests_id,created,byersid,name as byers_name,requests_nameid, 1c_num FROM `requests` LEFT JOIN byers ON byersid=byers_id LEFT OUTER JOIN allnames ON byers_nameid=allnames.nameid) AS a ON nameid=a.requests_nameid
-WHERE (1c_num LIKE concat('%', ?, '%')) OR (name LIKE concat('%', ?, '%')) GROUP BY byers_name,name");*/
-        $statement = $pdo->prepare("
-SELECT 1c_num, name, nameid, byers_id, sellers_id, trades_id, requests_id, created, byersid, byers_name FROM `allnames`
-  LEFT JOIN `byers` ON nameid=byers_nameid
-  LEFT JOIN `sellers` ON nameid=sellers_nameid
-  LEFT JOIN `trades` ON nameid=trades_nameid
-  LEFT JOIN (SELECT requests_id,created,byersid,name as byers_name,requests_nameid, 1c_num, byers_nameid FROM `requests` LEFT JOIN byers ON byersid=byers_id LEFT OUTER JOIN allnames ON byers_nameid=allnames.nameid) AS a ON nameid=a.byers_nameid
-WHERE (1c_num LIKE concat('%', ?, '%')) OR (name LIKE concat('%', ?, '%')) GROUP BY byers_name,name");
-        $statement->execute(array($sline, $sline));
+  WHERE (name LIKE concat('%', ?, '%')) GROUP BY name");
+
+        $reqs = $pdo->prepare("SELECT requests_id,created,byersid,1c_num, name FROM `requests` LEFT JOIN byers ON byersid=byers_id LEFT JOIN allnames ON byers.byers_nameid = allnames.nameid
+WHERE (1c_num LIKE concat('%', ?, '%')) GROUP BY created DESC");
+
+        $names->execute(array($sline));
+        $reqs->execute(array($sline));
+
+
+
         $result = '<ul>';
+
         $byers = '';
         $sellers = '';
         $trades = '';
         $requests = '';
-        foreach ($statement as $row) {
 
+        foreach ($names as $row) {
             if ($row['byers_id']) {
                 $byers .= "<li tabindex=0 category='byer' theid=" . $row['byers_id'] . " nameid=" . $row['nameid'] . "><span>" . $row['name'] . "</span><div class='note'>клиент</div></li>";
             };
@@ -35,14 +36,16 @@ WHERE (1c_num LIKE concat('%', ?, '%')) OR (name LIKE concat('%', ?, '%')) GROUP
             if ($row['trades_id']) {
                 $trades .= "<li tabindex=0 category='trade' theid=" . $row['trades_id'] . " nameid=" . $row['nameid'] . "><span>" . $row['name'] . "</span><div class='note'>товар</div></li>";
             };
-            if ($row['requests_id'] && $row['byers_id']) {
+        };
 
+        foreach ($reqs as $row) {
+            if ($row['requests_id']) {
                 $phpdate = strtotime($row['created']);
                 $mysqldate = date('d.m.y', $phpdate);
-
-                $requests .= "<li tabindex=0 category='request' theid=" . $row['requests_id'] . "><span>Заказ № ".$row['1c_num']." от ".$mysqldate." " . $row['byers_name'] . " </span><div class='note'>заявка</div></li>";
+                $requests .= "<li tabindex=0 category='request' theid=" . $row['requests_id'] . "><span>Заказ № ".$row['1c_num']." от ".$mysqldate." " . $row['name'] . " </span><div class='note'>заявка</div></li>";
             };
         };
+
 
 
         $result .= $requests . $byers . $sellers . $trades;
@@ -71,7 +74,7 @@ if (isset($_POST['sbyer'])){
         $byers .= "<li category='byer' byers_id=".$row['byers_id']." nameid=" . $row['nameid'] . "><p>" . $row['name'] . "</p><div class='note'>клиент</div></li>";
     };
     $result .= $byers;
-    $result .= "</ul><!--<script src='js/mysql_searching.js'>-->";
+    $result .= "</ul>";
 
     print $result;
 };

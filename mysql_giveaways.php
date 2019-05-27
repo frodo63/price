@@ -12,7 +12,6 @@ if (isset($_POST['the_byer'])){
         $ga_period_fetched = $ga_period->fetch(PDO::FETCH_ASSOC);
         $ga_period_current = $ga_period_fetched['ga_period'];
 
-
         switch ($ga_period_current){
             case 'year':
                 $from = date("Y")."-01-01";
@@ -50,18 +49,10 @@ if (isset($_POST['the_byer'])){
 
             $from_norm = substr($from,8,2).'-'.substr($from,5,2).'-'.substr($from,0,4);
             $to_norm = substr($to,8,2).'-'.substr($to,5,2).'-'.substr($to,0,4);
-        }/*else{
-            $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE (requests.byersid = ? AND requests.r1_hidden = 0) ORDER BY created");
-        }*/
+        }
         $req_payments = $pdo->prepare("SELECT requests_id,payments_id,number,payed,sum,req_sum FROM requests LEFT JOIN payments ON requests.requests_id=payments.requestid WHERE requests_id = ? ORDER BY payed");
-        $req_giveaways = $pdo->prepare("SELECT requests_id,given_away,giveaways_id,giveaway_sum FROM requests LEFT JOIN giveaways ON requests.requests_id=giveaways.requestid WHERE requests_id=? ORDER BY given_away");
+        $req_giveaways = $pdo->prepare("SELECT requests_id,given_away,giveaways_id,giveaway_sum, comment FROM requests LEFT JOIN giveaways ON requests.requests_id=giveaways.requestid WHERE requests_id=? ORDER BY given_away");
         $req_countings = $pdo->prepare("SELECT requestid,req_positionid,winnerid,oh,firstoh,kol FROM req_positions LEFT JOIN pricings on winnerid=pricings.pricingid WHERE requestid=?");
-
-        //Дополничельные запросы
-        //Дается byersid и и выводится картина сразу.
-        //Платежки
-        $total_payments = $pdo->prepare("SELECT * FROM payments where");
-
 
         $pdo->beginTransaction();
         $reqlist->execute(array($the_byer,$from,$to));
@@ -71,7 +62,14 @@ if (isset($_POST['the_byer'])){
 <input class='filter_date' type='button' value='Отобразить'></div>";
         $result.="<span>Заявки за период c <b>".$from_norm."</b> по <b>".$to_norm."</b></span>.<br><br>";
 
-        $result.="<table><thead><tr><th>Дата</th><th>Номер заказа в 1С</th><th>Название</th><th>Сумма заявки</th><th>Начислено</th><th>Статус заявки</th></tr></thead><tbody>";
+        $result.="<table><thead><tr><th>Дата</th><th>Номер заказа в 1С</th><th></th><th>Сумма заявки</th><th>Начислено</th><th>Статус заявки</th></tr></thead><tbody>";
+
+        /*ПЕРЕМЕННЫЕ ИТОГОВЫЕ*/
+        /*НА КАЖДОГО ПОКУПАТЕЛЯ У НАС 4 ПЕРЕМЕННЫЕ*/
+        $total_sum=0;//Сумма заказа строку приводим к числу
+        $total_count = 0;//Начислено
+        $total_pay = 0;//Оплачено
+        $total_give = 0;//Отдано
 
         foreach ($reqlist as $row){
 
@@ -111,24 +109,29 @@ if (isset($_POST['the_byer'])){
 
             //Выводим сумму заявки
             $result.="<td>".round($row['req_sum'],2)."</td>";
+            $total_sum += round($row['req_sum'],2);
+
             //Выводим сумму начислений по заявке
             $result.="<td>".round($req_count,2)."</td>";
+            $total_count += round($req_count,2);
 
 
             /*Расчет общего количества оплат*/
             foreach ($req_payments as $rp){
                 $req_pay+=round($rp['sum'],2);
             }
+            $total_pay += $req_pay;
             /**/
             /*Расчет общего количества выдач*/
             foreach ($req_giveaways as $rg){
                 $req_give+=round($rg['giveaway_sum'],2);
             }
+            $total_give += $req_give;
             /**/
 
             /*Подготовка переходных переменных*/
             $req_pay_ostatok = round($req_sum, 2) - round($req_pay, 2);//Остаток к оплате
-            $req_give_ostatok = round($req_count,2) - round($req_give,2);
+            $req_give_ostatok = round($req_count,2) - round($req_give,2);//Долг по выдачам
 
             /**/
 
@@ -179,9 +182,40 @@ if (isset($_POST['the_byer'])){
                            </td>";
                 }
         };
-
         $result.="</tr></tbody></table>";
+
+        //Выводим СУММУ ДОЛГА и СУММУ ВЫДАННОГО
+        //ВСЕГО НАЧИСЛЕНО:
+        echo "<br><br><br><br>";
+        echo "<h2>ОБЩАЯ СУММА ЗАКАЗОВ: ".$total_sum."</h2>";
+        echo "<h2>ВСЕГО ОПЛАЧЕНО: ".$total_pay."</h2>";
+        echo "<h2>ВСЕГО НАЧИСЛЕНО: ".$total_count."</h2>";
+        echo "<h2>ВСЕГО ВЫДАНО: ".$total_give."</h2>";
+        $total_togive = round($total_count-$total_give, 2);
+        echo "<h2>ОСТАЛОСЬ ВЫДАТЬ: ".$total_togive."</h2>";
+
         print $result;
+
+        echo "<table><thead><th>Дата выдачи</th><th>Сумма выдачи</th><th>Комментарий</th></thead><tbody>";
+
+        //Рисуем список выдач
+        foreach ($req_giveaways as $give){
+            echo "<tr>";
+
+            $phpdate = strtotime( $give['given_away'] );
+            $mysqldate = date( 'd.m.y', $phpdate );
+
+            echo "<td giveaways_id='".$give['requests_id']."'>".$mysqldate."</td>";
+            echo "<td>".$give['giveaway_sum']."</td>";
+            echo "<td>".$give['comment']."</td>";
+            echo "</tr>";
+        }
+
+        echo "</tbody></table>";
+
+
+        //Кнопка добавить выдачу
+        echo "<input type='button' value='+Выдача' class='add_giveaway'>";
 
     }catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
@@ -202,8 +236,11 @@ if (isset($_POST['the_request'])){
 
         $get_req_info = $pdo->prepare("SELECT created,req_sum,1c_num FROM `requests` WHERE requests_id=?");
         $get_payments = $pdo->prepare("SELECT payed,payments_id,number,sum,requestid FROM `payments` WHERE requestid=?");
-        $get_positions = $pdo->prepare("SELECT name, kol, oh, firstoh FROM (SELECT * FROM (SELECT trades_id,name FROM trades LEFT JOIN allnames ON trades_nameid=nameid) AS a LEFT JOIN pricings ON a.trades_id=tradeid) AS b left join req_positions on b.pricingid=req_positions.winnerid WHERE req_positions.requestid=?");
+        $get_positions = $pdo->prepare("SELECT name, kol, oh, firstoh, pricingid FROM (SELECT * FROM (SELECT trades_id,name FROM trades LEFT JOIN allnames ON trades_nameid=nameid) AS a LEFT JOIN pricings ON a.trades_id=tradeid) AS b left join req_positions on b.pricingid=req_positions.winnerid WHERE req_positions.requestid=?");
         $get_giveaways = $pdo->prepare("SELECT giveaways_id,requestid,given_away,comment,giveaway_sum FROM `giveaways` WHERE requestid=?");
+
+        //Запросы для расценки
+        $get_seller_name = $pdo->prepare("SELECT name, sellers_id FROM allnames LEFT JOIN sellers ON allnames.nameid = sellers.sellers_nameid LEFT JOIN pricings ON sellers_id=sellerid WHERE pricingid=?");
 
         $pdo->beginTransaction();
         $get_req_info->execute(array($the_request));
@@ -238,7 +275,11 @@ if (isset($_POST['the_request'])){
                     $onhands = round($row['oh'],2);
                 };
 
-                $result2 .= "<tr><td>" . $row['name'] . "</td><td>" . $row['kol'] . "</td><td>" . $onhands . "</td><td>" . round($row['kol'],2) * round($onhands,2) . "</td></tr>";
+                //Имя Поставщика
+                $get_seller_name->execute(array($row['pricingid']));
+                $get_seller_name_fetched = $get_seller_name->fetch(PDO::FETCH_ASSOC);
+
+                $result2 .= "<tr pricingid = ".$row['pricingid']." sellerid = '".$get_seller_name_fetched['sellers_id']."'><td><span class='ga_trade'>" . $row['name'] . " от </span><span class='ga_seller'>".$get_seller_name_fetched['name']."</span><input value='↑ расценка ↑' type='button' class='editpricing' pricing = '".$row['pricingid']."'></td><td>" . $row['kol'] . "</td><td>" . $onhands . "</td><td>" . round($row['kol'],2) * round($onhands,2) . "</td></tr>";
             };
             $result2 .= "</tbody></table>";
         };

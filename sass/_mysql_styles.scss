@@ -478,6 +478,16 @@ tr[pricingid] td {border: 1px solid black}
     &>table>thead>tr>th:nth-child(6), &>table>tbody>tr>td:nth-child(6){display: none}
     &>table>thead>tr>th:nth-child(7), &>table>tbody>tr>td:nth-child(7){display: none}
 }
+
+.ga_shrinken {
+  &>table>thead>tr>th:nth-child(1), &>table>tbody>tr>td:nth-child(1){display: none}
+  &>table>thead>tr>th:nth-child(2), &>table>tbody>tr>td:nth-child(2){display: none}
+  &>table>thead>tr>th:nth-child(3), &>table>tbody>tr>td:nth-child(3){width: 100%}
+  &>table>thead>tr>th:nth-child(4), &>table>tbody>tr>td:nth-child(4){display: none}
+  &>table>thead>tr>th:nth-child(5), &>table>tbody>tr>td:nth-child(5){display: none}
+  &>table>thead>tr>th:nth-child(6), &>table>tbody>tr>td:nth-child(6){display: none}
+}
+
 .ga_byer_requests.shrinken>table th:nth-child(4){
 
 }

@@ -512,7 +512,7 @@ $(document).ready(function(){
         var the_byer = $(event.target).parents('li[byerid]').attr('byerid');
 
         if($(event.target).val() == 'X'){//Закрываем просто
-            $(event.target).parents('.ga_byer_requests').removeClass('shrinken');
+            $(event.target).parents('.ga_byer_requests').removeClass('ga_shrinken');
             $(event.target).parent().removeClass('ga_widen');
             $('.ga_c_payments, .ga_c_giveaways, .ga_c_positions').removeClass('min-h')//Правила для трех папок по высоте
             $('.ga_requests_date_range').show();//Дейтпикер
@@ -537,7 +537,7 @@ $(document).ready(function(){
         $('.ga_requests_date_range').hide();//Дейтпикер
         $('.collapse_ga_byer.x').hide();//Верхний красный крест
         $('tr[ga_request]').not('tr[ga_request='+the_request+']').hide();
-        $(event.target).parents('.ga_byer_requests').addClass('shrinken');
+        $(event.target).parents('.ga_byer_requests').addClass('ga_shrinken');
         $(event.target).parent().addClass('ga_widen');
         $('.ga_c_payments, .ga_c_giveaways, .ga_c_positions').addClass('min-h')//Правила для трех папок по высоте
 

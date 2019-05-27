@@ -533,11 +533,14 @@ $(document).ready(function() {
         var thetab = $('#reads li.ui-state-active').attr('id').substr(4);
         console.log(thetab);
 
+        if (thetab == 'giveaways'){
+                $('html, body').animate({scrollTop: $('.byer_req_list .ga_widen').offset().top}, 1000);
+        }
+
         if($('#' + thetab + ' .widen').length == 0)
         {
             $('html, body').animate({scrollTop: $('#' + thetab).offset().top}, 1000);
-        }
-        else
+        }else
         {
             $('html, body').animate({scrollTop: $('#' + thetab + ' .widen').offset().top}, 1000);
         }
@@ -555,6 +558,17 @@ $(document).ready(function() {
         var tare = $(event.target).parents('td').siblings('.pr-trade-name').attr('tare');
         var byerid = $(event.target).parents('tr[byerid]').attr('byerid');
         var byername = $('tr[requestid="'+reqid+'"] td[byerid] span').text();
+
+        //Если эдитпрайсинг открывается из окна Р-1, переменные берутся из другого места
+        if($(event.target).parents('.ga_contents').length>0){
+            var reqid = $(event.target).parents('.ga_contents').attr('ga_request');
+            var prid = $(event.target).attr('pricing');
+            var byerid = $(event.target).parents('li[byerid]').attr('byerid');
+            var byername = $('.byer_req_list li[byerid='+byerid+'] span.name').text();
+
+            trade = $(event.target).siblings('span').text();
+            seller = $(event.target).siblings('.ga_seller').text();
+        }
 
                 window.scrollTo(0, 0);
                 $('#pricingwindow').slideDown(200);
@@ -592,7 +606,7 @@ $(document).ready(function() {
                         /*ШАПКА*/
                         $('#trade').attr({trade_id : json.tradeid, tare : tare}).val(trade);
                         $('#seller').attr('seller_id', json.sellerid).val(seller);
-                        $('#button_history').attr('hist_trade', json.tradeid);//Дбавляем идентификатор Товара в инпут по истории
+                        $('#button_history').attr('hist_trade', json.tradeid);//Добавляем идентификатор Товара в инпут по истории
                         console.log(json.tradeid);
 
                         $('#zak').val(json.zak);
@@ -628,34 +642,6 @@ $(document).ready(function() {
                             $('#firstoh').val(json.firstoh);
                             $('#clearp').text(json.clearp);
                         }
-                        /*if (json.fixed == 1){
-                            //Косметика
-                            $('#fixate').addClass('active').attr('value', 'Отпустить').slideDown();
-                            $('#pr').css({'font-weight': "bold", 'border': '1px solid red'});
-                            $('#go').slideUp().animate({top:'90vh', right:'56.5vw'}).slideDown();
-                            $('#cases').slideUp();
-                            $('#margediv').slideDown();
-                            $('#fcount').css('opacity', '0.2');
-                            console.log('Цена закреплена');
-                            //Косметика
-
-                            $('#op').val(json.op);
-                            $('#tp').val(json.tp);
-                            $('#firstobp').val(json.firstobp);
-                            $('#opr').text(json.opr);
-                            $('#tpr').text(json.tpr);
-                            $('#firstoh').val(json.firstoh);
-                            $('#clearp').text(json.clearp);
-
-                            $('#rtp').val(json.rtp);
-                            $('#rop').val(json.rop);
-                            $('#obp').val(json.obp);
-                            $('#marge').text(json.marge);
-                            $('#margek').text(json.margek);
-                            $('#oh').text(json.oh);
-                            $('#realop').text(json.realop + '%, от маржи');
-                            $('#realtp').text(json.realtp + '%, от маржи');
-                        }*/
                     },/*История*/
                     complete: function(){
                         $('#button_history').attr('hist_byer', byerid);//Добавляем идентификатор Покупателя в инпут по истории
@@ -685,55 +671,14 @@ $(document).ready(function() {
                                             console.log(data.tp);
                                             console.log(data.firstobp);
                                             console.log(data.wt);
-                                            //TODO:ПРОВЕРКУ НА FIXED!!!
                                         }
                                     });
 
                                 }else if(queen == null){
                                     console.log('queen has just almost killed this pricing, but i saved it!');
-                                        //ЕСЛИ QUEEN == NULL мы НИЧЕГО НЕ МЕНЯЕМ!!!
-                                    /*$.ajax({//БЕРЕМ ИЗ ЗАЯВКИ
-                                        url: 'mysql_options.php',
-                                        method: 'POST',
-                                        dataType: 'json',
-                                        cache: false,
-                                        data: {req_options:reqid},
-                                        success: function(data){
-                                            $('#op').val(data.op);
-                                            $('#tp').val(data.tp);
-                                            $('#firstobp').val(data.firstobp);
-                                            $('#wtime').val(data.wt);
-                                            console.log(data.op);
-                                            console.log(data.tp);
-                                            console.log(data.firstobp);
-                                            console.log(data.wt);
-                                            //TODO:ПРОВЕРКУ НА FIXED!!!
-                                        }
-                                    });
-                                */}
+                                    }
                             }
                         });
-                        ////////////////////////////////////////////////////////////////////////////////////////////////
-                        //Вставляем опции из заявки
-                        /*$.ajax({
-                            url: 'mysql_options.php',
-                            method: 'POST',
-                            dataType: 'json',
-                            cache: false,
-                            data: {req_options:reqid},
-                            success: function(data){
-                                $('#op').val(data.op);
-                                $('#tp').val(data.tp);
-                                $('#firstobp').val(data.firstobp);
-                                $('#wtime').val(data.wt);
-                                console.log(data.op);
-                                console.log(data.tp);
-                                console.log(data.firstobp);
-                                console.log(data.wt);
-
-                            }
-
-                        });*/
                         /*Выводим сообщение о том что расценка выгружена*/
                         $('#editmsg').css('display', 'block'). delay(2000).slideUp(300).html('Расценка ' + prid + ' выгружена.');
                     }
