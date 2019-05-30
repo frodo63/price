@@ -10,6 +10,10 @@ $(document).ready(function(){
         var op = Number(Number($('#op').val()).toFixed(3));        //Наша наценка (в формате десятичных 3 знаков)
         var firstobp = Number($('#firstobp').val());
         var wt = Number(Number($('#wtime').val()).toFixed(2));
+
+
+        //Изменение отсрочкорублей
+        $('#wtr').text(Number((a*0.0125*wt).toFixed(2)));
         var wtr = Number(Number($('#wtr').text()).toFixed(2));
 
         //Изменение проценторублей
@@ -44,7 +48,7 @@ $(document).ready(function(){
         var op = Number(Number($('#op').val()).toFixed(3));        //Наша наценка (в формате десятичных 3 знаков)
         var firstobp = Number($('#firstobp').val());
         var wt = Number(Number($('#wtime').val()).toFixed(2));
-        var wtr = Number(Number($('#wtr').text()).toFixed(2));
+
         //Изменяется обналотзркнам
         $('#obtzrknam').text((tzrknam*(1-(firstobp/100))).toFixed(2));
         //Изменяется сам тзр
@@ -53,6 +57,10 @@ $(document).ready(function(){
         //Происходит изменение тзр и только потом происходит выбирание переменной тзр для расчета цены
         var tzr = Number(Number($('#tzr').text()).toFixed(3));      //Транспортные (на шт)
         var a = zak+tzr;                                           //Сумма Закупа и ТЗР для формулы
+
+        //Изменение отсрочкорублей
+        $('#wtr').text(Number((a*0.0125*wt).toFixed(2)));
+        var wtr = Number(Number($('#wtr').text()).toFixed(2));
 
         //И происходит то, что обычно происходит при изменении тзр:
         //Изменение проценторублей
@@ -87,7 +95,7 @@ $(document).ready(function(){
         var op = Number(Number($('#op').val()).toFixed(3));        //Наша наценка (в формате десятичных 3 знаков)
         var firstobp = Number($('#firstobp').val());
         var wt = Number(Number($('#wtime').val()).toFixed(2));
-        var wtr = Number(Number($('#wtr').text()).toFixed(2));
+
 
         //Изменяется обналотзркпок
         $('#obtzrkpok').text((tzrkpok*(1-(firstobp/100))).toFixed(2));
@@ -97,6 +105,10 @@ $(document).ready(function(){
         //Происходит изменение тзр и только потом происходит выбирание переменной тзр для расчета цены
         var tzr = Number(Number($('#tzr').text()).toFixed(3));      //Транспортные (на шт)
         var a = zak+tzr;                                           //Сумма Закупа и ТЗР для формулы
+
+        //Изменение отсрочкорублей
+        $('#wtr').text(Number((a*0.0125*wt).toFixed(2)));
+        var wtr = Number(Number($('#wtr').text()).toFixed(2));
 
         //И происходит то, что обычно происходит при изменении тзр:
         //Изменение проценторублей

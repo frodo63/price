@@ -363,9 +363,9 @@ if(isset($_POST['number']) && isset($_POST['payed']) && isset($_POST['uid']) && 
 //////////////////////////////////////////////////////////////////////
 
 //ДОБАВЛЕНИЕ ВЫДАЧИ///////////////////////////////////////////////////
-if(isset($_POST['reqid']) && isset($_POST['giveaway_date']) && isset($_POST['comment']) && isset($_POST['sum'])){
+if(isset($_POST['byersid']) && isset($_POST['giveaway_date']) && isset($_POST['comment']) && isset($_POST['sum'])){
 
-    $reqid = $_POST['reqid'];
+    $byersid = $_POST['byersid'];
     $giveaway_date = $_POST['giveaway_date'];
     $comment = $_POST['comment'];
     $sum = $_POST['sum'];
@@ -373,9 +373,9 @@ if(isset($_POST['reqid']) && isset($_POST['giveaway_date']) && isset($_POST['com
     /**//////////////////////////////////////////////////////////////
 
     try {
-        $statement = $pdo->prepare("INSERT INTO `giveaways`(`requestid`,`given_away`,`comment`,`giveaway_sum`) VALUES(?,?,?,?)");
+        $statement = $pdo->prepare("INSERT INTO `giveaways`(`byersid`,`given_away`,`comment`,`giveaway_sum`) VALUES(?,?,?,?)");
 
-        $statement->bindParam(1, $reqid);
+        $statement->bindParam(1, $byersid);
         $statement->bindParam(2, $giveaway_date);
         $statement->bindParam(3, $comment);
         $statement->bindParam(4, $sum);
@@ -391,7 +391,7 @@ if(isset($_POST['reqid']) && isset($_POST['giveaway_date']) && isset($_POST['com
     }
     /**//////////////////////////////////////////////////////////////
 
-    echo "Получилось! Добавлена выдача на сумму $sum в заявку $reqid.";
+    echo "Получилось! Добавлена выдача на сумму $sum";
 
 };
 //////////////////////////////////////////////////////////////////////

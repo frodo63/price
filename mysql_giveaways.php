@@ -43,6 +43,7 @@ if (isset($_POST['the_byer'])){
 
         $the_byer = $_POST['the_byer'];
         $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE (requests.byersid = ? AND requests.created BETWEEN ? AND ? AND requests.r1_hidden = 0) ORDER BY created");
+        $req_giveaways = $pdo->prepare("SELECT given_away,giveaways_id,giveaway_sum,comment FROM giveaways WHERE byersid = ? AND given_away BETWEEN ? AND ? ORDER BY given_away");
         if(isset($_POST['from']) && isset($_POST['to'])){
             $from = $_POST['from'];
             $to = $_POST['to'];
@@ -50,12 +51,16 @@ if (isset($_POST['the_byer'])){
             $from_norm = substr($from,8,2).'-'.substr($from,5,2).'-'.substr($from,0,4);
             $to_norm = substr($to,8,2).'-'.substr($to,5,2).'-'.substr($to,0,4);
         }
+
+
         $req_payments = $pdo->prepare("SELECT requests_id,payments_id,number,payed,sum,req_sum FROM requests LEFT JOIN payments ON requests.requests_id=payments.requestid WHERE requests_id = ? ORDER BY payed");
-        $req_giveaways = $pdo->prepare("SELECT requests_id,given_away,giveaways_id,giveaway_sum, comment FROM requests LEFT JOIN giveaways ON requests.requests_id=giveaways.requestid WHERE requests_id=? ORDER BY given_away");
         $req_countings = $pdo->prepare("SELECT requestid,req_positionid,winnerid,oh,firstoh,kol FROM req_positions LEFT JOIN pricings on winnerid=pricings.pricingid WHERE requestid=?");
 
         $pdo->beginTransaction();
         $reqlist->execute(array($the_byer,$from,$to));
+        $requests_fetched = $reqlist->fetchAll(PDO::FETCH_ASSOC);
+        $req_giveaways->execute(array($the_byer,$from,$to));
+        $giveaways_fetched = $req_giveaways->fetchAll(PDO::FETCH_ASSOC);
         $pdo->commit();
 
         $result="<div class='ga_requests_date_range'><input class='from' size='10' placeholder='От'><input class='to' size='10' placeholder='До'>
@@ -71,13 +76,13 @@ if (isset($_POST['the_byer'])){
         $total_pay = 0;//Оплачено
         $total_give = 0;//Отдано
 
-        foreach ($reqlist as $row){
+        //foreach ($reqlist as $row){
+        foreach ($requests_fetched as $row){
 
             /*Выполняем запросы*/
             $pdo->beginTransaction();
             $req_countings->execute(array($row['requests_id']));
             $req_payments->execute(array($row['requests_id']));
-            $req_giveaways->execute(array($row['requests_id']));
             $pdo->commit();
 
             $result.="<tr ga_request='". $row['requests_id'] ."'>";
@@ -86,7 +91,7 @@ if (isset($_POST['the_byer'])){
             $mysqldate = date( 'd.m.y', $phpdate );
             $result.="<td>".$mysqldate."</td>";
             $result.="<td>".$row['1c_num']."</td>";
-            $result.="<td><input class='collapse_ga_request' ga_request='". $row['requests_id'] ."' type='button' value='♢'><span>".$row['name']."</span>
+            $result.="<td><input class='collapse_ga_request' ga_request='". $row['requests_id'] ."' type='button' value='♢'>
 <div class='ga_contents' ga_request='". $row['requests_id'] ."'><div class='ga_options'></div><div class='ga_c_payments'></div><div class='ga_c_positions'></div><div class='ga_c_giveaways'></div></div></td>";
 
             /*ПЕРЕМЕННЫЕ НА СТАТУС ЗАКАЗА*/
@@ -123,7 +128,9 @@ if (isset($_POST['the_byer'])){
             $total_pay += $req_pay;
             /**/
             /*Расчет общего количества выдач*/
-            foreach ($req_giveaways as $rg){
+
+            //TODO: Исправить пересчет долга по выдачам
+            foreach ($giveaways_fetched as $rg){
                 $req_give+=round($rg['giveaway_sum'],2);
             }
             $total_give += $req_give;
@@ -136,7 +143,7 @@ if (isset($_POST['the_byer'])){
             /**/
 
             /*УСЛОВИЯ ПО СТАТУСУ ЗАКАЗА*/
-            if(round($req_sum,2) == round($req_pay,2) && round($req_sum,2) !=0 && round($req_pay,2) != 0 && $req_give_ostatok == 0 && $req_give != 0){
+            /*if(round($req_sum,2) == round($req_pay,2) && round($req_sum,2) !=0 && round($req_pay,2) != 0 && $req_give_ostatok == 0 && $req_give != 0){
                 $result .="<td>
                                <div class='green'>
                                    <span>Оплата 100% Выдача 100%</span>
@@ -144,7 +151,8 @@ if (isset($_POST['the_byer'])){
                                        
                                </div>
                            </td>";
-            }elseif (round($req_sum,2) == round($req_pay,2) && round($req_sum,2) !=0 && round($req_pay,2) != 0 && $req_give_ostatok == 0 && $req_give == 0){
+            }else*/
+            if (round($req_sum,2) == round($req_pay,2) && round($req_sum,2) !=0 && round($req_pay,2) != 0 && $req_give_ostatok == 0 && $req_give == 0){
                 $result .="<td>
                                <div class='green'>
                                    <span>Оплата 100% Начислений не было</span>
@@ -184,38 +192,41 @@ if (isset($_POST['the_byer'])){
         };
         $result.="</tr></tbody></table>";
 
-        //Выводим СУММУ ДОЛГА и СУММУ ВЫДАННОГО
-        //ВСЕГО НАЧИСЛЕНО:
-        echo "<br><br><br><br>";
-        echo "<h2>ОБЩАЯ СУММА ЗАКАЗОВ: ".$total_sum."</h2>";
-        echo "<h2>ВСЕГО ОПЛАЧЕНО: ".$total_pay."</h2>";
-        echo "<h2>ВСЕГО НАЧИСЛЕНО: ".$total_count."</h2>";
-        echo "<h2>ВСЕГО ВЫДАНО: ".$total_give."</h2>";
-        $total_togive = round($total_count-$total_give, 2);
-        echo "<h2>ОСТАЛОСЬ ВЫДАТЬ: ".$total_togive."</h2>";
-
         print $result;
 
-        echo "<table><thead><th>Дата выдачи</th><th>Сумма выдачи</th><th>Комментарий</th></thead><tbody>";
+        //Кнопка добавить выдачу
+        echo "<input type='button' byersid='".$the_byer."' value='+Выдача' class='add_giveaway'>";
+
+        echo "<table><thead><th>Дата выдачи</th><th>Сумма выдачи</th><th>Комментарий</th><th>Опции</th></thead><tbody>";
 
         //Рисуем список выдач
-        foreach ($req_giveaways as $give){
-            echo "<tr>";
+        foreach ($giveaways_fetched as $give){
+            echo "<tr giveaways_id='".$give['giveaways_id']."'>";
 
             $phpdate = strtotime( $give['given_away'] );
             $mysqldate = date( 'd.m.y', $phpdate );
 
-            echo "<td giveaways_id='".$give['requests_id']."'>".$mysqldate."</td>";
+            echo "<td>".$mysqldate."</td>";
             echo "<td>".$give['giveaway_sum']."</td>";
             echo "<td>".$give['comment']."</td>";
+            echo "<td><input type='button' value='E' byersid='".$the_byer."' class='editgiveaway' g_id='".$give['giveaways_id']."'>
+            <input class='delgiveaway' type='button' value='X' give_id='".$give['giveaways_id']."'></td>";
             echo "</tr>";
         }
 
         echo "</tbody></table>";
 
-
-        //Кнопка добавить выдачу
-        echo "<input type='button' value='+Выдача' class='add_giveaway'>";
+        //Выводим СУММУ ДОЛГА и СУММУ ВЫДАННОГО
+        //ВСЕГО НАЧИСЛЕНО:
+        echo "<br><br><br><br>";
+        echo "<h2>СУММА ВСЕХ ЗАКАЗОВ: ".number_format($total_sum, 2, ',', ' ')."</h2>";
+        echo "<h2>ОПЛАЧЕНО: ".number_format($total_pay, 2, ',', ' ')."</h2>";
+        echo "<br>";
+        echo "<h2>НАЧИСЛЕНО: ".number_format($total_count, 2, ',', ' ')."</h2>";
+        echo "<h2>ВЫДАНО: ".number_format($total_give, 2, ',', ' ')."</h2>";
+        echo "<br>";
+        $total_togive = round($total_count-$total_give, 2);
+        echo "<h2>ОСТАЛОСЬ ВЫДАТЬ: ".number_format($total_togive, 2, ',', ' ')."</h2>";
 
     }catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!

@@ -14,7 +14,7 @@ if(isset($_POST['table'])){
     $tablenid = $table . '_nameid';
 
     if ($table == 'requests') {
-        //Блок рисовки результатов поиска из ВСПВ
+        //Блок рисовки результатов поиска из ВПСПВ
         if (isset($_POST['category']) && isset($_POST['theid'])){
             $category = $_POST['category'];
             $theid = $_POST['theid'];
@@ -33,7 +33,7 @@ if(isset($_POST['table'])){
                                         a.req_rent AS rent,
                                         a.req_sum AS sum 
                                         FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
-                                        WHERE a.byersid = ? ORDER BY `a`.`1c_num` DESC");
+                                        WHERE a.byersid = ? ORDER BY req_date DESC");
                     //////////////////////////////////////////////////////////////////////////
                     $pdo->beginTransaction();
                     $statement->execute(array($theid));
@@ -66,7 +66,7 @@ if(isset($_POST['table'])){
                                         a.req_rent AS rent,
                                         a.req_sum AS sum
                                         FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
-                                        WHERE a.requests_id = ? ORDER BY `a`.`1c_num` DESC");
+                                        WHERE a.requests_id = ? ORDER BY req_date DESC");
                     $pdo->beginTransaction();
                     $statement->execute(array($theid));
                     $pdo->commit();
@@ -109,7 +109,7 @@ if(isset($_POST['table'])){
                                         b.byers_nameid AS b_nameid,
                                         b.name AS b_name
                                             FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
-                                            WHERE `a`.`requests_id` IN (".$ids.") ORDER BY `a`.`1c_num` DESC");
+                                            WHERE `a`.`requests_id` IN (".$ids.") ORDER BY req_date DESC");
                         $statement->execute();
                         $pdo->commit();
 
@@ -155,7 +155,7 @@ if(isset($_POST['table'])){
                                         b.byers_nameid AS b_nameid,
                                         b.name AS b_name
                                             FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
-                                            WHERE a.requests_id IN (" . $ids . ") ORDER BY `a`.`1c_num` DESC");
+                                            WHERE a.requests_id IN (" . $ids . ") ORDER BY req_date DESC");
                         $statement->execute();
                         $pdo->commit();
 
@@ -186,7 +186,7 @@ if(isset($_POST['table'])){
                                         b.byers_nameid AS b_nameid,
                                         b.name AS b_name
                                         FROM (SELECT * FROM (SELECT * FROM requests WHERE `created` BETWEEN ? AND ?) AS x LEFT JOIN allnames ON x.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
-                                        ORDER BY `b`.`name` ASC");
+                                        ORDER BY req_date DESC");
 
                     $pdo->beginTransaction();
                     $statement->execute(array($from,$to));
@@ -219,7 +219,7 @@ if(isset($_POST['table'])){
                                               
                                               (SELECT * FROM byers AS t LEFT JOIN allnames ON t.byers_nameid=allnames.nameid) AS b 
                                               
-                                              ON b.byers_id=a.byersid WHERE (a.created BETWEEN ? AND ?) AND (`b`.`byers_id` = ?)");
+                                              ON b.byers_id=a.byersid WHERE (a.created BETWEEN ? AND ?) AND (`b`.`byers_id` = ?) ORDER BY req_date DESC");
 
                     $pdo->beginTransaction();
                     $statement->execute(array($from,$to,$filterbyer));
@@ -246,7 +246,7 @@ if(isset($_POST['table'])){
                                         b.byers_nameid AS b_nameid,
                                         b.name AS b_name
                                         FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
-                                        ORDER BY `b`.`name` ASC");
+                                        ORDER BY req_date DESC");
                 $statement->execute();
             } catch( PDOException $Exception ) {
                 throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
@@ -1156,14 +1156,14 @@ if(isset($_POST['pay_reqid']) && isset($_POST['pay_id'])){
 /**/
 
 //ЧТЕНИЕ ВЫДАЧИ
-if(isset($_POST['give_reqid']) && isset($_POST['give_id'])){
+if(isset($_POST['byersid']) && isset($_POST['give_id'])){
     $giveawayid = $_POST['give_id'];
-    $requestid = $_POST['give_reqid'];
+    $byersid = $_POST['byersid'];
 
     try{
         $pdo->beginTransaction();
-        $statement = $pdo->prepare("SELECT * FROM `giveaways` WHERE giveaways_id=? AND requestid=?");
-        $statement->execute(array($giveawayid,$requestid));
+        $statement = $pdo->prepare("SELECT * FROM `giveaways` WHERE giveaways_id=? AND byersid=?");
+        $statement->execute(array($giveawayid,$byersid));
         $pdo->commit();
         $result = $statement->fetch();
         echo json_encode($result);/*Перевели массив расценки в формат JSON*/

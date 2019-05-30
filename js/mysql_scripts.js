@@ -425,6 +425,10 @@ $(document).ready(function(){
                 $('input.collapse_ga_byer[value = "X"]').switchClass('x','w').val('♢');//Кнопочка
                 $('.ga_byer_requests:visible').slideUp();//Скрывается контейнер
                 console.log('about to false');
+
+                //Прячем все лишки кроме нужной
+                $('.byer_req_list>li[byerid]').css('display', 'block');
+
                 return false;
             }
             else {
@@ -453,6 +457,11 @@ $(document).ready(function(){
                         $(event.target).next('span').css({'font-size' : 30});//Увеличивается шрифт
                         $('.ga_byer_requests[ga_byer='+the_byer+']').slideDown();//Показывается контейнер
                         console.log('clear open from 1');
+
+                        //Прячем все лишки кроме нужной
+                        $('.byer_req_list>li[byerid]').slideUp();
+                        $('.byer_req_list>li[byerid='+the_byer+']').slideDown();
+
                     },complete:function () {
                         $('.from,.to').datepicker({//Подключение дейтпикера
                             dateFormat: "dd-mm-yy",
@@ -489,6 +498,11 @@ $(document).ready(function(){
                     $(event.target).next('span').css({'font-size' : 30});//Увеличивается шрифт
                     $('.ga_byer_requests[ga_byer='+the_byer+']').slideDown();//Показывается контейнер
                     console.log('clear open from 2');
+
+                    //Прячем все лишки кроме нужной
+                    $('.byer_req_list>li[byerid]').css('display', 'none');
+                    $('.byer_req_list>li[byerid='+the_byer+']').css('display', 'block');
+
                 },complete:function () {
                     $('.from,.to').datepicker({//Подключение дейтпикера
                         dateFormat: "dd-mm-yy",
@@ -578,7 +592,8 @@ $(document).ready(function(){
         $('#add_giveaway>input[name=1]').val('');//Стираем все данные
         $('#add_giveaway>input[name=2]').val('');//Стираем все данные
         $('#add_giveaway>input[name=3]').val('');//Стираем все данные
-        $('#button_add_giveaway').attr('requestid',''+$(event.target).attr('requestid')+'');//Добавляем в кнопку
+        //TODO: Добавить byersid заместо requestid
+        $('#button_add_giveaway').attr('byersid',''+$(event.target).attr('byersid')+'');//Добавляем в кнопку
     });
 
     $(document).off('click.come1cnum').on('click.come1cnum', '.edit_1c_num', function (event) {
@@ -788,8 +803,9 @@ $(document).ready(function(){
         $('#add_giveaway>input[name=1]').val('');//Стираем все данные
         $('#add_giveaway>input[name=2]').val('');//Стираем все данные
         $('#add_giveaway>input[name=3]').val('');//Стираем все данные
-        $('#button_add_giveaway').attr('requestid','-');//Стираем номер заявки из кнопки добавления
+
         $('#button_add_giveaway').attr('giveawayid','-');//Стираем номер выдачи из кнопки добавления
+        $('#button_add_giveaway').attr('byersid','-');//Стираем номер выдачи из кнопки добавления
     });
 
     /*Закрытие окна редактирования номера в 1с и даты*/
@@ -1024,15 +1040,17 @@ $(document).ready(function(){
                 $(event.target).addClass('green');
                 $(event.target).siblings('.date_option').removeClass('green');
                 $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
-            },
+            }
         });
     });
 
 
     //ДОБАВЛЕНИЕ ВЫДАЧИ/////////////////////////////////////////////////////////////////////////////////////////////////
     $(document).off('click.add_giveaway').on('click.add_giveaway', '#button_add_giveaway', function(event){
-        var reqid = $(event.target).attr("requestid");
+
+        var byersid = $(event.target).attr("byersid");
         var giveid = $(event.target).attr("giveawayid");
+
         /*Данные для заполнения выдачи*/
         var giveaway_date = $('#add_giveaway.come_here #add_giveaway_date').val();
         var comment = $('#add_giveaway.come_here #add_giveaway_comment').val();
@@ -1044,65 +1062,33 @@ $(document).ready(function(){
             $.ajax({
                 url: 'mysql_save.php',
                 method: 'POST',
-                data: {reqid:reqid, giveaway_date:giveaway_date, comment:comment, sum:sum, give_id:giveid},
-                success: function (data) {
-                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
-                }, complete: function () {
-                    $.ajax({
-                        url: 'mysql_giveaways.php',
-                        method: 'POST',
-                        dataType: 'json',
-                        cache: false,
-                        data: {the_request:reqid},
-                        success: function (data) {
-                            $('.ga_contents[ga_request='+reqid+'] .ga_c_payments').html(data.data1);
-                            $('.ga_contents[ga_request='+reqid+'] .ga_c_positions').html(data.data2);
-                            $('.ga_contents[ga_request='+reqid+'] .ga_c_giveaways').html(data.data3);
-                            $('.ga_contents[ga_request='+reqid+'] .ga_options').html(data.data4);
-                            $('#add_giveaway').toggleClass('come_here');
-                            $('#add_giveaway>input[name=1]').val('');//Стираем все данные
-                            $('#add_giveaway>input[name=2]').val('');//Стираем все данные
-                            $('#add_giveaway>input[name=3]').val('');//Стираем все данные
-                            $('#button_add_giveaway').attr('requestid','-');//Стираем номер заявки из кнопки добавления
-                            $('#button_add_giveaway').attr('giveawayid','-');//Стираем номер выдачи из кнопки добавления
-                        }
-                    });
+                data: {giveaway_date:giveaway_date, comment:comment, sum:sum, give_id:giveid},
+                success: function (data1) {
+                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data1);
                 }
             });
-
         }else{
             console.log('ушло на mysql_insert.php');
             $.ajax({
                 url: 'mysql_insert.php',
                 method: 'POST',
-                data: {reqid:reqid, giveaway_date:giveaway_date, comment:comment, sum:sum},
-                success: function (data) {
-                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
-                }, complete: function () {
-                    $.ajax({
-                        url: 'mysql_giveaways.php',
-                        method: 'POST',
-                        dataType: 'json',
-                        cache: false,
-                        data: {the_request:reqid},
-                        success: function (data) {
-                            $('.ga_contents[ga_request='+reqid+'] .ga_c_payments').html(data.data1);
-                            $('.ga_contents[ga_request='+reqid+'] .ga_c_positions').html(data.data2);
-                            $('.ga_contents[ga_request='+reqid+'] .ga_c_giveaways').html(data.data3);
-                            $('.ga_contents[ga_request='+reqid+'] .ga_options').html(data.data4);
-                            $('#add_giveaway').toggleClass('come_here');
-                            $('#add_giveaway>input[name=1]').val('');//Стираем все данные
-                            $('#add_giveaway>input[name=2]').val('');//Стираем все данные
-                            $('#add_giveaway>input[name=3]').val('');//Стираем все данные
-                            $('#button_add_giveaway').attr('requestid','-');//Стираем номер заявки из кнопки добавления
-                            $('#button_add_giveaway').attr('giveawayid','-');//Стираем номер выдачи из кнопки добавления
-                        }
-                    });
+                data: {byersid:byersid, giveaway_date:giveaway_date, comment:comment, sum:sum},
+                success: function (data2) {
+                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data2);
                 }
             });
         }
 
-
+        //Обновляем список
+        $.ajax({
+            url: 'mysql_giveaways.php',
+            method: 'POST',
+            data: {the_byer:byersid},
+            success: function (data3) {
+                //Вставляем данные аякса
+                $('.ga_byer_requests[ga_byer='+byersid+']').html(data3);
+            }
+        });
 
     });
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

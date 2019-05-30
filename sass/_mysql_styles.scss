@@ -499,6 +499,7 @@ tr[pricingid] td {border: 1px solid black}
   border-radius: 5px;
   border:2px solid black;
   color: black;
+  z-index: 100;
 
   position: fixed;
   left:770px;
@@ -673,12 +674,12 @@ tr[pricingid] td {border: 1px solid black}
   table{
     text-align: center;
     td:nth-child(3){text-align: left}
-    th:nth-child(1){width: 10%}
-    th:nth-child(2){width: 10%}
-    th:nth-child(3){width: 25%}
-    th:nth-child(4){width: 10%}
-    th:nth-child(5){width: 10%}
-    th:nth-child(6){width: 20%}
+    th:nth-child(1){width: 6%}
+    th:nth-child(2){width: 7%}
+    th:nth-child(3){width: 2%}
+    th:nth-child(4){width: 5%}
+    th:nth-child(5){width: 5%}
+    th:nth-child(6){width: 10%}
   }
 }
 

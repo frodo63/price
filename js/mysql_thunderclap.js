@@ -32,14 +32,14 @@ $(document).ready(function() {
 
     //Выдачи
     $(document).off('click.comeeditgiveaway').on('click.comeeditgiveaway', '.editgiveaway', function (event) {
-        var reqid = $(event.target).attr('req_id');
-        var giveid = $(event.target).attr('give_id');
+        var byersid = $(event.target).attr('byersid');
+        var giveid = $(event.target).attr('g_id');
         $('#add_giveaway').toggleClass('come_here', 1000);
         console.log('Из большого скрипта');
         $('#add_giveaway>input[name=1]').val('');//Стираем все данные
         $('#add_giveaway>input[name=2]').val('');//Стираем все данные
         $('#add_giveaway>input[name=3]').val('');//Стираем все данные
-        $('#button_add_giveaway').attr('requestid',''+reqid+'');//Добавляем в кнопку
+        $('#button_add_giveaway').attr('byersid',''+byersid+'');//Добавляем в кнопку
         $('#button_add_giveaway').attr('giveawayid',''+giveid+'');//Добавляем в кнопку
 
         //Аякс в базу для значений
@@ -48,7 +48,7 @@ $(document).ready(function() {
             method: 'POST',
             dataType: 'json',
             cache: false,
-            data: {give_reqid:reqid,give_id:giveid},
+            data: {byersid:byersid,give_id:giveid},
             success: function (data) {
                 $('#add_giveaway input[name=1]').val(data.given_away);//Стираем все данные
                 $('#add_giveaway input[name=2]').val(data.comment);//Стираем все данные

@@ -170,7 +170,7 @@ echo"       <!--Добавить Платежку -->
                   <label for='3'><span>Сумма, руб.:</span></label><input id='add_giveaway_sum' type='text' name='3' size='20'><br>
                   <span class='ready_comment'></span><br>
                   
-                  <input id='button_add_giveaway' type='button' name='add_giveaway' requestid='-' giveawayid='-' value='Сохранить выдачу'>
+                  <input id='button_add_giveaway' type='button' name='add_giveaway' byersid='-' giveawayid='-' value='Сохранить выдачу'>
                   <input class='close_add_g' type='button' value='X'>
               </div>
       

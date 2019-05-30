@@ -453,9 +453,8 @@ if(isset($_POST['reqid']) && isset($_POST['payment_date']) && isset($_POST['num'
 //////////////////////////////////////////////////////////////////////
 ///
 /// //Редактирование ВЫДАЧИ///////////////////////////////////////////////////
-if(isset($_POST['reqid']) && isset($_POST['giveaway_date']) && isset($_POST['comment']) && isset($_POST['sum']) && isset($_POST['give_id'])){
+if(isset($_POST['giveaway_date']) && isset($_POST['comment']) && isset($_POST['sum']) && isset($_POST['give_id'])){
 
-    $reqid = $_POST['reqid'];
     $giveaway_date = $_POST['giveaway_date'];
     $comment = $_POST['comment'];
     $sum = $_POST['sum'];
@@ -471,7 +470,6 @@ if(isset($_POST['reqid']) && isset($_POST['giveaway_date']) && isset($_POST['com
         $statement->bindValue(':given_away', $giveaway_date);
         $statement->bindValue(':comment', $comment);
         $statement->bindValue(':giveaway_sum', $sum);
-        $statement->bindValue(':requestid', $reqid);
         $statement->bindValue(':giveaways_id', $give_id);
 
 
@@ -487,7 +485,7 @@ if(isset($_POST['reqid']) && isset($_POST['giveaway_date']) && isset($_POST['com
     }
     /**//////////////////////////////////////////////////////////////
 
-    echo "Получилось! Обновлена выдача на сумму $sum в заявку $reqid.";
+    echo "Получилось! Обновлена выдача на сумму $sum .";
 
 };
 //////////////////////////////////////////////////////////////////////
