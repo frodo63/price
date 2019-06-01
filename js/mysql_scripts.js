@@ -565,7 +565,7 @@ $(document).ready(function(){
             success: function (data) {
                 $('.ga_contents[ga_request='+the_request+'] .ga_c_payments').html(data.data1);
                 $('.ga_contents[ga_request='+the_request+'] .ga_c_positions').html(data.data2);
-                $('.ga_contents[ga_request='+the_request+'] .ga_c_giveaways').html(data.data3);
+                /*$('.ga_contents[ga_request='+the_request+'] .ga_c_giveaways').html(data.data3);*/
                 $('.ga_contents[ga_request='+the_request+'] .ga_options').html(data.data4);
             }
         });

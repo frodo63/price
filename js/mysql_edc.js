@@ -435,14 +435,14 @@ $(document).ready(function() {
         var byerid = $(event.target).parents('tr[byerid]').attr('byerid');
         var byername = $('tr[requestid="'+reqid+'"] td[byerid] span').text();
 
-                $('#pricingwindow').slideDown().attr({ positionid:posid, byerid:byerid })
+                $('#pricingwindow').slideDown().attr({ positionid:posid, byerid:byerid });
                 $('#trade').attr('trade_id', '').val('');
                 $('#seller').attr('seller_id', '').val('');
                 $('#button_history').attr('hist_byer', byerid);//Дбавляем идентификатор ПОкупателя в инпут по истории
         console.log(byername);
         $('#byer_name').text(byername);
 
-                //Запрос в базу за опциями покупателя
+        //Запрос в базу за опциями покупателя
         //Проверка на QUEEN
         $.ajax({
             url: 'mysql_options.php',
