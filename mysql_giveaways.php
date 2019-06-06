@@ -48,7 +48,7 @@ if (isset($_POST['the_byer'])){
 
         $the_byer = $_POST['the_byer'];
         $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE (requests.byersid = ? AND requests.created BETWEEN ? AND ? AND requests.r1_hidden = 0) ORDER BY created");
-        $req_giveaways = $pdo->prepare("SELECT given_away,giveaways_id,giveaway_sum,comment FROM giveaways WHERE byersid = ? AND given_away BETWEEN ? AND ? ORDER BY given_away");
+        $req_giveaways = $pdo->prepare("SELECT given_away,giveaways_id,giveaway_sum,comment FROM giveaways WHERE (byersid = ?) AND (given_away BETWEEN ? AND ?) ORDER BY given_away");
         $req_all_payments = $pdo->prepare("SELECT payed FROM payments LEFT JOIN requests ON payments.requestid = requests.requests_id WHERE byersid = ? AND payed BETWEEN ? AND ? ORDER BY payed ASC");
         if(isset($_POST['from']) && isset($_POST['to'])){
             $from = $_POST['from'];
@@ -212,7 +212,7 @@ if (isset($_POST['the_byer'])){
         $last_payment = end($req_all_payments_fetched);
         $next_payment->execute(array($last_payment['payed']));
         $next_payment_fetched = $next_payment->fetchAll(PDO::FETCH_ASSOC);
-        if(!$next_payment_fetched[0]['payed']){
+        if(!$next_payment_fetched[0]['payed'] || strtotime($next_payment_fetched[0]['payed']) < strtotime(date('Y-m-d'))){
             $next_payment_fetched[0]['payed'] = date('Y-m-d');
         }
 
@@ -231,6 +231,7 @@ if (isset($_POST['the_byer'])){
         $total_give += $req_give;
         /**/
 
+        echo "<br><br>Показаны выдачи за период с ".$giveaways_start_date." по ".$giveaways_end_date;
         echo "<table><thead><th>Дата выдачи</th><th>Сумма выдачи</th><th>Комментарий</th><th>Опции</th></thead><tbody>";
 
         //Рисуем список выдач

@@ -18,8 +18,8 @@ $(document).ready(function(){
                     $('.history').hide();
                     $(event.target).toggleClass('pushed');
                 }else{
-                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history').removeClass('pushed');
-                    $('.history_kpok, .history_knam').hide();
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller').removeClass('pushed');
+                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller').hide();
                     $('.history').show();
                     $(event.target).toggleClass('pushed');
                 }
@@ -43,8 +43,8 @@ $(document).ready(function(){
                     $('.history_knam').hide();
                     $(event.target).toggleClass('pushed');
                 }else{
-                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history').removeClass('pushed');
-                    $('.history_kpok, .history').hide();
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller').removeClass('pushed');
+                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller').hide();
                     $('.history_knam').show();
                     $(event.target).toggleClass('pushed');
                 }
@@ -68,14 +68,65 @@ $(document).ready(function(){
                     $('.history_kpok').hide();
                     $(event.target).toggleClass('pushed');
                 }else{
-                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history').removeClass('pushed');
-                    $('.history_kpok, .history_knam, .history').hide();
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller').removeClass('pushed');
+                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller').hide();
                     $('.history_kpok').toggle();
                     $(event.target).toggleClass('pushed');
                 }
             }
         });
     });
+
+    //Показываем базе товар, чтобы посмотреть, от кого и почем возили
+    $(document).off('click.give_hist_trade').on('click.give_hist_trade', '#button_history_trade', function (event) {
+        var trade = $('#trade').attr('trade_id');
+        $.ajax({
+            url: 'mysql_history.php',
+            method: 'POST',
+            data: {post_trade_hist:trade},
+            success: function(data){
+                $('.history_trade').html(data);
+            },complete:function () {
+                if($('.history_trade:visible').length > 0){
+                    $('.history_trade').hide();
+                    $(event.target).toggleClass('pushed');
+                }else{
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller').removeClass('pushed');
+                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller').hide();
+                    $('.history_trade').toggle();
+                    $(event.target).toggleClass('pushed');
+                }
+            }
+        });
+    });
+    //Показываем базе поставщика, чтобы посмотреть, что от него вообще возили
+    $(document).off('click.give_hist_seller').on('click.give_hist_seller', '#button_history_seller', function (event) {
+        var seller = $('#seller').attr('seller_id');
+        $.ajax({
+            url: 'mysql_history.php',
+            method: 'POST',
+            data: {post_seller_hist:seller},
+            success: function(data){
+                $('.history_seller').html(data);
+            },complete:function () {
+                if($('.history_seller:visible').length > 0){
+                    $('.history_seller').hide();
+                    $(event.target).toggleClass('pushed');
+                }else{
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller').removeClass('pushed');
+                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller').hide();
+                    $('.history_seller').toggle();
+                    $(event.target).toggleClass('pushed');
+                }
+            }
+        });
+    });
+
+
+    $(document).off('click.enlarge').on('click.enlarge', '.button_enlarge', function (event) {
+        $(event.target).parent('[class*="history"]').toggleClass('enlarged');
+    })
+
 
 
 

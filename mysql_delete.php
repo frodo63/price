@@ -1,5 +1,6 @@
 <?php
 include_once 'pdo_connect.php';
+
 $table = null;
 $id = null;
 $col2 = null;
@@ -128,11 +129,32 @@ if(isset($_POST['delpricingid']))
 };
 function deletepricing($pdo,$delpricingid)
 {
+
+
+    $is_winner = $pdo->prepare("SELECT winner FROM pricings WHERE pricingid = ?");
+    $get_positionid = $pdo->prepare("SELECT positionid FROM pricings WHERE pricingid = ?");
+
+    $del_winner_from_position = $pdo->prepare("UPDATE req_positions SET winnerid = 0 WHERE req_positionid = ?");
+
+
         $statement = $pdo->prepare("DELETE FROM `pricings` WHERE `pricingid` = ?");
         try{
-                $pdo->beginTransaction();
-                $statement->execute(array($delpricingid));
-                $pdo->commit();
+
+            $is_winner->execute(array($delpricingid));
+            $is_winner_fetched = $is_winner->fetch(PDO::FETCH_ASSOC);
+
+
+            $pdo->beginTransaction();
+
+            //Проверка, а не является ли расцека виннером?
+            if($is_winner_fetched['winner'] == 1){
+                $get_positionid->execute(array($delpricingid));
+                $get_positionid_fetched = $get_positionid->fetch(PDO::FETCH_ASSOC);
+                $del_winner_from_position->execute(array($get_positionid_fetched['positionid']));
+            }
+
+            $statement->execute(array($delpricingid));
+            $pdo->commit();
         } catch( PDOException $Exception ) {
             // Note The Typecast To An Integer!
             $pdo->rollback();

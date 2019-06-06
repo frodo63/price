@@ -415,7 +415,6 @@ if(
     $zak = 0;
     $kol = $_POST['kol'];
     $price = $_POST['price'];
-    $winner = 1;
     $fixed = 0;
     $op = $_POST['op'];
     $tp = $_POST['tp'];
@@ -425,8 +424,8 @@ if(
     $rent = 0;
 
     try{
-        $addpricing = $pdo->prepare("INSERT INTO `pricings`(`positionid`,`tradeid`,`sellerid`,`zak`,`kol`,`price`,`winner`,`fixed`,`op`,`tp`,`firstobp`,`wtime`,`opr`,`rent`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-        $addpricing->execute(array($positionid,$tradeid,$sellerid,$zak,$kol,$price,$winner,$fixed,$op,$tp,$firstobp,$wtime,$opr,$rent));
+        $addpricing = $pdo->prepare("INSERT INTO `pricings`(`positionid`,`tradeid`,`sellerid`,`zak`,`kol`,`price`,`fixed`,`op`,`tp`,`firstobp`,`wtime`,`opr`,`rent`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        $addpricing->execute(array($positionid,$tradeid,$sellerid,$zak,$kol,$price,$fixed,$op,$tp,$firstobp,$wtime,$opr,$rent));
 
         //Добавляем Победителя к только что добавленной позиции из только что добавленной расценки
         $lastpricingid = $pdo->lastInsertId();

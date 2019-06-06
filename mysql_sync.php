@@ -508,6 +508,79 @@ if(isset($_POST['sync_file'])){
                 echo"<p>Файл НЕ найден</p>";
             }
             break;
+        case "purchases":
+            if ($file){
+                echo"<p>Файл найден</p>";
+                $file_array = file($path); // Считывание файла в массив $file_array
+                if (count($file_array) > 0){
+                    echo"<p>Файл выгружен в массив</p>";
+
+                    $check_purchase = $pdo->prepare("SELECT purchases_uid FROM purchases WHERE purchases_uid = ? AND line_num = ?");
+                    $insert_purchase = $pdo->prepare("INSERT INTO purchases (
+                                                    purchases_uid,
+                                                    seller_uid,
+                                                    incdoc_num,
+                                                    incdoc_date,
+                                                    line_num,
+                                                    trade_uid,
+                                                    kol,
+                                                    price,
+                                                    sum
+) VALUES(?,?,?,?,?,?,?,?,?)");
+
+                    foreach ($file_array as $row){
+                        $temp_array = explode(';',$row);
+                        /*
+                         * $temp_array[0] - uid заказа поставщику
+                         * $temp_array[1] - uid поставщика
+                         * $temp_array[2] - ДатаВходящегоДокумента
+                         * $temp_array[3] - №ВходящегоДокумента
+                         * $temp_array[4] - Номер строки
+                         * $temp_array[5] - uid товара
+                         * $temp_array[6] - количество
+                         * $temp_array[7] - цена
+                         * $temp_array[8] - сумма
+                         */
+
+                        /*Проверяем, есть ли в системе такая закупка, если нет - то заносим в базу. Если есть - ничего не делаем
+                         * */
+                        $check_purchase->execute(array($temp_array[0], $temp_array[4]));
+                        $check_purchase_fetched = $check_purchase->fetch(PDO::FETCH_ASSOC);
+                        if(!$check_purchase_fetched['purchases_uid']){
+
+                            //uid заказа поставщику
+                            $temp_array[0];
+                            //uid поставщика
+                            $temp_array[1];
+                            //ДатаВходящегоДокумента
+                            $temp_array[2] = substr($temp_array[2],6,4 )."-".substr($temp_array[2],3,2)."-".substr($temp_array[2],0,2);
+                            //№ВходящегоДокумента
+                            $temp_array[3];
+                            //Номер строки
+                            $temp_array[4];
+                            //uid товара
+                            $temp_array[5];
+                            //количество
+                            $temp_array[6];
+                            //цена
+                            $temp_array[7];
+                            //сумма
+                            $temp_array[8];
+
+
+                         $insert_purchase->execute(array($temp_array[0],$temp_array[1],$temp_array[3],$temp_array[2],$temp_array[4],$temp_array[5],$temp_array[6],$temp_array[7],$temp_array[8]));
+                        }
+
+
+
+
+                    }
+
+                };
+            }else{
+                echo"<p>Файл НЕ найден</p>";
+            };
+            break;
     }
 
     //$file = "files/sync_requests.txt";
@@ -578,7 +651,26 @@ if(isset($_POST['sync_html'])){
                 </select><br>
                 <span class='ready_comment'></span><br>
                 <input  type='button' name='trades' value='Добавить' disabled uid onec_id><br><br></div>";
-            break;}
+            break;
+        case "purchases":
+            echo"<div class ='creates'>
+                    <label for='sps_uid'>УИД Поставщика:</label><span class='sync_pur_seller' name='sps_uid'></span><br>    
+                    <label for='spd'>Дата:</label><span class='sync_pur_date' name='spd'></span><br>   
+                    <label for='spincdate'>ДатаВхДок:</label><span class='sync_pur_incnum' name='spincdate'></span><br>
+                    <label for='spincnum'>№ ВходДок:</label><span class='sync_pur_incdate' name='spincnum'></span><br>                       
+                    <label for='spsumincnds'>СуммаВклНДС:</label><span class='sync_pur_sinds' name='spsumincnds'></span><br>             
+                    <label for='spsum'>Сумма:</label><span class='sync_pur_sum' name='spsum'></span><br>             
+                    <label for='spt_uid'>УИД Товара:</label><span class='sync_pur_trade' name='spt_uid'></span><br>
+                    <label for='spt_kol'>Количество:</label><span class='sync_pur_kol' name='spt_kol'></span><br>
+                    <label for='spt_price'>Цена:</label><span class='sync_pur_price' name='spt_price'></span><br>
+                    <label for='spt_nds_rate'>СтавкаНДС:</label><span class='sync_pur_nds_rate' name='spt_nds_rate'></span><br>
+                    <label for='spt_nds_sum'>СуммаНДС:</label><span class='sync_pur_nds_sum' name='spt_nds_sum'></span><br>
+                    <label for='spt_sum'>Сумма:</label><span class='sync_pur_sum' name='spt_sum'></span><br>
+                    <span class='ready_comment'></span><br>             
+                    <input type='button' name='purchases' value='Добавить платежку' disabled>                
+                </div>";
+            break;
+    }
 }
 
 /*Собственно соотнесение*/

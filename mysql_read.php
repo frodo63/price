@@ -811,56 +811,43 @@ if(isset($_POST['table'])){
 if (isset($_POST['requestid'])){
     $req_id=$_POST['requestid'];
     try{
-        $nowinners = $pdo->prepare("SELECT `pos_name`, `req_positionid`, `winnerid` FROM `req_positions` WHERE `requestid`=?");
-        $winners = $pdo->prepare("SELECT `requestid`, `req_positionid`, `pos_name`, `name`, `rent`, `price`, `kol`   FROM
-								(SELECT `rent`, `price`,`kol`, `pricingid`, `name` FROM 
-																		(
-																			(SELECT `rent`, `price`, `kol`, `pricingid`, `sellerid` FROM `pricings`) AS a
-																				LEFT JOIN 
-																			(SELECT a.`sellers_id`, b.`name` FROM(
-																													(SELECT * FROM `sellers`) AS a 
-																														LEFT JOIN
-																													(SELECT * FROM `allnames`) AS b ON a.`sellers_nameid`=b.`nameid`
-																												)
-																			) AS b ON a.`sellerid` = b.`sellers_id`
-																		)
-								) AS a
-									LEFT JOIN
-								(SELECT * FROM `req_positions`) AS b ON a.`pricingid` = b.`winnerid` WHERE `req_positionid`=?");
+        $nowinners = $pdo->prepare("SELECT `pos_name`, `req_positionid`, `line_num`, `winnerid` FROM `req_positions` WHERE `requestid`=?");
+        $winners = $pdo->prepare("SELECT `requestid`, `req_positionid`, `line_num`, `pos_name`, `name`, `rent`, `price`, `kol` FROM (SELECT * FROM ((SELECT * FROM `pricings`) AS a LEFT JOIN (SELECT `sellers_id`, `name` FROM(sellers LEFT JOIN allnames ON sellers.sellers_nameid=allnames.nameid)) AS b ON a.`sellerid` = b.`sellers_id`)) AS a LEFT JOIN req_positions ON a.`pricingid` = req_positions.winnerid WHERE `req_positionid`=?");
         $nowinners->execute(array($req_id));
+        $nowinners_fetched = $nowinners->fetchAll(PDO::FETCH_ASSOC);
         $result .= "<br><table><thead><th>№</th><th>Название позиции</th><th>Цена</th><th>Сумма</th><th>Поб</th><th>Рент</th><th>Опции</th></thead><tbody>";
-        $rownumber = 1;
-        foreach ($nowinners as $row)
+        foreach ($nowinners_fetched as $row)
         {
-            if ($row['winnerid']!=0){//Если это виннер
+            if ($row['winnerid']!=0){//Если в позиции назначен победитель
                 $winners->execute(array($row['req_positionid']));
-                foreach ($winners as $row)
+                $winners_fetched = $winners->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($winners_fetched as $win)
                 {
-                    $price = number_format(round($row['price'],2),'2','.', ' ');
-                    $pr = round($row['price'],2)*round($row['kol'],2);
+                    $price = number_format(round($win['price'],2),'2','.', ' ');
+                    $pr = round($win['price'],2)*round($win['kol'],2);
                     $pr=number_format($pr,'2','.',' ');
 
-                    $result .= "<tr position =".$row['req_positionid'].">
-                    <td> ".$rownumber.".</td>
-                    <td category='positions'>
-                        <input type='button' request=".$req_id." position =".$row['req_positionid']." value=♢ class='collapsepos'>
-                        <span class='name'>" . $row['pos_name'] . "</span>
-                        <div class='pricings'>
-                        </div>
-                    </td>
-                    <td class='pr'>".$price."</td>
-                    <td class='pr'>".$pr."</td><!--Сумма-->
-                    <td class='winname'>".$row['name']."</td>
-                    <td class='rent'>".round($row['rent'], 2)."</td>
-                    <td class = 'pos_buttons'>
-                        <input type='button' position =" . $row['req_positionid'] . " value='R' class='edit'>
-                        <input type='button' position =" . $row['req_positionid'] . " value='X' class='posdelete'>
-                        <input type='button' req_op_id='".$req_id."' pos_op_id=". $row['req_positionid'] ." value='...' class='edit_options_pos'>
-                    </td></tr>";
-                    ++$rownumber;
+                    $result .= "<tr position =".$win['req_positionid'].">";
+                    $result .= "<td> ".$win['line_num'].".</td>";
+                    $result .= "<td category='positions'>";
+                    $result .= "<input type='button' request=".$req_id." position =".$win['req_positionid']." value=♢ class='collapsepos'>";
+                    $result .= "<span class='name'>" . $win['pos_name'] . "</span>";
+                    $result .= "<div class='pricings'>";
+                    $result .= "</div>";
+                    $result .= "</td>";
+                    $result .= "<td class='pr'>".$price."</td>";
+                    $result .= "<td class='pr'>".$pr."</td><!--Сумма-->";
+                    $result .= "<td class='winname'>".$win['name']."</td>";
+                    $result .= "<td class='rent'>".round($win['rent'], 2)."</td>";
+                    $result .= "<td class = 'pos_buttons'>";
+                    $result .= "<input type='button' position =" . $win['req_positionid'] . " value='R' class='edit'>";
+                    $result .= "<input type='button' position =" . $win['req_positionid'] . " value='X' class='posdelete'>";
+                    $result .= "<input type='button' req_op_id='".$req_id."' pos_op_id=". $win['req_positionid'] ." value='...' class='edit_options_pos'>";
+                    $result .= "</td></tr>";
+
                 };
             }else{
-                $result .= "<tr position =".$row['req_positionid']."><td> ".$rownumber.".</td>
+                $result .= "<tr position =".$row['req_positionid']."><td> ".$row['line_num'].".</td>
             <td category='positions'>
                 <input type='button' position =".$row['req_positionid']." value=♢ class='collapsepos'>
                 <span class='name'>" . $row['pos_name'] . "</span>
@@ -872,7 +859,7 @@ if (isset($_POST['requestid'])){
                 <input type='button' position =" . $row['req_positionid'] . " value='X' class='posdelete'>
                 <input type='button' req_op_id='".$req_id."' pos_op_id=". $row['req_positionid'] ." value='...' class='edit_options_pos'>
                 </td></tr>";
-                ++$rownumber;
+
             };
         }
         $result.="</tbody></table>";

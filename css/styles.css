@@ -1074,127 +1074,152 @@ tr[pricingid] td {
 }
 
 /* line 745, ../sass/_mysql_styles.scss */
-#button_history.pushed, #button_history_tzrkpok.pushed, #button_history_tzrknam.pushed {
+#button_history.pushed, #button_history_tzrkpok.pushed, #button_history_tzrknam.pushed, #button_history_trade.pushed, #button_history_seller.pushed {
   color: white;
   background: green;
 }
 
 /* line 751, ../sass/_mysql_styles.scss */
-.history, .history_knam, .history_kpok {
+.history, .history_knam, .history_kpok, .history_seller, .history_trade {
+  position: relative;
   display: none;
   width: 60vw;
   border: 1px solid black;
   border-top: none;
 }
-/* line 754, ../sass/_mysql_styles.scss */
-.history td, .history_knam td, .history_kpok td {
+/* line 753, ../sass/_mysql_styles.scss */
+.history .button_enlarge, .history_knam .button_enlarge, .history_kpok .button_enlarge, .history_seller .button_enlarge, .history_trade .button_enlarge {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+/* line 760, ../sass/_mysql_styles.scss */
+.history td, .history_knam td, .history_kpok td, .history_seller td, .history_trade td {
   text-align: center;
   font-size: 20px;
 }
 
-/* line 763, ../sass/_mysql_styles.scss */
-.history_knam th:nth-child(1), .history_kpok th:nth-child(1) {
+/* line 769, ../sass/_mysql_styles.scss */
+.history_knam.enlarged, .history_kpok.enlarged, .history_seller.enlarged, .history_trade.enlarged {
+  position: absolute;
+  top: 0;
+  left: 11px;
+  background: white;
+  min-height: 100%;
+  z-index: 10000;
+}
+/* line 777, ../sass/_mysql_styles.scss */
+.history_knam td, .history_kpok td, .history_seller td, .history_trade td {
+  font-size: 18px;
+}
+/* line 780, ../sass/_mysql_styles.scss */
+.history_knam th:nth-child(1), .history_kpok th:nth-child(1), .history_seller th:nth-child(1), .history_trade th:nth-child(1) {
   width: 10%;
 }
-/* line 764, ../sass/_mysql_styles.scss */
-.history_knam th:nth-child(2), .history_kpok th:nth-child(2) {
+/* line 781, ../sass/_mysql_styles.scss */
+.history_knam th:nth-child(2), .history_kpok th:nth-child(2), .history_seller th:nth-child(2), .history_trade th:nth-child(2) {
   width: 70%;
 }
-/* line 765, ../sass/_mysql_styles.scss */
-.history_knam th:nth-child(3), .history_kpok th:nth-child(3) {
+/* line 782, ../sass/_mysql_styles.scss */
+.history_knam th:nth-child(3), .history_kpok th:nth-child(3), .history_seller th:nth-child(3), .history_trade th:nth-child(3) {
   width: 10%;
 }
-/* line 766, ../sass/_mysql_styles.scss */
-.history_knam th:nth-child(4), .history_kpok th:nth-child(4) {
+/* line 783, ../sass/_mysql_styles.scss */
+.history_knam th:nth-child(4), .history_kpok th:nth-child(4), .history_seller th:nth-child(4), .history_trade th:nth-child(4) {
   width: 10%;
+}
+/* line 784, ../sass/_mysql_styles.scss */
+.history_knam tr:hover, .history_kpok tr:hover, .history_seller tr:hover, .history_trade tr:hover {
+  background-color: green;
+  color: white;
 }
 
-/* line 770, ../sass/_mysql_styles.scss */
+/* line 790, ../sass/_mysql_styles.scss */
 #fcount {
   border: 1px solid black;
 }
 
-/* line 774, ../sass/_mysql_styles.scss */
+/* line 794, ../sass/_mysql_styles.scss */
 #search_reads {
   min-height: 100vh;
   display: none;
 }
 
-/* line 780, ../sass/_mysql_styles.scss */
+/* line 800, ../sass/_mysql_styles.scss */
 .totals_list table {
   font-size: 20px;
 }
 
-/* line 785, ../sass/_mysql_styles.scss */
+/* line 805, ../sass/_mysql_styles.scss */
 .shrinken_totals {
   display: none;
 }
 
-/* line 786, ../sass/_mysql_styles.scss */
+/* line 806, ../sass/_mysql_styles.scss */
 .widen_totals {
   height: 70vh;
 }
 
-/* line 789, ../sass/_mysql_styles.scss */
+/* line 809, ../sass/_mysql_styles.scss */
 .byer_req_list_totals tr td:nth-child(2), .byer_req_list_totals tr td:nth-child(3), .byer_req_list_totals tr td:nth-child(4) {
   text-align: center;
 }
-/* line 791, ../sass/_mysql_styles.scss */
+/* line 811, ../sass/_mysql_styles.scss */
 .byer_req_list_totals .totals_byer_requests {
   display: none;
   padding-left: 2vw;
 }
-/* line 794, ../sass/_mysql_styles.scss */
+/* line 814, ../sass/_mysql_styles.scss */
 .byer_req_list_totals .totals_byer_requests li {
   list-style: none;
 }
 
-/* line 798, ../sass/_mysql_styles.scss */
+/* line 818, ../sass/_mysql_styles.scss */
 .totals_requests_list th {
   width: 10vw;
 }
-/* line 801, ../sass/_mysql_styles.scss */
+/* line 821, ../sass/_mysql_styles.scss */
 .totals_requests_list th:nth-child(5) {
   width: 20vw;
 }
-/* line 804, ../sass/_mysql_styles.scss */
+/* line 824, ../sass/_mysql_styles.scss */
 .totals_requests_list td {
   text-align: center;
 }
 
-/* line 808, ../sass/_mysql_styles.scss */
+/* line 828, ../sass/_mysql_styles.scss */
 .totals_g_list {
   display: none;
 }
-/* line 811, ../sass/_mysql_styles.scss */
+/* line 831, ../sass/_mysql_styles.scss */
 .totals_g_list table tr:hover {
   color: white;
   background: green;
 }
 
-/* line 818, ../sass/_mysql_styles.scss */
+/* line 838, ../sass/_mysql_styles.scss */
 .vid_byer_requests td {
   text-align: center;
 }
-/* line 821, ../sass/_mysql_styles.scss */
+/* line 841, ../sass/_mysql_styles.scss */
 .vid_byer_requests tr:hover {
   background: green;
   color: white;
 }
 
 /*Статус заказа в Р-1*/
-/* line 829, ../sass/_mysql_styles.scss */
+/* line 849, ../sass/_mysql_styles.scss */
 #requests, #requests table, #byers, #byers table, #sellers, #sellers table, #trades, #trades table, #givaways, #givaways table, #vidachi, #vidachi table, #totals, #totals table, #search, #search table {
   font-size: 16px;
 }
 
-/* line 833, ../sass/_mysql_styles.scss */
+/* line 853, ../sass/_mysql_styles.scss */
 .green, .lightgreen, .yellow, .lightblue, .red {
   border-radius: 5px;
   border: 1px solid white;
   position: relative;
 }
-/* line 837, ../sass/_mysql_styles.scss */
+/* line 857, ../sass/_mysql_styles.scss */
 .green input, .lightgreen input, .yellow input, .lightblue input, .red input {
   display: none;
   position: absolute;
@@ -1203,65 +1228,65 @@ tr[pricingid] td {
   font-size: 16px;
 }
 
-/* line 846, ../sass/_mysql_styles.scss */
+/* line 866, ../sass/_mysql_styles.scss */
 .w {
   background: white;
   color: black;
 }
 
-/* line 850, ../sass/_mysql_styles.scss */
+/* line 870, ../sass/_mysql_styles.scss */
 .x {
   background: red;
   color: white;
 }
 
-/* line 855, ../sass/_mysql_styles.scss */
+/* line 875, ../sass/_mysql_styles.scss */
 .green {
   background-color: green;
   color: white;
 }
 
-/* line 856, ../sass/_mysql_styles.scss */
+/* line 876, ../sass/_mysql_styles.scss */
 .lightgreen {
   background-color: lightgreen;
   color: black;
 }
 
-/* line 857, ../sass/_mysql_styles.scss */
+/* line 877, ../sass/_mysql_styles.scss */
 .yellow {
   background-color: yellow;
   color: black;
 }
 
-/* line 858, ../sass/_mysql_styles.scss */
+/* line 878, ../sass/_mysql_styles.scss */
 .lightblue {
   background-color: lightblue;
   color: blue;
 }
 
-/* line 859, ../sass/_mysql_styles.scss */
+/* line 879, ../sass/_mysql_styles.scss */
 .red {
   background-color: red;
   color: white;
 }
 
-/* line 862, ../sass/_mysql_styles.scss */
+/* line 882, ../sass/_mysql_styles.scss */
 .trades_list table {
   width: 50%;
 }
-/* line 865, ../sass/_mysql_styles.scss */
+/* line 885, ../sass/_mysql_styles.scss */
 .trades_list th:nth-child(1) {
   width: 30%;
 }
-/* line 866, ../sass/_mysql_styles.scss */
+/* line 886, ../sass/_mysql_styles.scss */
 .trades_list th:nth-child(2) {
   width: 5%;
 }
-/* line 867, ../sass/_mysql_styles.scss */
+/* line 887, ../sass/_mysql_styles.scss */
 .trades_list th:nth-child(3) {
   width: 5%;
 }
-/* line 869, ../sass/_mysql_styles.scss */
+/* line 889, ../sass/_mysql_styles.scss */
 .trades_list tr:hover td {
   background: green;
   color: white;
@@ -1285,7 +1310,7 @@ tr[pricingid] td {
     background: orange;
   }
 }
-/* line 886, ../sass/_mysql_styles.scss */
+/* line 906, ../sass/_mysql_styles.scss */
 .flash {
   -webkit-animation: flashss 2s;
   -moz-animation: flashss 2s;
@@ -1293,39 +1318,39 @@ tr[pricingid] td {
   animation: flashss 2s;
 }
 
-/* line 895, ../sass/_mysql_styles.scss */
+/* line 915, ../sass/_mysql_styles.scss */
 .payments_list table tbody tr:hover, .vidachi_list table tbody tr:hover {
   background: green;
   color: white;
 }
-/* line 899, ../sass/_mysql_styles.scss */
+/* line 919, ../sass/_mysql_styles.scss */
 .payments_list table td, .vidachi_list table td {
   text-align: center;
   border: 1px solid black;
   font-size: 21px;
 }
 
-/* line 907, ../sass/_mysql_styles.scss */
+/* line 927, ../sass/_mysql_styles.scss */
 #sync_info ul, #sync_info li {
   list-style: none;
 }
 
-/* line 912, ../sass/_mysql_styles.scss */
+/* line 932, ../sass/_mysql_styles.scss */
 #sync_add_to_base {
   position: fixed;
   top: 150px;
   width: 270px;
   right: 0;
 }
-/* line 918, ../sass/_mysql_styles.scss */
+/* line 938, ../sass/_mysql_styles.scss */
 #sync_add_to_base label {
   font-weight: bold;
 }
-/* line 921, ../sass/_mysql_styles.scss */
+/* line 941, ../sass/_mysql_styles.scss */
 #sync_add_to_base.up {
   display: none;
 }
-/* line 924, ../sass/_mysql_styles.scss */
+/* line 944, ../sass/_mysql_styles.scss */
 #sync_add_to_base .creates {
   display: block;
   width: 25vw;

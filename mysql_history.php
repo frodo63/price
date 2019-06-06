@@ -18,7 +18,7 @@ AS a LEFT JOIN (SELECT * FROM (SELECT * FROM `pricings` LEFT JOIN sellers ON pri
     $b_info = $byerinfo->fetch();
     $pdo->commit();
 
-    $result = "<br><span>Обнал:&nbsp".$b_info['ov_firstobp']."&nbspЕнот:&nbsp".$b_info['ov_tp']."&nbspОтсрочка:&nbsp".$b_info['ov_wt']."&nbspКоммент:&nbsp".$b_info['comment']."</span><br><br>";
+    $result = "<br><input class='button_enlarge' type='button' value='↕'><br><span>Обнал:&nbsp".$b_info['ov_firstobp']."&nbspЕнот:&nbsp".$b_info['ov_tp']."&nbspОтсрочка:&nbsp".$b_info['ov_wt']."&nbspКоммент:&nbsp".$b_info['comment']."</span><br><br>";
     $result .= "<table class='hystory-list'><thead><tr>
                     <th>№</th>    
                     <th>Когда</th>    
@@ -69,7 +69,7 @@ if (isset($_POST['post_seller']) && isset($_POST['post_tare'])){
 
         $aaa=$get_name->fetch();
 
-        $result .= "<br><span>Возили от поставщика \"".$aaa['name']."\", тара типа :\"".$post_tare."\"</span><br><br><table class='hystory-knam'><thead><tr> 
+        $result .= "<br><input class='button_enlarge' type='button' value='↕'><br><span>Возили от поставщика \"".$aaa['name']."\", тара типа :\"".$post_tare."\"</span><br><br><table class='hystory-knam'><thead><tr> 
                     <th>когда</th>                   
                     <th>что</th>
                     <th>кол-во</th>
@@ -113,7 +113,7 @@ if (isset($_POST['post_byer']) && isset($_POST['post_tare'])){
 
         $aaa=$get_name->fetch();
 
-        $result .= "<br><span>Возили к покупателю \"".$aaa['name']."\", тара типа :\"".$post_tare."\"</span><br><br><table class='hystory-knam'><thead><tr> 
+        $result .= "<br><input class='button_enlarge' type='button' value='↕'><br><span>Возили к покупателю \"".$aaa['name']."\", тара типа :\"".$post_tare."\"</span><br><br><table class='hystory-knam'><thead><tr> 
                     <th>когда</th>                   
                     <th>что</th>
                     <th>кол-во</th>
@@ -138,4 +138,129 @@ if (isset($_POST['post_byer']) && isset($_POST['post_tare'])){
         $pdo->rollback();
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
+}
+
+//Показываем базе товар, чтобы посмотреть, от кого и почем возили
+if (isset($_POST['post_trade_hist'])){
+    $tradeid = $_POST['post_trade_hist'];
+
+    try{
+        $get_uid=$pdo->prepare("SELECT trades_uid FROM trades WHERE trades_id = ?");
+        $get_purchases = $pdo->prepare("SELECT * FROM purchases WHERE trade_uid = ? ORDER BY incdoc_date DESC LIMIT 10");
+
+        $getname_trade = $pdo->prepare("SELECT name FROM trades LEFT JOIN allnames ON trades.trades_nameid = allnames.nameid WHERE trades_id = ?");
+
+        $getname_seller = $pdo->prepare("SELECT name FROM sellers LEFT JOIN allnames ON sellers.sellers_nameid = allnames.nameid WHERE sellers_uid = ?");
+
+        $pdo->beginTransaction();
+        $get_uid->execute(array($tradeid));
+        $get_uid_fetched = $get_uid->fetch(PDO::FETCH_ASSOC);
+
+        $get_purchases->execute(array($get_uid_fetched['trades_uid']));
+        $get_purchases_fetched = $get_purchases->fetchAll(PDO::FETCH_ASSOC);
+
+        $getname_trade->execute(array($tradeid));
+        $getname_trade_fetched = $getname_trade->fetch(PDO::FETCH_ASSOC);
+        $trade = $getname_trade_fetched['name'];
+
+        $result = "<input class='button_enlarge' type='button' value='↕'><br><span>Покупали \"".$trade."\"</span><br><table class='hystory-seller'><thead><tr> 
+                    <th>когда</th>                   
+                    <th>от кого</th>
+                    <th>сколько</th>
+                    <th>почем</th>
+                    </tr></thead><tbody>";
+
+        foreach ($get_purchases_fetched as $pur){
+
+            $getname_seller->execute(array($pur['seller_uid']));
+            $getname_seller_fetched = $getname_seller->fetch(PDO::FETCH_ASSOC);
+            $seller = $getname_seller_fetched['name'];
+
+            $phpdate = strtotime( $pur['incdoc_date'] );
+            $mysqldate = date( 'd.m.Y', $phpdate );
+
+            $result .="<tr>";
+            $result .="<td>".$mysqldate."</td>";
+            $result .="<td>".$seller."</td>";
+            $result .="<td>".$pur['kol']."</td>";
+            $result .="<td>".number_format($pur['price'],2,'.',' ')."</td>";
+            $result .="</tr>";
+
+        }
+
+        $pdo->commit();
+
+        $result .="</tbody></table>";
+
+        print $result;
+
+    }catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        $pdo->rollback();
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+
+}
+
+//Показываем базе поставщика, чтобы посмотреть, что от него вообще возили
+if (isset($_POST['post_seller_hist'])){
+    $sellerid = $_POST['post_seller_hist'];
+
+    /*
+     * 1.Получаем uid
+     * 2.Получаем данные из таблицы purchases
+     * */
+
+    try{
+        $get_uid=$pdo->prepare("SELECT sellers_uid FROM sellers WHERE sellers_id = ?");
+        $get_purchases = $pdo->prepare("SELECT * FROM purchases WHERE seller_uid = ? ORDER BY incdoc_date DESC");
+
+        $getname_trade = $pdo->prepare("SELECT name FROM trades LEFT JOIN allnames ON trades.trades_nameid = allnames.nameid WHERE trades_uid = ?");
+        $getname_seller = $pdo->prepare("SELECT name FROM sellers LEFT JOIN allnames ON sellers.sellers_nameid = allnames.nameid WHERE sellers_id = ?");
+
+        $getname_seller->execute(array($sellerid));
+        $getname_seller_fetched = $getname_seller->fetch(PDO::FETCH_ASSOC);
+        $seller = $getname_seller_fetched['name'];
+
+        $pdo->beginTransaction();
+        $get_uid->execute(array($sellerid));
+        $get_uid_fetched = $get_uid->fetch(PDO::FETCH_ASSOC);
+
+        $get_purchases->execute(array($get_uid_fetched['sellers_uid']));
+        $get_purchases_fetched = $get_purchases->fetchAll(PDO::FETCH_ASSOC);
+
+        $result = "<input class='button_enlarge' type='button' value='↕'><br><span>Покупали у \"".$seller."\"</span><br><table class='hystory-seller'><thead><tr> 
+                    <th>когда</th>                   
+                    <th>что</th>
+                    <th>сколько</th>
+                    <th>почем</th>
+                    </tr></thead><tbody>";
+
+        foreach ($get_purchases_fetched as $pur){
+            $getname_trade->execute(array($pur['trade_uid']));
+            $getname_trade_fetched = $getname_trade->fetch(PDO::FETCH_ASSOC);
+            $trade = $getname_trade_fetched['name'];
+
+            $phpdate = strtotime( $pur['incdoc_date'] );
+            $mysqldate = date( 'd.m.Y', $phpdate );
+
+            $result .="<tr>";
+            $result .="<td>".$mysqldate."</td>";
+            $result .="<td>".$trade."</td>";
+            $result .="<td>".$pur['kol']."</td>";
+            $result .="<td>".number_format($pur['price'],2,'.',' ')."</td>";
+            $result .="</tr>";
+        }
+
+        $pdo->commit();
+
+        $result.="</tbody></table>";
+        print $result;
+
+    }catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        $pdo->rollback();
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+
 }
