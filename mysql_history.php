@@ -264,3 +264,70 @@ if (isset($_POST['post_seller_hist'])){
     }
 
 }
+
+
+//ИСТОРИЯ ТРАНСПОРТНЫХ
+
+if (isset($_POST['transports_history'])){
+    $requestid = $_POST['transports_history'];
+
+    try{
+        $get_created=$pdo->prepare("SELECT created FROM requests WHERE requests_id = ?");
+        $get_transports_history = $pdo->prepare("SELECT seller_uid, incdoc_date, sum FROM transports WHERE incdoc_date BETWEEN ? AND ? ORDER BY incdoc_date ASC");
+        $get_seller_name = $pdo->prepare("SELECT name FROM sellers LEFT JOIN allnames ON sellers.sellers_nameid = allnames.nameid WHERE sellers_uid = ?");
+
+        $pdo->beginTransaction();
+        $get_created->execute(array($requestid));
+        $get_created_fetched = $get_created->fetch(PDO::FETCH_ASSOC);
+
+        $from = $get_created_fetched['created'];
+        $to = date( 'Y-m-d', strtotime($from." + 2 weeks") );
+
+        $get_transports_history->execute(array($from, $to));
+
+        $get_transports_history_fetched = $get_transports_history->fetchAll(PDO::FETCH_ASSOC);
+
+        $pdo->commit();
+
+        $phpdate = strtotime( $from );
+        $mysqlfrom = date( 'd.m.y', $phpdate );
+
+        $phpdate = strtotime( $to );
+        $mysqlto = date( 'd.m.y', $phpdate );
+
+        $result = "<input class='button_enlarge' type='button' value='↕'><br><span>Заказы транспортных компаний : c " . $mysqlfrom . " до " . $mysqlto . "</span><br><table class='hystory-transports'><thead><tr> 
+                    <th>когда</th>                   
+                    <th>кем</th>
+                    <th>почем</th>
+                    </tr></thead><tbody>";
+
+        foreach ($get_transports_history_fetched as $tran){
+            $result .= "<tr>";
+
+            $phpdate = strtotime( $tran['incdoc_date'] );
+            $mysqldate = date( 'd.m.y', $phpdate );
+
+            $seller_uid = $tran['seller_uid'];
+            $get_seller_name->execute(array($seller_uid));
+            $gotname = $get_seller_name->fetch(PDO::FETCH_ASSOC);
+
+            $result .="<td>".$mysqldate."</td>";
+            $result .="<td>".$gotname['name']."</td>";
+            $result .="<td>".$tran['sum']."</td>";
+
+            $result .= "</tr>";
+
+        }
+
+        $result.="</tbody></table>";
+
+        print $result;
+
+    }catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        $pdo->rollback();
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+}
+
+/**/

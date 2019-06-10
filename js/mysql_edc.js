@@ -435,12 +435,20 @@ $(document).ready(function() {
         var byerid = $(event.target).parents('tr[byerid]').attr('byerid');
         var byername = $('tr[requestid="'+reqid+'"] td[byerid] span').text();
 
-                $('#pricingwindow').slideDown().attr({ positionid:posid, byerid:byerid });
+        var num = $('.req_header_'+reqid+ ' span.1c_num').text();
+        var created = $('.req_header_'+reqid+ ' span.date').text();
+
+
+
+        /**/
+
+                $('#pricingwindow').slideDown().attr({ positionid:posid, byerid:byerid, requestid:reqid });
                 $('#trade').attr('trade_id', '').val('');
                 $('#seller').attr('seller_id', '').val('');
                 $('#button_history').attr('hist_byer', byerid);//Дбавляем идентификатор ПОкупателя в инпут по истории
         console.log(byername);
         $('#byer_name').text(byername);
+        $('#request_info').text('№ '+num+' от '+created);
 
         //Запрос в базу за опциями покупателя
         //Проверка на QUEEN
@@ -519,11 +527,12 @@ $(document).ready(function() {
         $('#pricingwindow input[type="number"]').val('');
         $('#pricingwindow input[type="text"]').text('');
         $('#cases p,#obtzr,#tzr,#obtzrknam,#obtzrkpok,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
-        $('#pricingwindow').attr({positionid: '-', pricingid: '-', preditposid:'-', byerid:'-'});
+        $('#pricingwindow').attr({positionid: '-', pricingid: '-', preditposid:'-', byerid:'-', requestid:'-'});
         $('#byer_name').text('');
         $('.history').html('');
         $('.history_knam').html('');
         $('.history_kpok').html('');
+        $('#request_info').text('');
 
 
         /*Скроллимся к только что открытой завяке*/
@@ -584,14 +593,15 @@ $(document).ready(function() {
                 $('#pricingwindow input[type="number"]').val('');
                 $('#pricingwindow input[type="text"]').text('');
                 $('#cases p,#obtzr,#tzr,#obtzrknam,#obtzrkpok,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
-                $('#pricingwindow').attr({positionid: '-', pricingid: '-', preditposid:'-', byerid:'-'});
+                $('#pricingwindow').attr({positionid: '-', pricingid: '-', preditposid:'-', byerid:'-', requestid:'-'});
                 $('#byer_name').text('');
                 $('.history').html('');
                 $('.history_knam').html('');
                 $('.history_kpok').html('');
+                $('#request_info').text('');
 
                 /*Вставим прайсингайди в прайсингвиндоу ПРОБНОЕ!!!*/
-                $('#pricingwindow').attr({pricingid: prid, byerid:byerid, preditposid:posid});
+                $('#pricingwindow').attr({pricingid: prid, byerid:byerid, preditposid:posid, requestid:reqid});
                 console.log(byername);
                 $('#byer_name').text(byername);
                 /**/
@@ -607,7 +617,7 @@ $(document).ready(function() {
                         $('#trade').attr({trade_id : json.tradeid, tare : tare}).val(trade);
                         $('#seller').attr('seller_id', json.sellerid).val(seller);
                         $('#button_history').attr('hist_trade', json.tradeid);//Добавляем идентификатор Товара в инпут по истории
-                        console.log(json.tradeid);
+                        $('#request_info').text('№ '+json.num+' от '+json.created);
 
                         $('#zak').val(json.zak);
                         $('#kol').val(json.kol);
@@ -617,6 +627,7 @@ $(document).ready(function() {
                         $('#wtime').val(json.wtime);
                         $('#wtimeday').text(json.wtimeday);
                         $('#wtr').text(json.wtr);
+
                         /*ЦЕНА и РЕНТАБЕЛЬНОСТЬ*/
                         $('#pr').val(Number(Number(json.price).toFixed(3)));
                         $('#rent h1').text(Number(Number(json.rent).toFixed(2)));

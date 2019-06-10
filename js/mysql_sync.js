@@ -2,7 +2,7 @@ $(document).ready(function(){
 
 
     //Вывод содержания файлов
-    $(document).off('click.sync').on('click.sync', '#sync_requests, #sync_payments, #sync_byers, #sync_sellers, #sync_trades, #sync_positions, #sync_purchases', function(event){
+    $(document).off('click.sync').on('click.sync', '#sync_requests, #sync_payments, #sync_byers, #sync_sellers, #sync_trades, #sync_positions, #sync_purchases, #sync_transports', function(event){
         var sync_file = ($(event.target).attr("id")).substring(5);
         console.log(sync_file);
         $.ajax({

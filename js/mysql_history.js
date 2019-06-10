@@ -18,8 +18,8 @@ $(document).ready(function(){
                     $('.history').hide();
                     $(event.target).toggleClass('pushed');
                 }else{
-                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller').removeClass('pushed');
-                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller').hide();
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports').removeClass('pushed');
+                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports').hide();
                     $('.history').show();
                     $(event.target).toggleClass('pushed');
                 }
@@ -43,8 +43,8 @@ $(document).ready(function(){
                     $('.history_knam').hide();
                     $(event.target).toggleClass('pushed');
                 }else{
-                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller').removeClass('pushed');
-                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller').hide();
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports').removeClass('pushed');
+                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports').hide();
                     $('.history_knam').show();
                     $(event.target).toggleClass('pushed');
                 }
@@ -68,8 +68,8 @@ $(document).ready(function(){
                     $('.history_kpok').hide();
                     $(event.target).toggleClass('pushed');
                 }else{
-                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller').removeClass('pushed');
-                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller').hide();
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports').removeClass('pushed');
+                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports').hide();
                     $('.history_kpok').toggle();
                     $(event.target).toggleClass('pushed');
                 }
@@ -91,8 +91,8 @@ $(document).ready(function(){
                     $('.history_trade').hide();
                     $(event.target).toggleClass('pushed');
                 }else{
-                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller').removeClass('pushed');
-                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller').hide();
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports').removeClass('pushed');
+                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports').hide();
                     $('.history_trade').toggle();
                     $(event.target).toggleClass('pushed');
                 }
@@ -113,14 +113,41 @@ $(document).ready(function(){
                     $('.history_seller').hide();
                     $(event.target).toggleClass('pushed');
                 }else{
-                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller').removeClass('pushed');
-                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller').hide();
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports').removeClass('pushed');
+                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports').hide();
                     $('.history_seller').toggle();
                     $(event.target).toggleClass('pushed');
                 }
             }
         });
     });
+
+    //Показываем базе дату заявки чтобы посмотреть, кем и почем в течение недели мы возили
+    $(document).off('click.give_hist_transports').on('click.give_hist_transports', '#button_history_transports', function (event) {
+        var reqid = $('#pricingwindow').attr('requestid');
+        console.log(reqid);
+
+        $.ajax({
+            url: 'mysql_history.php',
+            method: 'POST',
+            data: {transports_history:reqid},
+            success: function(data){
+                $('.history_transports').html(data);
+            },complete:function () {
+                if($('.history_transports:visible').length > 0){
+                    $('.history_transports').hide();
+                    $(event.target).toggleClass('pushed');
+                }else{
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller').removeClass('pushed');
+                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller').hide();
+                    $('.history_transports').toggle();
+                    $(event.target).toggleClass('pushed');
+                }
+            }
+        });
+
+    });
+
 
 
     $(document).off('click.enlarge').on('click.enlarge', '.button_enlarge', function (event) {

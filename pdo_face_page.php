@@ -8,15 +8,17 @@ echo"
         <script src='js/jquery.js'></script>
 </head>";
 
-echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byerid='-'>
+echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byerid='-' requestid='-'>
     <form id='price'><div class='sres'></div>
         <input id='button_history_trade' type='button' value='?'><label for='trade'>Товар</label><input trade_id = 'blank' tare='-' autocomplete='off' type='text' name='trade' id='trade' placeholder='Введите товар' size='70'/><div class='sres'></div>
         <input id='button_history_seller' type='button' value='?'><label for='seller'>Поставщик:</label><input seller_id = 'blank' autocomplete='off' type='text' name='seller' id='seller' placeholder='Введите поставщика' size='70'/><div class='sres'></div><br />
         <label for='zakup'>ЗАКУП ЗА 1 ШТ:</label> <input type='number' name='zak' id='zak' min='1' step='1'/> руб.<br />
         <label for='kol'>Кол-во:</label> <input type='number' name='kol' id='kol'  min='1'/><br /><br />
         <label for='tzrknam'>Довезти 1шт ДО НАС:</label><input id='button_history_tzrknam' type='button' value='?'><input type='number' name='tzrknam' id='tzrknam'  min='0' step='1'/> руб. &nbsp&nbsp&nbspС обналом:&nbsp<p id='obtzrknam'></p> руб.<br />
-        <label for='tzrkpok'>Довезти 1шт ДО <span id='byer_name'></span>:</label><input id='button_history_tzrkpok' type='button' value='?'><input type='number' name='tzrkpok' id='tzrkpok'  min='0' step='1'/> руб. &nbsp&nbsp&nbspС обналом:&nbsp<p id='obtzrkpok'></p> руб.<br /><br />
+        <label for='tzrkpok'>Довезти 1шт ДО <span id='byer_name'></span>:</label><input id='button_history_tzrkpok' type='button' value='?'><input type='number' name='tzrkpok' id='tzrkpok'  min='0' step='1'/> руб. &nbsp&nbsp&nbspС обналом:&nbsp<p id='obtzrkpok'></p> руб.<br />
+        
         <label for='tzr'>ТЗР на ШТУКЕ:</label> <span id='tzr'></span> руб.<br /><br />
+        <input type='button' value='Кем и почем возили в течение недели с выставления счета' id='button_history_transports'><br />
         <div id='fcount'>
             <label for='wtime'>ОТСРОЧКА:</label> <input type='number' size='2' name='wtime' id='wtime'  min='0' step='0.03'/> мес. <p id='wtimeday'></p> дней.&nbsp(От поставщика + От покупателя)&nbsp<span id='wtr'></span>.руб<br />           
             <label for='op'>НАШ ПРОЦЕНТ:</label> <input type='number' size='4' name='op' id='op'  min='1' step='0.01'/>% / <p id='opr'></p> руб.<br />
@@ -46,10 +48,12 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         <div class='history_kpok'></div>
         <div class='history_seller'></div>
         <div class='history_trade'></div>
+        <div class='history_transports'></div>
         <div id='cases'></div>
     </form>
         <input type='button' value='__' class='minimizepricing'>                
-        <input type='button' value='X' class='closepricing'>                
+        <input type='button' value='X' class='closepricing'>
+        <span id='request_info'></span>                
         <script src='js/price_mysql.js'></script>     
 </div>
 <div id='editmsg'></div>
@@ -209,6 +213,7 @@ echo "    <div id='sync'>
               <input type='button' id='sync_sellers' value='Поставщиков'>
               <input type='button' id='sync_trades' value='Товары'>
               <input type='button' id='sync_purchases' value='Закупки'>
+              <input type='button' id='sync_transports' value='Транспортные'>
               
               <div id='sync_add_to_base' class='up'>              
               </div>

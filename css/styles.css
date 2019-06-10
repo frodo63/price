@@ -1074,13 +1074,13 @@ tr[pricingid] td {
 }
 
 /* line 745, ../sass/_mysql_styles.scss */
-#button_history.pushed, #button_history_tzrkpok.pushed, #button_history_tzrknam.pushed, #button_history_trade.pushed, #button_history_seller.pushed {
+#button_history.pushed, #button_history_tzrkpok.pushed, #button_history_tzrknam.pushed, #button_history_trade.pushed, #button_history_seller.pushed, #button_history_transports.pushed {
   color: white;
   background: green;
 }
 
 /* line 751, ../sass/_mysql_styles.scss */
-.history, .history_knam, .history_kpok, .history_seller, .history_trade {
+.history, .history_knam, .history_kpok, .history_seller, .history_trade, .history_transports {
   position: relative;
   display: none;
   width: 60vw;
@@ -1088,19 +1088,19 @@ tr[pricingid] td {
   border-top: none;
 }
 /* line 753, ../sass/_mysql_styles.scss */
-.history .button_enlarge, .history_knam .button_enlarge, .history_kpok .button_enlarge, .history_seller .button_enlarge, .history_trade .button_enlarge {
+.history .button_enlarge, .history_knam .button_enlarge, .history_kpok .button_enlarge, .history_seller .button_enlarge, .history_trade .button_enlarge, .history_transports .button_enlarge {
   position: absolute;
   top: 0;
   right: 0;
 }
 /* line 760, ../sass/_mysql_styles.scss */
-.history td, .history_knam td, .history_kpok td, .history_seller td, .history_trade td {
+.history td, .history_knam td, .history_kpok td, .history_seller td, .history_trade td, .history_transports td {
   text-align: center;
   font-size: 20px;
 }
 
 /* line 769, ../sass/_mysql_styles.scss */
-.history_knam.enlarged, .history_kpok.enlarged, .history_seller.enlarged, .history_trade.enlarged {
+.history_knam.enlarged, .history_kpok.enlarged, .history_seller.enlarged, .history_trade.enlarged, .history_transports.enlarged {
   position: absolute;
   top: 0;
   left: 11px;
@@ -1109,27 +1109,27 @@ tr[pricingid] td {
   z-index: 10000;
 }
 /* line 777, ../sass/_mysql_styles.scss */
-.history_knam td, .history_kpok td, .history_seller td, .history_trade td {
+.history_knam td, .history_kpok td, .history_seller td, .history_trade td, .history_transports td {
   font-size: 18px;
 }
 /* line 780, ../sass/_mysql_styles.scss */
-.history_knam th:nth-child(1), .history_kpok th:nth-child(1), .history_seller th:nth-child(1), .history_trade th:nth-child(1) {
+.history_knam th:nth-child(1), .history_kpok th:nth-child(1), .history_seller th:nth-child(1), .history_trade th:nth-child(1), .history_transports th:nth-child(1) {
   width: 10%;
 }
 /* line 781, ../sass/_mysql_styles.scss */
-.history_knam th:nth-child(2), .history_kpok th:nth-child(2), .history_seller th:nth-child(2), .history_trade th:nth-child(2) {
+.history_knam th:nth-child(2), .history_kpok th:nth-child(2), .history_seller th:nth-child(2), .history_trade th:nth-child(2), .history_transports th:nth-child(2) {
   width: 70%;
 }
 /* line 782, ../sass/_mysql_styles.scss */
-.history_knam th:nth-child(3), .history_kpok th:nth-child(3), .history_seller th:nth-child(3), .history_trade th:nth-child(3) {
+.history_knam th:nth-child(3), .history_kpok th:nth-child(3), .history_seller th:nth-child(3), .history_trade th:nth-child(3), .history_transports th:nth-child(3) {
   width: 10%;
 }
 /* line 783, ../sass/_mysql_styles.scss */
-.history_knam th:nth-child(4), .history_kpok th:nth-child(4), .history_seller th:nth-child(4), .history_trade th:nth-child(4) {
+.history_knam th:nth-child(4), .history_kpok th:nth-child(4), .history_seller th:nth-child(4), .history_trade th:nth-child(4), .history_transports th:nth-child(4) {
   width: 10%;
 }
 /* line 784, ../sass/_mysql_styles.scss */
-.history_knam tr:hover, .history_kpok tr:hover, .history_seller tr:hover, .history_trade tr:hover {
+.history_knam tr:hover, .history_kpok tr:hover, .history_seller tr:hover, .history_trade tr:hover, .history_transports tr:hover {
   background-color: green;
   color: white;
 }
@@ -1354,6 +1354,17 @@ tr[pricingid] td {
 #sync_add_to_base .creates {
   display: block;
   width: 25vw;
+}
+
+/* line 950, ../sass/_mysql_styles.scss */
+#request_info {
+  position: absolute;
+  top: 4vw;
+  right: 1vw;
+  height: 4vw;
+  width: 12vw;
+  font-size: 3vh;
+  text-align: right;
 }
 
 /* line 1, ../sass/_price.scss */
