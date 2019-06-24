@@ -80,10 +80,19 @@ $(document).ready(function(){
     //Показываем базе товар, чтобы посмотреть, от кого и почем возили
     $(document).off('click.give_hist_trade').on('click.give_hist_trade', '#button_history_trade', function (event) {
         var trade = $('#trade').attr('trade_id');
+
+        if($('#pricingwindow').attr('preditposid') == '-'){
+            var posid = $('#pricingwindow').attr('positionid');
+        }else{
+            var posid = $('#pricingwindow').attr('preditposid');
+        }
+
+        console.log(posid);
+
         $.ajax({
             url: 'mysql_history.php',
             method: 'POST',
-            data: {post_trade_hist:trade},
+            data: {post_trade_hist:trade, trade_posid_hist:posid},
             success: function(data){
                 $('.history_trade').html(data);
             },complete:function () {
@@ -96,6 +105,7 @@ $(document).ready(function(){
                     $('.history_trade').toggle();
                     $(event.target).toggleClass('pushed');
                 }
+                //Обновить список
             }
         });
     });
@@ -124,13 +134,18 @@ $(document).ready(function(){
 
     //Показываем базе дату заявки чтобы посмотреть, кем и почем в течение недели мы возили
     $(document).off('click.give_hist_transports').on('click.give_hist_transports', '#button_history_transports', function (event) {
-        var reqid = $('#pricingwindow').attr('requestid');
-        console.log(reqid);
+        if($('#pricingwindow').attr('preditposid') == '-'){
+           var posid = $('#pricingwindow').attr('positionid');
+        }else{
+            var posid = $('#pricingwindow').attr('preditposid');
+        }
+
+        console.log(posid);
 
         $.ajax({
             url: 'mysql_history.php',
             method: 'POST',
-            data: {transports_history:reqid},
+            data: {transports_history:posid},
             success: function(data){
                 $('.history_transports').html(data);
             },complete:function () {

@@ -1,7 +1,7 @@
 <?php
 include_once 'pdo_connect.php';
 
-if(isset($_POST['table_c']) && isset($_POST['thename'])){
+if(isset($_POST['table_c']) && isset($_POST['thename']) && isset($_POST['uid']) && isset($_POST['onec_id'])){
 
     $table_c = $_POST['table_c'];
     switch($table_c){
@@ -15,71 +15,72 @@ if(isset($_POST['table_c']) && isset($_POST['thename'])){
     $nameid_column = $table . '_nameid';
 
     $thename = $_POST['thename'];
-    if(isset($_POST['uid']) && isset($_POST['onec_id'])){
-        $uid = $_POST['uid'];
-        $uid_column = $table . '_uid';
-        $onec_id = $_POST['onec_id'];
-    }
+    $uid = $_POST['uid'];
+    $uid_column = $table . '_uid';
+    $id_column = $table . '_id';
+    $onec_id = $_POST['onec_id'];
+
+    //TODO: Использовать innerid!!!
+    //Если иннерайди не определен - значит, соотнетси не вышло и надо добавлять полностью и в лтк и в ип.
+    if(isset($_POST['innerid'])){
+        $innerid = $_POST['innerid'];
+        $ltk_sync_ip = $pdo->prepare("UPDATE `$table` SET ip_uid = ? WHERE `$id_column` = ?");
+    }/*else{}*/
 
     /**//////////////////////////////////////////////////////////////
-    $statement = $pdo->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
+    $statement = $database->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
     try {
-        $pdo->beginTransaction();
+        $database->beginTransaction();
         $statement->execute(array($thename));
-        $theID = $pdo->lastInsertId();
+        $theID = $database->lastInsertId();
 
+        $statement = $database->prepare("INSERT INTO `$table`(`$nameid_column`,`$uid_column`,`onec_id`) VALUES(?,?,?)");
+        $statement->execute(array($theID,$uid,$onec_id));
 
-        if(isset($_POST['uid']) && isset($_POST['onec_id'])){
-            $statement = $pdo->prepare("INSERT INTO `$table`(`$nameid_column`,`$uid_column`,`onec_id`) VALUES(?,?,?)");
-            $statement->execute(array($theID,$uid,$onec_id));
-            $pdo->commit();
-        }else{
-            $statement = $pdo->prepare("INSERT INTO `$table`(`$nameid_column`) VALUES(?)");
-            $statement->execute(array($theID));
-            $pdo->commit();
-        }
+        $ltk_sync_ip->execute(array($uid, $innerid));
 
+        $database->commit();
 
     } catch( PDOException $Exception ) {
-        $pdo->rollback();
+        $database->rollback();
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
-    /**//////////////////////////////////////////////////////////////
-
     echo "Получилось! Добавлена запись $thename в таблицу $table.";
-
 };
 
 //ДОБАВЛЕНИЕ ТОВАРА////////////////////////////////////////////////////
-if(isset($_POST['trade_name']) && isset($_POST['trade_tare'])){
+if(isset($_POST['trade_name']) && isset($_POST['trade_tare']) && isset($_POST['uid']) && isset($_POST['onec_id'])){
 
     $trade_name = $_POST['trade_name'];
     $trade_tare = $_POST['trade_tare'];
-    if(isset($_POST['uid']) && isset($_POST['onec_id'])){
-        $uid = $_POST['uid'];
-        $onec_id = $_POST['onec_id'];
+    $uid = $_POST['uid'];
+    $onec_id = $_POST['onec_id'];
+
+    //TODO: Использовать innerid!!!
+    if(isset($_POST['innerid']) && $_POST['db'] == "ip"){
+        $innerid = $_POST['innerid'];
+        $ltk_sync_ip = $pdo->prepare("UPDATE trades SET ip_uid = ? WHERE trades_id = ?");
     }
 
-    $statement = $pdo->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
+
+    $statement = $database->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
     try {
-        $pdo->beginTransaction();
+        $database->beginTransaction();
         $statement->execute(array($trade_name));
 
-        $theID = $pdo->lastInsertId();
+        $theID = $database->lastInsertId();
 
-        if(isset($uid) && isset($onec_id)){
-            $statement = $pdo->prepare("INSERT INTO `trades`(`trades_nameid`,`tare`,`trades_uid`,`onec_id`) VALUES(?,?,?,?)");
-            $statement->execute(array($theID,$trade_tare,$uid,$onec_id));
-            unset($uid, $onec_id);
-        }else{
-            $statement = $pdo->prepare("INSERT INTO `trades`(`trades_nameid`,`tare`) VALUES(?,?)");
-            $statement->execute(array($theID,$trade_tare));
-        }
+        $statement = $database->prepare("INSERT INTO `trades`(`trades_nameid`,`tare`,`trades_uid`,`onec_id`) VALUES(?,?,?,?)");
+        $statement->execute(array($theID,$trade_tare,$uid,$onec_id));
 
-        $pdo->commit();
+        $ltk_sync_ip->execute(array($uid, $innerid));
+
+        unset($uid, $onec_id);
+
+        $database->commit();
 
     } catch( PDOException $Exception ) {
-        $pdo->rollback();
+        $database->rollback();
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
 
@@ -100,14 +101,14 @@ if(isset($_POST['byer']) && isset($_POST['thename'])){
     try {
 
         //Запросы
-        $statement = $pdo->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");//Имя заявки
-        $request_options = $pdo->prepare("SELECT byers.ov_tp,byers.ov_firstobp,byers.ov_wt FROM byers where byers.byers_id=?");//Опции заявки из Покупателя
-        $stmt = $pdo->prepare("INSERT INTO `requests`(`created`,`requests_nameid`,`byersid`,`ov_op`,`ov_firstobp`,`ov_tp`,`ov_wt`) VALUES(?,?,?,?,?,?,?)");//Сама заявка
+        $statement = $database->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");//Имя заявки
+        $request_options = $database->prepare("SELECT byers.ov_tp,byers.ov_firstobp,byers.ov_wt FROM byers where byers.byers_id=?");//Опции заявки из Покупателя
+        $stmt = $database->prepare("INSERT INTO `requests`(`created`,`requests_nameid`,`byersid`,`ov_op`,`ov_firstobp`,`ov_tp`,`ov_wt`) VALUES(?,?,?,?,?,?,?)");//Сама заявка
 
 
-        $pdo->beginTransaction();
+        $database->beginTransaction();
         $statement->execute(array($thename));
-        $theID = $pdo->lastInsertId();
+        $theID = $database->lastInsertId();
 
         $request_options->execute(array($byer));
         $result = $request_options->fetch();
@@ -119,11 +120,11 @@ if(isset($_POST['byer']) && isset($_POST['thename'])){
         $ov_wt = $result['ov_wt'];
 
         $stmt->execute(array($created, $theID, $byer, $ov_op, $ov_firstobp, $ov_tp, $ov_wt));
-        $pdo->commit();
+        $database->commit();
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
     /**//////////////////////////////////////////////////////////////
@@ -147,11 +148,11 @@ if(isset($_POST['byer']) && isset($_POST['created']) && isset($_POST['uid']) && 
     try {
 
         //Запросы
-        $request_options = $pdo->prepare("SELECT byers.ov_tp,byers.ov_firstobp,byers.ov_wt FROM byers where byers.byers_id=?");//Опции заявки из Покупателя
-        $stmt = $pdo->prepare("INSERT INTO `requests`(`created`,`byersid`,`ov_op`,`ov_firstobp`,`ov_tp`,`ov_wt`,`requests_uid`,`1c_num`) VALUES(?,?,?,?,?,?,?,?)");//Сама заявка
+        $request_options = $database->prepare("SELECT byers.ov_tp,byers.ov_firstobp,byers.ov_wt FROM byers where byers.byers_id=?");//Опции заявки из Покупателя
+        $stmt = $database->prepare("INSERT INTO `requests`(`created`,`byersid`,`ov_op`,`ov_firstobp`,`ov_tp`,`ov_wt`,`requests_uid`,`1c_num`) VALUES(?,?,?,?,?,?,?,?)");//Сама заявка
 
 
-        $pdo->beginTransaction();
+        $database->beginTransaction();
 
         $request_options->execute(array($byer));
         $result = $request_options->fetch();
@@ -163,11 +164,11 @@ if(isset($_POST['byer']) && isset($_POST['created']) && isset($_POST['uid']) && 
         $ov_wt = $result['ov_wt'];
 
         $stmt->execute(array($created, $byer, $ov_op, $ov_firstobp, $ov_tp, $ov_wt, $uid, $onec_id));
-        $pdo->commit();
+        $database->commit();
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
     /**//////////////////////////////////////////////////////////////
@@ -189,10 +190,10 @@ if(isset($_POST['reqid']) && isset($_POST['posname'])){
         //Проверка номера строки
 
 
-        $pdo->beginTransaction();
-        $line_num_check = $pdo->prepare("SELECT COUNT(*) FROM `req_positions` WHERE requestid = ?");
+        $database->beginTransaction();
+        $line_num_check = $database->prepare("SELECT COUNT(*) FROM `req_positions` WHERE requestid = ?");
 
-        $statement = $pdo->prepare("INSERT INTO `req_positions`(`pos_name`,`requestid`,`line_num`) VALUES(?,?,?)");
+        $statement = $database->prepare("INSERT INTO `req_positions`(`pos_name`,`requestid`,`line_num`) VALUES(?,?,?)");
 
         $line_num_check->execute(array($reqid));
         $line_num_array = $line_num_check->fetch();
@@ -204,11 +205,11 @@ if(isset($_POST['reqid']) && isset($_POST['posname'])){
 
         echo "Строк :" . $line_num;
         $statement->execute();
-        $pdo->commit();
+        $database->commit();
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
     /**//////////////////////////////////////////////////////////////
@@ -230,18 +231,18 @@ if (
     /**//////////////////////////////////////////////////////////////
 
     try {
-        $pdo->beginTransaction();
-        $statement = $pdo->prepare("INSERT INTO `req_positions`(`requestid`,`pos_name`,`line_num`) VALUES(?,?,?)");
+        $database->beginTransaction();
+        $statement = $database->prepare("INSERT INTO `req_positions`(`requestid`,`pos_name`,`line_num`) VALUES(?,?,?)");
         $statement->execute(array($reqid,$posname,$linenum));
 
         ///////////////////////////////////////////////
-        $pdo->commit();
+        $database->commit();
 
         echo "Позиция добавлена";
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
 
@@ -254,18 +255,18 @@ if (
 /*if (isset($_POST['dothe1s'])){
 
     try{
-        $gettherids = $pdo->prepare("SELECT requests_id FROM requests");
+        $gettherids = $database->prepare("SELECT requests_id FROM requests");
         $gettherids->execute();
         $gottherids = $gettherids->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($gottherids as $gottherid){
 
 
-            $pdo->beginTransaction();
+            $database->beginTransaction();
             $the1 = $gottherid['requests_id'];
 
-            $statement = $pdo->prepare("SELECT COUNT(*) FROM req_positions WHERE requestid = ?");
-            $update_statement = $pdo->prepare("UPDATE req_positions SET line_num = 1 WHERE requestid = ?");
+            $statement = $database->prepare("SELECT COUNT(*) FROM req_positions WHERE requestid = ?");
+            $update_statement = $database->prepare("UPDATE req_positions SET line_num = 1 WHERE requestid = ?");
 
             $statement->execute(array($the1));
             $the1_array = $statement->fetch();
@@ -274,7 +275,7 @@ if (
             if($thenum == 1){
                 $update_statement->execute(array($the1));
             }
-            $pdo->commit();
+            $database->commit();
 
         }
 
@@ -284,7 +285,7 @@ if (
 
     } catch( PDOException $Exception ) {
     // Note The Typecast To An Integer!
-    $pdo->rollback();
+    $database->rollback();
     throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
 }
 
@@ -301,20 +302,20 @@ if(isset($_POST['reqid']) && isset($_POST['payment_date']) && isset($_POST['num'
     /**//////////////////////////////////////////////////////////////
 
     try {
-        $statement = $pdo->prepare("INSERT INTO `payments`(`requestid`,`payed`,`number`,`sum`) VALUES(?,?,?,?)");
+        $statement = $database->prepare("INSERT INTO `payments`(`requestid`,`payed`,`number`,`sum`) VALUES(?,?,?,?)");
 
         $statement->bindParam(1, $reqid);
         $statement->bindParam(2, $payment_date);
         $statement->bindParam(3, $num);
         $statement->bindParam(4, $sum);
 
-        $pdo->beginTransaction();
+        $database->beginTransaction();
         $statement->execute();
-        $pdo->commit();
+        $database->commit();
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
     /**//////////////////////////////////////////////////////////////
@@ -337,7 +338,7 @@ if(isset($_POST['number']) && isset($_POST['payed']) && isset($_POST['uid']) && 
     /**//////////////////////////////////////////////////////////////
 
     try {
-        $statement = $pdo->prepare("INSERT INTO `payments`(`number`,`payed`,`payments_uid`,`onec_id`,`sum`,`requestid`) VALUES(?,?,?,?,?,?)");
+        $statement = $database->prepare("INSERT INTO `payments`(`number`,`payed`,`payments_uid`,`onec_id`,`sum`,`requestid`) VALUES(?,?,?,?,?,?)");
 
         $statement->bindParam(1, $number);
         $statement->bindParam(2, $payed);
@@ -346,13 +347,13 @@ if(isset($_POST['number']) && isset($_POST['payed']) && isset($_POST['uid']) && 
         $statement->bindParam(5, $sum);
         $statement->bindParam(6, $requestid);
 
-        $pdo->beginTransaction();
+        $database->beginTransaction();
         $statement->execute();
-        $pdo->commit();
+        $database->commit();
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
     /**//////////////////////////////////////////////////////////////
@@ -373,20 +374,20 @@ if(isset($_POST['byersid']) && isset($_POST['giveaway_date']) && isset($_POST['c
     /**//////////////////////////////////////////////////////////////
 
     try {
-        $statement = $pdo->prepare("INSERT INTO `giveaways`(`byersid`,`given_away`,`comment`,`giveaway_sum`) VALUES(?,?,?,?)");
+        $statement = $database->prepare("INSERT INTO `giveaways`(`byersid`,`given_away`,`comment`,`giveaway_sum`) VALUES(?,?,?,?)");
 
         $statement->bindParam(1, $byersid);
         $statement->bindParam(2, $giveaway_date);
         $statement->bindParam(3, $comment);
         $statement->bindParam(4, $sum);
 
-        $pdo->beginTransaction();
+        $database->beginTransaction();
         $statement->execute();
-        $pdo->commit();
+        $database->commit();
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
     /**//////////////////////////////////////////////////////////////
@@ -424,22 +425,22 @@ if(
     $rent = 0;
 
     try{
-        $addpricing = $pdo->prepare("INSERT INTO `pricings`(`positionid`,`tradeid`,`sellerid`,`zak`,`kol`,`price`,`fixed`,`op`,`tp`,`firstobp`,`wtime`,`opr`,`rent`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        $addpricing = $database->prepare("INSERT INTO `pricings`(`positionid`,`tradeid`,`sellerid`,`zak`,`kol`,`price`,`fixed`,`op`,`tp`,`firstobp`,`wtime`,`opr`,`rent`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
         $addpricing->execute(array($positionid,$tradeid,$sellerid,$zak,$kol,$price,$fixed,$op,$tp,$firstobp,$wtime,$opr,$rent));
 
         //Добавляем Победителя к только что добавленной позиции из только что добавленной расценки
-        $lastpricingid = $pdo->lastInsertId();
+        $lastpricingid = $database->lastInsertId();
 
         echo "Расценка № " . $lastpricingid . " добавлена";
 
-        $addwinner = $pdo->prepare("UPDATE req_positions SET winnerid = ? WHERE req_positionid = ?");
+        $addwinner = $database->prepare("UPDATE req_positions SET winnerid = ? WHERE req_positionid = ?");
         $addwinner->execute(array($lastpricingid,$positionid));
 
         echo "Победитель назначен";
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
     }
 }

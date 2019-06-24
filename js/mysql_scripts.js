@@ -85,14 +85,11 @@ $(document).ready(function(){
     };
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
     //ДОБАВЛЕНИЕ в Таблицу. Имя талицы берется из атрибута инпута ('name')//////////////////////////////////////////////
     $(document).off('click.addtab').on('click.addtab', '.creates input[type="button"]', function(event){
-
         var table_name = $(event.target).attr('name');
         //Добавляем заявку?
-        if(table_name == 'requests'){
+        if(table_name == 'requests'){//Добавление из окна синхронизации
             if(
                 $(event.target).parents('#sync_add_to_base')
             ){
@@ -101,11 +98,16 @@ $(document).ready(function(){
                 var bid = $(event.target).attr('bid');
                 var uid = $(event.target).attr('uid');
                 var onec_id = $(event.target).attr('onec_id');
+                var db = $(event.target).attr('database');
+
+                if(db == 'ip'){
+                    table_name = 'ip_'+table_name;
+                }
 
                 $.ajax({
                     url: 'mysql_insert.php',
                     method: 'POST',
-                    data: {byer:bid, created:created, uid:uid, onec_id:onec_id},
+                    data: {byer:bid, created:created, uid:uid, onec_id:onec_id, db:db},
                     success: function (data) {
                         console.log("Добавлена заявка");
                         $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
@@ -150,12 +152,18 @@ $(document).ready(function(){
             var trade_tare = $(event.target).siblings('.add_trade_tare').val();
             var uid = $(event.target).attr('uid');
             var onec_id = $(event.target).attr('onec_id');
-            console.log(trade_name+'     '+trade_tare+'     '+uid+'     '+onec_id);
+            var db = $(event.target).attr('database');
+            var innerid = $(event.target).attr('innerid');
+            console.log(trade_name+'     '+trade_tare+'     '+uid+'     '+onec_id+'    '+db+'    '+innerid);
+
+            if(db == 'ip'){
+                table_name = 'ip_'+table_name;
+            }
 
             $.ajax({
                 url: 'mysql_insert.php',
                 method: 'POST',
-                data: {trade_name:trade_name, trade_tare:trade_tare, uid:uid, onec_id:onec_id},
+                data: {trade_name:trade_name, trade_tare:trade_tare, uid:uid, onec_id:onec_id, db:db, innerid:innerid},
                 success: function (data) {
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                     $('.add_trade_name').val('').focus();
@@ -163,6 +171,7 @@ $(document).ready(function(){
                     $(event.target).prop('disabled',true);
                     $(event.target).attr('uid','');
                     $(event.target).attr('onec_id','');
+                    $(event.target).attr('innerid','');
                 },
                 complete: function() {
                     if($(event.target).parents('#sync_add_to_base')){
@@ -213,18 +222,23 @@ $(document).ready(function(){
 
         }
         else{
-            //var table = $(event.target).attr("name");
             var table_c = $(event.target).attr("tc");
             var thename = $(event.target).siblings('input[type=\'text\']').val();
-            //var addinput = $(event.target).prev('input[type="text"]');
+            var db = $(event.target).attr('database');
+            var innerid = $(event.target).attr('innerid');
             var uid = $(event.target).attr('uid');
             var onec_id = $(event.target).attr('onec_id');
-            console.log(thename+'     '+table_c+'     '+uid+'     '+onec_id);
+
+            if(db == 'ip'){
+                table_name = 'ip_'+table_name;
+            }
+
+            console.log(thename+'     '+table_c+'     '+uid+'     '+onec_id+'    '+db+'    '+innerid);
                     if(thename!=''){
                         $.ajax({
                             url: 'mysql_insert.php',
                             method: 'POST',
-                            data: {table_c:table_c, thename:thename, uid:uid, onec_id:onec_id},
+                            data: {table_c:table_c, thename:thename, uid:uid, onec_id:onec_id, db:db, innerid:innerid},
                             success: function (data) {
                                 $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                                 $('#creates input[type=\'text\']').val('');

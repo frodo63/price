@@ -204,27 +204,17 @@ $(document).ready(function() {
 
 //Добавление позиции в таблицу positions
     $(document).off('click.ap').on('click.ap', 'input.addpos', function(event){
-
+//Добавление позиции из окна синхронизации
         if(
             $(event.target).parents('#sync_add_to_base')
         ){
             var reqid = $(event.target).attr('requestid');
             var posname = $(event.target).attr('posname');
             var linenum = $(event.target).attr('linenum');
+            var db = $('input[type=button].green').attr('database');
+
 
             if(posname!=''){
-
-                //ВРЕМЕННО
-                /*$.ajax({
-                    url: 'mysql_sync.php',
-                    method: 'POST',
-                    data: {synched_request:reqid},
-                    success: function (data) {
-                        $('li[rid='+reqid+']').html(data);
-                    }
-                });*/
-
-
 
                 $.ajax({
                     url: 'mysql_insert.php',
@@ -232,7 +222,8 @@ $(document).ready(function() {
                     data: {
                         sync_reqid:reqid,
                         sync_posname:posname,
-                        sync_linenum:linenum
+                        sync_linenum:linenum,
+                        db:db
                     },
                     success: function (data) {
                         $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
@@ -259,7 +250,7 @@ $(document).ready(function() {
                 });
             } else {alert("Введите имя позиции")}
 
-        }else{
+        }else{//ДОбавление позиции из списка заявок
             var reqid = $(event.target).attr("name");
             var posname = $(event.target).siblings('input[type="text"]').val();
             if(posname!=''){

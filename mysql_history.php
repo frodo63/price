@@ -12,14 +12,14 @@ AS a LEFT JOIN (SELECT * FROM (SELECT * FROM `pricings` LEFT JOIN sellers ON pri
     $byerinfo=$pdo->prepare("SELECT * FROM byers WHERE byers_id=?");
 
     try{
-    $pdo->beginTransaction();
-    $statement->execute(array($post_byer,$post_trade));
-    $byerinfo->execute(array($post_byer));
-    $b_info = $byerinfo->fetch();
-    $pdo->commit();
+        $pdo->beginTransaction();
+        $statement->execute(array($post_byer,$post_trade));
+        $byerinfo->execute(array($post_byer));
+        $b_info = $byerinfo->fetch();
+        $pdo->commit();
 
-    $result = "<br><input class='button_enlarge' type='button' value='↕'><br><span>Обнал:&nbsp".$b_info['ov_firstobp']."&nbspЕнот:&nbsp".$b_info['ov_tp']."&nbspОтсрочка:&nbsp".$b_info['ov_wt']."&nbspКоммент:&nbsp".$b_info['comment']."</span><br><br>";
-    $result .= "<table class='hystory-list'><thead><tr>
+        $result = "<br><input class='button_enlarge' type='button' value='↕'><br><span>Обнал:&nbsp".$b_info['ov_firstobp']."&nbspЕнот:&nbsp".$b_info['ov_tp']."&nbspОтсрочка:&nbsp".$b_info['ov_wt']."&nbspКоммент:&nbsp".$b_info['comment']."</span><br><br>";
+        $result .= "<table class='hystory-list'><thead><tr>
                     <th>№</th>    
                     <th>Когда</th>    
                     <th>У кого</th>                    
@@ -27,19 +27,19 @@ AS a LEFT JOIN (SELECT * FROM (SELECT * FROM `pricings` LEFT JOIN sellers ON pri
                     <th>Цена</th>
                     <th>Рент</th>
                     </tr></thead><tbody>";
-    foreach ($statement as $row) {
-        $result .= "<tr post_reqid='".$row['requests_id']." post_posid='".$row['req_positionid']."' post_prid='".$row['pricingid']."'>";
+        foreach ($statement as $row) {
+            $result .= "<tr post_reqid='".$row['requests_id']." post_posid='".$row['req_positionid']."' post_prid='".$row['pricingid']."'>";
 
-        $phpdate = strtotime( $row['created'] );
-        $mysqldate = date( 'd.m.y', $phpdate );
+            $phpdate = strtotime( $row['created'] );
+            $mysqldate = date( 'd.m.y', $phpdate );
 
-        $result .="<td>".$n."</td><td>" . $mysqldate . "</td>
+            $result .="<td>".$n."</td><td>" . $mysqldate . "</td>
                 <td >" . $row['name'] . "</td>                
                 <td>" . $row['zak'] . "</td>
                 <td>" . $row['price'] . "</td>
                 <td>" . $row['rent'] . "</td>";
-        $result.="</div></td></tr>";
-        ++$n;
+            $result.="</div></td></tr>";
+            ++$n;
         };
 
         $result.="</tbody></table>";
@@ -141,16 +141,17 @@ if (isset($_POST['post_byer']) && isset($_POST['post_tare'])){
 }
 
 //Показываем базе товар, чтобы посмотреть, от кого и почем возили
-if (isset($_POST['post_trade_hist'])){
+if (isset($_POST['post_trade_hist']) && isset($_POST['trade_posid_hist'])){
     $tradeid = $_POST['post_trade_hist'];
+    $posid = $_POST['trade_posid_hist'];
 
     try{
         $get_uid=$pdo->prepare("SELECT trades_uid FROM trades WHERE trades_id = ?");
         $get_purchases = $pdo->prepare("SELECT * FROM purchases WHERE trade_uid = ? ORDER BY incdoc_date DESC LIMIT 10");
-
         $getname_trade = $pdo->prepare("SELECT name FROM trades LEFT JOIN allnames ON trades.trades_nameid = allnames.nameid WHERE trades_id = ?");
-
         $getname_seller = $pdo->prepare("SELECT name FROM sellers LEFT JOIN allnames ON sellers.sellers_nameid = allnames.nameid WHERE sellers_uid = ?");
+        $get_position_data = $pdo->prepare("SELECT purchased, purchase_id FROM req_positions WHERE req_positionid = ?");
+
 
         $pdo->beginTransaction();
         $get_uid->execute(array($tradeid));
@@ -163,29 +164,38 @@ if (isset($_POST['post_trade_hist'])){
         $getname_trade_fetched = $getname_trade->fetch(PDO::FETCH_ASSOC);
         $trade = $getname_trade_fetched['name'];
 
+        $get_position_data->execute(array($posid));
+        $get_position_data_fetched = $get_position_data->fetch(PDO::FETCH_ASSOC);
+
         $result = "<input class='button_enlarge' type='button' value='↕'><br><span>Покупали \"".$trade."\"</span><br><table class='hystory-seller'><thead><tr> 
                     <th>когда</th>                   
+                    <th>ВхДок</th>
                     <th>от кого</th>
                     <th>сколько</th>
                     <th>почем</th>
+                    <th>закрепить</th>
                     </tr></thead><tbody>";
 
-        foreach ($get_purchases_fetched as $pur){
+        foreach ($get_purchases_fetched as $pur) {
+                $getname_seller->execute(array($pur['seller_uid']));
+                $getname_seller_fetched = $getname_seller->fetch(PDO::FETCH_ASSOC);
+                $seller = $getname_seller_fetched['name'];
 
-            $getname_seller->execute(array($pur['seller_uid']));
-            $getname_seller_fetched = $getname_seller->fetch(PDO::FETCH_ASSOC);
-            $seller = $getname_seller_fetched['name'];
+                $phpdate = strtotime($pur['incdoc_date']);
+                $mysqldate = date('d.m.Y', $phpdate);
 
-            $phpdate = strtotime( $pur['incdoc_date'] );
-            $mysqldate = date( 'd.m.Y', $phpdate );
-
-            $result .="<tr>";
-            $result .="<td>".$mysqldate."</td>";
-            $result .="<td>".$seller."</td>";
-            $result .="<td>".$pur['kol']."</td>";
-            $result .="<td>".number_format($pur['price'],2,'.',' ')."</td>";
-            $result .="</tr>";
-
+                if($get_position_data_fetched['purchase_id'] == $pur['purchases_id']){
+                    $result .="<tr class='pointed'>";
+                }else{
+                    $result .="<tr>";
+                }
+                $result .="<td>".$mysqldate."</td>";
+                $result .="<td>".$pur['incdoc_num']."</td>";
+                $result .="<td>".$seller."</td>";
+                $result .="<td>".$pur['kol']."</td>";
+                $result .="<td>".number_format($pur['price'],2,'.',' ')."</td>";
+                $result .="<td><input type='button' value='+' class='attach_pur' date='".$pur['incdoc_date']."' pur_id='".$pur['purchases_id']."'></td>";
+                $result .="</tr>";
         }
 
         $pdo->commit();
@@ -269,57 +279,64 @@ if (isset($_POST['post_seller_hist'])){
 //ИСТОРИЯ ТРАНСПОРТНЫХ
 
 if (isset($_POST['transports_history'])){
-    $requestid = $_POST['transports_history'];
+    $posid = $_POST['transports_history'];
 
     try{
-        $get_created=$pdo->prepare("SELECT created FROM requests WHERE requests_id = ?");
+        $get_purchased=$pdo->prepare("SELECT purchased FROM req_positions WHERE req_positionid = ?");
         $get_transports_history = $pdo->prepare("SELECT seller_uid, incdoc_date, sum FROM transports WHERE incdoc_date BETWEEN ? AND ? ORDER BY incdoc_date ASC");
         $get_seller_name = $pdo->prepare("SELECT name FROM sellers LEFT JOIN allnames ON sellers.sellers_nameid = allnames.nameid WHERE sellers_uid = ?");
 
         $pdo->beginTransaction();
-        $get_created->execute(array($requestid));
-        $get_created_fetched = $get_created->fetch(PDO::FETCH_ASSOC);
+        $get_purchased->execute(array($posid));
+        $get_purchased_fetched = $get_purchased->fetch(PDO::FETCH_ASSOC);
 
-        $from = $get_created_fetched['created'];
-        $to = date( 'Y-m-d', strtotime($from." + 2 weeks") );
+        if ($get_purchased_fetched['purchased']){
 
-        $get_transports_history->execute(array($from, $to));
+            $from = $get_purchased_fetched['purchased'];
+            $to = date( 'Y-m-d', strtotime($from." + 1 week") );
 
-        $get_transports_history_fetched = $get_transports_history->fetchAll(PDO::FETCH_ASSOC);
+            $get_transports_history->execute(array($from, $to));
 
-        $pdo->commit();
+            $get_transports_history_fetched = $get_transports_history->fetchAll(PDO::FETCH_ASSOC);
 
-        $phpdate = strtotime( $from );
-        $mysqlfrom = date( 'd.m.y', $phpdate );
+            $pdo->commit();
 
-        $phpdate = strtotime( $to );
-        $mysqlto = date( 'd.m.y', $phpdate );
+            $phpdate = strtotime( $from );
+            $mysqlfrom = date( 'd.m.y', $phpdate );
 
-        $result = "<input class='button_enlarge' type='button' value='↕'><br><span>Заказы транспортных компаний : c " . $mysqlfrom . " до " . $mysqlto . "</span><br><table class='hystory-transports'><thead><tr> 
+            $phpdate = strtotime( $to );
+            $mysqlto = date( 'd.m.y', $phpdate );
+
+            $result = "<input class='button_enlarge' type='button' value='↕'><br><span>Заказы транспортных компаний : c " . $mysqlfrom . " до " . $mysqlto . "</span><br><table class='hystory-transports'><thead><tr> 
                     <th>когда</th>                   
                     <th>кем</th>
                     <th>почем</th>
                     </tr></thead><tbody>";
 
-        foreach ($get_transports_history_fetched as $tran){
-            $result .= "<tr>";
+            foreach ($get_transports_history_fetched as $tran){
+                $result .= "<tr>";
 
-            $phpdate = strtotime( $tran['incdoc_date'] );
-            $mysqldate = date( 'd.m.y', $phpdate );
+                $phpdate = strtotime( $tran['incdoc_date'] );
+                $mysqldate = date( 'd.m.y', $phpdate );
 
-            $seller_uid = $tran['seller_uid'];
-            $get_seller_name->execute(array($seller_uid));
-            $gotname = $get_seller_name->fetch(PDO::FETCH_ASSOC);
+                $seller_uid = $tran['seller_uid'];
+                $get_seller_name->execute(array($seller_uid));
+                $gotname = $get_seller_name->fetch(PDO::FETCH_ASSOC);
 
-            $result .="<td>".$mysqldate."</td>";
-            $result .="<td>".$gotname['name']."</td>";
-            $result .="<td>".$tran['sum']."</td>";
+                $result .="<td>".$mysqldate."</td>";
+                $result .="<td>".$gotname['name']."</td>";
+                $result .="<td>".$tran['sum']."</td>";
 
-            $result .= "</tr>";
+                $result .= "</tr>";
 
+            }
+
+            $result.="</tbody></table>";
+
+        }else{
+            $result = "Прикрепите поступление к данной позиции.";
         }
 
-        $result.="</tbody></table>";
 
         print $result;
 

@@ -1,6 +1,7 @@
 <?php
 
 $dsn = 'mysql:host=localhost;dbname=prices';
+$dsnip = 'mysql:host=localhost;dbname=prices_ip';
 $username = 'root';
 $password = 'root';
 $options = array(
@@ -11,7 +12,12 @@ $options = array(
 
 try {
     $pdo = new PDO($dsn, $username, $password, $options);
+    $pdoip = new PDO($dsnip, $username, $password, $options);
 
+    if(isset($_POST['db'])){
+        if($_POST['db'] == "ltk"){$database = $pdo;}
+        if($_POST['db'] == "ip"){$database = $pdoip;}
+    }
 
 } catch (PDOException $e) {
     print "Error!: " . $e->getMessage() . "<br/>";

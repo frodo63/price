@@ -765,7 +765,7 @@ tr[pricingid] td {border: 1px solid black}
   border-top: none;
 }
 
-.history_knam, .history_kpok, .history_seller, .history_trade, .history_transports{
+.history_knam, .history_kpok, .history_seller, .history_transports{
   &.enlarged{
     position: absolute;
     top: 0;
@@ -786,6 +786,31 @@ tr[pricingid] td {border: 1px solid black}
     color: white;
   }
 }
+
+.history_trade{
+  &.enlarged{
+    position: absolute;
+    top: 0;
+    left:11px;
+    background: white;
+    min-height:100%;
+    z-index: 10000;
+  }
+  td{
+    font-size: 18px;
+  }
+  th:nth-child(1){width: 10%}
+  th:nth-child(2){width: 10%}
+  th:nth-child(3){width: 50%}
+  th:nth-child(4){width: 10%}
+  th:nth-child(4){width: 10%}
+  tr:hover{
+    background-color: green;
+    color: white;
+  }
+}
+
+
 
 #fcount {
   border:1px solid black;
@@ -932,9 +957,9 @@ tr[pricingid] td {border: 1px solid black}
 #sync_add_to_base{
   position: fixed;
 
-  top:150px;
+  top:280px;
   width: 270px;
-  right: 0;
+  right: 66px;
   label{
     font-weight: bold;
   }
@@ -955,5 +980,10 @@ tr[pricingid] td {border: 1px solid black}
   width: 12vw;
   font-size: 3vh;
   text-align: right;
+}
+
+.pointed{
+  color:white;
+  background-color: black;
 }
 

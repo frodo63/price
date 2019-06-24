@@ -18,7 +18,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         <label for='tzrkpok'>Довезти 1шт ДО <span id='byer_name'></span>:</label><input id='button_history_tzrkpok' type='button' value='?'><input type='number' name='tzrkpok' id='tzrkpok'  min='0' step='1'/> руб. &nbsp&nbsp&nbspС обналом:&nbsp<p id='obtzrkpok'></p> руб.<br />
         
         <label for='tzr'>ТЗР на ШТУКЕ:</label> <span id='tzr'></span> руб.<br /><br />
-        <input type='button' value='Кем и почем возили в течение недели с выставления счета' id='button_history_transports'><br />
+        <input type='button' value='Кем и почем возили в течение недели с момента поступления' id='button_history_transports'><br />
         <div id='fcount'>
             <label for='wtime'>ОТСРОЧКА:</label> <input type='number' size='2' name='wtime' id='wtime'  min='0' step='0.03'/> мес. <p id='wtimeday'></p> дней.&nbsp(От поставщика + От покупателя)&nbsp<span id='wtr'></span>.руб<br />           
             <label for='op'>НАШ ПРОЦЕНТ:</label> <input type='number' size='4' name='op' id='op'  min='1' step='0.01'/>% / <p id='opr'></p> руб.<br />
@@ -206,14 +206,25 @@ echo"       <!--Добавить Платежку -->
 echo "    <div id='sync'>
           <div class='sync_list'>
               <p>Синхронизировать: </p>
-              <input type='button' id='sync_requests' value='Заказы'>
-              <input type='button' id='sync_positions' value='Позиции в заказе'>
-              <input type='button' id='sync_payments' value='Платежки'>
-              <input type='button' id='sync_byers' value='Покупателей'>
-              <input type='button' id='sync_sellers' value='Поставщиков'>
-              <input type='button' id='sync_trades' value='Товары'>
-              <input type='button' id='sync_purchases' value='Закупки'>
-              <input type='button' id='sync_transports' value='Транспортные'>
+              <input type='button' id='sync_requests' value='Заказы ЛТК' database='ltk'>
+              <input type='button' id='sync_positions' value='Позиции в заказе ЛТК' database='ltk'>
+              <input type='button' id='sync_payments' value='Платежки ЛТК' database='ltk'>
+              <input type='button' id='sync_byers' value='Покупателей ЛТК' database='ltk'>
+              <input type='button' id='sync_sellers' value='Поставщиков ЛТК' database='ltk'>
+              <input type='button' id='sync_trades' value='Товары ЛТК' database='ltk'>
+              <input type='button' id='sync_purchases' value='Закупки ЛТК' database='ltk'>
+              <input type='button' id='sync_executes' value='Реализации ЛТК' database='ltk'>
+              <input type='button' id='sync_transports' value='Транспортные ЛТК' database='ltk'>
+              <br>
+              <input type='button' id='sync_ip_requests' value='Заказы ИП' database='ip'>
+              <input type='button' id='sync_ip_positions' value='Позиции в заказе ИП' database='ip'>
+              <input type='button' id='sync_ip_payments' value='Платежки ИП' database='ip'>
+              <input type='button' id='sync_ip_byers' value='Покупателей ИП' database='ip'>
+              <input type='button' id='sync_ip_sellers' value='Поставщиков ИП' database='ip'>
+              <input type='button' id='sync_ip_trades' value='Товары ИП' database='ip'>
+              <input type='button' id='sync_ip_purchases' value='Закупки ИП' database='ip'>
+              <input type='button' id='sync_ip_executes' value='Реализации ИП' database='ip'>
+              <input type='button' id='sync_ip_transports' value='Транспортные ИП' database='ip'>
               
               <div id='sync_add_to_base' class='up'>              
               </div>

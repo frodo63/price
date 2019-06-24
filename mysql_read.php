@@ -25,6 +25,7 @@ if(isset($_POST['table'])){
                                         a.created AS req_date,
                                         a.requests_id AS req_id,
                                         a.requests_nameid AS req_nameid,
+                                        a.requests_uid AS req_uid,
                                         a.name AS req_name,
                                         a.1c_num AS 1c_num,
                                         b.byers_id AS b_id,
@@ -58,6 +59,7 @@ if(isset($_POST['table'])){
                                         a.created AS req_date,
                                         a.requests_id AS req_id,
                                         a.requests_nameid AS req_nameid,
+                                        a.requests_uid AS req_uid,
                                         a.name AS req_name,
                                         a.1c_num AS 1c_num,
                                         b.byers_id AS b_id,
@@ -101,6 +103,7 @@ if(isset($_POST['table'])){
                                         a.created AS req_date,
                                         a.requests_id AS req_id,
                                         a.requests_nameid AS req_nameid,
+                                        a.requests_uid AS req_uid,
                                         a.name AS req_name,
                                         a.req_rent AS rent,
                                         a.req_sum AS sum,
@@ -147,6 +150,7 @@ if(isset($_POST['table'])){
                                         a.created AS req_date,
                                         a.requests_id AS req_id,
                                         a.requests_nameid AS req_nameid,
+                                        a.requests_uid AS req_uid,
                                         a.name AS req_name,
                                         a.req_rent AS rent,
                                         a.req_sum AS sum,
@@ -178,6 +182,7 @@ if(isset($_POST['table'])){
                                         a.created AS req_date,
                                         a.requests_id AS req_id,
                                         a.requests_nameid AS req_nameid,
+                                        a.requests_uid AS req_uid,
                                         a.name AS req_name,
                                         a.req_rent AS rent,
                                         a.req_sum AS sum,
@@ -204,6 +209,7 @@ if(isset($_POST['table'])){
                                         a.created AS req_date,
                                         a.requests_id AS req_id,
                                         a.requests_nameid AS req_nameid,
+                                        a.requests_uid AS req_uid,
                                         a.name AS req_name,
                                         a.req_rent AS rent,
                                         a.req_sum AS sum,
@@ -238,6 +244,7 @@ if(isset($_POST['table'])){
                                         a.created AS req_date,
                                         a.requests_id AS req_id,
                                         a.requests_nameid AS req_nameid,
+                                        a.requests_uid AS req_uid,
                                         a.name AS req_name,
                                         a.req_rent AS rent,
                                         a.req_sum AS sum,
@@ -256,6 +263,10 @@ if(isset($_POST['table'])){
             $result .= "<table><thead><tr><th>Дата</th><th>№ в 1С</th><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Сумма</th><th></th></tr></thead>";
             foreach ($statement as $row) {
 
+                $get_executals = $pdo->prepare("SELECT * FROM executes WHERE requests_uid = ?");
+                $get_executals->execute(array($row['req_uid']));
+                $get_executals_fetched = $get_executals->fetchAll(PDO::FETCH_ASSOC);
+
                 /*Заголовок заказа////////////////////////////////////////////////////////////////////////////////////////////////*/
                 $phpdate = strtotime( $row['req_date'] );
                 $mysqldate = date( 'd.m.y', $phpdate );
@@ -265,10 +276,20 @@ if(isset($_POST['table'])){
             <td class='req_date'><span>" . $mysqldate . "</span></td>
             <td class='1c_num'><span>" . $row['1c_num'] . "</span></td>
             <td byerid=" . $row['b_id'] . " name=" . $row['b_nameid'] . "><span>". $row['b_name'] ."</span></td>
-            <td category='requests' name =".$row['req_nameid']."><input type='button' requestid =".$row['req_id']." value=♢ class='collapse' name =".$row['req_nameid']."><span class='name'>&nbsp ".$row['req_name']."</span>
-            
+            <td category='requests' name =".$row['req_nameid'].">";
 
-            <div class='contents' id=".$row['req_nameid'].">
+                $result .="<input type='button' requestid =".$row['req_id']." value=♢ class='collapse' name =".$row['req_nameid'].">";
+
+                if(count($get_executals_fetched) > 0){
+                    foreach($get_executals_fetched as $exe){
+                        $result .="<span style='color: green'>Накладная № ".$exe['execute_1c_num']." от ".$exe['executed']."</span><br>";
+                    }
+                }
+
+                $result .="<span class='name'>&nbsp ".$row['req_name']."</span>";
+
+
+                $result .="<div class='contents' id=".$row['req_nameid'].">
                 <h3 class='req_header_".$row['req_id']."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму <span class='reqsumma'>".number_format($row['sum'],2,'.',' ')."&nbsp</span><br> Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h3/><br>
                 <input type='button' class='edit_options' value='Опции' requestid='".$row['req_id']."'>
                 <input type='button' class='edit_1c_num' value='Номер в 1С и дата' requestid='".$row['req_id']."'>  
