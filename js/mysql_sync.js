@@ -99,9 +99,6 @@ $(document).ready(function(){
 
     //Заполнение формы для добавления в базу из окна СИНХРОНИЗАЦИИ
     $(document).off('click.syncaddnew').on('click.syncaddnew', '.sync_add_to_base', function(event){
-        if ($('#sync_add_to_base').hasClass('up')){
-            $('#sync_add_to_base').removeClass('up');
-        }
         if($('#sinchronize_payments').length > 0 || $('#sinchronize_ip_payments').length > 0){
 
             var payed = $(event.target).attr('payed');
@@ -119,6 +116,11 @@ $(document).ready(function(){
             console.log(requestid);
 
             if(requestid !='none' && requestid){
+
+                if ($('#sync_add_to_base').hasClass('up')){
+                    $('#sync_add_to_base').removeClass('up');
+                }
+
                 $('#sync_add_to_base .sync_pay_payed').text(payed);
                 $('#sync_add_to_base .sync_pay_num').text(number);
                 $('#sync_add_to_base .sync_pay_onec_id').text(onec_id);
@@ -140,6 +142,9 @@ $(document).ready(function(){
             }
         }
         if($('#sinchronize_requests').length > 0 || $('#sinchronize_ip_requests').length > 0){
+            if ($('#sync_add_to_base').hasClass('up')){
+                $('#sync_add_to_base').removeClass('up');
+            }
 
         var created = $(event.target).attr('created');
         var uid = $(event.target).attr('uid');
@@ -165,6 +170,9 @@ $(document).ready(function(){
 
         }
         if($('#sinchronize_positions').length > 0 || $('#sinchronize_ip_positions').length > 0){
+            if ($('#sync_add_to_base').hasClass('up')){
+                $('#sync_add_to_base').removeClass('up');
+            }
             var posname = $(event.target).siblings('span.pn').text();
             var requestid = $(event.target).attr('requests_id');
             var linenum = $(event.target).attr('linenum');
@@ -189,6 +197,9 @@ $(document).ready(function(){
             $('#sync_add_to_base input[type="button"]').prop( "disabled", false ).focus();
         }
         if($('#sinchronize_trades').length > 0){
+            if ($('#sync_add_to_base').hasClass('up')){
+                $('#sync_add_to_base').removeClass('up');
+            }
             var name = $(event.target).siblings('.sync_add_name').text();
             var uid = $(event.target).attr('uid');
             var onec_id = $(event.target).attr('onec_id');
@@ -207,6 +218,9 @@ $(document).ready(function(){
 
         }
         if($('#sinchronize_byers').length > 0){
+            if ($('#sync_add_to_base').hasClass('up')){
+                $('#sync_add_to_base').removeClass('up');
+            }
 
             var name = $(event.target).siblings('.sync_add_name').text();
             var uid = $(event.target).attr('uid');
@@ -225,6 +239,9 @@ $(document).ready(function(){
             $('#sync_add_to_base input[type="button"]').attr('onec_id', onec_id);
         }
         if($('#sinchronize_sellers').length > 0){
+            if ($('#sync_add_to_base').hasClass('up')){
+                $('#sync_add_to_base').removeClass('up');
+            }
 
             var name = $(event.target).siblings('.sync_add_name').text();
             var uid = $(event.target).attr('uid');
@@ -248,13 +265,16 @@ $(document).ready(function(){
             var uid = $(event.target).attr('uid');
             var innerid = $(event.target).attr('innerid');
             var onec_id = $(event.target).attr('onec_id');
+            var table = $(event.target).attr('table');
 
             console.log(name);
             console.log(uid);
             console.log(innerid);
             console.log(onec_id);
 
-            if(innerid && typeof innerid != 'undefined') {
+                if ($('#sync_add_to_base').hasClass('up')){
+                    $('#sync_add_to_base').removeClass('up');
+                }
 
                 $('#sync_add_to_base .add_trade_name').val(name);
                 $('#sync_add_to_base .add_trade_name').trigger('keyup.checkname');
@@ -263,12 +283,6 @@ $(document).ready(function(){
                 $('#sync_add_to_base input[type="button"]').attr('onec_id', onec_id);
                 $('#sync_add_to_base input[type="button"]').prop("disabled", false);
                 $('#sync_add_to_base select').focus();
-            }else{
-                alert('Нужно соотнести, и чтобы плюсик стал зеленым');
-                $(event.target).siblings('input[type=text]').focus();
-            }
-
-
         }
         if($('#sinchronize_ip_byers').length > 0){
 
@@ -283,6 +297,10 @@ $(document).ready(function(){
             console.log(innerid);
 
             if(innerid && typeof innerid != 'undefined'){
+
+                if ($('#sync_add_to_base').hasClass('up')){
+                    $('#sync_add_to_base').removeClass('up');
+                }
 
                 $('#sync_add_to_base .add_byer_name').val(name);
                 $('#sync_add_to_base .add_byer_name').trigger('keyup.checkname');
@@ -311,6 +329,10 @@ $(document).ready(function(){
             console.log(onec_id);
 
             if(innerid && typeof innerid != 'undefined') {
+
+                if ($('#sync_add_to_base').hasClass('up')){
+                    $('#sync_add_to_base').removeClass('up');
+                }
 
                 $('#sync_add_to_base .add_seller_name').val(name);
                 $('#sync_add_to_base .add_seller_name').trigger('keyup.checkname');

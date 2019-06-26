@@ -20,8 +20,28 @@ if(isset($_POST['table_c']) && isset($_POST['thename']) && isset($_POST['uid']) 
     $id_column = $table . '_id';
     $onec_id = $_POST['onec_id'];
 
-    //TODO: Использовать innerid!!!
-    //Если иннерайди не определен - значит, соотнетси не вышло и надо добавлять полностью и в лтк и в ип.
+    //Если $database = 'ltk'
+    if($_POST['db'] == 'ltk'){
+        if(isset($_POST['innerid'])){
+            //Соотносим с болванкой
+
+        }else{
+            //Добавляем новое
+
+        }
+    }
+
+    //Если $database = 'ip'
+    if($_POST['db'] == 'ip'){
+        if(isset($_POST['innerid'])){
+            //Соотносим с ltk
+
+        }else{
+            //Добавляем новое и болванку
+
+        }
+    }
+
     if(isset($_POST['innerid'])){
         $innerid = $_POST['innerid'];
         $ltk_sync_ip = $pdo->prepare("UPDATE `$table` SET ip_uid = ? WHERE `$id_column` = ?");
@@ -48,6 +68,86 @@ if(isset($_POST['table_c']) && isset($_POST['thename']) && isset($_POST['uid']) 
     echo "Получилось! Добавлена запись $thename в таблицу $table.";
 };
 
+//ДОБАВЛЕНИЕ БОЛВАНКИ ПОСТАВЩИКА/ПОКУПАТЕЛЯ//////////////////////////////////////////////////
+if(isset($_POST['table_c']) && isset($_POST['bolv_name']) && isset($_POST['ip_uid'])){
+
+    $table_c = $_POST['table_c'];
+    switch($table_c){
+        case 1:
+            $table = 'byers';
+            break;
+        case 2:
+            $table = 'sellers';
+            break;
+    }
+
+    $nameid_column = $table . '_nameid';
+    $thename = $_POST['bolv_name'];
+    $id_column = $table . '_id';
+    $ip_uid = $_POST['ip_uid'];
+
+    /*Добавляем в ltk болванку*//////////////////////////////////////////////////////////////
+    $statement = $pdo->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
+    try {
+        $pdo->beginTransaction();
+        $statement->execute(array($thename));
+        $theID = $pdo->lastInsertId();
+
+        $statement = $pdo->prepare("INSERT INTO `$table`(`$nameid_column`,`ip_uid`) VALUES(?,?)");
+        $statement->execute(array($theID,$ip_uid));
+        $pdo->commit();
+
+        echo $theID;
+
+    } catch( PDOException $Exception ) {
+        $pdo->rollback();
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+};
+///////////////////////////////////////////////////////////////////////
+
+//ДОБАВЛЕНИЕ БОЛВАНКИ ТОВАРА//////////////////////////////////////////////////
+if(isset($_POST['bolv_name']) && isset($_POST['bolv_tare']) && isset($_POST['ip_uid']) && isset($_POST['onec_id'])){
+
+    $table = 'trades';
+    $nameid_column = $table . '_nameid';
+    $thename = $_POST['bolv_name'];
+    $thetare = $_POST['bolv_tare'];
+    $id_column = $table . '_id';
+    $ip_uid = $_POST['ip_uid'];
+    $onec_id = $_POST['onec_id'];
+
+    /*Добавляем в ltk болванку*//////////////////////////////////////////////////////////////
+    $statement = $pdo->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
+    try {
+        $pdo->beginTransaction();
+        $statement->execute(array($thename));
+        $theID = $pdo->lastInsertId();
+
+        $statement = $pdo->prepare("INSERT INTO `$table`(`$nameid_column`,`ip_uid`,`tare`) VALUES(?,?,?)");
+        $statement->execute(array($theID,$ip_uid,$thetare));
+        $pdo->commit();
+
+        //Болванка добавлена. Теперь можно и в ip базу засунуть новый товар.
+        /*$pdoip->beginTransaction();
+
+        $statement = $pdoip->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
+        $statement->execute(array($thename));
+        $theID = $pdoip->lastInsertId();
+
+        $statement = $pdoip->prepare("INSERT INTO `$table`(`$nameid_column`,`onec_id`,`trades_uid`,`tare`) VALUES(?,?,?,?)");
+        $statement->execute(array($theID,$onec_id,$ip_uid,$thetare));
+        $pdoip->commit();*/
+
+        echo $theID;
+
+    } catch( PDOException $Exception ) {
+        $pdo->rollback();
+        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    }
+};
+///////////////////////////////////////////////////////////////////////
+
 //ДОБАВЛЕНИЕ ТОВАРА////////////////////////////////////////////////////
 if(isset($_POST['trade_name']) && isset($_POST['trade_tare']) && isset($_POST['uid']) && isset($_POST['onec_id'])){
 
@@ -56,7 +156,6 @@ if(isset($_POST['trade_name']) && isset($_POST['trade_tare']) && isset($_POST['u
     $uid = $_POST['uid'];
     $onec_id = $_POST['onec_id'];
 
-    //TODO: Использовать innerid!!!
     if(isset($_POST['innerid']) && $_POST['db'] == "ip"){
         $innerid = $_POST['innerid'];
         $ltk_sync_ip = $pdo->prepare("UPDATE trades SET ip_uid = ? WHERE trades_id = ?");

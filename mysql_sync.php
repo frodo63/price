@@ -447,6 +447,8 @@ if(isset($_POST['sync_file'])){
             break;
         case "trades":
             if ($file){
+
+
                 echo"<p>Файл найден</p>";
                 $file_array = file($path); // Считывание файла в массив $file_array
                 if (count($file_array) > 0);
@@ -461,18 +463,23 @@ if(isset($_POST['sync_file'])){
                     $temp_array = explode(';',$row);
                     $uid_trimmed = substr($temp_array[4],0,-2);
 
+                    //Логика такая:
+                    //1. Если в ltk такого uid нет -           Соотносим с ltk вручную, проверяем, есть ли такая болванка
+                    //2. Если в ltk нашлась болванка -         Добавляем в болванку uid и 1c_num
+                    //3. Если в ltk не нашлась болванка -      Заносим новый итем
+
                     //Проверка на наличие такого uid  в базе
                     $gotuid->execute(array($uid_trimmed));
                     $gotsome = $gotuid->fetch(PDO::FETCH_ASSOC);
 
                     //Если такой uid есть - ничего не делаем
                     if(is_string($gotsome['trades_uid']) && $uid_trimmed == $gotsome['trades_uid']){
-                        //echo"<li> Уже в базе --- ".$temp_array[1]."</li>";
                         $synched[]="<li> Уже в базе --- ".$temp_array[1]."(".$gotsome['tare'].") Ед. Изм.: ".$temp_array[2]." </li>";
-                        /*ничего не выводим*/
+                        //Тут можно вывести, с кем итем соотнесен
 
                     }else{
                         //Выводим возможность соотнести и записать в базу
+                        //В результатах поиска при соотнесении будут выскакивать только болванки. Чтоб не запутаться
                         $not_synched[]="<li>
                                  <span class='sync_add_name'>$temp_array[1] в $temp_array[2]</span><input class='sync_add_to_base' type='button' value='+' table='trades' innerid  onec_id=$temp_array[0] uid=$temp_array[4]>
                              </li>";
@@ -501,12 +508,20 @@ if(isset($_POST['sync_file'])){
             break;
         case "ip_trades":
             if ($file){
+                //Логика такая:
+                //1. Если в ip такого uid нет -                    Заносим в ip
+                //2. Если в ip такой uid есть -                    Проверяем, есть ли в ltk такой ip_uid
+                //3. Если в ltk такого ip_uid нет -                Соотносим с ltk вручную
+                //4. Если с ltk соотнести не удалось -             Заносим в ltk болванку(итем без uid и 1c_num) и добавляем в нее наш ip_uid
+
                 echo"<p>Файл найден</p>";
                 $file_array = file($path); // Считывание файла в массив $file_array
                 if (count($file_array) > 0);
                 echo"<p>Файл выгружен в массив: </p>";
 
-                $gotuid = $database->prepare("SELECT trades_uid, tare FROM trades WHERE trades_uid = ?");
+                $gotuid = $pdoip->prepare("SELECT trades_uid, tare FROM trades WHERE trades_uid = ?");
+                $got_sync = $pdo->prepare("SELECT trades_id, trades_uid, tare FROM trades WHERE ip_uid = ?");
+                $get_name = $pdo->prepare("SELECT name FROM trades LEFT JOIN allnames ON trades.trades_nameid = allnames.nameid WHERE trades_id = ?");
 
 
                 foreach ($file_array as $row){
@@ -519,9 +534,20 @@ if(isset($_POST['sync_file'])){
 
                     //Если такой uid есть - ничего не делаем
                     if(is_string($gotsome['trades_uid']) && $uid_trimmed == $gotsome['trades_uid']){
-                        //echo"<li> Уже в базе --- ".$temp_array[1]."</li>";
-                        $synched[]="<li> Уже в базе --- ".$temp_array[1]."(".$gotsome['tare'].") Ед. Изм.: ".$temp_array[2]." </li>";
-                        /*ничего не выводим*/
+                        //Дополнительно надо проверить, а есть ли такой uid в ip_uid?
+                        $got_sync->execute(array($uid_trimmed));
+                        $got_sync_fetched = $got_sync->fetch(PDO::FETCH_ASSOC);
+                        if(is_string($got_sync_fetched['trades_id']) && is_string($got_sync_fetched['tare'])){
+                            //получаем имя соотнесённого товара
+                            $get_name->execute(array($got_sync_fetched['trades_id']));
+                            $get_name_fetched = $get_name->fetch(PDO::FETCH_ASSOC);
+                            $synched[]="<li>".$temp_array[1]."(".$gotsome['tare'].") Ед. Изм.: ".$temp_array[2]." <span style='color: green'>СООТНЕСЕН С </span>".$get_name_fetched['name']."</li>";
+                        }else{
+                            $synched[]="<li><input type='text' class='sync_trade'><div class='sres'></div>".$temp_array[1]."(".$gotsome['tare'].") Ед. Изм.: ".$temp_array[2]."<span style='color: red'> НЕ СООТНЕСЕН</span></li>";
+                        }
+
+
+
 
                     }else{
                         //Выводим возможность соотнести и записать в базу
