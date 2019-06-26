@@ -99,6 +99,10 @@ $(document).ready(function(){
 
     //Заполнение формы для добавления в базу из окна СИНХРОНИЗАЦИИ
     $(document).off('click.syncaddnew').on('click.syncaddnew', '.sync_add_to_base', function(event){
+        var add_name_text = $('#sync_add_to_base input[type="text"]');
+        var add_select = $('#sync_add_to_base select');
+        var add_button = $('#sync_add_to_base input[type="button"]')
+
         if($('#sinchronize_payments').length > 0 || $('#sinchronize_ip_payments').length > 0){
 
             var payed = $(event.target).attr('payed');
@@ -127,7 +131,7 @@ $(document).ready(function(){
                 $('#sync_add_to_base .sync_pay_uid').text(uid);
                 $('#sync_add_to_base .sync_pay_sum').text(sum);
                 $('#sync_add_to_base .sync_pay_rid').text(requestid);
-                $('#sync_add_to_base input[type="button"]').attr({
+                add_button.attr({
                     payed:payed,
                     number:number,
                     onec_id:onec_id,
@@ -160,7 +164,7 @@ $(document).ready(function(){
             $('#sync_add_to_base .sync_req_uid').text(uid);
             $('#sync_add_to_base .sync_req_byers_id').text(bid);
             $('#sync_add_to_base .sync_req_onec_id').text(onec_id);
-            $('#sync_add_to_base input[type="button"]').attr({
+            add_button.attr({
                 created:created,
                 uid:uid,
                 bid:bid,
@@ -186,7 +190,7 @@ $(document).ready(function(){
             $('#sync_add_to_base .sync_pos_price').text(price);
             $('#sync_add_to_base .sync_pos_kol').text(kol);
             $('#sync_add_to_base .sync_pos_tradeid').text(tradeid);
-            $('#sync_add_to_base input[type="button"]').attr({
+            add_button.attr({
                 posname:posname,
                 requestid:requestid,
                 linenum:linenum,
@@ -203,17 +207,22 @@ $(document).ready(function(){
             var name = $(event.target).siblings('.sync_add_name').text();
             var uid = $(event.target).attr('uid');
             var onec_id = $(event.target).attr('onec_id');
+            var innerid = $(event.target).attr('innerid');
 
             console.log(name);
             console.log(uid);
             console.log(onec_id);
 
-            $('#sync_add_to_base .add_trade_name').val(name);
-            $('#sync_add_to_base .add_trade_name').trigger('keyup.checkname');
-            $('#sync_add_to_base input[type="button"]').attr('uid', uid);
-            $('#sync_add_to_base input[type="button"]').attr('onec_id', onec_id);
-            $('#sync_add_to_base input[type="button"]').prop( "disabled", false );
-            $('#sync_add_to_base select').focus();
+            var add_trade_name = $('#sync_add_to_base .add_trade_name');
+
+            add_trade_name.val(name);
+            add_trade_name.trigger('keyup.checkname');
+            add_button.attr({
+                'uid': uid,
+                'innerid': innerid,
+                'onec_id': onec_id
+            }).prop("disabled", false);
+            add_select.focus();
 
 
         }
@@ -222,50 +231,58 @@ $(document).ready(function(){
                 $('#sync_add_to_base').removeClass('up');
             }
 
-            var name = $(event.target).siblings('.sync_add_name').text();
-            var uid = $(event.target).attr('uid');
-            var dataver = $(event.target).attr('dataver');
-            var onec_id = $(event.target).attr('onec_id');
+            name = $(event.target).siblings('.sync_add_name').text();
+            uid = $(event.target).attr('uid');
+            innerid = $(event.target).attr('innerid');
+            onec_id = $(event.target).attr('onec_id');
 
             console.log(name);
             console.log(uid);
-            console.log(dataver);
+            console.log(innerid);
             console.log(onec_id);
 
-            $('#sync_add_to_base .add_byer_name').val(name);
-            $('#sync_add_to_base .add_byer_name').trigger('keyup.checkname');
-            $('#sync_add_to_base input[type="button"]').attr('uid', uid);
-            $('#sync_add_to_base input[type="button"]').attr('dataver', dataver);
-            $('#sync_add_to_base input[type="button"]').attr('onec_id', onec_id);
+            var add_byer_name = $('#sync_add_to_base .add_byer_name');
+
+            add_byer_name.val(name);
+            add_byer_name.trigger('keyup.checkname');
+            add_button.attr({
+                'uid': uid,
+                'innerid': innerid,
+                'onec_id': onec_id
+            }).prop("disabled", false);
+            add_name_text.focus();
         }
         if($('#sinchronize_sellers').length > 0){
             if ($('#sync_add_to_base').hasClass('up')){
                 $('#sync_add_to_base').removeClass('up');
             }
 
-            var name = $(event.target).siblings('.sync_add_name').text();
-            var uid = $(event.target).attr('uid');
-            var dataver = $(event.target).attr('dataver');
-            var onec_id = $(event.target).attr('onec_id');
+            name = $(event.target).siblings('.sync_add_name').text();
+            uid = $(event.target).attr('uid');
+            innerid = $(event.target).attr('innerid');
+            onec_id = $(event.target).attr('onec_id');
 
             console.log(name);
             console.log(uid);
-            console.log(dataver);
             console.log(onec_id);
 
-            $('#sync_add_to_base .add_seller_name').val(name);
-            $('#sync_add_to_base .add_seller_name').trigger('keyup.checkname');
-            $('#sync_add_to_base input[type="button"]').attr('uid', uid);
-            $('#sync_add_to_base input[type="button"]').attr('dataver', dataver);
-            $('#sync_add_to_base input[type="button"]').attr('onec_id', onec_id);
+            var add_seller_name = $('#sync_add_to_base .add_seller_name');
+
+            add_seller_name.val(name);
+            add_seller_name.trigger('keyup.checkname');
+            add_button.attr({
+                uid:uid,
+                onec_id:onec_id,
+                innerid:innerid
+            }).prop("disabled", false);
+            add_name_text.focus();
         }
         if($('#sinchronize_ip_trades').length > 0){
 
-            var name = $(event.target).siblings('.sync_add_name').text();
-            var uid = $(event.target).attr('uid');
-            var innerid = $(event.target).attr('innerid');
-            var onec_id = $(event.target).attr('onec_id');
-            var table = $(event.target).attr('table');
+            name = $(event.target).siblings('.sync_add_name').text();
+            uid = $(event.target).attr('uid');
+            innerid = $(event.target).attr('innerid');
+            onec_id = $(event.target).attr('onec_id');
 
             console.log(name);
             console.log(uid);
@@ -276,75 +293,73 @@ $(document).ready(function(){
                     $('#sync_add_to_base').removeClass('up');
                 }
 
-                $('#sync_add_to_base .add_trade_name').val(name);
-                $('#sync_add_to_base .add_trade_name').trigger('keyup.checkname');
-                $('#sync_add_to_base input[type="button"]').attr('uid', uid);
-                $('#sync_add_to_base input[type="button"]').attr('innerid', innerid);
-                $('#sync_add_to_base input[type="button"]').attr('onec_id', onec_id);
-                $('#sync_add_to_base input[type="button"]').prop("disabled", false);
-                $('#sync_add_to_base select').focus();
+            add_trade_name = $('#sync_add_to_base .add_trade_name');
+
+            add_trade_name.val(name);
+            add_trade_name.trigger('keyup.checkname');
+            add_button.attr({
+                'uid': uid,
+                'innerid': innerid,
+                'onec_id': onec_id
+            }).prop("disabled", false);
+            add_select.focus();
+
         }
         if($('#sinchronize_ip_byers').length > 0){
 
-            var name = $(event.target).siblings('.sync_add_name').text();
-            var uid = $(event.target).attr('uid');
-            var onec_id = $(event.target).attr('onec_id');
-            var innerid = $(event.target).attr('innerid');
+            name = $(event.target).siblings('.sync_add_name').text();
+            uid = $(event.target).attr('uid');
+            onec_id = $(event.target).attr('onec_id');
+            innerid = $(event.target).attr('innerid');
 
             console.log(name);
             console.log(uid);
             console.log(onec_id);
             console.log(innerid);
 
-            if(innerid && typeof innerid != 'undefined'){
-
                 if ($('#sync_add_to_base').hasClass('up')){
                     $('#sync_add_to_base').removeClass('up');
                 }
 
-                $('#sync_add_to_base .add_byer_name').val(name);
-                $('#sync_add_to_base .add_byer_name').trigger('keyup.checkname');
-                $('#sync_add_to_base input[type="button"]').attr('uid', uid);
-                $('#sync_add_to_base input[type="button"]').attr('onec_id', onec_id);
-                $('#sync_add_to_base input[type="button"]').attr('innerid', innerid);
-                $('#sync_add_to_base input[type="button"]').prop( "disabled", false );
-                $('#sync_add_to_base select').focus();
-            }else{
-                alert('Нужно соотнести, и чтобы плюсик стал зеленым');
-                $(event.target).siblings('input[type=text]').focus();
-            }
+            add_byer_name = $('#sync_add_to_base .add_byer_name');
 
+            add_byer_name.val(name);
+            add_byer_name.trigger('keyup.checkname');
+            add_button.attr({
+                uid:uid,
+                onec_id:onec_id,
+                innerid:innerid
+            }).prop("disabled", false);
+            add_name_text.focus();
 
         }
         if($('#sinchronize_ip_sellers').length > 0){
 
-            var name = $(event.target).siblings('.sync_add_name').text();
-            var uid = $(event.target).attr('uid');
-            var innerid = $(event.target).attr('innerid');
-            var onec_id = $(event.target).attr('onec_id');
+            name = $(event.target).siblings('.sync_add_name').text();
+            uid = $(event.target).attr('uid');
+            innerid = $(event.target).attr('innerid');
+            onec_id = $(event.target).attr('onec_id');
 
             console.log(name);
             console.log(uid);
             console.log(innerid);
             console.log(onec_id);
 
-            if(innerid && typeof innerid != 'undefined') {
-
-                if ($('#sync_add_to_base').hasClass('up')){
-                    $('#sync_add_to_base').removeClass('up');
-                }
-
-                $('#sync_add_to_base .add_seller_name').val(name);
-                $('#sync_add_to_base .add_seller_name').trigger('keyup.checkname');
-                $('#sync_add_to_base input[type="button"]').attr('uid', uid);
-                $('#sync_add_to_base input[type="button"]').attr('onec_id', onec_id);
-                $('#sync_add_to_base input[type="button"]').attr('innerid', innerid);
-                $('#sync_add_to_base input[type="button"]').prop("disabled", false);
-                $('#sync_add_to_base select').focus();
-            }else{
-                alert('Нужно соотнести, и чтобы плюсик стал зеленым');
-                $(event.target).siblings('input[type=text]').focus();
+            if ($('#sync_add_to_base').hasClass('up')){
+                $('#sync_add_to_base').removeClass('up');
             }
+
+            add_seller_name = $('#sync_add_to_base .add_seller_name');
+
+            add_seller_name.val(name);
+            add_seller_name.trigger('keyup.checkname');
+            add_button.attr({
+                uid:uid,
+                onec_id:onec_id,
+                innerid:innerid
+            }).prop("disabled", false);
+            $('#sync_add_to_base input[type="text"]');
+            add_name_text.focus();
         }
     });
 

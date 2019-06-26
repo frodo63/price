@@ -262,7 +262,7 @@ if(isset($_POST['sync_file'])){
                         $synched[]="<li> Уже в базе --- ".$temp_array[1]."</li>";
                     }else{
                         //Выводим возможность соотнести и записать в базу
-                        $not_synched[]="<li>
+                        $not_synched[]="<li><input type='text' class='sync_byer'><div class='sres'></div>
                                  <span class='sync_add_name'>$temp_array[1]</span><input class='sync_add_to_base' type='button' value='+' table='byers' innerid  onec_id=$temp_array[0] uid=$temp_array[3]>
                              </li>";
                     }
@@ -362,7 +362,7 @@ if(isset($_POST['sync_file'])){
 
                     }else{
                         //Выводим возможность соотнести и записать в базу
-                        $not_synched[]="<li>
+                        $not_synched[]="<li><input type='text' class='sync_seller'><div class='sres'></div>
                                  <span class='sync_add_name'>$temp_array[1]</span><input class='sync_add_to_base' type='button' value='+' table='sellers' innerid  onec_id=$temp_array[0] uid=$temp_array[3]>
                              </li>";
                     }
@@ -480,7 +480,7 @@ if(isset($_POST['sync_file'])){
                     }else{
                         //Выводим возможность соотнести и записать в базу
                         //В результатах поиска при соотнесении будут выскакивать только болванки. Чтоб не запутаться
-                        $not_synched[]="<li>
+                        $not_synched[]="<li><input type='text' class='sync_trade'><div class='sres'></div>
                                  <span class='sync_add_name'>$temp_array[1] в $temp_array[2]</span><input class='sync_add_to_base' type='button' value='+' table='trades' innerid  onec_id=$temp_array[0] uid=$temp_array[4]>
                              </li>";
                     }
@@ -1013,7 +1013,7 @@ if(isset($_POST['sync_html'])){
                 <option value='бочка'>бочка(200л)</option>
                 </select><br>
                 <span class='ready_comment'></span><br>
-                <input  type='button' database='ltk' name='trades' value='Добавить' disabled uid onec_id><br><br></div>";
+                <input  type='button' database='ltk' tc='3' name='trades' value='Добавить' disabled uid onec_id><br><br></div>";
             break;
         case "ip_trades":
             echo"<div class ='creates'>
@@ -1026,7 +1026,7 @@ if(isset($_POST['sync_html'])){
                 <option value='бочка'>бочка(200л)</option>
                 </select><br>
                 <span class='ready_comment'></span><br>
-                <input  type='button' database='ip' name='trades' value='Добавить' disabled innerid uid onec_id><br><br></div>";
+                <input  type='button' database='ip' tc='3' name='trades' value='Добавить' disabled innerid uid onec_id><br><br></div>";
             break;
         case "purchases":
         case "ip_purchases":

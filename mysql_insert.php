@@ -1,7 +1,7 @@
 <?php
 include_once 'pdo_connect.php';
-
-if(isset($_POST['table_c']) && isset($_POST['thename']) && isset($_POST['uid']) && isset($_POST['onec_id'])){
+//ДОБАВЛЕНИЕ В обе базы товаров, поставщиков или покупателей
+if(isset($_POST['table_c']) && isset($_POST['thename']) && isset($_POST['uid']) && isset($_POST['onec_id']) && isset($_POST['innerid'])){
 
     $table_c = $_POST['table_c'];
     switch($table_c){
@@ -11,181 +11,173 @@ if(isset($_POST['table_c']) && isset($_POST['thename']) && isset($_POST['uid']) 
         case 2:
             $table = 'sellers';
             break;
+        case 3:
+            $table = 'trades';
+            if(isset($_POST['thetare'])){
+                $thetare = $_POST['thetare'];
+            }
+            break;
     }
-    $nameid_column = $table . '_nameid';
 
+    $nameid_column = $table . '_nameid';
     $thename = $_POST['thename'];
     $uid = $_POST['uid'];
     $uid_column = $table . '_uid';
     $id_column = $table . '_id';
     $onec_id = $_POST['onec_id'];
+    $innerid = $_POST['innerid'];
+
+    /*Общий принцип Соотнесения двух баз:
+            * Есть 4 варианта ситуации:
+            * 1. bd = ltk, innerid = ''      Добавляем новое в ltk и все.
+            * 2. bd = ltk, innerid != ''     Соотносим с существующей болванкой, ничего не добавляем.
+            * 3. bd=ip, innerid = ''         Создаем в ltk болванку, создаем в ip новое и соотносим с ней.
+            * 4. bd=ip, innerid = !''        Создаем в ip новое и cоотносим с существующим в ltk.
+            */
 
     //Если $database = 'ltk'
     if($_POST['db'] == 'ltk'){
-        if(isset($_POST['innerid'])){
-            //Соотносим с болванкой
+        if($innerid == ''){
+            //Вариант 1. Добавляем новое в ltk и все.
+
+            $statement = $database->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
+            try {
+                $database->beginTransaction();
+                $statement->execute(array($thename));
+                $theID = $database->lastInsertId();
+
+                if($table =="trades"){
+                    $insert_sql = "INSERT INTO `$table`(`$nameid_column`,`$uid_column`,`onec_id`,`tare`) VALUES(?,?,?,?)";
+                    $var_array = array($theID,$uid,$onec_id,$thetare);
+                }else{
+                    $insert_sql = "INSERT INTO `$table`(`$nameid_column`,`$uid_column`,`onec_id`) VALUES(?,?,?)";
+                    $var_array = array($theID,$uid,$onec_id,);
+                }
+
+                $statement = $database->prepare($insert_sql);
+                $statement->execute($var_array);
+
+                $database->commit();
+
+            } catch( PDOException $Exception ) {
+                $database->rollback();
+                throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+            }
+            echo "Вариант 1. Получилось! Добавлена запись $thename в таблицу $table.";
 
         }else{
-            //Добавляем новое
+            //Вариант 2. Соотносим с существующей болванкой, ничего не добавляем.
+            $statement = $pdo->prepare("UPDATE `$table` SET `$uid_column` = ?,`onec_id` = ? WHERE `$id_column` = ?");
 
+            try {
+                $pdo->beginTransaction();
+
+                $statement->execute(array($uid,$onec_id,$innerid));
+
+                $pdo->commit();
+
+            } catch( PDOException $Exception ) {
+                $pdo->rollback();
+                throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+            }
+            echo "Вариант 2. Соотнесение с существующей болванкой прошло успешно!";
         }
     }
-
     //Если $database = 'ip'
     if($_POST['db'] == 'ip'){
-        if(isset($_POST['innerid'])){
-            //Соотносим с ltk
+        if($innerid == ''){
+            //Вариант 3. Создаем в ltk болванку, создаем в ip новое и соотносим с ней.
+            //Добавляем в ltk болванку
+            $statement = $pdo->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
+            try {
+                $pdo->beginTransaction();
+                $statement->execute(array($thename));
+                $theID = $pdo->lastInsertId();
 
+                if($table =="trades"){
+                    $insert_sql = "INSERT INTO `trades`(`trades_nameid`,`ip_uid`,`tare`) VALUES(?,?,?)";
+                    $var_array = array($theID,$uid,$thetare);
+                }else{
+                    $insert_sql = "INSERT INTO `$table`(`$nameid_column`,`ip_uid`) VALUES(?,?)";
+                    $var_array = (array($theID,$uid));
+                }
+
+                $statement = $pdo->prepare($insert_sql);
+                $statement->execute($var_array);
+                $pdo->commit();
+            } catch( PDOException $Exception ) {
+                $pdo->rollback();
+                throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+            }
+
+                //Болванка добавлена. Теперь можно и в ip базу добавить
+            try {
+                $pdoip->beginTransaction();
+
+                $statement = $pdoip->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
+                $statement->execute(array($thename));
+                $theID = $pdoip->lastInsertId();
+
+                if($table =="trades"){
+                    $ip_insert_sql = "INSERT INTO `trades`(`trades_nameid`,`trades_uid`,`onec_id`,`tare`) VALUES(?,?,?,?)";
+                    $ip_var_array = array($theID,$uid,$onec_id,$thetare);
+                }else{
+                    $ip_insert_sql = "INSERT INTO `$table`(`$nameid_column`,`$uid_column`,`onec_id`) VALUES(?,?,?)";
+                    $ip_var_array = (array($theID,$uid,$onec_id));
+                }
+
+                $statement = $pdoip->prepare($ip_insert_sql);
+                $statement->execute($ip_var_array);
+                $pdoip->commit();
+
+            } catch( PDOException $Exception ) {
+                $pdoip->rollback();
+                throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+            }
+            echo "Вариант 3. Создали в ltk болванку, создали в ip новое и соотнесли с ней.";
         }else{
-            //Добавляем новое и болванку
+            //Вариант 4. Создаем в ip новое и cоотносим с существующим в ltk.
+            //Создаем в ip
+            try {
+                $pdoip->beginTransaction();
 
+                $statement = $pdoip->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
+                $statement->execute(array($thename));
+                $theID = $pdoip->lastInsertId();
+
+                if($table =="trades"){
+                    $ip_insert_sql = "INSERT INTO `trades`(`trades_nameid`,`trades_uid`,`onec_id`,`tare`) VALUES(?,?,?,?)";
+                    $ip_var_array = array($theID,$uid,$onec_id,$thetare);
+                }else{
+                    $ip_insert_sql = "INSERT INTO `$table`(`$nameid_column`,`$uid_column`,`onec_id`) VALUES(?,?,?)";
+                    $ip_var_array = (array($theID,$uid,$onec_id));
+                }
+
+                $statement = $pdoip->prepare($ip_insert_sql);
+                $statement->execute($ip_var_array);
+                $pdoip->commit();
+
+            } catch( PDOException $Exception ) {
+                $pdoip->rollback();
+                throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+            }
+            //Соотносим с ltk
+            try {
+                $pdo->beginTransaction();
+
+                    $ip_insert_sql = "UPDATE `$table` SET `ip_uid` = ? WHERE $id_column = ?";
+                    $ip_var_array = array($uid,$innerid);
+
+                $pdo->commit();
+
+            } catch( PDOException $Exception ) {
+                $pdo->rollback();
+                throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+            }
+            echo "Вариант 4. Создали в ip новое и cоотнесли с существующим в ltk.";
         }
     }
-
-    if(isset($_POST['innerid'])){
-        $innerid = $_POST['innerid'];
-        $ltk_sync_ip = $pdo->prepare("UPDATE `$table` SET ip_uid = ? WHERE `$id_column` = ?");
-    }/*else{}*/
-
-    /**//////////////////////////////////////////////////////////////
-    $statement = $database->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
-    try {
-        $database->beginTransaction();
-        $statement->execute(array($thename));
-        $theID = $database->lastInsertId();
-
-        $statement = $database->prepare("INSERT INTO `$table`(`$nameid_column`,`$uid_column`,`onec_id`) VALUES(?,?,?)");
-        $statement->execute(array($theID,$uid,$onec_id));
-
-        $ltk_sync_ip->execute(array($uid, $innerid));
-
-        $database->commit();
-
-    } catch( PDOException $Exception ) {
-        $database->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
-    }
-    echo "Получилось! Добавлена запись $thename в таблицу $table.";
 };
-
-//ДОБАВЛЕНИЕ БОЛВАНКИ ПОСТАВЩИКА/ПОКУПАТЕЛЯ//////////////////////////////////////////////////
-if(isset($_POST['table_c']) && isset($_POST['bolv_name']) && isset($_POST['ip_uid'])){
-
-    $table_c = $_POST['table_c'];
-    switch($table_c){
-        case 1:
-            $table = 'byers';
-            break;
-        case 2:
-            $table = 'sellers';
-            break;
-    }
-
-    $nameid_column = $table . '_nameid';
-    $thename = $_POST['bolv_name'];
-    $id_column = $table . '_id';
-    $ip_uid = $_POST['ip_uid'];
-
-    /*Добавляем в ltk болванку*//////////////////////////////////////////////////////////////
-    $statement = $pdo->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
-    try {
-        $pdo->beginTransaction();
-        $statement->execute(array($thename));
-        $theID = $pdo->lastInsertId();
-
-        $statement = $pdo->prepare("INSERT INTO `$table`(`$nameid_column`,`ip_uid`) VALUES(?,?)");
-        $statement->execute(array($theID,$ip_uid));
-        $pdo->commit();
-
-        echo $theID;
-
-    } catch( PDOException $Exception ) {
-        $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
-    }
-};
-///////////////////////////////////////////////////////////////////////
-
-//ДОБАВЛЕНИЕ БОЛВАНКИ ТОВАРА//////////////////////////////////////////////////
-if(isset($_POST['bolv_name']) && isset($_POST['bolv_tare']) && isset($_POST['ip_uid']) && isset($_POST['onec_id'])){
-
-    $table = 'trades';
-    $nameid_column = $table . '_nameid';
-    $thename = $_POST['bolv_name'];
-    $thetare = $_POST['bolv_tare'];
-    $id_column = $table . '_id';
-    $ip_uid = $_POST['ip_uid'];
-    $onec_id = $_POST['onec_id'];
-
-    /*Добавляем в ltk болванку*//////////////////////////////////////////////////////////////
-    $statement = $pdo->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
-    try {
-        $pdo->beginTransaction();
-        $statement->execute(array($thename));
-        $theID = $pdo->lastInsertId();
-
-        $statement = $pdo->prepare("INSERT INTO `$table`(`$nameid_column`,`ip_uid`,`tare`) VALUES(?,?,?)");
-        $statement->execute(array($theID,$ip_uid,$thetare));
-        $pdo->commit();
-
-        //Болванка добавлена. Теперь можно и в ip базу засунуть новый товар.
-        /*$pdoip->beginTransaction();
-
-        $statement = $pdoip->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
-        $statement->execute(array($thename));
-        $theID = $pdoip->lastInsertId();
-
-        $statement = $pdoip->prepare("INSERT INTO `$table`(`$nameid_column`,`onec_id`,`trades_uid`,`tare`) VALUES(?,?,?,?)");
-        $statement->execute(array($theID,$onec_id,$ip_uid,$thetare));
-        $pdoip->commit();*/
-
-        echo $theID;
-
-    } catch( PDOException $Exception ) {
-        $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
-    }
-};
-///////////////////////////////////////////////////////////////////////
-
-//ДОБАВЛЕНИЕ ТОВАРА////////////////////////////////////////////////////
-if(isset($_POST['trade_name']) && isset($_POST['trade_tare']) && isset($_POST['uid']) && isset($_POST['onec_id'])){
-
-    $trade_name = $_POST['trade_name'];
-    $trade_tare = $_POST['trade_tare'];
-    $uid = $_POST['uid'];
-    $onec_id = $_POST['onec_id'];
-
-    if(isset($_POST['innerid']) && $_POST['db'] == "ip"){
-        $innerid = $_POST['innerid'];
-        $ltk_sync_ip = $pdo->prepare("UPDATE trades SET ip_uid = ? WHERE trades_id = ?");
-    }
-
-
-    $statement = $database->prepare("INSERT INTO `allnames`(`name`) VALUES(?)");
-    try {
-        $database->beginTransaction();
-        $statement->execute(array($trade_name));
-
-        $theID = $database->lastInsertId();
-
-        $statement = $database->prepare("INSERT INTO `trades`(`trades_nameid`,`tare`,`trades_uid`,`onec_id`) VALUES(?,?,?,?)");
-        $statement->execute(array($theID,$trade_tare,$uid,$onec_id));
-
-        $ltk_sync_ip->execute(array($uid, $innerid));
-
-        unset($uid, $onec_id);
-
-        $database->commit();
-
-    } catch( PDOException $Exception ) {
-        $database->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
-    }
-
-    echo "Добавлен товар $thename.";
-};
-///////////////////////////////////////////////////////////////////////
 
 //ДОБАВЛЕНИЕ заявки из окна списка заявок///////////////////////////////////////////////////
 if(isset($_POST['byer']) && isset($_POST['thename'])){
