@@ -20,10 +20,10 @@ if(isset($_POST['table_c']) && isset($_POST['thename']) && isset($_POST['uid']) 
     }
 
     $nameid_column = $table . '_nameid';
-    $thename = $_POST['thename'];
-    $uid = $_POST['uid'];
     $uid_column = $table . '_uid';
     $id_column = $table . '_id';
+    $thename = $_POST['thename'];
+    $uid = $_POST['uid'];
     $onec_id = $_POST['onec_id'];
     $innerid = $_POST['innerid'];
 
@@ -118,7 +118,7 @@ if(isset($_POST['table_c']) && isset($_POST['thename']) && isset($_POST['uid']) 
                 $statement->execute(array($thename));
                 $theID = $pdoip->lastInsertId();
 
-                if($table =="trades"){
+                if($table == "trades"){
                     $ip_insert_sql = "INSERT INTO `trades`(`trades_nameid`,`trades_uid`,`onec_id`,`tare`) VALUES(?,?,?,?)";
                     $ip_var_array = array($theID,$uid,$onec_id,$thetare);
                 }else{
@@ -145,7 +145,7 @@ if(isset($_POST['table_c']) && isset($_POST['thename']) && isset($_POST['uid']) 
                 $statement->execute(array($thename));
                 $theID = $pdoip->lastInsertId();
 
-                if($table =="trades"){
+                if($table == "trades"){
                     $ip_insert_sql = "INSERT INTO `trades`(`trades_nameid`,`trades_uid`,`onec_id`,`tare`) VALUES(?,?,?,?)";
                     $ip_var_array = array($theID,$uid,$onec_id,$thetare);
                 }else{
@@ -167,6 +167,9 @@ if(isset($_POST['table_c']) && isset($_POST['thename']) && isset($_POST['uid']) 
 
                     $ip_insert_sql = "UPDATE `$table` SET `ip_uid` = ? WHERE $id_column = ?";
                     $ip_var_array = array($uid,$innerid);
+
+                $statement = $pdo->prepare($ip_insert_sql);
+                $statement->execute($ip_var_array);
 
                 $pdo->commit();
 

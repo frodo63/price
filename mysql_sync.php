@@ -244,8 +244,6 @@ if(isset($_POST['sync_file'])){
                 $file_array = file($path); // Считывание файла в массив $file_array
                 if (count($file_array) > 0);
                 echo"<p>Файл выгружен в массив: </p>";
-                echo"<p>Функция Соотнести проверяет, есть ли в ltk базе покупатель из ip базы. Чтобы при добавлении в ip базу покупателя, поставщика или товара в ltk базу попадала информация об имени этого итема в базу ip. Чтобы была возможность искать одновремено в двух базах.</p>";
-
                 $gotuid = $database->prepare("SELECT `byers_uid` FROM `byers` WHERE `byers_uid` = ?");
 
 
@@ -340,8 +338,6 @@ if(isset($_POST['sync_file'])){
                 $file_array = file($path); // Считывание файла в массив $file_array
                 if (count($file_array) > 0);
                 echo"<p>Файл выгружен в массив: </p>";
-                echo"<p>Функция Соотнести проверяет, есть ли в ltk базе поставщик из ip базы. Чтобы при добавлении в ip базу покупателя, поставщика или товара в ltk базу попадала информация об имени этого итема в базу ip. Чтобы была возможность искать одновремено в двух базах.</p>";
-
 
                 $gotuid = $database->prepare("SELECT `sellers_uid` FROM `sellers` WHERE `sellers_uid` = ?");
 
@@ -453,8 +449,6 @@ if(isset($_POST['sync_file'])){
                 $file_array = file($path); // Считывание файла в массив $file_array
                 if (count($file_array) > 0);
                 echo"<p>Файл выгружен в массив: </p>";
-                echo"<p>Функция Соотнести проверяет, есть ли в ltk базе товар из ip базы. Чтобы при добавлении в ip базу покупателя, поставщика или товара в ltk базу попадала информация об имени этого итема в базу ip. Чтобы была возможность искать одновремено в двух базах.</p>";
-
 
                 $gotuid = $database->prepare("SELECT trades_uid, tare FROM trades WHERE trades_uid = ?");
 

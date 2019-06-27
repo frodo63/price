@@ -146,111 +146,6 @@ $(document).ready(function(){
 
         //Добавляем товар?
         }
-        //Добавляем товар?
-        else if(table_name == 'trades'){
-            var trade_name = $(event.target).siblings('.add_trade_name').val();
-            var trade_tare = $(event.target).siblings('.add_trade_tare').val();
-            var uid = $(event.target).attr('uid');
-            var onec_id = $(event.target).attr('onec_id');
-            var db = $(event.target).attr('database');
-            var innerid = $(event.target).attr('innerid'); //Результат соотнесения
-            if(db == 'ip'){table_name = 'ip_'+table_name}//только ради рефреш клика
-
-            /*Общий принцип Соотнесения двух баз:
-            * Есть 4 варианта ситуации:
-            * 1. bd = ltk, innerid = ''      Добавляем новое в ltk и все.
-            * 2. bd = ltk, innerid != ''     Соотносим с существующей болванкой, ничего не добавляем.
-            * 3. bd=ip, innerid = ''         Создаем в ltk болванку, создаем в ip новое и соотносим с ней.
-            * 4. bd=ip, innerid = !''        Создаем в ip новое и cоотносим с существующим в ltk.
-            */
-            switch (db) {
-                case 'ltk':
-                    if(innerid === '') {
-                        console.log("Вариант 1. Добавляем новое в ltk и все.");
-                        $.ajax({
-                            url: 'mysql_insert.php',
-                            method: 'POST',
-                            data: {trade_name:trade_name, trade_tare:trade_tare, uid:uid, onec_id:onec_id, db:db},
-                            success: function (data) {
-                                $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
-                                $('.add_trade_name').val('').focus();
-                                $('.add_trade_tare').val('штука');
-                                $(event.target).prop('disabled',true);
-                                $(event.target).attr({uid:'',onec_id:'',innerid:''});
-                                if($(event.target).parents('#sync_add_to_base')){
-                                    $('#sync_'+table_name).trigger("click");
-                                }
-                            }
-                        });
-                    }else{
-                        console.log("Вариант 2. Соотносим с существующей болванкой, ничего не добавляем.");
-                        $.ajax({
-                            url: 'mysql_insert.php',
-                            method: 'POST',
-                            data: {sync_bolv_name:trade_name, sync_bolv_trade_tare:trade_tare, sync_bolv_uid:uid, sync_bolv_onec_id:onec_id, db:db},
-                            success: function (data) {
-                                $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
-                                $('.add_trade_name').val('').focus();
-                                $('.add_trade_tare').val('штука');
-                                $(event.target).prop('disabled',true);
-                                $(event.target).attr({uid:'',onec_id:'',innerid:''});
-                                if($(event.target).parents('#sync_add_to_base')){
-                                    $('#sync_'+table_name).trigger("click");
-                                }
-                            }
-                        });
-                    }
-                    break;
-                case 'ip':
-                    if(innerid === '') {
-                        if (confirm('Занести в базу Лубритэк болванку?')){
-                            console.log('Вариант 3. Создаем в ltk болванку, создаем в ip новое и соотносим с ней.');
-                            $.ajax({
-                                url: 'mysql_insert.php',
-                                method: 'POST',
-                                data: {bolv_name:trade_name, bolv_tare:trade_tare, ip_uid:uid, db:db},
-                                success: function (data) {
-                                    console.log(data);
-                                    $.ajax({
-                                        url: 'mysql_insert.php',
-                                        method: 'POST',
-                                        data: {trade_name:trade_name, trade_tare:trade_tare, uid:uid, onec_id:onec_id, db:db, innerid:data}
-                                    })
-                                },complete: function () {
-                                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
-                                    $('.add_trade_name').val('').focus();
-                                    $('.add_trade_tare').val('штука');
-                                    $(event.target).prop('disabled',true);
-                                    $(event.target).attr({uid:'',onec_id:'',innerid:''});
-                                    if($(event.target).parents('#sync_add_to_base')){
-                                        $('#sync_'+table_name).trigger("click");
-                                    }
-                                }
-                            });
-                        }
-                    }else{
-                        console.log("Вариант 4. Создаем в ip новое и cоотносим с существующим в ltk.");
-                        $.ajax({
-                            url: 'mysql_insert.php',
-                            method: 'POST',
-                            data: {trade_name:trade_name, trade_tare:trade_tare, uid:uid, onec_id:onec_id, innerid:innerid, db:db},
-                            success: function (data) {
-                                $('#editmsg').css("display", "block").delay(2000).slideUp(300).html(data);
-                                $('.add_trade_name').val('').focus();
-                                $('.add_trade_tare').val('штука');
-                                $(event.target).prop('disabled',true);
-                                $(event.target).attr({uid:'',onec_id:'',innerid:''});
-                            },
-                            complete: function() {
-                                if($(event.target).parents('#sync_add_to_base')){
-                                    $('#sync_'+table_name).trigger("click");
-                                }
-                            }
-                        });
-                    }
-                    break;
-            }
-        }
         //Добавляем платежку?
         else if(table_name == 'payments'){
             //Добавление из окна синхронизации
@@ -292,6 +187,7 @@ $(document).ready(function(){
 
 
         }
+        //Добавляем товар/покупателя/поставщика
         else{
             var db = $(event.target).attr('database');
             if(db == 'ip'){table_name = 'ip_'+table_name}//только ради рефреш клика
@@ -311,55 +207,6 @@ $(document).ready(function(){
             * 4. bd=ip, innerid = !''        Создаем в ip новое и cоотносим с существующим в ltk.
             */
 
-
-                if(thename!=''){
-                    if(innerid === '') {
-                        if (confirm('Занести в базу Лубритэк болванку?')){
-                            console.log('bolvanka time');
-                           $.ajax({
-                                url: 'mysql_insert.php',
-                                method: 'POST',
-                                data: {bolv_name:thename, ip_uid:uid, db:db, table_c:table_c, onec_id:onec_id},
-                                success: function (data) {
-                                    console.log(data);
-                                    $.ajax({
-                                        url: 'mysql_insert.php',
-                                        method: 'POST',
-                                        data:{table_c:table_c, thename:thename, uid:uid, onec_id:onec_id, db:db, innerid:data}
-                                    })
-                                },complete: function () {
-                                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
-                                    $('.add_trade_name').val('').focus();
-                                    $(event.target).prop('disabled',true);
-                                    $(event.target).attr('uid','');
-                                    $(event.target).attr('onec_id','');
-                                    $(event.target).attr('innerid','');
-                                    if($(event.target).parents('#sync_add_to_base')){
-                                        $('#sync_'+table_name).trigger("click");
-                                    }
-                                }
-                            });
-
-                        }
-                    }else{
-                        console.log("Ушел на инсерт аякс с норм добавлением");
-                        $.ajax({
-                            url: 'mysql_insert.php',
-                            method: 'POST',
-                            data: {table_c:table_c, thename:thename, uid:uid, onec_id:onec_id, db:db, innerid:innerid},
-                            success: function (data) {
-                                $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
-                                $('#creates input[type=\'text\']').val('');
-                            },
-                            complete: function() {
-                                if($(event.target).parents('#sync_add_to_base')){
-                                    $('#sync_'+table_name).trigger("click");
-                                }
-                            }
-                        })
-                    }
-                } else {alert("Введите имя")}
-
             switch (db) {
                 case 'ltk':
                     if(innerid === '') {
@@ -367,7 +214,7 @@ $(document).ready(function(){
                         $.ajax({
                             url: 'mysql_insert.php',
                             method: 'POST',
-                            data: {thename:thename, thetare:thetare, uid:uid, onec_id:onec_id, db:db, innerid:innerid},
+                            data: {table_c:table_c, thename:thename, thetare:thetare, uid:uid, onec_id:onec_id, db:db, innerid:innerid},
                             success: function (data) {
                                 $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                                 $('#sync_add_to_base input[type=\'text\']').val('');
@@ -384,7 +231,7 @@ $(document).ready(function(){
                         $.ajax({
                             url: 'mysql_insert.php',
                             method: 'POST',
-                            data: {thename:thename, thetare:thetare, uid:uid, onec_id:onec_id, db:db, innerid:innerid},
+                            data: {table_c:table_c, thename:thename, thetare:thetare, uid:uid, onec_id:onec_id, db:db, innerid:innerid},
                             success: function (data) {
                                 $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                                 $('#sync_add_to_base input[type=\'text\']').val('');
@@ -405,7 +252,7 @@ $(document).ready(function(){
                             $.ajax({
                                 url: 'mysql_insert.php',
                                 method: 'POST',
-                                data: {thename:thename, thetare:thetare, uid:uid, onec_id:onec_id, db:db, innerid:innerid},
+                                data: {table_c:table_c, thename:thename, thetare:thetare, uid:uid, onec_id:onec_id, db:db, innerid:innerid},
                                 success: function (data) {
                                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                                     $('#sync_add_to_base input[type=\'text\']').val('');
@@ -420,10 +267,16 @@ $(document).ready(function(){
                         }
                     }else{
                         console.log("Вариант 4. Создаем в ip новое и cоотносим с существующим в ltk.");
+                        /*console.log(thename);
+                        console.log(thetare);
+                        console.log(uid);
+                        console.log(onec_id);
+                        console.log(db);
+                        console.log(innerid);*/
                         $.ajax({
                             url: 'mysql_insert.php',
                             method: 'POST',
-                            data: {thename:thename, thetare:thetare, uid:uid, onec_id:onec_id, db:db, innerid:innerid},
+                            data: {table_c:table_c, thename:thename, thetare:thetare, uid:uid, onec_id:onec_id, db:db, innerid:innerid},
                             success: function (data) {
                                 $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                                 $('#sync_add_to_base input[type=\'text\']').val('');
