@@ -146,11 +146,11 @@ if (isset($_POST['post_trade_hist']) && isset($_POST['trade_posid_hist'])){
     $posid = $_POST['trade_posid_hist'];
 
     try{
-        $get_uid=$pdo->prepare("SELECT trades_uid FROM trades WHERE trades_id = ?");
-        $get_purchases = $pdo->prepare("SELECT * FROM purchases WHERE trade_uid = ? ORDER BY incdoc_date DESC LIMIT 10");
-        $getname_trade = $pdo->prepare("SELECT name FROM trades LEFT JOIN allnames ON trades.trades_nameid = allnames.nameid WHERE trades_id = ?");
-        $getname_seller = $pdo->prepare("SELECT name FROM sellers LEFT JOIN allnames ON sellers.sellers_nameid = allnames.nameid WHERE sellers_uid = ?");
-        $get_position_data = $pdo->prepare("SELECT purchased, purchase_id FROM req_positions WHERE req_positionid = ?");
+        $get_uid=$pdo->prepare("SELECT trades_uid FROM trades WHERE trades_id = ?");//Идентифицируем товар
+        $getname_trade = $pdo->prepare("SELECT name FROM trades LEFT JOIN allnames ON trades.trades_nameid = allnames.nameid WHERE trades_id = ?");//Имя товара
+        $get_purchases = $pdo->prepare("SELECT * FROM purchases WHERE trade_uid = ? ORDER BY incdoc_date DESC LIMIT 10");//Показываем 10 последних закупок с этим товаром
+        $getname_seller = $pdo->prepare("SELECT name FROM sellers LEFT JOIN allnames ON sellers.sellers_nameid = allnames.nameid WHERE sellers_uid = ?");//Из закупки берем uid поставщика и получаем его имя
+        $get_position_data = $pdo->prepare("SELECT purchased, purchase_id FROM req_positions WHERE req_positionid = ?");//Получаем данные по привязанным закупкам у текущей позиции
 
 
         $pdo->beginTransaction();
@@ -194,7 +194,8 @@ if (isset($_POST['post_trade_hist']) && isset($_POST['trade_posid_hist'])){
                 $result .="<td>".$seller."</td>";
                 $result .="<td>".$pur['kol']."</td>";
                 $result .="<td>".number_format($pur['price'],2,'.',' ')."</td>";
-                $result .="<td><input type='button' value='+' class='attach_pur' date='".$pur['incdoc_date']."' pur_id='".$pur['purchases_id']."'></td>";
+                /*TODO: СДЕЛАТЬ автоматическое определение database. Времено вручную вбил ltk*/
+                $result .="<td><input type='button' value='+' class='attach_pur' date='".$pur['incdoc_date']."' pur_id='".$pur['purchases_id']."'database = 'ltk'></td>";
                 $result .="</tr>";
         }
 

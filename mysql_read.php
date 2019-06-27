@@ -298,7 +298,7 @@ if(isset($_POST['table'])){
                 <div class='add-pos-inputs'>
                 <input type='text' class='trade' name='new_req_name' placeholder='Название позиции' size='50'>
                 <div class='sres'></div>
-                <input type='button' name =" . $row['req_id'] . " value='Добавить' class='addpos'>
+                <input type='button' name =" . $row['req_id'] . " value='Добавить' class='addpos' database='ltk'>
             </div>
             
             <div class='positions'></div>
@@ -560,12 +560,12 @@ if(isset($_POST['table'])){
         /**//////////////////////////////////////////////////////////////ЧТЕНИЕ СПИСКА ЗАЯВОК
     }
     else if(($table == 'byers')) {
-        /**//////////////////////////////////////////////////////////////ЧТЕНИЕ ПОКУПАТЕЛИ/ПОСТАВЩИКИ/ТОВАРЫ
+        /**//////////////////////////////////////////////////////////////ЧТЕНИЕ ПОКУПАТЕЛИ
         try {
 
-            $statement = $pdo->prepare("SELECT name, byers_id, nameid, ov_tp, ov_firstobp, ov_wt, comment  FROM $table  LEFT JOIN `allnames` ON allnames.nameid=$table.$tablenid GROUP BY name");
+            $statement = $pdo->prepare("SELECT name, byers_id, nameid, ov_tp, ov_firstobp, ov_wt, comment, onec_id, ip_uid  FROM $table  LEFT JOIN `allnames` ON allnames.nameid=$table.$tablenid GROUP BY name");
             $statement->execute();
-            $result = "<table><thead><tr><th>Покупатель</th><th>%</th><th>Обн</th><th>Отсрочка</th><th>Коммент</th><th>Опции</th></tr></thead>";
+            $result = "<table><thead><tr><th>Покупатель</th><th>%</th><th>Обн</th><th>Отсрочка</th><th>Коммент</th><th>Номер в 1С</th><th>Соотнесение</th><th>Опции</th></tr></thead>";
             foreach ($statement as $row)
             {
                 $result .= "<tr><td category='" . $table . "' name =" . $row['nameid'] . ">";
@@ -573,7 +573,9 @@ if(isset($_POST['table'])){
                                 <td class='ov_tp'><span>" . $row['ov_tp'] . "<span/></td>
                                 <td class='ov_firstobp'><span>" . $row['ov_firstobp'] . "<span/></td>
                                 <td class='ov_wt'><span>" . $row['ov_wt'] . "<span/></td>
-                                <td class='comment'><span>" . $row['comment'] . "<span/></td>
+                                <td class='comment'><span>" . $row['comment'] . "<span/></td>";
+                $result .= "<td class='onec_id'><span>" . $row['onec_id'] . "<span/></td>
+                <td class='synced'><span>" . $row['ip_uid'] . "<span/></td>
                 <td class = 'item_buttons'>
          <input type='button' name =" . $row['nameid'] . " value='R' class='edit'>
          <input type='button' name =" . $row['nameid'] . " value='X' class='delete'></td></tr>";
@@ -584,7 +586,7 @@ if(isset($_POST['table'])){
 
 
 
-        } catch(PDOExecption $e) {
+        } catch(PDOExeption $e) {
             $pdo->rollback();
             print "Error!: " . $e->getMessage() . "</br>";
         }
@@ -775,14 +777,20 @@ if(isset($_POST['table'])){
     else if ($table == 'trades'){
         try {
 
-            $statement = $pdo->prepare("SELECT `trades_id`,`nameid`,`name`,`tare` FROM `trades` LEFT JOIN `allnames` ON allnames.nameid=`trades`.`trades_nameid`");
+            $statement = $pdo->prepare("SELECT `trades_id`,`nameid`,`name`,`tare`,`onec_id`,`ip_uid` FROM `trades` LEFT JOIN `allnames` ON allnames.nameid=`trades`.`trades_nameid`");
             $statement->execute();
-            $result = "<table><thead><tr><th>Наименование</th><th>Тип тары</th><th></th></tr></thead>";
+            $result = "<table><thead><tr><th>Наименование</th><th>Тип тары</th><th>Номер в 1С</th><th>Соотнесение</th><th></th></tr></thead>";
             foreach ($statement as $row)
             {
                 $result .= "<tr><td category='trades' name =" . $row['nameid'] . ">";
                 $result .= "<span class='trade_name' tradeid=" . $row['trades_id'] . " name =" . $row['nameid'] . ">" . $row['name'] . "</span></td>
-                                <td class='trade_tare' tradeid=" . $row['trades_id'] . "><span>" . $row['tare'] . "<span/></td>
+                                <td class='trade_tare' tradeid=" . $row['trades_id'] . "><span>" . $row['tare'] . "<span/></td>";
+
+                if($row['onec_id']){
+                    $result .= "<td class='trade_onec_id'><span>" . $row['onec_id'] . "<span/></td>";
+                }else{$result .= "<td class='trade_onec_id'><span style='color: grey'>Болванка<span/></td>";}
+
+                $result .= "<td class='trade_synched'><span>" . $row['ip_uid'] . "<span/></td>
                 <td class = 'item_buttons'>
          <input type='button' name =" . $row['nameid'] . " tradeid =" . $row['trades_id'] . " value='E' class='edit_options_trade'>
          <input type='button' name =" . $row['nameid'] . " value='X' class='delete'></td></tr>";
@@ -793,7 +801,7 @@ if(isset($_POST['table'])){
 
 
 
-        } catch(PDOExecption $e) {
+        } catch(PDOExeption $e) {
             $pdo->rollback();
             print "Error!: " . $e->getMessage() . "</br>";
         }

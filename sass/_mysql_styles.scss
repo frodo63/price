@@ -672,14 +672,16 @@ tr[pricingid] td {border: 1px solid black}
 .ga_byer_requests {
   display: none;
   table{
+    tr[ga_request]{border-bottom: 1px solid grey}
     text-align: center;
     td:nth-child(3){text-align: left}
     th:nth-child(1){width: 6%}
     th:nth-child(2){width: 7%}
     th:nth-child(3){width: 2%}
-    th:nth-child(4){width: 5%}
+    th:nth-child(4){width: 7%}
     th:nth-child(5){width: 5%}
-    th:nth-child(6){width: 10%}
+    th:nth-child(6){width: 5%}
+    th:nth-child(7){width: 10%}
   }
 }
 
@@ -905,11 +907,18 @@ tr[pricingid] td {border: 1px solid black}
 
 .trades_list{
   table{
-    width:50%;
+    width:60%;
+    td.trade_synched{
+      font-size: 10px;
+      text-align: right;
+    }
+
   }
-  th:nth-child(1){width: 30%}
+  th:nth-child(1){width: 20%}
   th:nth-child(2){width: 5%}
   th:nth-child(3){width: 5%}
+  th:nth-child(4){width: 15%}
+  th:nth-child(5){width: 5%}
   tr:hover{
     td{
       background: green;

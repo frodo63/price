@@ -448,6 +448,8 @@ $(document).ready(function(){
     $(document).off('click.add_pur').on('click.add.pur', '.attach_pur', function (event) {
         var date_to_attach = $(event.target).attr('date');
         var pur_id_to_attach = $(event.target).attr('pur_id');
+        var db = $(event.target).attr('database');
+
 
         if($('#pricingwindow').attr('positionid') == '-'){
             var position_to_attach = $('#pricingwindow').attr('preditposid');
@@ -459,7 +461,7 @@ $(document).ready(function(){
             $.ajax({
                 url: 'mysql_sync.php',
                 method: 'POST',
-                data: {attach_pur_date:date_to_attach, attach_pur_id:pur_id_to_attach, position_to_attach:position_to_attach},
+                data: {attach_pur_date:date_to_attach, attach_pur_id:pur_id_to_attach, position_to_attach:position_to_attach, db:db},
                 success: function (data) {
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                     //отобразить изменившиеся данные

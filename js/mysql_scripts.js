@@ -155,6 +155,7 @@ $(document).ready(function(){
             var onec_id = $(event.target).attr('onec_id');
             var sum = $(event.target).attr('sum');
             var requestid = $(event.target).attr('requestid');
+            var db = $(event.target).attr('database');
 
             console.log(payed);
             console.log(number);
@@ -162,6 +163,7 @@ $(document).ready(function(){
             console.log(onec_id);
             console.log(sum);
             console.log(requestid);
+            console.log(db);
 
             if (requestid=="")
             {
@@ -172,7 +174,7 @@ $(document).ready(function(){
                 $.ajax({
                     url: 'mysql_insert.php',
                     method: 'POST',
-                    data: {number:number, payed:payed, uid:uid, onec_id:onec_id, sum:sum, requestid:requestid},
+                    data: {number:number, payed:payed, uid:uid, onec_id:onec_id, sum:sum, requestid:requestid, db:db},
                     success: function (data) {
                         console.log("Добавлена платежка");
                         $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);

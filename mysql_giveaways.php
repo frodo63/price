@@ -47,9 +47,10 @@ if (isset($_POST['the_byer'])){
         //Определилилсь с $from и $to
 
         $the_byer = $_POST['the_byer'];
-        $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE (requests.byersid = ? AND requests.created BETWEEN ? AND ? AND requests.r1_hidden = 0) ORDER BY created");
+        $reqlist = $pdo->prepare("SELECT created,requests_id,1c_num,name,req_sum,requests_uid FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE (requests.byersid = ? AND requests.created BETWEEN ? AND ? AND requests.r1_hidden = 0) ORDER BY created");
         $req_giveaways = $pdo->prepare("SELECT given_away,giveaways_id,giveaway_sum,comment FROM giveaways WHERE (byersid = ?) AND (given_away BETWEEN ? AND ?) ORDER BY given_away");
         $req_all_payments = $pdo->prepare("SELECT payed FROM payments LEFT JOIN requests ON payments.requestid = requests.requests_id WHERE byersid = ? AND payed BETWEEN ? AND ? ORDER BY payed ASC");
+        $get_executals = $pdo->prepare("SELECT * FROM executes WHERE requests_uid = ?");
         if(isset($_POST['from']) && isset($_POST['to'])){
             $from = $_POST['from'];
             $to = $_POST['to'];
@@ -70,7 +71,7 @@ if (isset($_POST['the_byer'])){
 <input class='filter_date' type='button' value='Отобразить'></div>";
         $result.="<span>Заявки за период c <b>".$from_norm."</b> по <b>".$to_norm."</b></span>.<br><br>";
 
-        $result.="<table><thead><tr><th>Дата</th><th>Номер заказа в 1С</th><th></th><th>Сумма заявки</th><th>Начислено</th><th>Статус заявки</th></tr></thead><tbody>";
+        $result.="<table><thead><tr><th>Дата</th><th>Номер заказа в 1С</th><th>Накладная</th><th></th><th>Сумма заявки</th><th>Начислено</th><th>Статус заявки</th></tr></thead><tbody>";
 
         /*ПЕРЕМЕННЫЕ ИТОГОВЫЕ*/
         /*НА КАЖДОГО ПОКУПАТЕЛЯ У НАС 3 ПЕРЕМЕННЫЕ*/
@@ -88,6 +89,9 @@ if (isset($_POST['the_byer'])){
             $req_payments->execute(array($row['requests_id']));
             $req_payments_fetched = $req_payments->fetchAll(PDO::FETCH_ASSOC);
 
+            $get_executals->execute(array($row['requests_uid']));
+            $get_executals_fetched = $get_executals->fetchAll(PDO::FETCH_ASSOC);
+
             $pdo->commit();
 
             $result.="<tr ga_request='". $row['requests_id'] ."'>";
@@ -96,8 +100,18 @@ if (isset($_POST['the_byer'])){
             $mysqldate = date( 'd.m.y', $phpdate );
             $result.="<td>".$mysqldate."</td>";
             $result.="<td>".$row['1c_num']."</td>";
+
             $result.="<td><input class='collapse_ga_request' ga_request='". $row['requests_id'] ."' type='button' value='♢'>
 <div class='ga_contents' ga_request='". $row['requests_id'] ."'><div class='ga_options'></div><div class='ga_c_payments'></div><div class='ga_c_positions'></div><!--<div class='ga_c_giveaways'></div>--></div></td>";
+
+            $result.="<td>";
+            //Вывести номер и дату накладной реализации
+            if(count($get_executals_fetched) > 0){
+                foreach($get_executals_fetched as $exe){
+                    $result .="<span style='color: green'>".$exe['execute_1c_num']." от ".$exe['executed']."</span><br>";
+                }
+            };
+            $result.="</td>";
 
             /*ПЕРЕМЕННЫЕ НА СТАТУС ЗАКАЗА*/
             /*НА КАЖДЫЙ ЗАКАЗ У НА 3 ПЕРЕМЕННЫЕ*/

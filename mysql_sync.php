@@ -731,6 +731,8 @@ if(isset($_POST['sync_file'])){
                             break;
                     }
 
+                    /*Мехаинзм такой: Если закупка в 1С изменилась - она меняется в базе*/
+
                     $check_purchase = $database->prepare("SELECT purchases_uid FROM purchases WHERE purchases_uid = ? AND line_num = ?");
                     $insert_purchase = $database->prepare("INSERT INTO purchases (
                                                     purchases_uid,
@@ -743,6 +745,14 @@ if(isset($_POST['sync_file'])){
                                                     price,
                                                     sum
 ) VALUES(?,?,?,?,?,?,?,?,?)");
+                    $update_purchase = $database->prepare("UPDATE purchases SET seller_uid=?,
+                                                                                incdoc_num=?,
+                                                                                incdoc_date=?,
+                                                                                line_num=?,
+                                                                                trade_uid=?,
+                                                                                kol=?,
+                                                                                price=?,
+                                                                                sum=? WHERE purchases_uid=?");
 
                     foreach ($file_array as $row){
                         $temp_array = explode(';',$row);
@@ -762,6 +772,9 @@ if(isset($_POST['sync_file'])){
                          * */
                         $check_purchase->execute(array($temp_array[0], $temp_array[4]));
                         $check_purchase_fetched = $check_purchase->fetch(PDO::FETCH_ASSOC);
+
+                        $good_date = substr($temp_array[2],6,4 )."-".substr($temp_array[2],3,2)."-".substr($temp_array[2],0,2);
+
                         if(!$check_purchase_fetched['purchases_uid']){
 
                             //uid заказа поставщику
@@ -769,7 +782,7 @@ if(isset($_POST['sync_file'])){
                             //uid поставщика
                             $temp_array[1];
                             //ДатаВходящегоДокумента
-                            $temp_array[2] = substr($temp_array[2],6,4 )."-".substr($temp_array[2],3,2)."-".substr($temp_array[2],0,2);
+                            $good_date;
                             //№ВходящегоДокумента
                             $temp_array[3];
                             //Номер строки
@@ -783,7 +796,9 @@ if(isset($_POST['sync_file'])){
                             //сумма
                             $temp_array[8];
 
-                         $insert_purchase->execute(array($temp_array[0],$temp_array[1],$temp_array[3],$temp_array[2],$temp_array[4],$temp_array[5],$temp_array[6],$temp_array[7],$temp_array[8]));
+                         $insert_purchase->execute(array($temp_array[0],$temp_array[1],$temp_array[3],$good_date,$temp_array[4],$temp_array[5],$temp_array[6],$temp_array[7],$temp_array[8]));
+                        }else{
+                            $update_purchase->execute(array($temp_array[1],$temp_array[3],$good_date,$temp_array[4],$temp_array[5],$temp_array[6],$temp_array[7],$temp_array[8],$temp_array[0]));
                         }
                     }
                     echo"Закупки пройдены.";

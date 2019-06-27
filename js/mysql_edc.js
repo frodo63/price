@@ -6,7 +6,7 @@ $(document).ready(function() {
     });
 
     /*СКРЫВАНИЕ дива дополнения позиции*/
-    $(document).off('click.addpos').on('click.addpos', '.add_pos', function (event) {
+    $(document).off('click.add_pos_ramk').on('click.add_pos_ramk', '.add_pos', function (event) {
         $(event.target).next('.add-pos-inputs').toggle().toggleClass('add_ramk');
         $(event.target).next('.add_ramk').children('input[type="text"]').focus();
 
@@ -203,19 +203,19 @@ $(document).ready(function() {
 
 
 //Добавление позиции в таблицу positions
-    $(document).off('click.ap').on('click.ap', 'input.addpos', function(event){
+    $(document).off('click.ap').on('click.ap', '.add-pos-inputs input[type=button].addpos', function(event){
 //Добавление позиции из окна синхронизации
         if(
-            $(event.target).parents('#sync_add_to_base')
+            $(event.target).parents('#sync_add_to_base')//Работает на оба случая. Нехорошо
         ){
             var reqid = $(event.target).attr('requestid');
             var posname = $(event.target).attr('posname');
             var linenum = $(event.target).attr('linenum');
             var db = $('input[type=button].green').attr('database');
 
+            console.log('what?');
 
             if(posname!=''){
-
                 $.ajax({
                     url: 'mysql_insert.php',
                     method: 'POST',
@@ -253,11 +253,13 @@ $(document).ready(function() {
         }else{//ДОбавление позиции из списка заявок
             var reqid = $(event.target).attr("name");
             var posname = $(event.target).siblings('input[type="text"]').val();
+            var db = $(event.target).attr('database');
+            console.log(reqid+''+posname+''+db);
             if(posname!=''){
                 $.ajax({
                     url: 'mysql_insert.php',
                     method: 'POST',
-                    data: {reqid:reqid, posname:posname},
+                    data: {reqid:reqid, posname:posname, db:db},
                     success: function (data) {
                         $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                         $('td input[type=\'text\']').val('');
