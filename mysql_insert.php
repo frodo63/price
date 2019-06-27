@@ -293,23 +293,16 @@ if(isset($_POST['reqid']) && isset($_POST['posname'])){
         $line_num_array = $line_num_check->fetch();
         $line_num = ++$line_num_array['COUNT(*)'];
 
-        $statement->bindParam(1, $posname);
-        $statement->bindParam(2, $reqid);
-        $statement->bindParam(3, $line_num);
-
         echo "Строк :" . $line_num;
-        $statement->execute();
+        $statement->execute(array($posname,$reqid,$line_num));
         $database->commit();
+        echo "Получилось! Добавлена запись $posname в заявку $reqid.";
 
-    } catch( PDOException $Exception ) {
-        // Note The Typecast To An Integer!
+    } catch( PDOException $e ) {
         $database->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $e->getMessage() . "<br/>" . (int)$e->getCode( );
     }
     /**//////////////////////////////////////////////////////////////
-
-    echo "Получилось! Добавлена запись $posname в заявку $reqid.";
-
 };
 //////////////////////////////////////////////////////////////////////
 

@@ -3,7 +3,7 @@
 $dsn = 'mysql:host=localhost;dbname=prices';
 $dsnip = 'mysql:host=localhost;dbname=prices_ip';
 $username = 'root';
-$password = 'root';
+$password = 'tr776bBe';
 $options = array(
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,

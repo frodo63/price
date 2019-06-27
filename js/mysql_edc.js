@@ -206,7 +206,7 @@ $(document).ready(function() {
     $(document).off('click.ap').on('click.ap', '.add-pos-inputs input[type=button].addpos', function(event){
 //Добавление позиции из окна синхронизации
         if(
-            $(event.target).parents('#sync_add_to_base')//Работает на оба случая. Нехорошо
+            $(event.target).parents('#sync_add_to_base').length > 0//Работает на оба случая. Нехорошо
         ){
             var reqid = $(event.target).attr('requestid');
             var posname = $(event.target).attr('posname');
@@ -271,12 +271,7 @@ $(document).ready(function() {
                             success: function (data) {
                                 $('input[requestid='+reqid+'] ~ div div.positions').html(data);
                                 $(event.target).siblings('input[type="text"]').focus();
-                            }/*,
-                         complete: function(){*/
-                            /*$('#editmsg').css('display', 'block'). delay(2000).slideUp(300).html('Содержимое заявки ' + reqid + ' получено.');*/
-                            /*$(event.target).parents("td[category='requests']").children("input.collapse").trigger("click").trigger("click");*///То же с позицией? НОч уть сложнее через родителя
-
-                            /*}*/
+                            }
                         });
                     }
                 });
