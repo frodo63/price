@@ -608,7 +608,7 @@ if(isset($_POST['sync_file'])){
                     $file_array_trimmed[$k]=[$t_a];
                 }
 
-                //Массив для дубрилующих элементво массива. Сюда удут стекаться ключи и он будет ограничивать проход по массиву
+                //Массив для дубрилующих элементво массива. Сюда будут стекаться ключи и он будет ограничивать проход по массиву
                 $a2del = array();
                 //Всякое с массивом
                 foreach($file_array_trimmed as $k2 => $v2){
@@ -703,7 +703,7 @@ if(isset($_POST['sync_file'])){
                                 $pos_trade_uid = $v[$pos_lnum][6];
                                 $gettradename->execute(array($pos_trade_uid));
                                 $gottradename=$gettradename->fetch(PDO::FETCH_ASSOC);
-                                echo "<input type='button' requestid = '" . $gotreqnum['requests_id'] . "' req_positionid = '" . $pos['req_positionid'] . "' price = '" . $v[$pos_lnum][7] . "' kol = '" . $v[$pos_lnum][4] . "' tradeid = '" . $gottradename['trades_id'] . "'  class='sync_addpricing' value='+Превратить позицию в расценку'>";
+                                echo "<input database='".$_POST['db']."' type='button' requestid = '" . $gotreqnum['requests_id'] . "' req_positionid = '" . $pos['req_positionid'] . "' price = '" . $v[$pos_lnum][7] . "' kol = '" . $v[$pos_lnum][4] . "' tradeid = '" . $gottradename['trades_id'] . "'  class='sync_addpricing' value='+Превратить позицию в расценку'>";
                             }
                         }
                     };
@@ -1219,7 +1219,7 @@ if(isset($_POST['synched_request'])){
                             $pos_trade_uid = $v[$pos_lnum][6];
                             $gettradename->execute(array($pos_trade_uid));
                             $gottradename=$gettradename->fetch(PDO::FETCH_ASSOC);
-                            $thehtml .= "<input type='button' requestid = '" . $rid . "' req_positionid = '" . $pos['req_positionid'] . "' price = '" . $v[$pos_lnum][7] . "' kol = '" . $v[$pos_lnum][4] . "' tradeid = '" . $gottradename['trades_id'] . "'  class='sync_addpricing' value='+Превратить позицию в расценку'>";
+                            $thehtml .= "<input database='".$_POST['db']."' type='button' requestid = '" . $rid . "' req_positionid = '" . $pos['req_positionid'] . "' price = '" . $v[$pos_lnum][7] . "' kol = '" . $v[$pos_lnum][4] . "' tradeid = '" . $gottradename['trades_id'] . "'  class='sync_addpricing' value='+Превратить позицию в расценку'>";
                         }
                     }
                 };

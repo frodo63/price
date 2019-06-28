@@ -203,10 +203,10 @@ $(document).ready(function() {
 
 
 //Добавление позиции в таблицу positions
-    $(document).off('click.ap').on('click.ap', '.add-pos-inputs input[type=button].addpos', function(event){
+    $(document).off('click.ap').on('click.ap', 'input[type=button].addpos', function(event){
 //Добавление позиции из окна синхронизации
         if(
-            $(event.target).parents('#sync_add_to_base').length > 0//Работает на оба случая. Нехорошо
+            $(event.target).parents('#sync_add_to_base').length > 0
         ){
             var reqid = $(event.target).attr('requestid');
             var posname = $(event.target).attr('posname');
