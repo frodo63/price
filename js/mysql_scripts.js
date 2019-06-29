@@ -91,7 +91,7 @@ $(document).ready(function(){
         //Добавляем заявку?
         if(table_name == 'requests'){//Добавление из окна синхронизации
             if(
-                $(event.target).parents('#sync_add_to_base')
+                $(event.target).parents('#sync_add_to_base').length > 0
             ){
                 //Добавление из окна синхронизации
                 var created = $(event.target).attr('created');
@@ -103,7 +103,8 @@ $(document).ready(function(){
                 if(db == 'ip'){
                     table_name = 'ip_'+table_name;
                 }
-
+                console.log("аякс на добавление из окна синхронизации");
+                console.log(created+"*"+bid+"*"+uid+"*"+onec_id+"*"+db);
                 $.ajax({
                     url: 'mysql_insert.php',
                     method: 'POST',
@@ -126,6 +127,8 @@ $(document).ready(function(){
                 var thename = $('#req_name').val();
 
                 if(thename!='' && byer > 0){
+                    console.log("аякс на добавление из списка заявок");
+                    console.log(created+bid+uid+onec_id+byer+thename+db);
                     $.ajax({
                         url: 'mysql_insert.php',
                         method: 'POST',

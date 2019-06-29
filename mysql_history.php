@@ -49,7 +49,7 @@ AS a LEFT JOIN (SELECT * FROM (SELECT * FROM `pricings` LEFT JOIN sellers ON pri
     }catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 
@@ -92,7 +92,7 @@ if (isset($_POST['post_seller']) && isset($_POST['post_tare'])){
     }catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 
 }
@@ -136,7 +136,7 @@ if (isset($_POST['post_byer']) && isset($_POST['post_tare'])){
     }catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 }
 
@@ -208,7 +208,7 @@ if (isset($_POST['post_trade_hist']) && isset($_POST['trade_posid_hist'])){
     }catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 
 }
@@ -271,7 +271,7 @@ if (isset($_POST['post_seller_hist'])){
     }catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 
 }
@@ -344,7 +344,7 @@ if (isset($_POST['transports_history'])){
     }catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 }
 

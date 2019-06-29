@@ -211,11 +211,12 @@ $(document).ready(function() {
             var reqid = $(event.target).attr('requestid');
             var posname = $(event.target).attr('posname');
             var linenum = $(event.target).attr('linenum');
-            var db = $('input[type=button].green').attr('database');
+            var db = $(event.target).attr('database');
 
-            console.log('what?');
+            console.log(reqid+'*'+posname+'*'+db+'*'+linenum);
 
             if(posname!=''){
+                console.log('Аякс на добавление позиции из окна синхронизаии');
                 $.ajax({
                     url: 'mysql_insert.php',
                     method: 'POST',
@@ -233,13 +234,21 @@ $(document).ready(function() {
                         $.ajax({
                             url: 'mysql_sync.php',
                             method: 'POST',
-                            data: {synched_request:reqid},
+                            data: {synched_request:reqid, db:db},
                             success: function (data) {
                                 $('li[rid='+reqid+']').html(data);
+                                switch(db){
+                                    case 'ip':
+                                        var pos_table_name = 'ip_positions';
+                                        break;
+                                    case 'ltk':
+                                        var pos_table_name = 'positions';
+                                        break;
+                                }
                                 $.ajax({
                                     url: 'mysql_sync.php',
                                     method: 'POST',
-                                    data: {sync_html:"positions"},
+                                    data: {sync_html:pos_table_name,db:db},
                                     success: function (data) {
                                         $('#sync_add_to_base').html(data);
                                     }
@@ -250,12 +259,13 @@ $(document).ready(function() {
                 });
             } else {alert("Введите имя позиции")}
 
-        }else{//ДОбавление позиции из списка заявок
+        }else{//Добавление позиции из списка заявок
             var reqid = $(event.target).attr("name");
             var posname = $(event.target).siblings('input[type="text"]').val();
             var db = $(event.target).attr('database');
             console.log(reqid+''+posname+''+db);
             if(posname!=''){
+                console.log('Аякс на добавление позиции из списка заявок');
                 $.ajax({
                     url: 'mysql_insert.php',
                     method: 'POST',

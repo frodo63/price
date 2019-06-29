@@ -53,7 +53,7 @@ WHERE (1c_num LIKE concat('%', ?, '%')) GROUP BY created DESC");
 
         print $result;
     } catch( PDOException $Exception ) {
-    throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
 }
 
 };
@@ -102,7 +102,7 @@ if (isset($_POST['strade'])){
 
         print $result;
     } catch( PDOException $Exception ) {
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 

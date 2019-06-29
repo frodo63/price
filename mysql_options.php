@@ -15,7 +15,7 @@ if (isset($_POST['period'])){
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 }
 
@@ -38,7 +38,7 @@ if (isset($_POST['req_options'])){
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 }
 
@@ -60,7 +60,7 @@ if ( isset($_POST['pos_options'])){
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 /**/
@@ -83,7 +83,7 @@ if ( isset($_POST['name_and_queen'])){
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 /**/
@@ -107,7 +107,7 @@ if ( isset($_POST['minus_queen'])){
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 /**/
@@ -129,7 +129,7 @@ if ( isset($_POST['minus_queen'])){
         } catch( PDOException $Exception ) {
             // Note The Typecast To An Integer!
             $pdo->rollback();
-            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+            print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
         }
     }
 /**/

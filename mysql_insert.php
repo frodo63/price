@@ -61,7 +61,7 @@ if(isset($_POST['table_c']) && isset($_POST['thename']) && isset($_POST['uid']) 
 
             } catch( PDOException $Exception ) {
                 $database->rollback();
-                throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
             }
             echo "Вариант 1. Получилось! Добавлена запись $thename в таблицу $table.";
 
@@ -78,7 +78,7 @@ if(isset($_POST['table_c']) && isset($_POST['thename']) && isset($_POST['uid']) 
 
             } catch( PDOException $Exception ) {
                 $pdo->rollback();
-                throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
             }
             echo "Вариант 2. Соотнесение с существующей болванкой прошло успешно!";
         }
@@ -107,7 +107,7 @@ if(isset($_POST['table_c']) && isset($_POST['thename']) && isset($_POST['uid']) 
                 $pdo->commit();
             } catch( PDOException $Exception ) {
                 $pdo->rollback();
-                throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
             }
 
                 //Болванка добавлена. Теперь можно и в ip базу добавить
@@ -132,7 +132,7 @@ if(isset($_POST['table_c']) && isset($_POST['thename']) && isset($_POST['uid']) 
 
             } catch( PDOException $Exception ) {
                 $pdoip->rollback();
-                throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
             }
             echo "Вариант 3. Создали в ltk болванку, создали в ip новое и соотнесли с ней.";
         }else{
@@ -159,7 +159,7 @@ if(isset($_POST['table_c']) && isset($_POST['thename']) && isset($_POST['uid']) 
 
             } catch( PDOException $Exception ) {
                 $pdoip->rollback();
-                throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
             }
             //Соотносим с ltk
             try {
@@ -175,7 +175,7 @@ if(isset($_POST['table_c']) && isset($_POST['thename']) && isset($_POST['uid']) 
 
             } catch( PDOException $Exception ) {
                 $pdo->rollback();
-                throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
             }
             echo "Вариант 4. Создали в ip новое и cоотнесли с существующим в ltk.";
         }
@@ -219,7 +219,7 @@ if(isset($_POST['byer']) && isset($_POST['thename'])){
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $database->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
     /**//////////////////////////////////////////////////////////////
 
@@ -263,7 +263,7 @@ if(isset($_POST['byer']) && isset($_POST['created']) && isset($_POST['uid']) && 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $database->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
     /**//////////////////////////////////////////////////////////////
 
@@ -298,9 +298,9 @@ if(isset($_POST['reqid']) && isset($_POST['posname'])){
         $database->commit();
         echo "Получилось! Добавлена запись $posname в заявку $reqid.";
 
-    } catch( PDOException $e ) {
+    } catch( PDOException $Exception ) {
         $database->rollback();
-        print "Error!: " . $e->getMessage() . "<br/>" . (int)$e->getCode( );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
     /**//////////////////////////////////////////////////////////////
 };
@@ -325,12 +325,12 @@ if (
         ///////////////////////////////////////////////
         $database->commit();
 
-        echo "Позиция добавлена";
+        echo "Позиция добавлена.";
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $database->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 
 }
@@ -373,7 +373,7 @@ if (
     } catch( PDOException $Exception ) {
     // Note The Typecast To An Integer!
     $database->rollback();
-    throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+    print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
 }
 
 }*/
@@ -403,7 +403,7 @@ if(isset($_POST['reqid']) && isset($_POST['payment_date']) && isset($_POST['num'
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $database->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
     /**//////////////////////////////////////////////////////////////
 
@@ -441,7 +441,7 @@ if(isset($_POST['number']) && isset($_POST['payed']) && isset($_POST['uid']) && 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $database->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
     /**//////////////////////////////////////////////////////////////
 
@@ -475,7 +475,7 @@ if(isset($_POST['byersid']) && isset($_POST['giveaway_date']) && isset($_POST['c
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $database->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
     /**//////////////////////////////////////////////////////////////
 
@@ -528,6 +528,6 @@ if(
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $database->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 }

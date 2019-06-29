@@ -32,7 +32,7 @@ if(isset($_POST['plus_winid']) && isset($_POST['posid'])){
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 
@@ -54,7 +54,7 @@ if(isset($_POST['minus_winid']) && isset($_POST['posid'])){
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 
@@ -80,7 +80,7 @@ if(isset($_POST['read_winid'])){
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 
@@ -219,7 +219,7 @@ if (isset($_POST['request'])){
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 /***/

@@ -87,7 +87,7 @@ if(
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 
@@ -203,7 +203,7 @@ if(
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 
@@ -232,7 +232,7 @@ if(
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 /**/
@@ -263,7 +263,7 @@ if(
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 /**/
@@ -311,7 +311,7 @@ if(
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 /**/
@@ -360,7 +360,7 @@ if(
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 /**/
@@ -384,7 +384,7 @@ if(
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 /**/
@@ -408,7 +408,7 @@ isset($_POST["r1_show_reqid"])
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 /**/
@@ -443,7 +443,7 @@ if(isset($_POST['reqid']) && isset($_POST['payment_date']) && isset($_POST['num'
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
     /**//////////////////////////////////////////////////////////////
 
@@ -481,7 +481,7 @@ if(isset($_POST['giveaway_date']) && isset($_POST['comment']) && isset($_POST['s
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
     /**//////////////////////////////////////////////////////////////
 
@@ -514,7 +514,7 @@ if(
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 /**/

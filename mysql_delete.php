@@ -34,7 +34,7 @@ function delete($pdo,$tablenameid,$id,$table){
         } catch( PDOException $Exception ) {
             // Note The Typecast To An Integer!
             $pdo->rollback();
-            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+            print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
         }
 };
 /*//УДАЛЕНИЕ ВСЯКОГО РАЗНОГО ИЗ ТАБЛИЦ*/
@@ -65,7 +65,7 @@ function deleterequest($pdo,$delrequestid,$delnameid)
         } catch( PDOException $Exception ) {
             // Note The Typecast To An Integer!
             $pdo->rollback();
-            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+            print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
         }
 
 };
@@ -91,7 +91,7 @@ function deleterequest_no_nameid($pdo,$delrequestid)
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 
 };
@@ -115,7 +115,7 @@ function deleteposition($pdo,$delpositionid)
         } catch( PDOException $Exception ) {
             // Note The Typecast To An Integer!
             $pdo->rollback();
-            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+            print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
         }
 };
 /*////УДАЛЕНИЕ ПОЗИЦИИ*/
@@ -158,7 +158,7 @@ function deletepricing($pdo,$delpricingid)
         } catch( PDOException $Exception ) {
             // Note The Typecast To An Integer!
             $pdo->rollback();
-            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+            print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
         }
 };
 
@@ -181,7 +181,7 @@ function deletepayment($pdo,$delpaymentid)
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 
@@ -203,7 +203,7 @@ function deletegiveaway($pdo,$delgiveawayid)
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 

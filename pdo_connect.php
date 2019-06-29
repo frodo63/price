@@ -19,8 +19,8 @@ try {
         if($_POST['db'] == "ip"){$database = $pdoip;}
     }
 
-} catch (PDOException $e) {
-    print "Error!: " . $e->getMessage() . "<br/>";
+} catch (PDOException $Exception) {
+    print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     die();
 }
 

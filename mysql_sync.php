@@ -86,7 +86,7 @@ if(isset($_POST['sync_file'])){
 
                     } catch( PDOException $Exception ) {
                         // Note The Typecast To An Integer!
-                        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
                     }
 
 
@@ -1095,7 +1095,7 @@ if(isset($_POST['sync_html'])){
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 }*/
 
@@ -1116,7 +1116,14 @@ if(isset($_POST['synched_request'])){
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             //Фaйл в массив
-            $path = '/samba/allaccess/1111/sync_positions.txt';
+            switch($_POST['db']){
+                case 'ip':
+                    $path = '/samba/allaccess/1111/sync_ip_positions.txt';
+                    break;
+                case 'ltk':
+                    $path = '/samba/allaccess/1111/sync_positions.txt';
+                    break;
+            }
             $file = fopen($path,'r');
             $file_array = file($path); // Считывание файла в массив $file_array
 
@@ -1230,7 +1237,7 @@ if(isset($_POST['synched_request'])){
 } catch( PDOException $Exception ) {
     // Note The Typecast To An Integer!
     $database->rollback();
-    throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
 }
 }
 
@@ -1262,6 +1269,6 @@ if (isset($_POST['attach_pur_date']) && isset($_POST['attach_pur_id']) && isset(
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $database->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 }

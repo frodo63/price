@@ -372,7 +372,7 @@ $(document).ready(function(){
         var tradeid = $(event.target).attr('tradeid');
         var kol = $(event.target).attr('kol');
         var price = $(event.target).attr('price');
-        var db = $('input[type=button].green').attr('database');
+        var db = $(event.target).attr('database');
 
 
         //ЗАПРОС НА ОПЦИИ
@@ -381,23 +381,12 @@ $(document).ready(function(){
             method: 'POST',
             dataType: 'json',
             cache: false,
-            data: {req_options:requestid},
+            data: {req_options:requestid, db:db},
             success: function(data){
                 var op = data.op;
                 var tp = data.tp;
                 var firstobp = data.firstobp;
                 var wt = data.wt;
-
-                //ВРЕМЕННО
-                /*$.ajax({
-                    url: 'mysql_sync.php',
-                    method: 'POST',
-                    data: {synched_request:requestid},
-                    success: function (data) {
-                        //$('li[rid='+requestid+']').html(data.markup);
-                        $('li[rid='+requestid+']').html(data);
-                    }
-                });*/
 
                 $.ajax({
                     url: 'mysql_insert.php',
@@ -411,7 +400,7 @@ $(document).ready(function(){
                         $.ajax({
                             url: 'mysql_sync.php',
                             method: 'POST',
-                            data: {synched_request:requestid},
+                            data: {synched_request:requestid, db:db},
                             success: function (data) {
                                 $('li[rid='+requestid+']').html(data);
                             }

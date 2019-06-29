@@ -49,7 +49,7 @@ if(isset($_POST['table'])){
                 } catch( PDOException $Exception ) {
                     // Note The Typecast To An Integer!
                     $pdo->rollback();
-                    throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                    print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
                 }
             };
             /*Список заявок по названию заявки*/
@@ -75,7 +75,7 @@ if(isset($_POST['table'])){
                 } catch( PDOException $Exception ) {
                     // Note The Typecast To An Integer!
                     $pdo->rollback();
-                    throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                    print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
                 }
             };
             /*Список заявок по Поставщику*/
@@ -120,7 +120,7 @@ if(isset($_POST['table'])){
                 } catch( PDOException $Exception ) {
                     // Note The Typecast To An Integer!
                     $pdo->rollback();
-                    throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                    print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
                 }
 
             };
@@ -167,7 +167,7 @@ if(isset($_POST['table'])){
                 } catch( PDOException $Exception ) {
                     // Note The Typecast To An Integer!
                     $pdo->rollback();
-                    throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                    print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
                 }
             };
         }/*Временной интервал*/else if(isset($_POST['from']) && isset($_POST['to'])) {
@@ -200,7 +200,7 @@ if(isset($_POST['table'])){
                 }catch( PDOException $Exception ) {
                     // Note The Typecast To An Integer!
                     $pdo->rollback();
-                    throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                    print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
                 }
             }else{
                 try {
@@ -234,7 +234,7 @@ if(isset($_POST['table'])){
                 }catch( PDOException $Exception ) {
                     // Note The Typecast To An Integer!
                     $pdo->rollback();
-                    throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                    print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
                 }
             }
 
@@ -256,7 +256,7 @@ if(isset($_POST['table'])){
                                         ORDER BY req_date DESC");
                 $statement->execute();
             } catch( PDOException $Exception ) {
-                throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+                print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
             }
         }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -363,7 +363,7 @@ if(isset($_POST['table'])){
 
         } catch( PDOException $Exception ) {
             // Note The Typecast To An Integer!
-            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+            print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
         }
         /**//////////////////////////////////////////////////////////////ЧТЕНИЕ СПИСКА ЗАЯВОК
     }
@@ -459,7 +459,7 @@ if(isset($_POST['table'])){
             print $result;
         } catch( PDOException $Exception ) {
             // Note The Typecast To An Integer!
-            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+            print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
         }
         /**//////////////////////////////////////////////////////////////ЧТЕНИЕ СПИСКА ЗАЯВОК
     }
@@ -555,7 +555,7 @@ if(isset($_POST['table'])){
             print $result;
         } catch( PDOException $Exception ) {
             // Note The Typecast To An Integer!
-            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+            print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
         }
         /**//////////////////////////////////////////////////////////////ЧТЕНИЕ СПИСКА ЗАЯВОК
     }
@@ -770,7 +770,7 @@ if(isset($_POST['table'])){
             print $result;
         } catch( PDOException $Exception ) {
             // Note The Typecast To An Integer!
-            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+            print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
         }
         /**//////////////////////////////////////////////////////////////ЧТЕНИЕ СПИСКА ЗАЯВОК
     }
@@ -829,7 +829,7 @@ if(isset($_POST['table'])){
 
         } catch( PDOException $Exception ) {
             // Note The Typecast To An Integer!
-            throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+            print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
         }
         /**//////////////////////////////////////////////////////////////
     };
@@ -900,7 +900,7 @@ if (isset($_POST['requestid'])){
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 
 };
@@ -1000,7 +1000,7 @@ if (isset($_POST['positionid'])){
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 
 };
@@ -1021,7 +1021,7 @@ if (isset($_POST['pricingid'])){
         echo json_encode($result);/*Перевели массив расценки в формат JSON*/
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 
 };
@@ -1048,7 +1048,7 @@ if ( isset($_POST['chng_number']) ){
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 /**/
@@ -1072,7 +1072,7 @@ if ( isset($_POST['chng_number_1c']) ){
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 /**/
@@ -1112,7 +1112,7 @@ if ( isset($_POST['c_c']) &&  isset($_POST['reqid'])){
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 /**/
@@ -1152,7 +1152,7 @@ if ( isset($_POST['pos_c_c']) &&  isset($_POST['posid'])){
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
         $pdo->rollback();
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
 /**/
@@ -1170,7 +1170,7 @@ if(isset($_POST['pay_reqid']) && isset($_POST['pay_id'])){
         echo json_encode($result);/*Перевели массив расценки в формат JSON*/
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 }
 /**/
@@ -1189,7 +1189,7 @@ if(isset($_POST['byersid']) && isset($_POST['give_id'])){
         echo json_encode($result);/*Перевели массив расценки в формат JSON*/
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        throw new MyDatabaseException( $Exception->getMessage( ) , (int)$Exception->getCode( ) );
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 
 }
