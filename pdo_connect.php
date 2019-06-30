@@ -15,8 +15,8 @@ try {
     $pdoip = new PDO($dsnip, $username, $password, $options);
 
     if(isset($_POST['db'])){
-        if($_POST['db'] == "ltk"){$database = $pdo;}
-        if($_POST['db'] == "ip"){$database = $pdoip;}
+        if($_POST['db'] == "ltk"){$database = $pdo; $db_text = 'ltk';}
+        if($_POST['db'] == "ip"){$database = $pdoip; $db_text = 'ip';}
     }
 
 } catch (PDOException $Exception) {

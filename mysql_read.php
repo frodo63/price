@@ -12,6 +12,7 @@ function number_f($num)
 if(isset($_POST['table'])){
     $table = $_POST['table'];
     $tablenid = $table . '_nameid';
+    $dbs_array=array(array($pdo,'ltk'),array($pdoip,'ip'));
 
     if ($table == 'requests') {
         //Блок рисовки результатов поиска из ВПСПВ
@@ -42,7 +43,7 @@ if(isset($_POST['table'])){
 
                     $count = $statement->rowCount();
                     if($count==0){
-                        echo ('<p>Заявок, в которых бы фигурировал этот покупатель, не обнаружено.</p>');
+                        echo ('<p>Заявок в базе Лубритэк, в которых бы фигурировал этот покупатель, не обнаружено.</p>');
                     }else{
                         //Тут исполнение
                     }
@@ -239,8 +240,10 @@ if(isset($_POST['table'])){
             }
 
         }/*Общий список заявок*/else{
-            try {
-                $statement = $pdo->prepare("SELECT 
+            $result = "";
+            foreach ($dbs_array as $database){
+                try {
+                    $statement = $database[0]->prepare("SELECT 
                                         a.created AS req_date,
                                         a.requests_id AS req_id,
                                         a.requests_nameid AS req_nameid,
@@ -254,42 +257,43 @@ if(isset($_POST['table'])){
                                         b.name AS b_name
                                         FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
                                         ORDER BY req_date DESC");
-                $statement->execute();
-            } catch( PDOException $Exception ) {
-                print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
-            }
-        }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            $result .= "<table><thead><tr><th>Дата</th><th>№ в 1С</th><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Сумма</th><th></th></tr></thead>";
-            foreach ($statement as $row) {
+                    $statement->execute();
+                } catch( PDOException $Exception ) {
+                    print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+                }
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                $get_executals = $pdo->prepare("SELECT * FROM executes WHERE requests_uid = ?");
-                $get_executals->execute(array($row['req_uid']));
-                $get_executals_fetched = $get_executals->fetchAll(PDO::FETCH_ASSOC);
+                $result .= "<table><thead><tr><th>Дата</th><th>№ в 1С</th><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Сумма</th><th></th></tr></thead>";
+                //Рисуем заявки из базы ltk
+                foreach ($statement as $row) {
 
-                /*Заголовок заказа////////////////////////////////////////////////////////////////////////////////////////////////*/
-                $phpdate = strtotime( $row['req_date'] );
-                $mysqldate = date( 'd.m.y', $phpdate );
-                /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+                    $get_executals = $database[0]->prepare("SELECT * FROM executes WHERE requests_uid = ?");
+                    $get_executals->execute(array($row['req_uid']));
+                    $get_executals_fetched = $get_executals->fetchAll(PDO::FETCH_ASSOC);
 
-                $result .= "<tr requestid =" . $row['req_id'] . " byerid =".$row['b_id'].">
+                    /*Заголовок заказа////////////////////////////////////////////////////////////////////////////////////////////////*/
+                    $phpdate = strtotime( $row['req_date'] );
+                    $mysqldate = date( 'd.m.y', $phpdate );
+                    /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+                    $result .= "<tr database = '".$database[1]."' requestid =" . $row['req_id'] . " byerid =".$row['b_id'].">
             <td class='req_date'><span>" . $mysqldate . "</span></td>
             <td class='1c_num'><span>" . $row['1c_num'] . "</span></td>
             <td byerid=" . $row['b_id'] . " name=" . $row['b_nameid'] . "><span>". $row['b_name'] ."</span></td>
             <td category='requests' name =".$row['req_nameid'].">";
 
-                $result .="<input type='button' requestid =".$row['req_id']." value=♢ class='collapse' name =".$row['req_nameid'].">";
+                    $result .="<input type='button' requestid =".$row['req_id']." value=♢ class='collapse' name =".$row['req_nameid'].">";
 
-                if(count($get_executals_fetched) > 0){
-                    foreach($get_executals_fetched as $exe){
-                        $result .="<span style='color: green'>Накладная № ".$exe['execute_1c_num']." от ".$exe['executed']."</span><br>";
+                    if(count($get_executals_fetched) > 0){
+                        foreach($get_executals_fetched as $exe){
+                            $result .="<span style='color: green'>Накладная № ".$exe['execute_1c_num']." от ".$exe['executed']."</span><br>";
+                        }
                     }
-                }
 
-                $result .="<span class='name'>&nbsp ".$row['req_name']."</span>";
+                    $result .="<span class='name'>&nbsp ".$row['req_name']."</span>";
 
 
-                $result .="<div class='contents' id=".$row['req_nameid'].">
+                    $result .="<div class='contents' id=".$row['req_nameid'].">
                 <h3 class='req_header_".$row['req_id']."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму <span class='reqsumma'>".number_format($row['sum'],2,'.',' ')."&nbsp</span><br> Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h3/><br>
                 <input type='button' class='edit_options' value='Опции' requestid='".$row['req_id']."'>
                 <input type='button' class='edit_1c_num' value='Номер в 1С и дата' requestid='".$row['req_id']."'>  
@@ -308,9 +312,14 @@ if(isset($_POST['table'])){
                 <td class = 'sum_whole'>" .number_format(round($row['sum'], 2), 2, '.', ' '). "</td>
             <td class = 'req_buttons'><input type='button' requestid =" . $row['req_id'] . " value='R' class='edit' name =".$row['req_nameid'].">
          <input type='button' requestid =" . $row['req_id'] . " value='X' class='reqdelete' name =".$row['req_nameid']."></td></tr>";
+                }
             }
-            $result .= "</table>";
-            print $result;
+        }
+
+
+        $result .= "</table>";
+        print $result;
+        unset($result);
     }
     else if ($table == 'givaways') {
         try {

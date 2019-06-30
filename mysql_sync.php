@@ -143,11 +143,11 @@ if(isset($_POST['sync_file'])){
 
                 foreach ($file_array as $row){
                     $temp_array = explode(';',$row);
-                    foreach($temp_array as $row){
+                    foreach($temp_array as $row_tr){
 
-                        $string = htmlentities($row[4], null, 'utf-8');
+                        $string = htmlentities($row_tr[4], null, 'utf-8');
                         $content = str_replace("&nbsp;", "", $string);
-                        $row[4] = html_entity_decode($content);
+                        $row_tr[4] = html_entity_decode($content);
                     }
 
                     //Проверяем, есть ли платежка уже
@@ -722,14 +722,14 @@ if(isset($_POST['sync_file'])){
                 if (count($file_array) > 0){
                     echo"<p>Файл выгружен в массив</p>";
 
-                    switch($sync){
+                    /*switch($sync){
                         case "purchases":
                             $database = $pdo;
                             break;
                         case "ip_purchases":
                             $database = $pdoip;
                             break;
-                    }
+                    }*/
 
                     /*Мехаинзм такой: Если закупка в 1С изменилась - она меняется в базе*/
 
@@ -815,14 +815,14 @@ if(isset($_POST['sync_file'])){
                 if (count($file_array) > 0){
                     echo"<p>Файл выгружен в массив</p>";
 
-                    switch($sync){
+                    /*switch($sync){
                         case "transports":
                             $database = $pdo;
                             break;
                         case "ip_transports":
                             $database = $pdoip;
                             break;
-                    }
+                    }*/
 
                     $check_transport = $database->prepare("SELECT purchases_uid FROM transports WHERE purchases_uid = ?");
                     $insert_transport = $database->prepare("INSERT INTO transports (purchases_uid,seller_uid,incdoc_date,incdoc_num,sum) VALUES(?,?,?,?,?)");
@@ -871,14 +871,14 @@ if(isset($_POST['sync_file'])){
                 if (count($file_array) > 0){
                     echo"<p>Файл выгружен в массив</p>";
 
-                    switch($sync){
+                    /*switch($sync){
                         case "executes":
                             $database = $pdo;
                             break;
                         case "ip_executes":
                             $database = $pdoip;
                             break;
-                    }
+                    }*/
 
                     $check_executes = $database->prepare("SELECT executes_uid FROM executes WHERE executes_uid = ?");
                     $insert_execute = $database->prepare("INSERT INTO executes (executes_uid,requests_uid,executed,execute_1c_num) VALUES(?,?,?,?)");

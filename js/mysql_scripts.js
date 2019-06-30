@@ -160,6 +160,10 @@ $(document).ready(function(){
             var requestid = $(event.target).attr('requestid');
             var db = $(event.target).attr('database');
 
+            if(db == 'ip'){
+                table_name = 'ip_'+table_name;
+            }
+
             console.log(payed);
             console.log(number);
             console.log(uid);
@@ -322,7 +326,7 @@ $(document).ready(function(){
                     $(event.target).siblings('.' + table + '_list').html(data);
                 },
                 complete: function(){
-                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Данные из таблицы " + table + " получены.");
+                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Данные из таблицы " + table + " обеих баз получены.");
                     $('.creates input[type=\'text\']').val('');
                     $('.from,.to').val('');
                 }
