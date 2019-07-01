@@ -12,16 +12,27 @@ function number_f($num)
 if(isset($_POST['table'])){
     $table = $_POST['table'];
     $tablenid = $table . '_nameid';
-    $dbs_array=array(array($pdo,'ltk'),array($pdoip,'ip'));
+    $dbs_array=array(array($pdo,'ltk',array(),'ЛТК'),array($pdoip,'ip',array(),'ИП УСВ'));
 
     if ($table == 'requests') {
         //Блок рисовки результатов поиска из ВПСПВ
         if (isset($_POST['category']) && isset($_POST['theid'])){
+            //Рисование заявок из обеих баз по результатам из Великой Поисковой Строки Поиска Всего
+            //
             $category = $_POST['category'];
             $theid = $_POST['theid'];
             /*Список заявок по покупателю*/
             if($category == 'byer'){
                 try {
+                    //Логика использования сдвоенной базы ПОкупателей.
+                    //Если у заявленного покупателя в базе лтк есть ip_uid - берем из базы лтк uid, берем из базы ип trades_id
+                    //и выбираем из базы ип данные по этому покупателю. Код для покупателей должен быть вне цикла форич
+
+                    $check_lkt_byer = $pdo->prepare("SELECT ip_uid FROM byers WHERE byers_id = ?");
+                    $check_lkt_byer->execute(array($theid));
+                    $check_lkt_byer_fetched = $check_lkt_byer->fetch(PDO::FETCH_ASSOC);
+
+                    //ip_uid по умолчанию равен null, и мы берем данные из одной базы ЛТК
                     $statement = $pdo->prepare("SELECT 
                                         a.created AS req_date,
                                         a.requests_id AS req_id,
@@ -39,13 +50,33 @@ if(isset($_POST['table'])){
                     //////////////////////////////////////////////////////////////////////////
                     $pdo->beginTransaction();
                     $statement->execute(array($theid));
+                    $stmt_fetched = $statement->fetchAll(PDO::FETCH_ASSOC);
+                    $dbs_array[0][2] = $stmt_fetched;
                     $pdo->commit();
 
-                    $count = $statement->rowCount();
-                    if($count==0){
-                        echo ('<p>Заявок в базе Лубритэк, в которых бы фигурировал этот покупатель, не обнаружено.</p>');
-                    }else{
-                        //Тут исполнение
+                    if ($check_lkt_byer_fetched['ip_uid']){
+                        //Когда же ip_uid не равен null, мы добавляем данные из базы ИП
+                        $statement_ip = $pdoip->prepare("SELECT 
+                                        a.created AS req_date,
+                                        a.requests_id AS req_id,
+                                        a.requests_nameid AS req_nameid,
+                                        a.requests_uid AS req_uid,
+                                        a.name AS req_name,
+                                        a.1c_num AS 1c_num,
+                                        b.byers_id AS b_id,
+                                        b.byers_uid AS b_uid,
+                                        b.byers_nameid AS b_nameid,
+                                        b.name AS b_name,
+                                        a.req_rent AS rent,
+                                        a.req_sum AS sum 
+                                        FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
+                                        WHERE b.byers_uid = ? ORDER BY req_date DESC");
+                        //////////////////////////////////////////////////////////////////////////
+                        $pdoip->beginTransaction();
+                        $statement_ip->execute(array($check_lkt_byer_fetched['ip_uid']));
+                        $stmt_ip_fetched = $statement_ip->fetchAll(PDO::FETCH_ASSOC);
+                        $dbs_array[1][2] = $stmt_ip_fetched;
+                        $pdoip->commit();
                     }
                 } catch( PDOException $Exception ) {
                     // Note The Typecast To An Integer!
@@ -55,7 +86,8 @@ if(isset($_POST['table'])){
             };
             /*Список заявок по названию заявки*/
             if($category == 'request'){
-                try {
+                try {//Выводится в любом случае одна заявка, надо, чтобы шел поиск по базе ип по номеру заявки в 1С. Не страшно, сделаем.
+                    //Дифференциация базы, из какой заявка
                     $statement = $pdo->prepare("SELECT 
                                         a.created AS req_date,
                                         a.requests_id AS req_id,
@@ -74,38 +106,43 @@ if(isset($_POST['table'])){
                     $statement->execute(array($theid));
                     $pdo->commit();
                 } catch( PDOException $Exception ) {
-                    // Note The Typecast To An Integer!
                     $pdo->rollback();
                     print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
                 }
             };
             /*Список заявок по Поставщику*/
             if($category == 'seller'){
-                try {
-                    $getids=$pdo->prepare("SELECT b.`requestid` AS reqid FROM 
+
+                $getids=$pdo->prepare("SELECT b.`requestid` AS reqid FROM 
             ((SELECT `sellerid`,`positionid` FROM `pricings`) AS a INNER JOIN (SELECT `req_positionid`, `requestid` FROM `req_positions`) AS b 
             ON a.`positionid`= b.`req_positionid`) 
             WHERE a.`sellerid` = ?");
+
+                $getids_ip=$pdoip->prepare("SELECT b.`requestid` AS reqid FROM
+                                   (SELECT `sellerid`,`positionid`,`sellers_uid` FROM `pricings` LEFT JOIN prices_ip.sellers ON prices_ip.pricings.sellerid=prices_ip.sellers.sellers_id) AS a INNER JOIN (SELECT `req_positionid`, `requestid` FROM `req_positions`) AS b
+                                       ON a.`positionid`= b.`req_positionid` WHERE a.`sellers_uid` = ?");
+
+                $check_lkt_seller = $pdo->prepare("SELECT ip_uid FROM sellers WHERE sellers_id = ?");
+                $check_lkt_seller->execute(array($theid));
+                $check_lkt_seller_fetched = $check_lkt_seller->fetch(PDO::FETCH_ASSOC);
+
+                //Логика использования сдвоенной базы Поставщиков.
+                //Если у заявленного поставщика в базе лтк есть ip_uid - берем из базы лтк uid, берем из базы ип sellers_id
+                //и выбираем из базы ип данные по этому поставщику.
+
+                try {
                     $pdo->beginTransaction();
                     $getids->execute(array($theid));
-                    /*Создаем пустой массив, кидаем все результаты в массив ids*/
+                    $getids_fetched = $getids->fetchAll(PDO::FETCH_ASSOC);
                     $ids=array();
-                    foreach ($getids as $row){
-                        $ids[] = $row['reqid'];
-                    };
-                    /*Если заявок нет, список пустой - то выводим текcт об этом*/
-                    if (count($ids) == 0){
-                        echo ('<p>Заявок, в позициях которых были бы расценки, в которых бы фигурировал этот поставщик, не обнаружено.</p>');
-                    }else{
+                    foreach ($getids_fetched as $row){$ids[] = $row['reqid'];}
                         /*Айдишники из массива в строку с сепаратором запятая*/
                         $ids=implode(",", array_unique($ids));
-                        /*Строка из значений передается напрямую в запрос, только после того, как переменная готова*/
                         $statement = $pdo->prepare("SELECT 
                                         a.created AS req_date,
                                         a.requests_id AS req_id,
                                         a.requests_nameid AS req_nameid,
                                         a.requests_uid AS req_uid,
-                                        a.name AS req_name,
                                         a.req_rent AS rent,
                                         a.req_sum AS sum,
                                         a.1c_num AS 1c_num,
@@ -114,45 +151,29 @@ if(isset($_POST['table'])){
                                         b.name AS b_name
                                             FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
                                             WHERE `a`.`requests_id` IN (".$ids.") ORDER BY req_date DESC");
+
+
                         $statement->execute();
+                        $stmt_fetched = $statement->fetchAll(PDO::FETCH_ASSOC);
+                        $dbs_array[0][2] = $stmt_fetched;
                         $pdo->commit();
 
-                    };
-                } catch( PDOException $Exception ) {
-                    // Note The Typecast To An Integer!
-                    $pdo->rollback();
-                    print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
-                }
+                } catch( PDOException $Exception ) {$pdo->rollback();print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );}
 
-            };
-            /*Список заявок по товару*/
-            if($category == 'trade'){
-                try {
-                    $getids=$pdo->prepare("SELECT b.`requestid` AS reqid FROM 
-            ((SELECT `tradeid`,`positionid` FROM `pricings`) AS a INNER JOIN (SELECT `req_positionid`, `requestid` FROM `req_positions`) AS b 
-            ON a.`positionid`= b.`req_positionid`) 
-            WHERE a.`tradeid` = ?");
-                    $pdo->beginTransaction();
-                    $getids->execute(array($theid));
-                    /*Создаем пустой массив, кидаем все результаты в массив ids*/
-                    $ids = array();
-                    foreach ($getids as $row) {
-                        $ids[] = $row['reqid'];
-                    };
-                    /*Если заявок нет, список пустой - то выводим тект об этом*/
-                    if (count($ids) == 0){
-                        echo ('<p>Заявок, в позициях которых были бы расценки, в которых бы фигурировал этот товар, не обнаружено.</p>');
-                    }else {
-                        /*Айдишники из массива в cтроку с сепаратором запятая*/
-                        $ids = implode(",", array_unique($ids));
-                        /*echo $ids;*/
-                        /*Строка из значений передается напрямую в запрос, только после того, как переменная готова*/
-                        $statement = $pdo->prepare("SELECT 
+                if($check_lkt_seller_fetched['ip_uid']){
+                    try {
+                        $pdoip->beginTransaction();
+                        $getids_ip->execute(array($check_lkt_seller_fetched['ip_uid']));
+                        $getids_ip_fetched = $getids_ip->fetchAll(PDO::FETCH_ASSOC);
+                        $ids=array();
+                        foreach ($getids_ip_fetched as $row){$ids[] = $row['reqid'];}
+                        /*Айдишники из массива в строку с сепаратором запятая*/
+                        $ids=implode(",", array_unique($ids));
+                        $statement = $pdoip->prepare("SELECT 
                                         a.created AS req_date,
                                         a.requests_id AS req_id,
                                         a.requests_nameid AS req_nameid,
                                         a.requests_uid AS req_uid,
-                                        a.name AS req_name,
                                         a.req_rent AS rent,
                                         a.req_sum AS sum,
                                         a.1c_num AS 1c_num,
@@ -160,88 +181,216 @@ if(isset($_POST['table'])){
                                         b.byers_nameid AS b_nameid,
                                         b.name AS b_name
                                             FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
-                                            WHERE a.requests_id IN (" . $ids . ") ORDER BY req_date DESC");
-                        $statement->execute();
-                        $pdo->commit();
+                                            WHERE `a`.`requests_id` IN (".$ids.") ORDER BY req_date DESC");
 
-                    };
-                } catch( PDOException $Exception ) {
-                    // Note The Typecast To An Integer!
-                    $pdo->rollback();
-                    print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+
+                        $statement->execute();
+                        $stmt_fetched = $statement->fetchAll(PDO::FETCH_ASSOC);
+                        $dbs_array[1][2] = $stmt_fetched;
+                        $pdoip->commit();
+
+                    } catch( PDOException $Exception ) {$pdoip->rollback();print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );}
+
                 }
+
             };
-        }/*Временной интервал*/else if(isset($_POST['from']) && isset($_POST['to'])) {
+            /*Список заявок по товару*/
+            if($category == 'trade'){
+
+                $getids=$pdo->prepare("SELECT b.`requestid` AS reqid FROM 
+            ((SELECT `tradeid`,`positionid` FROM `pricings`) AS a JOIN (SELECT `req_positionid`, `requestid` FROM `req_positions`) AS b 
+            ON a.`positionid`= b.`req_positionid`) 
+            WHERE a.`tradeid` = ?");
+                $getids_ip=$pdoip->prepare("SELECT b.`requestid` AS reqid FROM 
+            ((SELECT `tradeid`,`positionid` FROM `pricings`) AS a JOIN (SELECT `req_positionid`, `requestid` FROM `req_positions`) AS b 
+            ON a.`positionid`= b.`req_positionid`) 
+            WHERE a.`tradeid` = ?");
+
+                try {
+                    $pdo->beginTransaction();
+                    $getids->execute(array($theid));
+                    /*Создаем пустой массив, кидаем все результаты в массив ids*/
+                    $ids = array();
+                    foreach ($getids as $row) {$ids[] = $row['reqid'];};
+                    echo"LTK_ OUTPUT<pre>";
+                    print_r($ids);
+                    echo"</pre>";
+
+                        /*Айдишники из массива в cтроку с сепаратором запятая*/
+                        $ids = implode(",", array_unique($ids));
+                        $statement = $pdo->prepare("SELECT 
+                                        a.created AS req_date,
+                                        a.requests_id AS req_id,
+                                        a.requests_nameid AS req_nameid,
+                                        a.requests_uid AS req_uid,
+                                        a.req_rent AS rent,
+                                        a.req_sum AS sum,
+                                        a.1c_num AS 1c_num,
+                                        b.byers_id AS b_id,
+                                        b.byers_nameid AS b_nameid,
+                                        b.name AS b_name
+                                            FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
+                                            WHERE a.requests_id IN (".$ids.") ORDER BY req_date DESC");
+                        $statement->execute();
+                        $stmt_fetched = $statement->fetchAll(PDO::FETCH_ASSOC);
+                        $dbs_array[0][2] = $stmt_fetched;
+                        $pdo->commit();
+                } catch( PDOException $Exception ) {$pdo->rollback();print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );}
+
+                try {
+                    $pdoip->beginTransaction();
+
+                    //Прилетает айдишник товара.
+                    //Мы одним запросом получаем его айдишник в обеих базах.
+                    $get_trade_info=$pdo->prepare("SELECT b.trades_id as trades_id FROM prices.trades as a LEFT JOIN prices_ip.trades as b ON a.ip_uid=b.trades_uid WHERE a.trades_id=?");
+                    $get_trade_info->execute(array($theid));
+                    $get_trade_info_fetched = $get_trade_info->fetch(PDO::FETCH_ASSOC);
+
+                    echo"IP_ OUTPUT<pre>";
+                    print_r($get_trade_info_fetched['trades_id']);
+                    echo"</pre>";
+
+                    $getids_ip->execute(array($get_trade_info_fetched['trades_id']));
+                    /*Создаем пустой массив, кидаем все результаты в массив ids*/
+                    $ids = array();
+                    foreach ($getids_ip as $row) {$ids[] = $row['reqid'];};
+                    echo"<pre>";
+                    print_r($ids);
+                    echo"</pre>";
+
+                    $new_array_of_ids = array_values(array_unique($ids));
+
+                    /*Айдишники из массива в cтроку с сепаратором запятая*/
+                    $ids = implode(",", $new_array_of_ids);
+                    $statement = $pdoip->prepare("SELECT 
+                                        a.created AS req_date,
+                                        a.requests_id AS req_id,
+                                        a.requests_nameid AS req_nameid,
+                                        a.requests_uid AS req_uid,
+                                        a.req_rent AS rent,
+                                        a.req_sum AS sum,
+                                        a.1c_num AS 1c_num,
+                                        b.byers_id AS b_id,
+                                        b.byers_nameid AS b_nameid,
+                                        b.name AS b_name
+                                            FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT byers_id,byers_nameid,name FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid WHERE a.requests_id IN (".$ids.") ORDER BY req_date DESC");
+                    $statement->execute();
+                    $stmt_fetched = $statement->fetchAll(PDO::FETCH_ASSOC);
+                    $dbs_array[1][2] = $stmt_fetched;
+                    $pdoip->commit();
+                } catch( PDOException $Exception ) {$pdoip->rollback();print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );}
+            };
+        }/*Временной интервал*/
+        else if(isset($_POST['from']) && isset($_POST['to'])) {
             $from = $_POST['from'];
             $to = $_POST['to'];
             $filterbyer = $_POST['filterbyer'];
+            $result = "";
 
-            if($filterbyer == 'none'){
-                try {
+                if($filterbyer == 'none'){
+                    foreach ($dbs_array as $k=>$database) {
+                        try {
+                            $statement = $database[0]->prepare("SELECT                                       
+                                            a.created AS req_date,
+                                            a.requests_id AS req_id,
+                                            a.requests_nameid AS req_nameid,
+                                            a.requests_uid AS req_uid,
+                                            a.name AS req_name,
+                                            a.req_rent AS rent,
+                                            a.req_sum AS sum,
+                                            a.1c_num AS 1c_num,
+                                            b.byers_id AS b_id,
+                                            b.byers_nameid AS b_nameid,
+                                            b.name AS b_name
+                                            FROM (SELECT * FROM (SELECT * FROM requests WHERE `created` BETWEEN ? AND ?) AS x LEFT JOIN allnames ON x.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
+                                            ORDER BY req_date DESC");
 
-                    $statement = $pdo->prepare("SELECT                                       
-                                        a.created AS req_date,
-                                        a.requests_id AS req_id,
-                                        a.requests_nameid AS req_nameid,
-                                        a.requests_uid AS req_uid,
-                                        a.name AS req_name,
-                                        a.req_rent AS rent,
-                                        a.req_sum AS sum,
-                                        a.1c_num AS 1c_num,
-                                        b.byers_id AS b_id,
-                                        b.byers_nameid AS b_nameid,
-                                        b.name AS b_name
-                                        FROM (SELECT * FROM (SELECT * FROM requests WHERE `created` BETWEEN ? AND ?) AS x LEFT JOIN allnames ON x.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
-                                        ORDER BY req_date DESC");
+                            $database[0]->beginTransaction();
+                            $statement->execute(array($from, $to));
+                            $stmt_fetched = $statement->fetchAll(PDO::FETCH_ASSOC);
+                            $dbs_array[$k][2] = $stmt_fetched;
+                            $database[0]->commit();
+                        } catch (PDOException $Exception) {
+                            // Note The Typecast To An Integer!
+                            $pdo->rollback();
+                            print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode();
+                        }
+                    }
+                }else{
 
-                    $pdo->beginTransaction();
-                    $statement->execute(array($from,$to));
-                    $pdo->commit();
+                        //Логика использования сдвоенной базы ПОкупателей.
+                        //Если у заявленного покупателя в базе лтк есть ip_uid - берем из базы лтк uid, берем из базы ип trades_id
+                        //и выбираем из базы ип данные по этому покупателю. Код для покупателей должен быть вне цикла форич
+                        $check_lkt_byer = $pdo->prepare("SELECT ip_uid FROM byers WHERE byers_id = ?");
+                        $check_lkt_byer->execute(array($filterbyer));
+                        $check_lkt_byer_fetched = $check_lkt_byer->fetch(PDO::FETCH_ASSOC);
 
-                }catch( PDOException $Exception ) {
-                    // Note The Typecast To An Integer!
-                    $pdo->rollback();
-                    print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+                        //ip_uid по умолчанию равен null, и мы берем данные из одной базы ЛТК
+                        $statement = $pdo->prepare("SELECT                                       
+                                            a.created AS req_date,
+                                            a.requests_id AS req_id,
+                                            a.requests_nameid AS req_nameid,
+                                            a.requests_uid AS req_uid,
+                                            a.name AS req_name,
+                                            a.req_rent AS rent,
+                                            a.req_sum AS sum,
+                                            a.1c_num AS 1c_num,
+                                            b.byers_id AS b_id,
+                                            b.byers_nameid AS b_nameid,
+                                            b.name AS b_name
+                                            FROM (SELECT * FROM 
+                                                  
+                                                  (SELECT * FROM requests) AS x LEFT JOIN allnames ON x.requests_nameid=allnames.nameid)AS a 
+                                                  
+                                                  LEFT JOIN 
+                                                  
+                                                  (SELECT * FROM byers AS t LEFT JOIN allnames ON t.byers_nameid=allnames.nameid) AS b 
+                                                  
+                                                  ON b.byers_id=a.byersid WHERE (a.created BETWEEN ? AND ?) AND (`b`.`byers_id` = ?) ORDER BY req_date DESC");
+                        ///////////////////////////////////////////////////////////////////////////
+                    try {
+                        $pdo->beginTransaction();
+                        $statement->execute(array($from, $to, $filterbyer));
+                        $stmt_fetched = $statement->fetchAll(PDO::FETCH_ASSOC);
+                        $dbs_array[0][2] = $stmt_fetched;
+                        $pdo->commit();
+                    }catch( PDOException $Exception ) {$pdoip->rollback();print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );}
+
+                    if($check_lkt_byer_fetched['ip_uid']){
+                        //Когда же ip_uid не равен null, мы добавляем данные из базы ИП
+                        $statement = $pdoip->prepare("SELECT                                       
+                                            a.created AS req_date,
+                                            a.requests_id AS req_id,
+                                            a.requests_nameid AS req_nameid,
+                                            a.requests_uid AS req_uid,
+                                            a.name AS req_name,
+                                            a.req_rent AS rent,
+                                            a.req_sum AS sum,
+                                            a.1c_num AS 1c_num,
+                                            b.byers_id AS b_id,
+                                            b.byers_nameid AS b_nameid,
+                                            b.name AS b_name
+                                            FROM (SELECT * FROM 
+                                                  
+                                                  (SELECT * FROM requests) AS x LEFT JOIN allnames ON x.requests_nameid=allnames.nameid)AS a 
+                                                  
+                                                  LEFT JOIN 
+                                                  
+                                                  (SELECT * FROM byers AS t LEFT JOIN allnames ON t.byers_nameid=allnames.nameid) AS b 
+                                                  
+                                                  ON b.byers_id=a.byersid WHERE (a.created BETWEEN ? AND ?) AND (`b`.`byers_uid` = ?) ORDER BY req_date DESC");
+                        try {
+                            $pdoip->beginTransaction();
+                            $statement->execute(array($from,$to,$check_lkt_byer_fetched['ip_uid']));
+                            $stmt_fetched = $statement->fetchAll(PDO::FETCH_ASSOC);
+                            $dbs_array[1][2] = $stmt_fetched;
+                            $pdoip->commit();
+                        }catch( PDOException $Exception ) {$pdoip->rollback();print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );}
+                    }
                 }
-            }else{
-                try {
-
-                    $statement = $pdo->prepare("SELECT                                       
-                                        a.created AS req_date,
-                                        a.requests_id AS req_id,
-                                        a.requests_nameid AS req_nameid,
-                                        a.requests_uid AS req_uid,
-                                        a.name AS req_name,
-                                        a.req_rent AS rent,
-                                        a.req_sum AS sum,
-                                        a.1c_num AS 1c_num,
-                                        b.byers_id AS b_id,
-                                        b.byers_nameid AS b_nameid,
-                                        b.name AS b_name
-                                        FROM (SELECT * FROM 
-                                              
-                                              (SELECT * FROM requests) AS x LEFT JOIN allnames ON x.requests_nameid=allnames.nameid)AS a 
-                                              
-                                              LEFT JOIN 
-                                              
-                                              (SELECT * FROM byers AS t LEFT JOIN allnames ON t.byers_nameid=allnames.nameid) AS b 
-                                              
-                                              ON b.byers_id=a.byersid WHERE (a.created BETWEEN ? AND ?) AND (`b`.`byers_id` = ?) ORDER BY req_date DESC");
-
-                    $pdo->beginTransaction();
-                    $statement->execute(array($from,$to,$filterbyer));
-                    $pdo->commit();
-
-                }catch( PDOException $Exception ) {
-                    // Note The Typecast To An Integer!
-                    $pdo->rollback();
-                    print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
-                }
-            }
 
         }/*Общий список заявок*/else{
-            $result = "";
-            foreach ($dbs_array as $database){
+            foreach ($dbs_array as $k=>$database) {
                 try {
                     $statement = $database[0]->prepare("SELECT 
                                         a.created AS req_date,
@@ -257,15 +406,31 @@ if(isset($_POST['table'])){
                                         b.name AS b_name
                                         FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
                                         ORDER BY req_date DESC");
+                    $database[0]->beginTransaction();
                     $statement->execute();
-                } catch( PDOException $Exception ) {
-                    print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
-                }
-                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    $stmt_fetched = $statement->fetchAll(PDO::FETCH_ASSOC);
+                    $dbs_array[$k][2] = $stmt_fetched;
+                    $database[0]->commit();
 
-                $result .= "<table><thead><tr><th>Дата</th><th>№ в 1С</th><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Сумма</th><th></th></tr></thead>";
-                //Рисуем заявки из базы ltk
-                foreach ($statement as $row) {
+                } catch (PDOException $Exception) {
+                    print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode();
+                }
+            }
+        }
+
+            $result .= "<table><thead><tr><th>Дата</th><th>№ в 1С</th><th>Покупатель</th><th>Название заявки</th><th>Рент</th><th>Сумма</th><th></th></tr></thead>";
+            //РИСОВАНИЕ ЗАЯВОК////////////////////////////////////////////////////////////////////////////////////////////////////////
+            foreach ($dbs_array as $database){
+
+                //Перед рисованием
+                if(count($database[2]) == 0){
+                    $result .= "<tr><td></td><td></td><td></td><td><span>Заявок в базе $database[3] не обнаружено.</span></td><td></td><td></td><td></td></tr>";
+                }else{
+                    $result .= "<tr><td></td><td></td><td></td><td><span>По данным базы $database[3]: </span></td><td></td><td></td><td></td></tr>";
+                }
+
+
+                foreach ($database[2] as $row){
 
                     $get_executals = $database[0]->prepare("SELECT * FROM executes WHERE requests_uid = ?");
                     $get_executals->execute(array($row['req_uid']));
@@ -278,7 +443,7 @@ if(isset($_POST['table'])){
 
                     $result .= "<tr database = '".$database[1]."' requestid =" . $row['req_id'] . " byerid =".$row['b_id'].">
             <td class='req_date'><span>" . $mysqldate . "</span></td>
-            <td class='1c_num'><span>" . $row['1c_num'] . "</span></td>
+            <td class='1c_num'><span>" . $row['1c_num'] . "</span><br><span>".$database[3]."</span></td>
             <td byerid=" . $row['b_id'] . " name=" . $row['b_nameid'] . "><span>". $row['b_name'] ."</span></td>
             <td category='requests' name =".$row['req_nameid'].">";
 
@@ -289,9 +454,7 @@ if(isset($_POST['table'])){
                             $result .="<span style='color: green'>Накладная № ".$exe['execute_1c_num']." от ".$exe['executed']."</span><br>";
                         }
                     }
-
-                    $result .="<span class='name'>&nbsp ".$row['req_name']."</span>";
-
+                    /*$result .="<span class='name'>&nbsp ".$row['req_name']."</span>";*/
 
                     $result .="<div class='contents' id=".$row['req_nameid'].">
                 <h3 class='req_header_".$row['req_id']."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму <span class='reqsumma'>".number_format($row['sum'],2,'.',' ')."&nbsp</span><br> Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h3/><br>
@@ -310,16 +473,12 @@ if(isset($_POST['table'])){
             </td>
                 <td class = 'rent_whole'>".round($row['rent'], 2)."</td>
                 <td class = 'sum_whole'>" .number_format(round($row['sum'], 2), 2, '.', ' '). "</td>
-            <td class = 'req_buttons'><input type='button' requestid =" . $row['req_id'] . " value='R' class='edit' name =".$row['req_nameid'].">
-         <input type='button' requestid =" . $row['req_id'] . " value='X' class='reqdelete' name =".$row['req_nameid']."></td></tr>";
+                <td class = 'req_buttons'><input type='button' requestid =" . $row['req_id'] . " value='R' class='edit' name =".$row['req_nameid'].">
+                <input type='button' requestid =" . $row['req_id'] . " value='X' class='reqdelete' name =".$row['req_nameid']."></td></tr>";
                 }
             }
-        }
-
-
         $result .= "</table>";
         print $result;
-        unset($result);
     }
     else if ($table == 'givaways') {
         try {
@@ -432,10 +591,7 @@ if(isset($_POST['table'])){
                   ";
         }
 
-        try {
-            $statement = $pdo->prepare($sql);
-            $statement->execute();
-            $result = "
+        $result = "
                 <table><thead>
                 <th id='vidachi_order_given_away'>Дата выдачи</th>
                 <th>Сумма выдачи</th>
@@ -446,7 +602,15 @@ if(isset($_POST['table'])){
                 <th>Сумма заказа</th>
                 </thead><tbody>";
 
-            foreach ($statement as $row) {
+        $statement = $pdo->prepare($sql);
+        $statement_ip = $pdoip->prepare($sql);
+
+        try {
+            $pdo->beginTransaction();
+            $statement->execute();
+            $statement_fetched = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($statement_fetched as $row) {
                 $phpdate = strtotime( $row['given_away'] );
                 $given_away= date( 'd.m.y', $phpdate );
 
@@ -463,13 +627,50 @@ if(isset($_POST['table'])){
                                 <td>".$row['1c_num']."</td>
                                 <td>".$row['req_sum']."</td>
                                 <td>".$row['comment']."</td>
-                            </tr>";          }
-            $result .= "</tbody></table>";
-            print $result;
+                            </tr>";
+            }
+            $pdo->commit();
+
         } catch( PDOException $Exception ) {
             // Note The Typecast To An Integer!
             print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
         }
+
+
+        try{
+            $pdoip->beginTransaction();
+            $statement_ip->execute();
+            $statement_ip_fetched = $statement_ip->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($statement_ip_fetched as $row) {
+                $phpdate = strtotime( $row['given_away'] );
+                $given_away= date( 'd.m.y', $phpdate );
+
+                $phpdate = strtotime( $row['created'] );
+                $created = date( 'd.m.y', $phpdate );
+
+
+
+                $result .= "<tr g_id='".$row['giveaways_id']."'>
+                                <td>$given_away</td>
+                                <td>".$row['giveaway_sum']."</td>
+                                <td>".$row['name']."</td>
+                                <td>$created</td>
+                                <td>".$row['1c_num']."</td>
+                                <td>".$row['req_sum']."</td>
+                                <td>".$row['comment']."</td>
+                            </tr>";
+            }
+            $pdoip->commit();
+
+        } catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+        }
+
+            $result .= "</tbody></table>";
+            print $result;
+
         /**//////////////////////////////////////////////////////////////ЧТЕНИЕ СПИСКА ЗАЯВОК
     }
     else if ($table == 'payments') {
@@ -570,35 +771,64 @@ if(isset($_POST['table'])){
     }
     else if(($table == 'byers')) {
         /**//////////////////////////////////////////////////////////////ЧТЕНИЕ ПОКУПАТЕЛИ
-        try {
+        ///Как выглядит список товаров/покупателей/поставщиков:
+        ///Ну, по идее, так же как и сейчас
 
-            $statement = $pdo->prepare("SELECT name, byers_id, nameid, ov_tp, ov_firstobp, ov_wt, comment, onec_id, ip_uid  FROM $table  LEFT JOIN `allnames` ON allnames.nameid=$table.$tablenid GROUP BY name");
+        $statement = $pdo->prepare("SELECT name, byers_id, nameid, ov_tp, ov_firstobp, ov_wt, comment, onec_id, ip_uid  FROM $table  LEFT JOIN `allnames` ON allnames.nameid=$table.$tablenid GROUP BY name");
+        $statement_ip = $pdoip->prepare("SELECT name, byers_id, nameid, ov_tp, ov_firstobp, ov_wt, comment, onec_id/*, ip_uid*/  FROM $table  LEFT JOIN `allnames` ON allnames.nameid=$table.$tablenid GROUP BY name");
+
+        $result = "<table><thead><tr><th>Покупатель</th><th>%</th><th>Обн</th><th>Отсрочка</th><th>Коммент</th><th>Номер в 1С</th><th>Соотнесение</th><th>Опции</th></tr></thead>";
+
+        try {
+            $pdo->beginTransaction();
             $statement->execute();
-            $result = "<table><thead><tr><th>Покупатель</th><th>%</th><th>Обн</th><th>Отсрочка</th><th>Коммент</th><th>Номер в 1С</th><th>Соотнесение</th><th>Опции</th></tr></thead>";
+            $pdo->commit();
             foreach ($statement as $row)
             {
-                $result .= "<tr><td category='" . $table . "' name =" . $row['nameid'] . ">";
+                $result .= "<tr database = 'ltk'><td category='" . $table . "' name =" . $row['nameid'] . ">";
                 $result .= "<span class='name' byerid=" . $row['byers_id'] . " name =" . $row['nameid'] . ">" . $row['name'] . "</span></td>
                                 <td class='ov_tp'><span>" . $row['ov_tp'] . "<span/></td>
                                 <td class='ov_firstobp'><span>" . $row['ov_firstobp'] . "<span/></td>
                                 <td class='ov_wt'><span>" . $row['ov_wt'] . "<span/></td>
                                 <td class='comment'><span>" . $row['comment'] . "<span/></td>";
-                $result .= "<td class='onec_id'><span>" . $row['onec_id'] . "<span/></td>
-                <td class='synced'><span>" . $row['ip_uid'] . "<span/></td>
+
+                if($row['onec_id']){$result .= "<td class='onec_id'><span>" . $row['onec_id'] . "<span/></td>";
+                }elseif ($row['ip_uid']){$result .= "<td class='onec_id'><span style='color: grey'>Болванка<span/></td>";}else{$result .= "<td class='onec_id'><span style='color: blue'>Нет ни в одной базе, есть старые расценки.<span/></td>";}
+
+                $result .= "<td class='synced'><span>" . $row['ip_uid'] . "<span/></td>
                 <td class = 'item_buttons'>
-         <input type='button' name =" . $row['nameid'] . " value='R' class='edit'>
-         <input type='button' name =" . $row['nameid'] . " value='X' class='delete'></td></tr>";
+                <input type='button' name =" . $row['nameid'] . " value='R' class='edit'>
+                <input type='button' name =" . $row['nameid'] . " value='X' class='delete'></td></tr>";
             }
-            $result.="</table>";
-
-            print $result;
-
-
-
-        } catch(PDOExeption $e) {
+        } catch( PDOException $Exception ) {
             $pdo->rollback();
-            print "Error!: " . $e->getMessage() . "</br>";
+            print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
         }
+
+        try {
+            $pdoip->beginTransaction();
+            $statement_ip->execute();
+            $pdoip->commit();
+            foreach ($statement_ip as $row)
+            {
+                $result .= "<tr database = 'ip'><td category='" . $table . "' name =" . $row['nameid'] . ">";
+                $result .= "<span class='name' byerid=" . $row['byers_id'] . " name =" . $row['nameid'] . ">" . $row['name'] . "</span></td>
+                                <td class='ov_tp'><span>" . $row['ov_tp'] . "<span/></td>
+                                <td class='ov_firstobp'><span>" . $row['ov_firstobp'] . "<span/></td>
+                                <td class='ov_wt'><span>" . $row['ov_wt'] . "<span/></td>
+                                <td class='comment'><span>" . $row['comment'] . "<span/></td>";
+                $result .= "<td class='onec_id'><span>" . $row['onec_id'] . "<span/></td>";
+                $result .= "<td class='synced'></td>";
+                $result .= "<td class = 'item_buttons'>
+                <input type='button' name =" . $row['nameid'] . " value='R' class='edit'>
+                <input type='button' name =" . $row['nameid'] . " value='X' class='delete'></td></tr>";
+            }
+        } catch( PDOException $Exception ) {
+            $pdoip->rollback();
+            print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+        }
+        $result.="</table>";
+        print $result;
         /**//////////////////////////////////////////////////////////////
     }
     else if ($table == 'totals') {
@@ -784,9 +1014,12 @@ if(isset($_POST['table'])){
         /**//////////////////////////////////////////////////////////////ЧТЕНИЕ СПИСКА ЗАЯВОК
     }
     else if ($table == 'trades'){
-        try {
 
-            $statement = $pdo->prepare("SELECT `trades_id`,`nameid`,`name`,`tare`,`onec_id`,`ip_uid` FROM `trades` LEFT JOIN `allnames` ON allnames.nameid=`trades`.`trades_nameid`");
+
+        $statement = $pdo->prepare("SELECT `trades_id`,`nameid`,`name`,`tare`,`onec_id`,`ip_uid` FROM `trades` LEFT JOIN `allnames` ON allnames.nameid=`trades`.`trades_nameid`");
+        $statement_ip = $pdoip->prepare("SELECT `trades_id`,`nameid`,`name`,`tare`,`onec_id` FROM `trades` LEFT JOIN `allnames` ON allnames.nameid=`trades`.`trades_nameid`");
+
+        try {
             $statement->execute();
             $result = "<table><thead><tr><th>Наименование</th><th>Тип тары</th><th>Номер в 1С</th><th>Соотнесение</th><th></th></tr></thead>";
             foreach ($statement as $row)
@@ -795,40 +1028,70 @@ if(isset($_POST['table'])){
                 $result .= "<span class='trade_name' tradeid=" . $row['trades_id'] . " name =" . $row['nameid'] . ">" . $row['name'] . "</span></td>
                                 <td class='trade_tare' tradeid=" . $row['trades_id'] . "><span>" . $row['tare'] . "<span/></td>";
 
-                if($row['onec_id']){
-                    $result .= "<td class='trade_onec_id'><span>" . $row['onec_id'] . "<span/></td>";
-                }else{$result .= "<td class='trade_onec_id'><span style='color: grey'>Болванка<span/></td>";}
+                if($row['onec_id']){$result .= "<td class='trade_onec_id'><span>" . $row['onec_id'] . "<span/></td>";
+                }elseif ($row['ip_uid']){$result .= "<td class='trade_onec_id'><span style='color: grey'>Болванка<span/></td>";}else{$result .= "<td class='trade_onec_id'><span style='color: blue'>Нет ни в одной базе, есть старые расценки.<span/></td>";}
 
                 $result .= "<td class='trade_synched'><span>" . $row['ip_uid'] . "<span/></td>
                 <td class = 'item_buttons'>
-         <input type='button' name =" . $row['nameid'] . " tradeid =" . $row['trades_id'] . " value='E' class='edit_options_trade'>
-         <input type='button' name =" . $row['nameid'] . " value='X' class='delete'></td></tr>";
+                <input type='button' name =" . $row['nameid'] . " tradeid =" . $row['trades_id'] . " value='E' class='edit_options_trade'>
+                <input type='button' name =" . $row['nameid'] . " value='X' class='delete'></td></tr>";
             }
-            $result.="</table>";
-
-            print $result;
-
-
 
         } catch(PDOExeption $e) {
             $pdo->rollback();
             print "Error!: " . $e->getMessage() . "</br>";
         }
+
+        try {
+            $statement_ip->execute();
+            foreach ($statement_ip as $row)
+            {
+                $result .= "<tr><td category='trades' name =" . $row['nameid'] . ">";
+                $result .= "<span class='trade_name' tradeid=" . $row['trades_id'] . " name =" . $row['nameid'] . ">" . $row['name'] . "</span></td>
+                                <td class='trade_tare' tradeid=" . $row['trades_id'] . "><span>" . $row['tare'] . "<span/></td>";
+
+                if($row['onec_id']){$result .= "<td class='trade_onec_id'><span>" . $row['onec_id'] . "<span/></td>";
+                }elseif ($row['ip_uid']){$result .= "<td class='trade_onec_id'><span style='color: grey'>Болванка<span/></td>";}else{$result .= "<td class='trade_onec_id'><span style='color: blue'>Нет ни в одной базе, есть старые расценки.<span/></td>";}
+
+                $result .= "<td class='trade_synched'><span>" . $row['ip_uid'] . "<span/></td>
+                <td class = 'item_buttons'>
+                <input type='button' name =" . $row['nameid'] . " tradeid =" . $row['trades_id'] . " value='E' class='edit_options_trade'>
+                <input type='button' name =" . $row['nameid'] . " value='X' class='delete'></td></tr>";
+            }
+            $result.="</table>";
+            print $result;
+
+        } catch(PDOExeption $e) {
+            $pdoip->rollback();
+            print "Error!: " . $e->getMessage() . "</br>";
+        }
     }
-    else {
-        /**//////////////////////////////////////////////////////////////ЧТЕНИЕ ПОКУПАТЕЛИ/ПОСТАВЩИКИ/ТОВАРЫ
+    else if ($table == 'sellers'){
+        /**//////////////////////////////////////////////////////////////ЧТЕНИЕ ПОСТАВЩИКИ
         try {
 
-            $statement = $pdo->prepare("SELECT name, nameid  FROM $table  LEFT JOIN `allnames` ON allnames.nameid=$table.$tablenid GROUP BY name");
+            $statement = $pdo->prepare("SELECT *  FROM sellers  LEFT JOIN `allnames` ON allnames.nameid=sellers.sellers_nameid GROUP BY name");
+            $statement_ip = $pdoip->prepare("SELECT *  FROM sellers  LEFT JOIN `allnames` ON allnames.nameid=sellers.sellers_nameid GROUP BY name");
+
             $statement->execute();
+            $statement_ip->execute();
+
             $result = "<table>";
             foreach ($statement as $row)
             {
-                $result .= "<tr><td category='" . $table . "' name =" . $row['nameid'] . ">";
-                $result .= "<span class='name' name =" . $row['nameid'] . ">" . $row['name'] . "</span></td>                
+                $result .= "<tr database='ltk' sellerid=".$row['sellers_id']."><td category='".$table."' name =".$row['nameid'].">";
+                $result .= "<span class='name' name =".$row['nameid'].">".$row['name']."</span></td>                
                 <td class = 'item_buttons'>
-         <input type='button' name =" . $row['nameid'] . " value='R' class='edit'>
-         <input type='button' name =" . $row['nameid'] . " value='X' class='delete'></td></tr>";
+         <input type='button' sellerid=".$row['sellers_id']." name =" . $row['nameid'] . " value='R' class='edit'>
+         <input type='button' sellerid=".$row['sellers_id']." name =" . $row['nameid'] . " value='X' class='delete'></td></tr>";
+            }
+            foreach ($statement_ip as $row)
+            {
+                $result .= "<tr database='ltk' sellerid=".$row['sellers_id']."><td category='".$table."' name =".$row['nameid'].">";
+                $result .= "<span class='name' name =".$row['nameid'].">".$row['name']."</span></td>                
+                <td class = 'item_buttons'>
+         <input type='button' sellerid=".$row['sellers_id']." name =" . $row['nameid'] . " value='R' class='edit'>
+         <input type='button' sellerid=".$row['sellers_id']." name =" . $row['nameid'] . " value='X' class='delete'></td></tr>";
             }
             $result.="</table><!--<script src='js/mysql_edc.js'></script>-->";
 

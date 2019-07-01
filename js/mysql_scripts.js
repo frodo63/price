@@ -339,12 +339,12 @@ $(document).ready(function(){
     //Чтение списка заявок из фильтра по дате.//////////////////////////////////////////////////////////////////////////
     $(document).off('click.filter_date').on('click.filter_date', '#requests_date_range .filter_date', function(){
         var from = $('#requests_date_range .from').val();
-        console.log(from);
+        //console.log(from);
         from = from.slice(6,10)+'-'+from.slice(3,5)+'-'+from.slice(0,2);
         console.log(from);
 
         var to = $('#requests_date_range .to').val();
-        console.log(to);
+        //console.log(to);
         to = to.slice(6,10)+'-'+to.slice(3,5)+'-'+to.slice(0,2);
         console.log(to);
 
@@ -373,7 +373,7 @@ $(document).ready(function(){
             });
         }else{
             alert("Введите обе точки временного диапазона.");
-        };
+        }
     });
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
