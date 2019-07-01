@@ -47,7 +47,7 @@ if(isset($_POST['delrequestid']) && isset($_POST['delnameid']))
 {
         $delrequestid  = $_POST['delrequestid'];
         $delnameid  = $_POST['delnameid'];
-        deleterequest($pdo, $delrequestid, $delnameid);
+        deleterequest($database, $delrequestid, $delnameid);
 };
 
 function deleterequest($pdo,$delrequestid,$delnameid)
@@ -75,7 +75,7 @@ function deleterequest($pdo,$delrequestid,$delnameid)
 if(isset($_POST['delrequestid_no_nameid']))
 {
     $delrequestid  = $_POST['delrequestid_no_nameid'];
-    deleterequest_no_nameid($pdo, $delrequestid);
+    deleterequest_no_nameid($database, $delrequestid);
 };
 
 function deleterequest_no_nameid($pdo,$delrequestid)
@@ -103,7 +103,7 @@ function deleterequest_no_nameid($pdo,$delrequestid)
 if(isset($_POST['delpositionid']))
 {
         $delpositionid  = $_POST['delpositionid'];
-        deleteposition($pdo, $delpositionid);
+        deleteposition($database, $delpositionid);
 };
 function deleteposition($pdo,$delpositionid)
 {
@@ -125,7 +125,7 @@ function deleteposition($pdo,$delpositionid)
 if(isset($_POST['delpricingid']))
 {
         $delpricingid  = $_POST['delpricingid'];
-        deletepricing($pdo, $delpricingid);
+        deletepricing($database, $delpricingid);
 };
 function deletepricing($pdo,$delpricingid)
 {

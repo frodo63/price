@@ -41,6 +41,8 @@ $(document).ready(function() {
         /*$('.reqdelete').off().click(function () {*/
         var delrequestid = $(event.target).attr("requestid"); //id заявки
         var delnameid = $(event.target).attr("nameid"); //nameid заявки
+        var db = $(event.target).parents('tr[database]').attr('database');
+
         if (confirm("Удалить саму запись из базы данных ? Может, вы хотите просто переименовать? Тогда кликайте \"Отмена\".")) {
             console.log(delrequestid);
             console.log(delnameid);
@@ -49,7 +51,7 @@ $(document).ready(function() {
                 $.ajax({
                     url: 'mysql_delete.php',
                     method: 'POST',
-                    data: {delrequestid_no_nameid:delrequestid},
+                    data: {delrequestid_no_nameid:delrequestid, db:db},
                     success: function(){
                         $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Заявка без названия"+ delrequestid +" удалена.");
                     },
@@ -62,7 +64,7 @@ $(document).ready(function() {
                 $.ajax({
                     url: 'mysql_delete.php',
                     method: 'POST',
-                    data: {delrequestid:delrequestid, delnameid:delnameid},
+                    data: {delrequestid:delrequestid, delnameid:delnameid, db:db},
                     success: function(){
                         $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Заявка "+ delrequestid +" удалена.");
                     },
@@ -81,11 +83,12 @@ $(document).ready(function() {
     $(document).off('click.posdel').on('click.posdel', 'input.posdelete', function (event) {
         var delpositionid = $(event.target).attr("position"); //id позиции
         var reqid = $(event.target).parents('tr[requestid]').attr('requestid');
+        var db = $(event.target).parents('tr[database]').attr('database');
         if (confirm("Удалить запись ?")) {
             $.ajax({
                 url: 'mysql_delete.php',
                 method: 'POST',
-                data: {delpositionid:delpositionid},
+                data: {delpositionid:delpositionid, db:db},
                 success: function(){
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Позиция "+ delpositionid +" удалена.");
                 },
@@ -93,7 +96,7 @@ $(document).ready(function() {
                     $.ajax({
                         url: 'mysql_read.php',
                         method: 'POST',
-                        data: {requestid:reqid},
+                        data: {requestid:reqid, db:db},
                         success: function (data) {
                             $('input[requestid='+reqid+'] ~ div div.positions').html(data);
                         }
@@ -110,11 +113,12 @@ $(document).ready(function() {
         /*$('.delpricing').off().click(function () {*/
         var delpricingid = $(event.target).attr("pricing"); //id расценки
         var delposid = $(event.target).parents("tr[position]").attr('position'); //id позиции
+        var db = $(event.target).parents('tr[database]').attr('database');
         if (confirm("Удалить расценку ?")) {
             $.ajax({
                 url: 'mysql_delete.php',
                 method: 'POST',
-                data: {delpricingid:delpricingid},
+                data: {delpricingid:delpricingid, db:db},
                 success: function(){
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Расценка "+ delpricingid +" удалена.");
                 },
@@ -123,7 +127,7 @@ $(document).ready(function() {
                     $.ajax({
                         url: 'mysql_read.php',
                         method: 'POST',
-                        data: {positionid:delposid},
+                        data: {positionid:delposid, db:db},
                         success: function (data) {
                             $('input[position='+delposid+'] ~ div.pricings').html(data);
                         }
@@ -294,6 +298,7 @@ $(document).ready(function() {
     $(document).off('click.collapse').on('click.collapse', 'input.collapse', function(event){
         var rid = $(event.target).attr('requestid');
         var thetab = $('#reads li.ui-state-active').attr('id').substr(4);
+        var db = $(event.target).parents('tr[database]').attr('database');
 
         if($('div.contents:visible').length > 0){
 
@@ -304,8 +309,7 @@ $(document).ready(function() {
                 $(event.target).parent().removeClass('widen');
                 $('tr[requestid='+rid+'] .rentcount').html('');//По закрытию чистим расчет рентабельности
                 return false;
-
-            };
+            }
             //Закрываем старое
             $('input.collapse[value = "X"]').css('background', 'white');
             $('input.collapse[value = "X"]').css('color', 'black');
@@ -315,7 +319,6 @@ $(document).ready(function() {
             $('.'+thetab+'_list').removeClass('shrinken');
             $(event.target).parent().removeClass('widen');
             $('tr[requestid='+rid+'] .rentcount').html('');//По закрытию чистим расчет рентабельности
-
 
             //Открываем новое
             $(event.target).val('X');
@@ -328,12 +331,12 @@ $(document).ready(function() {
             $.ajax({
                 url: 'mysql_read.php',
                 method: 'POST',
-                data: {requestid:rid},
+                data: {requestid:rid, db:db},
                 success: function (data) {
                     $('input[requestid='+rid+'] ~ div div.positions').html(data);
                 },
                 complete: function(){
-                    $('#editmsg').css('display', 'block'). delay(2000).slideUp(300).html('Содержимое заявки ' + rid + ' получено.');
+                    $('#editmsg').css('display', 'block'). delay(2000).slideUp(300).html('Содержимое заявки ' + rid + ' из базы ' + db + ' получено.');
                 }
             });
 
@@ -354,7 +357,7 @@ $(document).ready(function() {
             $.ajax({
                 url: 'mysql_read.php',
                 method: 'POST',
-                data: {requestid:rid},
+                data: {requestid:rid, db:db},
                 success: function (data) {
                     $('input[requestid='+rid+'] ~ div div.positions').html(data);
                 },
@@ -377,9 +380,10 @@ $(document).ready(function() {
 //Чтение позиции. Строится список расценок. Айди берется из инпута плюса////////////////////////////////////////////
     /*$('input.collapsepos').off('click.collapsepos').on('click.collapsepos', function(){*/
     $(document).off('click.collapsepos').on('click.collapsepos', 'input.collapsepos', function(event){
-
         var positionid = $(event.target).attr('position');
         var requestid = $(event.target).attr('request');
+        var db = $(event.target).parents('tr[database]').attr('database');
+
         switch ($(event.target).siblings('div.pricings').css('display')){
 
             case 'none':
@@ -387,12 +391,11 @@ $(document).ready(function() {
                 $('div.pricings').slideUp();
                 $('input.collapsepos').val('♢').css({'background-color': 'white', 'color': 'black'});
 
-
                 $(event.target).siblings('div.pricings').slideDown();
                 $.ajax({
                     url: 'mysql_read.php',
                     method: 'POST',
-                    data: {positionid:positionid},
+                    data: {positionid:positionid, db:db},
                     success: function (data) {
                         $('input[position='+positionid+'] ~ div.pricings').html(data);
                     },
@@ -419,8 +422,7 @@ $(document).ready(function() {
                 //$('tr[requestid='+requestid+'] tr[position]').css('opacity', 1);
                 /**/
                 break;
-        };
-
+        }
     });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -699,6 +701,7 @@ $(document).ready(function() {
     /*Переименование*/
 //По клику на кнопку "Переименовать":
     $(document).off('click.rename').on('click.rename', '.edit', function (event) {
+        var db = $(event.target).parents('tr[database]').attr('database');
         console.log('клик на Переименовать');
         event.stopImmediatePropagation();
         //Все переменные берутся сразу
@@ -740,7 +743,7 @@ $(document).ready(function() {
                 }else{
                     $('#theinput').remove();
                     $('td[name="'+nameIDold+'"]').children('input').after($('<span class="name">' + nameRealOld + '</span>'));
-                };
+                }
 
             } else if ($(event.target).attr('position')){//Если нажато "Переименовать позицию, а до этого зэинпут был на заявке"
                 var nameRealOld = $('#theinput').attr('placeholder');//Перед удалением берем из зэинпута плейсхолдер для старого имени и нейайди для селекта на след круге старого тп
@@ -757,7 +760,7 @@ $(document).ready(function() {
                 }else{
                     $('#theinput').remove();
                     $('input.collapsepos[position="'+nameIDold+'"]').after($('<span class="name">' + nameRealOld + '</span>'));
-                };
+                }
 
             } else {//Если пепреименовывется итем
                 var thebuttons = $('#theinput').parent().siblings('td.item_buttons').children('input');
@@ -770,8 +773,8 @@ $(document).ready(function() {
                 theTd.html($('<input type="text" name="' + nameID + '" id="theinput" value="' + nameOld + '" placeholder="' + nameOld + '" >'));
                 $('#theinput').focus().select();
                 var nameSaved = nameOld;
-            };
-        };
+            }
+        }
 
         if ($('#theinput').length == 0) { //Проверяем, идет ли уже где-то процесс переименования. если нет - то:
             if ($(event.target).attr('requestid')){//При нолике если заявка:
@@ -790,8 +793,8 @@ $(document).ready(function() {
                 theTd.html($('<input type="text" name="' + nameID + '" id="theinput" value="' + nameOld + '" placeholder="' + nameOld + '" >'));
                 $('#theinput').focus().select();
                 var nameSaved = nameOld;
-            };
-        };
+            }
+        }
     });
 //Чтобы можно было кликать на зэинпут без схлопываний
     $(document).off('click.theinput').on('click.theinput', '#theinput', function (event) {
@@ -1024,12 +1027,14 @@ $(document).ready(function() {
     /*РАСЧЕТ РЕНТАБЕЛЬНОСТИ по КНОПКЕ ВНУТРИ ЗАЯВКИ*/
     $(document).off('click.check_rent').on('click.check_rent', '.check_rent', function (event) {
         var reqid = $(event.target).attr('requestid'); //ID заявки, где есть позиция, где выбирается победитель
+        var db = $(event.target).parents('tr[database]').attr('database');
+
         $.ajax({
             url: 'mysql_rent.php',
             method: 'POST',
             dataType: 'json',
             cache: false,
-            data: {request:reqid},
+            data: {request:reqid, db:db},
             success: function (data) {
                 $('tr[requestid='+reqid+'] .rentcount').toggle().html(data.data1);
                 $('tr[requestid='+reqid+'] .rent_whole').html(data.data2);

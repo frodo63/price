@@ -476,14 +476,14 @@ if(isset($_POST['table'])){
 
                     $result .="<div class='contents' id=".$row['req_nameid'].">
                 <h3 class='req_header_".$row['req_id']."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму <span class='reqsumma'>".number_format($row['sum'],2,'.',' ')."&nbsp</span><br> Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h3/><br>
-                <input type='button' class='edit_options' value='Опции' requestid='".$row['req_id']."'>
-                <input type='button' class='edit_1c_num' value='Номер в 1С и дата' requestid='".$row['req_id']."'>  
-                <input type='button' value='Вернуть в Р-1' class='r1_show' requestid='".$row['req_id']."'>              
+                <input type='button' class='edit_options' value='Опции' requestid='".$row['req_id']."'>";
+                    //$result .="<input type='button' class='edit_1c_num' value='Номер в 1С и дата' requestid='".$row['req_id']."'>";
+                    $result .="<input type='button' value='Вернуть в Р-1' class='r1_show' requestid='".$row['req_id']."'>              
                 <input type='button' class='add_pos' value='+позиция'>
                 <div class='add-pos-inputs'>
                 <input type='text' class='trade' name='new_req_name' placeholder='Название позиции' size='50'>
                 <div class='sres'></div>
-                <input type='button' name =" . $row['req_id'] . " value='Добавить' class='addpos' database='ltk'>
+                <input type='button' name =" . $row['req_id'] . " value='Добавить' class='addpos' database = '".$database[1]."'>
             </div>
             
             <div class='positions'></div>
@@ -1033,7 +1033,6 @@ if(isset($_POST['table'])){
     }
     else if ($table == 'trades'){
 
-
         $statement = $pdo->prepare("SELECT `trades_id`,`nameid`,`name`,`tare`,`onec_id`,`ip_uid` FROM `trades` LEFT JOIN `allnames` ON allnames.nameid=`trades`.`trades_nameid`");
         $statement_ip = $pdoip->prepare("SELECT `trades_id`,`nameid`,`name`,`tare`,`onec_id` FROM `trades` LEFT JOIN `allnames` ON allnames.nameid=`trades`.`trades_nameid`");
 
@@ -1042,7 +1041,7 @@ if(isset($_POST['table'])){
             $result = "<table><thead><tr><th>Наименование</th><th>Тип тары</th><th>Номер в 1С</th><th>Соотнесение</th><th></th></tr></thead>";
             foreach ($statement as $row)
             {
-                $result .= "<tr><td category='trades' name =" . $row['nameid'] . ">";
+                $result .= "<tr database='ltk'><td category='trades' name =" . $row['nameid'] . ">";
                 $result .= "<span class='trade_name' tradeid=" . $row['trades_id'] . " name =" . $row['nameid'] . ">" . $row['name'] . "</span></td>
                                 <td class='trade_tare' tradeid=" . $row['trades_id'] . "><span>" . $row['tare'] . "<span/></td>";
 
@@ -1064,7 +1063,7 @@ if(isset($_POST['table'])){
             $statement_ip->execute();
             foreach ($statement_ip as $row)
             {
-                $result .= "<tr><td category='trades' name =" . $row['nameid'] . ">";
+                $result .= "<tr database='ip'><td category='trades' name =" . $row['nameid'] . ">";
                 $result .= "<span class='trade_name' tradeid=" . $row['trades_id'] . " name =" . $row['nameid'] . ">" . $row['name'] . "</span></td>
                                 <td class='trade_tare' tradeid=" . $row['trades_id'] . "><span>" . $row['tare'] . "<span/></td>";
 
@@ -1130,8 +1129,8 @@ if(isset($_POST['table'])){
 if (isset($_POST['requestid'])){
     $req_id=$_POST['requestid'];
     try{
-        $nowinners = $pdo->prepare("SELECT `pos_name`, `req_positionid`, `line_num`, `winnerid` FROM `req_positions` WHERE `requestid`=?");
-        $winners = $pdo->prepare("SELECT `requestid`, `req_positionid`, `line_num`, `pos_name`, `name`, `rent`, `price`, `kol` FROM (SELECT * FROM ((SELECT * FROM `pricings`) AS a LEFT JOIN (SELECT `sellers_id`, `name` FROM(sellers LEFT JOIN allnames ON sellers.sellers_nameid=allnames.nameid)) AS b ON a.`sellerid` = b.`sellers_id`)) AS a LEFT JOIN req_positions ON a.`pricingid` = req_positions.winnerid WHERE `req_positionid`=?");
+        $nowinners = $database->prepare("SELECT `pos_name`, `req_positionid`, `line_num`, `winnerid` FROM `req_positions` WHERE `requestid`=?");
+        $winners = $database->prepare("SELECT `requestid`, `req_positionid`, `line_num`, `pos_name`, `name`, `rent`, `price`, `kol` FROM (SELECT * FROM ((SELECT * FROM `pricings`) AS a LEFT JOIN (SELECT `sellers_id`, `name` FROM(sellers LEFT JOIN allnames ON sellers.sellers_nameid=allnames.nameid)) AS b ON a.`sellerid` = b.`sellers_id`)) AS a LEFT JOIN req_positions ON a.`pricingid` = req_positions.winnerid WHERE `req_positionid`=?");
         $nowinners->execute(array($req_id));
         $nowinners_fetched = $nowinners->fetchAll(PDO::FETCH_ASSOC);
         $result .= "<br><table><thead><th>№</th><th>Название позиции</th><th>Цена</th><th>Сумма</th><th>Поб</th><th>Рент</th><th>Опции</th></thead><tbody>";
@@ -1161,7 +1160,7 @@ if (isset($_POST['requestid'])){
                     $result .= "<td class = 'pos_buttons'>";
                     $result .= "<input type='button' position =" . $win['req_positionid'] . " value='R' class='edit'>";
                     $result .= "<input type='button' position =" . $win['req_positionid'] . " value='X' class='posdelete'>";
-                    $result .= "<input type='button' req_op_id='".$req_id."' pos_op_id=". $win['req_positionid'] ." value='...' class='edit_options_pos'>";
+                    $result .= "<input type='button' req_op_id='".$req_id."' pos_op_id=". $win['req_positionid'] ." value='Опции' class='edit_options_pos'>";
                     $result .= "</td></tr>";
 
                 };
@@ -1200,7 +1199,7 @@ if (isset($_POST['positionid'])){
     $pos_id=$_POST['positionid'];
 
     try{
-        $statement = $pdo->prepare("SELECT  c.pricingid AS pricingid,
+        $statement = $database->prepare("SELECT  c.pricingid AS pricingid,
                                             c.firstoh AS firstoh,
                                             c.rop AS rop,
                                             c.oh AS oh,
@@ -1226,9 +1225,7 @@ if (isset($_POST['positionid'])){
         $statement->execute(array($pos_id));
         if($statement->rowCount() == 0) {$result = "Здесь еще нет расценок.<input class ='addpricing' positionid='".$pos_id."' value='Расценить новое?' type ='button'><script src='js/mysql_edc.js'></script>";
         } else{
-
             /*ДЕЛАЕМ ТАБЛИЦУ!!!*/
-
             $result = "<table class='pricing-list'><thead><tr>
                     <th>Продавец</th>    
                     <th>Товар</th>                    
@@ -1279,8 +1276,6 @@ if (isset($_POST['positionid'])){
                     $result.="<input type='button' pricing =" . $row['pricingid'] . " value='П' class='winner'>";
                 }else{$result.="<input type='button' pricing =" . $row['pricingid'] . " value='*' class='winner'>";}
 
-
-
                 $result.="</div></td></tr>";
             }
             $result.="<!--<script src='js/mysql_edc.js'></script>--></tbody></table><input class ='addpricing' positionid='".$pos_id."' value='Расценить новое?' type ='button'>";
@@ -1288,10 +1283,7 @@ if (isset($_POST['positionid'])){
 
         echo $result;
 
-    } catch( PDOException $Exception ) {
-        // Note The Typecast To An Integer!
-        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
-    }
+    } catch( PDOException $Exception ) {print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );}
 
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

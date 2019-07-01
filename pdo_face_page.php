@@ -249,7 +249,7 @@ echo "    <div id='sync'>
               </div>
 
 
-              <div id='edit_options'>
+              <div id='edit_options' database>
                   
                   <label for='1'><span>Наценка:</span></label>&nbsp<b><span id='req_op_op'></span></b><br><input id='edit_op' type='number' name='1' type='text' size='5' min='0' step='0.05'>,%<br>
                   <input cc='1' id='button_edit_op' type='button' name='edit_op' requestid='' value='Задать наценку'><br><br>
@@ -268,7 +268,7 @@ echo "    <div id='sync'>
                   
               </div>
               
-              <div id='edit_options_pos'>
+              <div id='edit_options_pos' database>
               <h3></h3>
                   <label for='add_queen'>Считать отдельно:</label><input id='add_queen' type='checkbox' name='queen'><br>
     
@@ -288,7 +288,7 @@ echo "    <div id='sync'>
                   <input class='close_edit_options_pos' type='button' value='X'>
               </div> 
               
-              <div id='edit_options_trade'>
+              <div id='edit_options_trade' database>
               <br>
               <span>Наименование:</span> <span id='trade_options_name'></span><br><br>
 

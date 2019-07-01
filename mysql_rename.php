@@ -42,7 +42,7 @@ if(isset($_POST['newname']) && isset($_POST['nameid']) && isset($_POST['table'])
     $nameid = $_POST['nameid'];
     $table = $_POST['table'];
 
-    OutNewRename($pdo, $newname, $nameid, $table);
+    OutNewRename($database, $newname, $nameid, $table);
 };
 
 

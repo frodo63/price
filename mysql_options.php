@@ -25,11 +25,11 @@ if (isset($_POST['period'])){
 if (isset($_POST['req_options'])){
     $reqid = $_POST['req_options'];
 
-    $statement = $pdo->prepare("SELECT ov_op,ov_tp,ov_wt,ov_firstobp FROM `requests` WHERE `requests_id` = ?");
+    $statement = $database->prepare("SELECT ov_op,ov_tp,ov_wt,ov_firstobp FROM `requests` WHERE `requests_id` = ?");
     try {
-        $pdo->beginTransaction();
+        $database->beginTransaction();
         $statement->execute(array($reqid));
-        $pdo->commit();
+        $database->commit();
 
         $result = $statement->fetch();
 
@@ -37,7 +37,7 @@ if (isset($_POST['req_options'])){
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 }
@@ -47,11 +47,11 @@ if ( isset($_POST['pos_options'])){
     try{
         $posid = ($_POST["pos_options"]);
 
-        $statement=$pdo->prepare("SELECT `ov_op`,`ov_firstobp`,`ov_tp`,`ov_wt` FROM `req_positions` WHERE req_positionid = ?");
+        $statement=$database->prepare("SELECT `ov_op`,`ov_firstobp`,`ov_tp`,`ov_wt` FROM `req_positions` WHERE req_positionid = ?");
 
-        $pdo->beginTransaction();
+        $database->beginTransaction();
         $statement->execute(array($posid));
-        $pdo->commit();
+        $database->commit();
 
         $result = $statement->fetch();
 
@@ -59,7 +59,7 @@ if ( isset($_POST['pos_options'])){
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
@@ -116,20 +116,16 @@ if ( isset($_POST['minus_queen'])){
     if (isset($_POST['trade_options'])){
         $tradeid = $_POST['trade_options'];
 
-        $statement = $pdo->prepare("SELECT `trades_id`,`nameid`,`name`,`tare` FROM `trades` LEFT JOIN `allnames` ON allnames.nameid=`trades`.`trades_nameid` WHERE `trades_id` = ?");
+        $statement = $database->prepare("SELECT `trades_id`,`nameid`,`name`,`tare` FROM `trades` LEFT JOIN `allnames` ON allnames.nameid=`trades`.`trades_nameid` WHERE `trades_id` = ?");
         try {
-            $pdo->beginTransaction();
+            $database->beginTransaction();
             $statement->execute(array($tradeid));
-            $pdo->commit();
+            $database->commit();
 
             $result = $statement->fetch();
 
             print(json_encode(array('trades_id'=>$result['trades_id'],'tradenameid'=>$result['nameid'],'tradename'=>$result['name'],'tare'=>$result['tare'])));
 
-        } catch( PDOException $Exception ) {
-            // Note The Typecast To An Integer!
-            $pdo->rollback();
-            print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
-        }
+        } catch( PDOException $Exception ) {$database->rollback();print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );}
     }
 /**/

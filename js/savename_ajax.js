@@ -3,11 +3,12 @@ $(document).off('click.savename').on('click.savename', 'input.savename', functio
     var table = $('#theinput').parent().attr('category');
     var nameid = $('#theinput').attr('name');
     var newname = $('#theinput').val();
+    var db = $(event.target).parents('tr[database]').attr('database');
 
     $.ajax({
         url: 'mysql_rename.php',
         method: 'POST',
-        data: {nameid:nameid, newname:newname, table:table},
+        data: {nameid:nameid, newname:newname, table:table, db:db},
         success: function (data) {
             console.log(data);
             $(e.target).addClass('edit').removeClass('savename').val('R');//Вернули кнопку в первоначальное положение

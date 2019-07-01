@@ -301,16 +301,16 @@ if(
         }
 
         $sql = "UPDATE `requests` SET $column = ? WHERE requests_id = ?";
-        $statement = $pdo->prepare($sql);
+        $statement = $database->prepare($sql);
 
-       $pdo->beginTransaction();
+        $database->beginTransaction();
         $statement->execute(array($the_input,$reqid));
-        $pdo->commit();
+        $database->commit();
 
         echo "<p>Опция ".$c_text." в заявке ".$reqid." обновлена. ".$the_input."</p>";
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
@@ -350,16 +350,16 @@ if(
         }
 
         $sql = "UPDATE `req_positions` SET $column = ?, `queen` = ? WHERE req_positionid = ?";
-        $statement = $pdo->prepare($sql);
+        $statement = $database->prepare($sql);
 
-        $pdo->beginTransaction();
+        $database->beginTransaction();
         $statement->execute(array($the_input,$queen,$posid));
-        $pdo->commit();
+        $database->commit();
 
         echo "<p>Опция ".$c_text." в позиции ".$posid." обновлена. ".$the_input."</p>";
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
@@ -374,16 +374,16 @@ if(
 
     try{
         $sql = "UPDATE `requests` SET r1_hidden = 1 WHERE requests_id = ?";
-        $statement = $pdo->prepare($sql);
+        $statement = $database->prepare($sql);
 
-        $pdo->beginTransaction();
+        $database->beginTransaction();
         $statement->execute(array($reqid));
-        $pdo->commit();
+        $database->commit();
 
         echo "<p>Заявка ".$reqid." убрана из выдачи Р-1.</p>";
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
@@ -398,16 +398,16 @@ isset($_POST["r1_show_reqid"])
 
     try{
         $sql = "UPDATE `requests` SET r1_hidden = 0 WHERE requests_id = ?";
-        $statement = $pdo->prepare($sql);
+        $statement = $database->prepare($sql);
 
-        $pdo->beginTransaction();
+        $database->beginTransaction();
         $statement->execute(array($reqid));
-        $pdo->commit();
+        $database->commit();
 
         echo "<p>Заявка ".$reqid." возвращена в выдачу Р-1.</p>";
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };

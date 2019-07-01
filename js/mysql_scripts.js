@@ -675,10 +675,14 @@ $(document).ready(function(){
         $('#edit_options>input[name=3]').val('');//Стираем все данные
         $('#edit_options>input[name=4]').val('');//Стираем все данные
         var reqid = $(event.target).attr('requestid');
+        var db = $(event.target).parents('tr[database]').attr('database');
         $('#button_edit_op').attr('requestid',''+reqid+'');//Добавляем в кнопку
         $('#button_edit_tp').attr('requestid',''+reqid+'');//Добавляем в кнопку
         $('#button_edit_firstobp').attr('requestid',''+reqid+'');//Добавляем в кнопку
         $('#button_edit_wt').attr('requestid',''+reqid+'');//Добавляем в кнопку
+
+        //Обновляем database атрибут окошка
+        $('#edit_options').attr('database',db);
 
         /*Запрос в базу для текущих опций*/
         if($('#edit_options').hasClass('come_here')){
@@ -689,7 +693,7 @@ $(document).ready(function(){
                 method: 'POST',
                 dataType: 'json',
                 cache: false,
-                data: {req_options:reqid},
+                data: {req_options:reqid, db:db},
                 success: function (data) {
 
                     $('#req_op_op').text(data.op);
@@ -718,10 +722,14 @@ $(document).ready(function(){
         $('#edit_options_pos>input[name=4]').val('');//Стираем все данные
         var posid = $(event.target).attr('pos_op_id');
         var reqid = $(event.target).attr('req_op_id');
+        var db = $(event.target).parents('tr[database]').attr('database');
         $('#button_edit_op_pos').attr('positionid',''+posid+'');//Добавляем в кнопку
         $('#button_edit_tp_pos').attr('positionid',''+posid+'');//Добавляем в кнопку
         $('#button_edit_firstobp_pos').attr('positionid',''+posid+'');//Добавляем в кнопку
         $('#button_edit_wt_pos').attr('positionid',''+posid+'');//Добавляем в кнопку
+
+        //Обновляем database атрибут окошка
+        $('#edit_options_pos').attr('database',db);
 
         /*Запрос в базу для текущих опций*/
         if($('#edit_options_pos').hasClass('come_here')){
@@ -732,7 +740,7 @@ $(document).ready(function(){
                 method: 'POST',
                 dataType: 'json',
                 cache: false,
-                data: {name_and_queen:posid},
+                data: {name_and_queen:posid, db:db},
                 success: function (data) {
 
                     $('#edit_options_pos h3').text(data.name);
@@ -748,7 +756,7 @@ $(document).ready(function(){
                             method: 'POST',
                             dataType: 'json',
                             cache: false,
-                            data: {pos_options:posid},
+                            data: {pos_options:posid, db:db},
                             success: function (data) {
                                 $('#edit_op_pos').val(data.op);
                                 $('#edit_tp_pos').val(data.tp);
@@ -771,7 +779,7 @@ $(document).ready(function(){
                             method: 'POST',
                             dataType: 'json',
                             cache: false,
-                            data: {req_options:reqid},
+                            data: {req_options:reqid, db:db},
                             success: function (data) {
                                 $('#edit_op_pos').val(data.op);
                                 $('#edit_tp_pos').val(data.tp);
@@ -798,8 +806,9 @@ $(document).ready(function(){
         $('#edit_options_trade>input[name=2]').val('');//Стираем все данные
 
         var tradeid = $(event.target).attr('tradeid');
+        var db = $(event.target).parents('tr[database]').attr('database');
 
-        /*Запрос в базу для текущих опций*/
+        //Запрос в базу для текущих опций
         if($('#edit_options_trade').hasClass('come_here')){
             return false;
         }else{
@@ -808,7 +817,7 @@ $(document).ready(function(){
                 method: 'POST',
                 dataType: 'json',
                 cache: false,
-                data: {trade_options:tradeid},
+                data: {trade_options:tradeid, db:db},
                 success: function (data) {
 
                     $('#trade_options_name').text(data.tradename);
@@ -825,7 +834,6 @@ $(document).ready(function(){
         }
 
         $('#edit_options_trade').toggleClass('come_here', "fast");
-        /*///////////////////////////////*/
     });
 
     /*Закрытие окна редактирования опций товара*/
@@ -893,6 +901,8 @@ $(document).ready(function(){
         $('#button_edit_firstobp').attr('requestid','xxx');//Стираем номер заявки из кнопки добавления
         $('#button_edit_wt').attr('requestid','xxx');//Стираем номер заявки из кнопки добавления
 
+        $('#edit_options').attr('database','xxx');
+
         $('#req_op_op').text('');
         $('#req_op_tp').text('');
         $('#req_op_firstobp').text('');
@@ -919,6 +929,8 @@ $(document).ready(function(){
         $('#button_edit_firstobp_pos').attr('positionid','xxx');//Стираем номер заявки из кнопки добавления
         $('#button_edit_wt_pos').attr('positionid','xxx');//Стираем номер заявки из кнопки добавления
 
+        $('#edit_options_pos').attr('database','xxx');
+
         $('#pos_op_op').text('');
         $('#pos_op_tp').text('');
         $('#pos_op_firstobp').text('');
@@ -933,8 +945,8 @@ $(document).ready(function(){
     });
 
     /*Действия по чекингу/анчекингу королевы*/
-    //$('#edit_options_pos #queen').prop( "checked", false );//Стираем все данные
     $(document).off('click.addqueen').on('click.addqueen', '#add_queen', function (event) {
+        //TODO: FIX FOR USING WITH BOTH DATABASES
         var posid = $('#button_edit_op_pos').attr('positionid');
         if($('#add_queen').prop('checked')){
             console.log($('#add_queen').prop('checked'));
@@ -989,7 +1001,7 @@ $(document).ready(function(){
             //console.log(4);
             $(event.target).switchClass('not_ready','ready');
             $(event.target).siblings('.ready_comment').text('Все ОК').switchClass('not-ok','ok');
-        };
+        }
     });
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1156,10 +1168,10 @@ $(document).ready(function(){
     });
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //ИЗМЕНЕНИЕ НОМЕРА ЗАКАЗА В 1С//////////////////////////////////////////////////////////////////////////////////////
-    $(document).off('click.edit_1c_num').on('click.edit_1c_num', '#button_edit_1c_num', function(event){
+    //ВРЕМЕННО СКРЫТО - ИЗМЕНЕНИЕ НОМЕРА ЗАКАЗА В 1С//////////////////////////////////////////////////////////////////////////////////////
+    /*$(document).off('click.edit_1c_num').on('click.edit_1c_num', '#button_edit_1c_num', function(event){
         var reqid = $(event.target).attr("requestid");
-        /*Данные для заполнения выдачи*/
+        //Данные для заполнения выдачи
         var new1cnum = $('#add_1c_num').val();
         //Проверка на чекбокс ИП
         if($('#1cnum').prop('checked') == true){
@@ -1168,7 +1180,6 @@ $(document).ready(function(){
             console.log('ИП checked');
         }
         console.log(new1cnum);
-        /*//////////////////////////////*/
         $.ajax({
             url: 'mysql_save.php',
             method: 'POST',
@@ -1193,7 +1204,7 @@ $(document).ready(function(){
                     $.ajax({
                         url: 'mysql_read.php',
                         method: 'POST',
-                        data: {/*gt_table:'requests',gt_identifier:'requests_id',*/chng_number_1c:reqid/*,gt_attribute:'created'*/},
+                        data: {chng_number_1c:reqid},
                         success: function (data) {
                             $('.req_header_'+reqid+' .1c_num').html(data);
                             $('tr[requestid="'+reqid+'"] td.1c_num span').html(data);
@@ -1202,18 +1213,18 @@ $(document).ready(function(){
                 }
             }
         });
-    });
+    });*/
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //ИЗМЕНЕНИЕ ДАТЫ ЗАЯВКИ/////////////////////////////////////////////////////////////////////////////////////////////
-    $(document).off('click.edit_created').on('click.edit_created', '#button_edit_created', function(event){
+    //ВРЕМЕННО СКРЫТО - ИЗМЕНЕНИЕ ДАТЫ ЗАЯВКИ/////////////////////////////////////////////////////////////////////////////////////////////
+    /*$(document).off('click.edit_created').on('click.edit_created', '#button_edit_created', function(event){
         var reqid = Number($(event.target).attr("requestid"));
-        /*Данные для заполнения выдачи*/
+        //Данные для заполнения выдачи
         var newdate = $('#add_created').val();
         console.log(newdate);
         newdate = newdate.slice(6,10)+'-'+newdate.slice(3,5)+'-'+newdate.slice(0,2);
         console.log(newdate);
-        /*//////////////////////////////*/
+
         $.ajax({
             url: 'mysql_save.php',
             method: 'POST',
@@ -1238,7 +1249,7 @@ $(document).ready(function(){
                     $.ajax({
                         url: 'mysql_read.php',
                         method: 'POST',
-                        data: {/*gt_table:'requests',gt_identifier:'requests_id',*/chng_number:reqid/*,gt_attribute:'created'*/},
+                        data: {chng_number:reqid},
                         success: function (data) {
                             $('.req_header_'+reqid+' .date').html(data);
                             $('tr[requestid="'+reqid+'"] td.req_date span').html(data);
@@ -1248,12 +1259,14 @@ $(document).ready(function(){
                 }
             }
         });
-    });
+    });*/
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //ИЗМЕНЕНИЕ ОПЦИЙ ЗАКАЗА////////////////////////////////////////////////////////////////////////////////////////////
     $(document).off('click.edit_options').on('click.edit_options', '#button_edit_op, #button_edit_tp, #button_edit_firstobp, #button_edit_wt', function(event){
         var reqid = $(event.target).attr("requestid");
+        var db = $('#edit_options').attr('database');
+
         /*Данные для заполнения выдачи*/
 
         var the_span = $(event.target).attr('id').substring(12);
@@ -1275,14 +1288,14 @@ $(document).ready(function(){
             $.ajax({
                 url: 'mysql_save.php',
                 method: 'POST',
-                data: {reqid:reqid, c_c:c_c, the_input:the_input},
+                data: {reqid:reqid, c_c:c_c, the_input:the_input, db:db},
                 success: function (data) {//Изменяем
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                 },complete: function (data) {
                     $.ajax({
                         url: 'mysql_read.php',
                         method: 'POST',
-                        data: {c_c:c_c, reqid:reqid},
+                        data: {c_c:c_c, reqid:reqid, db:db},
                         success: function (data) {//Читаем
                             $(put_span).html(data);
                             console.log("выполнено");
@@ -1297,6 +1310,8 @@ $(document).ready(function(){
     //ИЗМЕНЕНИЕ ОПЦИЙ ПОЗИЦИИ///////////////////////////////////////////////////////////////////////////////////////////
     $(document).off('click.edit_options_pos').on('click.edit_options_pos', '#button_edit_op_pos, #button_edit_tp_pos, #button_edit_firstobp_pos, #button_edit_wt_pos', function(event){
         var posid = $(event.target).attr("positionid");
+        var db = $('#edit_options_pos').attr('database');
+
         /*Данные для заполнения выдачи*/
 
         var the_span = $(event.target).attr('id').substring(12);
@@ -1326,14 +1341,14 @@ $(document).ready(function(){
             $.ajax({
                 url: 'mysql_save.php',
                 method: 'POST',
-                data: {posid:posid, c_c:c_c, the_input:the_input, queen:queen},
+                data: {posid:posid, c_c:c_c, the_input:the_input, queen:queen, db:db},
                 success: function (data) {//Изменяем
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                 },complete: function (data) {
                     $.ajax({
                         url: 'mysql_read.php',
                         method: 'POST',
-                        data: {pos_c_c:c_c, posid:posid},
+                        data: {pos_c_c:c_c, posid:posid, db:db},
                         success: function (data) {//Читаем
                             $(put_span).text(data);
                             console.log(put_span);
@@ -1445,12 +1460,14 @@ $(document).ready(function(){
                 ' его статус в списке расценок из вкладки "Заявки"')){
             var reqid = $(event.target).attr('requestid');
             var byerid = $(event.target).attr('byerid');
+            var db = $(event.target).parents('tr[database]').attr('database');
+            console.log(db);
             console.log(reqid);
             console.log(byerid);
             $.ajax({
                 url: 'mysql_save.php',
                 method: 'POST',
-                data: {r1_hide_reqid:reqid},
+                data: {r1_hide_reqid:reqid, db:db},
                 success: function (data) {//Изменяем
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                 },complete: function (data) {
@@ -1474,11 +1491,13 @@ $(document).ready(function(){
         if(confirm('Вернуть этот заказ в выдачу отчета Р-1? Он будет появляться в Р-1, пока вы не измените' +
                 ' его статус во вкладке "Р-1"')){
             var reqid = $(event.target).attr('requestid');
+            var db = $(event.target).parents('tr[database]').attr('database');
             console.log(reqid);
+            console.log(db);
             $.ajax({
                 url: 'mysql_save.php',
                 method: 'POST',
-                data: {r1_show_reqid:reqid},
+                data: {r1_show_reqid:reqid, db:db},
                 success: function (data) {//Изменяем
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                 },
