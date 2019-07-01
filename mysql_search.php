@@ -14,8 +14,12 @@ SELECT name, nameid, byers_id, sellers_id, trades_id FROM `allnames`
         $reqs = $pdo->prepare("SELECT requests_id,created,byersid,1c_num, name FROM `requests` LEFT JOIN byers ON byersid=byers_id LEFT JOIN allnames ON byers.byers_nameid = allnames.nameid
 WHERE (1c_num LIKE concat('%', ?, '%')) GROUP BY created DESC");
 
+        $reqs_ip = $pdoip->prepare("SELECT requests_id,created,byersid,1c_num, name FROM `requests` LEFT JOIN byers ON byersid=byers_id LEFT JOIN allnames ON byers.byers_nameid = allnames.nameid
+WHERE (1c_num LIKE concat('%', ?, '%')) GROUP BY created DESC");
+
         $names->execute(array($sline));
         $reqs->execute(array($sline));
+        $reqs_ip->execute(array($sline));
 
 
 
@@ -42,7 +46,15 @@ WHERE (1c_num LIKE concat('%', ?, '%')) GROUP BY created DESC");
             if ($row['requests_id']) {
                 $phpdate = strtotime($row['created']);
                 $mysqldate = date('d.m.y', $phpdate);
-                $requests .= "<li tabindex=0 category='request' theid=" . $row['requests_id'] . "><span>Заказ № ".$row['1c_num']." от ".$mysqldate." " . $row['name'] . " </span><div class='note'>заявка</div></li>";
+                $requests .= "<li database='ltk' tabindex=0 category='request' theid=" . $row['requests_id'] . "><span>Заказ № ".$row['1c_num']." от ".$mysqldate." " . $row['name'] . " </span><div class='note'>заявка ЛТК</div></li>";
+            };
+        };
+
+        foreach ($reqs_ip as $row) {
+            if ($row['requests_id']) {
+                $phpdate = strtotime($row['created']);
+                $mysqldate = date('d.m.y', $phpdate);
+                $requests .= "<li database='ip' tabindex=0 category='request' theid=" . $row['requests_id'] . "><span>Заказ № ".$row['1c_num']." от ".$mysqldate." " . $row['name'] . " </span><div class='note'>заявка ИП УСВ</div></li>";
             };
         };
 

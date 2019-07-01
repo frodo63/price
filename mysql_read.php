@@ -86,9 +86,7 @@ if(isset($_POST['table'])){
             };
             /*Список заявок по названию заявки*/
             if($category == 'request'){
-                try {//Выводится в любом случае одна заявка, надо, чтобы шел поиск по базе ип по номеру заявки в 1С. Не страшно, сделаем.
-                    //Дифференциация базы, из какой заявка
-                    $statement = $pdo->prepare("SELECT 
+                $statement = $pdo->prepare("SELECT 
                                         a.created AS req_date,
                                         a.requests_id AS req_id,
                                         a.requests_nameid AS req_nameid,
@@ -102,12 +100,39 @@ if(isset($_POST['table'])){
                                         a.req_sum AS sum
                                         FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
                                         WHERE a.requests_id = ? ORDER BY req_date DESC");
-                    $pdo->beginTransaction();
-                    $statement->execute(array($theid));
-                    $pdo->commit();
-                } catch( PDOException $Exception ) {
-                    $pdo->rollback();
-                    print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+                $statement_ip = $pdoip->prepare("SELECT 
+                                        a.created AS req_date,
+                                        a.requests_id AS req_id,
+                                        a.requests_nameid AS req_nameid,
+                                        a.requests_uid AS req_uid,
+                                        a.name AS req_name,
+                                        a.1c_num AS 1c_num,
+                                        b.byers_id AS b_id,
+                                        b.byers_nameid AS b_nameid,
+                                        b.name AS b_name,
+                                        a.req_rent AS rent,
+                                        a.req_sum AS sum
+                                        FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
+                                        WHERE a.requests_id = ? ORDER BY req_date DESC");
+                //Выводится в любом случае одна заявка, надо, чтобы шел поиск по базе ип по номеру заявки в 1С. Не страшно, сделаем.
+                //Дифференциация базы, из какой заявка. Должна быть индикация в выпадающем списке, из какой базы заявка.
+                if($_POST['db'] == "ltk"){
+                    try {
+                        $pdo->beginTransaction();
+                        $statement->execute(array($theid));
+                        $stmt_fetched = $statement->fetchAll(PDO::FETCH_ASSOC);
+                        $dbs_array[0][2] = $stmt_fetched;
+                        $pdo->commit();
+                    } catch( PDOException $Exception ) {$pdo->rollback();print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );}
+                }
+                if($_POST['db'] == "ip"){
+                    try {
+                        $pdoip->beginTransaction();
+                        $statement_ip->execute(array($theid));
+                        $stmt_ip_fetched = $statement_ip->fetchAll(PDO::FETCH_ASSOC);
+                        $dbs_array[1][2] = $stmt_ip_fetched;
+                        $pdoip->commit();
+                    } catch( PDOException $Exception ) {$pdoip->rollback();print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );}
                 }
             };
             /*Список заявок по Поставщику*/
@@ -212,9 +237,6 @@ if(isset($_POST['table'])){
                     /*Создаем пустой массив, кидаем все результаты в массив ids*/
                     $ids = array();
                     foreach ($getids as $row) {$ids[] = $row['reqid'];};
-                    echo"LTK_ OUTPUT<pre>";
-                    print_r($ids);
-                    echo"</pre>";
 
                         /*Айдишники из массива в cтроку с сепаратором запятая*/
                         $ids = implode(",", array_unique($ids));
@@ -245,10 +267,6 @@ if(isset($_POST['table'])){
                     $get_trade_info=$pdo->prepare("SELECT b.trades_id as trades_id FROM prices.trades as a LEFT JOIN prices_ip.trades as b ON a.ip_uid=b.trades_uid WHERE a.trades_id=?");
                     $get_trade_info->execute(array($theid));
                     $get_trade_info_fetched = $get_trade_info->fetch(PDO::FETCH_ASSOC);
-
-                    echo"IP_ OUTPUT<pre>";
-                    print_r($get_trade_info_fetched['trades_id']);
-                    echo"</pre>";
 
                     $getids_ip->execute(array($get_trade_info_fetched['trades_id']));
                     /*Создаем пустой массив, кидаем все результаты в массив ids*/

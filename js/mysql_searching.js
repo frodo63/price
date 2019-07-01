@@ -25,16 +25,18 @@ $(document).ready(function(){
         /*А атрибуты - категория и айдишник*/
         $('#thesearch').attr('category', $(this).attr('category'));
         $('#thesearch').attr('theid', $(this).attr('theid'));
+        $('#thesearch').attr('database', $(this).attr('database'));
 
         /*Мы готовы для аякса*/
         var category = $(this).attr('category');
         var theid = $(this).attr('theid');
+        var db = $(this).attr('database');
         var table = 'requests';
         if (typeof category != "undefined" && typeof theid != "undefined" ){
             $.ajax({
                 url: 'mysql_read.php',
                 method: 'POST',
-                data: {table:table, category:category, theid:theid },
+                data: {table:table, category:category, theid:theid, db:db},
                 success: function(data){
                     $('html, body').animate({scrollTop: $("#thesearch").offset().top}, 1000);
                     $('#tab_search a').trigger('click');
