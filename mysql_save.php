@@ -55,7 +55,7 @@ if(
         $sql = "INSERT INTO pricings(
         positionid,tradeid,sellerid,zak,kol,tzr,tzrknam,tzrkpok,wtime,fixed,op,tp,opr,tpr,firstobp,firstobpr,firstoh,clearp,obp,price,rent,wtr,wtimeday)
         VALUES(:positionid,:trade,:seller,:zak,:kol,:tzr,:tzrknam,:tzrkpok,:wtime,:fixed,:op,:tp,:opr,:tpr,:firstobp,:firstobpr,:firstoh,:clearp,:obp,:price,:rent,:wtr,:wtimeday)";
-        $statement = $pdo->prepare($sql);
+        $statement = $database->prepare($sql);
         $statement->bindValue(':positionid', $positionid);
         $statement->bindValue(':trade', $trade);
         $statement->bindValue(':seller', $seller);
@@ -79,14 +79,14 @@ if(
         $statement->bindValue(':rent', $rent);
         $statement->bindValue(':wtr', $wtr);
         $statement->bindValue(':wtimeday', $wtimeday);
-        $pdo->beginTransaction();
+        $database->beginTransaction();
         $statement->execute();
-        $pdo->commit();
+        $database->commit();
 
        echo "<p>Расценка добавлена</p>";
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
@@ -170,7 +170,7 @@ if(
         rent = :rent,
         wtr = :wtr,
         wtimeday = :wtimeday WHERE pricingid = :pricingid";
-        $statement = $pdo->prepare($sql);
+        $statement = $database->prepare($sql);
 
         $statement->bindValue(':pricingid', $pricingid);
         $statement->bindValue(':trade', $trade);
@@ -195,14 +195,14 @@ if(
         $statement->bindValue(':rent', $rent);
         $statement->bindValue(':wtr', $wtr);
         $statement->bindValue(':wtimeday', $wtimeday);
-        $pdo->beginTransaction();
+        $database->beginTransaction();
         $statement->execute();
-        $pdo->commit();
+        $database->commit();
 
         echo "<p>Расценка " . $pricingid . " обновлена</p>";
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };

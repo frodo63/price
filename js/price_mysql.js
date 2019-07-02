@@ -364,6 +364,7 @@ $(document).ready(function(){
                 var pricingID = $('#pricingwindow').attr('pricingid');
                 var preditposID = $('#pricingwindow').attr('preditposid');
                 var reqid = $('.collapsepos[position='+preditposID+']').attr('request');
+                var db = $('#pricingwindow').attr('database');
 
 
                 lprice = Number(Number($('#pr').val()).toFixed(3));
@@ -402,7 +403,7 @@ $(document).ready(function(){
                     $.ajax({
                         url: 'mysql_save.php',
                         method: 'POST',
-                        data: formData,
+                        data: formData, db:db,
                         success: function (data) {
                             $('#editmsg').css("display", "block"). delay(1000).slideUp(300).html(data);
                         },
@@ -410,7 +411,7 @@ $(document).ready(function(){
                             $.ajax({
                                 url: 'mysql_read.php',
                                 method: 'POST',
-                                data: {positionid:positionID},
+                                data: {positionid:positionID, db:db},
                                 success: function (data) {
                                     $('input[position='+positionID+'] ~ div.pricings').html(data);
                                 }
@@ -428,7 +429,7 @@ $(document).ready(function(){
                     $.ajax({
                         url: 'mysql_save.php',
                         method: 'POST',
-                        data: formData,
+                        data: formData, db:db,
                         success: function (data) {
                             $('#editmsg').css("display", "block"). delay(1000).slideUp(300).html(data);
                         },
@@ -436,7 +437,7 @@ $(document).ready(function(){
                             $.ajax({//Меняются реквизиты текущей расценки
                                 url: 'mysql_read.php',
                                 method: 'POST',
-                                data: {positionid:preditposID},
+                                data: {positionid:preditposID, db:db},
                                 success: function (data) {
                                     $('input[position='+preditposID+'] ~ div.pricings').html(data);
                                 },
@@ -447,7 +448,7 @@ $(document).ready(function(){
                                             method: 'POST',
                                             dataType: 'json',
                                             cache: false,
-                                            data: {read_winid:pricingID},
+                                            data: {read_winid:pricingID, db:db},
                                             success: function(data) {
                                                 $('tr[position=' + preditposID + ']>td.winname').html(data.data1);//Вставить имя Победителя (Имя)
                                                 $('tr[position=' + preditposID + ']>td.pr').html(data.data2);//Вставить СУмму по позиции
@@ -459,7 +460,7 @@ $(document).ready(function(){
                                                     method: 'POST',
                                                     dataType: 'json',
                                                     cache: false,
-                                                    data: {request:reqid},
+                                                    data: {request:reqid, db:db},
                                                     success: function (data) {
                                                         $('tr[requestid='+reqid+'] .rent_whole').html(data.data2);
                                                         $('tr[requestid='+reqid+'] .sum_whole').html(data.data3);
