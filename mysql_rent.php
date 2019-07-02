@@ -9,10 +9,10 @@ if(isset($_POST['plus_winid']) && isset($_POST['posid'])){
 
     //Задача - добыть имя Поставщика - победителя. Из расценки его вытащим
     //Запрос:
-    $getvars = $pdo->prepare("SELECT `name`,`price`,`kol`,`rent` FROM (SELECT sellerid,pricingid,price,kol,rent FROM pricings WHERE pricingid = ?) AS a LEFT JOIN (SELECT sellers_id,name FROM sellers LEFT JOIN allnames ON sellers.sellers_nameid=allnames.nameid) AS b ON a.sellerid = b.sellers_id");
-    $changewinner = $pdo->prepare("UPDATE `req_positions` SET `winnerid` = ? WHERE `req_positionid` = ?");
-    $makeequal = $pdo->prepare("UPDATE `pricings` SET `winner`=0 WHERE `positionid` = ? AND `winner` = 1");
-    $makewinner = $pdo->prepare("UPDATE `pricings` SET `winner`=1 WHERE `pricingid` = ?");
+    $getvars = $database->prepare("SELECT `name`,`price`,`kol`,`rent` FROM (SELECT sellerid,pricingid,price,kol,rent FROM pricings WHERE pricingid = ?) AS a LEFT JOIN (SELECT sellers_id,name FROM sellers LEFT JOIN allnames ON sellers.sellers_nameid=allnames.nameid) AS b ON a.sellerid = b.sellers_id");
+    $changewinner = $database->prepare("UPDATE `req_positions` SET `winnerid` = ? WHERE `req_positionid` = ?");
+    $makeequal = $database->prepare("UPDATE `pricings` SET `winner`=0 WHERE `positionid` = ? AND `winner` = 1");
+    $makewinner = $database->prepare("UPDATE `pricings` SET `winner`=1 WHERE `pricingid` = ?");
 
     try{
         //$pdo->beginTransaction();
@@ -31,7 +31,7 @@ if(isset($_POST['plus_winid']) && isset($_POST['posid'])){
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
@@ -41,19 +41,19 @@ if(isset($_POST['minus_winid']) && isset($_POST['posid'])){
     $losid = $_POST['minus_winid'];
     $posid = $_POST['posid'];
 
-    $erasewinner = $pdo->prepare("UPDATE `req_positions` SET `winnerid` = 0 WHERE `req_positionid` = ?");
-    $makeloser = $pdo->prepare("UPDATE `pricings` SET `winner`= 0 WHERE `pricingid` = ?");
+    $erasewinner = $database->prepare("UPDATE `req_positions` SET `winnerid` = 0 WHERE `req_positionid` = ?");
+    $makeloser = $database->prepare("UPDATE `pricings` SET `winner`= 0 WHERE `pricingid` = ?");
 
     try{
-        $pdo->beginTransaction();
+        $database->beginTransaction();
         $erasewinner->execute(array($posid));
         $makeloser->execute(array($losid));
-        $pdo->commit();
+        $database->commit();
         echo 'Победитель отменен.';
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };

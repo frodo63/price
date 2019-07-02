@@ -8,7 +8,7 @@ echo"
         <script src='js/jquery.js'></script>
 </head>";
 
-echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byerid='-' requestid='-'>
+echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byerid='-' requestid='-' database='-'>
     <form id='price'><div class='sres'></div>
         <input id='button_history_trade' type='button' value='?'><label for='trade'>Товар</label><input trade_id = 'blank' tare='-' autocomplete='off' type='text' name='trade' id='trade' placeholder='Введите товар' size='70'/><div class='sres'></div>
         <input id='button_history_seller' type='button' value='?'><label for='seller'>Поставщик:</label><input seller_id = 'blank' autocomplete='off' type='text' name='seller' id='seller' placeholder='Введите поставщика' size='70'/><div class='sres'></div><br />

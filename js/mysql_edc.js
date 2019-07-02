@@ -434,18 +434,16 @@ $(document).ready(function() {
         var posid = $(event.target).attr('positionid');
         var byerid = $(event.target).parents('tr[byerid]').attr('byerid');
         var byername = $('tr[requestid="'+reqid+'"] td[byerid] span').text();
-
         var num = $('.req_header_'+reqid+ ' span.1c_num').text();
         var created = $('.req_header_'+reqid+ ' span.date').text();
 
+        var db = $(event.target).parents('tr[database]').attr('database');
+        console.log(db);
 
-
-        /**/
-
-                $('#pricingwindow').slideDown().attr({ positionid:posid, byerid:byerid, requestid:reqid });
-                $('#trade').attr('trade_id', '').val('');
-                $('#seller').attr('seller_id', '').val('');
-                $('#button_history').attr('hist_byer', byerid);//Дбавляем идентификатор ПОкупателя в инпут по истории
+        $('#pricingwindow').slideDown().attr({ positionid:posid, byerid:byerid, requestid:reqid, database:db });
+        $('#trade').attr('trade_id', '').val('');
+        $('#seller').attr('seller_id', '').val('');
+        $('#button_history').attr('hist_byer', byerid);//Дбавляем идентификатор ПОкупателя в инпут по истории
         console.log(byername);
         $('#byer_name').text(byername);
         $('#request_info').text('№ '+num+' от '+created);
@@ -457,7 +455,7 @@ $(document).ready(function() {
             method: 'POST',
             dataType: 'json',
             cache: false,
-            data: {name_and_queen:posid},
+            data: {name_and_queen:posid, db:db},
             success: function (data) {
                 var queen = data.queen;
                 console.log(queen+" "+typeof queen);
@@ -468,7 +466,7 @@ $(document).ready(function() {
                         method: 'POST',
                         dataType: 'json',
                         cache: false,
-                        data: {pos_options:posid},
+                        data: {pos_options:posid, db:db},
                         success: function(data){
                             $('#op').val(data.op);
                             $('#tp').val(data.tp);
@@ -488,7 +486,7 @@ $(document).ready(function() {
                         method: 'POST',
                         dataType: 'json',
                         cache: false,
-                        data: {req_options:reqid},
+                        data: {req_options:reqid, db:db},
                         success: function(data){
                             $('#op').val(data.op);
                             $('#tp').val(data.tp);
@@ -527,7 +525,7 @@ $(document).ready(function() {
         $('#pricingwindow input[type="number"]').val('');
         $('#pricingwindow input[type="text"]').text('');
         $('#cases p,#obtzr,#tzr,#obtzrknam,#obtzrkpok,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
-        $('#pricingwindow').attr({positionid: '-', pricingid: '-', preditposid:'-', byerid:'-', requestid:'-'});
+        $('#pricingwindow').attr({positionid: '-', pricingid: '-', preditposid:'-', byerid:'-', requestid:'-', database:'-'});
         $('#byer_name').text('');
         $('.history').html('');
         $('.history_knam').html('');
@@ -568,7 +566,11 @@ $(document).ready(function() {
         var byerid = $(event.target).parents('tr[byerid]').attr('byerid');
         var byername = $('tr[requestid="'+reqid+'"] td[byerid] span').text();
 
+        var db = $(event.target).parents('tr[database]').attr('database');
+        console.log(db);
+
         //Если эдитпрайсинг открывается из окна Р-1, переменные берутся из другого места
+        //TODO:ПОка не трогаем, сделать когда буду заниматься Р-1
         if($(event.target).parents('.ga_contents').length>0){
             var reqid = $(event.target).parents('.ga_contents').attr('ga_request');
             var prid = $(event.target).attr('pricing');
@@ -593,7 +595,7 @@ $(document).ready(function() {
                 $('#pricingwindow input[type="number"]').val('');
                 $('#pricingwindow input[type="text"]').text('');
                 $('#cases p,#obtzr,#tzr,#obtzrknam,#obtzrkpok,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
-                $('#pricingwindow').attr({positionid: '-', pricingid: '-', preditposid:'-', byerid:'-', requestid:'-'});
+                $('#pricingwindow').attr({positionid: '-', pricingid: '-', preditposid:'-', byerid:'-', requestid:'-', database:'-'});
                 $('#byer_name').text('');
                 $('.history').html('');
                 $('.history_knam').html('');
@@ -601,7 +603,7 @@ $(document).ready(function() {
                 $('#request_info').text('');
 
                 /*Вставим прайсингайди в прайсингвиндоу ПРОБНОЕ!!!*/
-                $('#pricingwindow').attr({pricingid: prid, byerid:byerid, preditposid:posid, requestid:reqid});
+                $('#pricingwindow').attr({pricingid: prid, byerid:byerid, preditposid:posid, requestid:reqid, database:db});
                 console.log(byername);
                 $('#byer_name').text(byername);
                 /**/
@@ -610,7 +612,7 @@ $(document).ready(function() {
                 $.ajax({
                     url: 'mysql_read.php',
                     method: 'POST',
-                    data: {pricingid:prid},
+                    data: {pricingid:prid, db:db},
                     success: function (data) {
                         var json = $.parseJSON(data);
                         /*ШАПКА*/
@@ -662,7 +664,7 @@ $(document).ready(function() {
                             method: 'POST',
                             dataType: 'json',
                             cache: false,
-                            data: {name_and_queen:posid},
+                            data: {name_and_queen:posid, db:db},
                             success: function (data) {
                                 var queen = data.queen;
                                 console.log(queen+" "+typeof queen);
@@ -672,7 +674,7 @@ $(document).ready(function() {
                                         method: 'POST',
                                         dataType: 'json',
                                         cache: false,
-                                        data: {pos_options:posid},
+                                        data: {pos_options:posid, db:db},
                                         success: function(data){
                                             $('#op').val(data.op);
                                             $('#tp').val(data.tp);
@@ -923,7 +925,10 @@ $(document).ready(function() {
         var posid = $(event.target).parents('tr[position]').attr('position'); // ID позиции, где выбирается победитель
         var reqid = $(event.target).parents('tr[requestid]').attr('requestid'); //ID заявки, где есть позиция, где выбирается победитель
 
-        console.log("winid: "+winid+" , posid: "+posid+", reqid: "+reqid);
+        var db = $(event.target).parents('tr[database]').attr('database');
+        console.log(db);
+
+        console.log("winid: "+winid+" , posid: "+posid+", reqid: "+reqid+", db: "+db);
 
         //Если Победитель выбран, мы щелкаем по "П" и победитель убирается.
         if($('tr[pricingid='+winid+']').hasClass('win')){
@@ -933,13 +938,13 @@ $(document).ready(function() {
             $.ajax({//на мскл_рент отправлется минус_винайди и посайди
                 url: 'mysql_rent.php',
                 method: 'POST',
-                data: {minus_winid:winid, posid:posid},
+                data: {minus_winid:winid, posid:posid, db:db},
                 success: function(){//По успеху - обновляется позиция
                     /*Чтение*/
                     $.ajax({
                         url: 'mysql_read.php',
                         method: 'POST',
-                        data: {positionid:posid},
+                        data: {positionid:posid, db:db},
                         success: function (data) {
                             $('input[position='+posid+']~div.pricings').html(data);
                         },
@@ -960,7 +965,7 @@ $(document).ready(function() {
                         method: 'POST',
                         dataType: 'json',
                         cache: false,
-                        data: {request:reqid},
+                        data: {request:reqid, db:db},
                         success: function (data) {
                             $('tr[requestid='+reqid+'] .rentcount').html(data.data1);
                             $('tr[requestid='+reqid+'] .rent_whole').html(data.data2);
@@ -981,7 +986,7 @@ $(document).ready(function() {
                 method: 'POST',
                 dataType: 'json',
                 cache: false,
-                data: {plus_winid:winid, posid:posid},
+                data: {plus_winid:winid, posid:posid, db:db},
                 success: function(data){
                     $('tr[position='+posid+']>td.winname').html(data.data1);//Вставить имя Победителя (Имя)
                     $('tr[position='+posid+']>td.pr').html(data.data2);//Вставить имя Победителя (Имя)
@@ -990,7 +995,7 @@ $(document).ready(function() {
                     $.ajax({
                         url: 'mysql_read.php',
                         method: 'POST',
-                        data: {positionid:posid},
+                        data: {positionid:posid, db:db},
                         success: function (data1) {
                             $('input[position='+posid+'] ~ div.pricings').html(data1);
                         },
@@ -1008,7 +1013,7 @@ $(document).ready(function() {
                         method: 'POST',
                         dataType: 'json',
                         cache: false,
-                        data: {request:reqid},
+                        data: {request:reqid, db:db},
                         success: function (data) {
                             $('tr[requestid='+reqid+'] .rentcount').html(data.data1);
                             $('tr[requestid='+reqid+'] .rent_whole').html(data.data2);

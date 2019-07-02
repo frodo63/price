@@ -5,11 +5,14 @@ $(document).ready(function(){
         var trade = $(event.target).attr('hist_trade');
         var byer = $(event.target).attr('hist_byer');
         var prid = $('#pricingwindow').attr('pricingid');
+        var db = $('#pricingwindow').attr('database');
+        console.log(db);
+
         console.log('trade: '+trade+', byer: '+byer+', pricing: '+prid)
         $.ajax({
             url: 'mysql_history.php',
             method: 'POST',
-            data: {post_byersid:byer, post_tradeid:trade},
+            data: {post_byersid:byer, post_tradeid:trade, db:db},
             success: function(data){
                 $('.history').html(data);
             },complete:function () {
@@ -32,10 +35,12 @@ $(document).ready(function(){
         var tare = $('#trade').attr('tare');
         var sellerid = $('#seller').attr('seller_id');
         console.log("tare: "+tare+" / seller: "+sellerid);
+        var db = $('#pricingwindow').attr('database');
+        console.log(db);
         $.ajax({
             url: 'mysql_history.php',
             method: 'POST',
-            data: {post_seller:sellerid, post_tare:tare},
+            data: {post_seller:sellerid, post_tare:tare, db:db},
             success: function(data){
                 $('.history_knam').html(data);
             },complete:function () {
@@ -57,10 +62,12 @@ $(document).ready(function(){
         var tare = $('#trade').attr('tare');
         var byerid = $('#pricingwindow').attr('byerid');
         console.log("tare: "+tare+" / byer: "+byerid);
+        var db = $('#pricingwindow').attr('database');
+        console.log(db);
         $.ajax({
             url: 'mysql_history.php',
             method: 'POST',
-            data: {post_byer:byerid, post_tare:tare},
+            data: {post_byer:byerid, post_tare:tare, db:db},
             success: function(data){
                 $('.history_kpok').html(data);
             },complete:function () {
@@ -80,6 +87,8 @@ $(document).ready(function(){
     //Показываем базе товар, чтобы посмотреть, от кого и почем возили
     $(document).off('click.give_hist_trade').on('click.give_hist_trade', '#button_history_trade', function (event) {
         var trade = $('#trade').attr('trade_id');
+        var db = $('#pricingwindow').attr('database');
+        console.log(db);
 
         if($('#pricingwindow').attr('preditposid') == '-'){
             var posid = $('#pricingwindow').attr('positionid');
@@ -92,7 +101,7 @@ $(document).ready(function(){
         $.ajax({
             url: 'mysql_history.php',
             method: 'POST',
-            data: {post_trade_hist:trade, trade_posid_hist:posid},
+            data: {post_trade_hist:trade, trade_posid_hist:posid, db:db},
             success: function(data){
                 $('.history_trade').html(data);
             },complete:function () {
@@ -112,10 +121,12 @@ $(document).ready(function(){
     //Показываем базе поставщика, чтобы посмотреть, что от него вообще возили
     $(document).off('click.give_hist_seller').on('click.give_hist_seller', '#button_history_seller', function (event) {
         var seller = $('#seller').attr('seller_id');
+        var db = $('#pricingwindow').attr('database');
+        console.log(db);
         $.ajax({
             url: 'mysql_history.php',
             method: 'POST',
-            data: {post_seller_hist:seller},
+            data: {post_seller_hist:seller, db:db},
             success: function(data){
                 $('.history_seller').html(data);
             },complete:function () {
@@ -139,13 +150,15 @@ $(document).ready(function(){
         }else{
             var posid = $('#pricingwindow').attr('preditposid');
         }
-
         console.log(posid);
+
+        var db = $('#pricingwindow').attr('database');
+        console.log(db);
 
         $.ajax({
             url: 'mysql_history.php',
             method: 'POST',
-            data: {transports_history:posid},
+            data: {transports_history:posid, db:db},
             success: function(data){
                 $('.history_transports').html(data);
             },complete:function () {

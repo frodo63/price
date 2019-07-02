@@ -49,10 +49,7 @@ $(document).ready(function(){
     });
 
     /*При изменении текста должен меняться атрибут #byer - byer_id, #seller - seller_id, #trade - trade_id и tare*/
-    $(document).off('click.sresseller').on('click.sresseller', '#seller+div ul li p', function (event) {
-        $('#seller').val($(event.target).text());
-        $('#seller').attr('seller_id', $(event.target).parent().attr('sellers_id'));
-    });
+
     $(document).off('click.sresbyer').on('click.sresbyer', '#byer+div ul li p', function (event) {
         $('#byer').val($(event.target).text());
         $('#byer').attr('byer_id', $(event.target).parent().attr('byers_id'));
@@ -62,13 +59,19 @@ $(document).ready(function(){
         $('#byer_interval').val($(event.target).text());
         $('#byer_interval').attr('byer_id', $(event.target).parent().attr('byers_id'));
     });
+
     $(document).off('click.srestrade').on('click.srestrade', '#trade+div ul li p', function (event) {
         $('#trade').val($(event.target).text());
         var tradeid = $(event.target).parent().attr('trades_id');
         var tare = $(event.target).parent().attr('tare');
-        console.log(tradeid);
+
         $('#trade').attr({trade_id: tradeid, tare: tare});
-        $('#button_history').attr('hist_trade', tradeid);//Добавление трейдайди в атрибут инфокнопки и стории для окончательного запроса
+        $('#button_history').attr('hist_trade', tradeid);//Добавление трейдайди в атрибут инфокнопки истории для окончательного запроса
+    });
+
+    $(document).off('click.sresseller').on('click.sresseller', '#seller+div ul li p', function (event) {
+        $('#seller').val($(event.target).text());
+        $('#seller').attr('seller_id', $(event.target).parent().attr('sellers_id'));
     });
 
 
@@ -158,49 +161,69 @@ $(document).ready(function(){
                 success: function (data) {
                     $(event.target).next().html(data);
                 }
-
             });
-        };
-
+        }
     });
-    $(document).off('keyup.seller').on('keyup.seller', '#seller, .sync_seller', function(event){
-
+    /*ПОИСКОВАЯ СТРОКА ПОСТАВЩИК ПРИ РАСЦЕНКЕ*/
+    $(document).off('keyup.seller_pricing').on('keyup.seller_pricing', '#seller', function(event){
+        var db = $('#pricingwindow').attr('database');
         var sseller = $(event.target).val();
-
         if (sseller.length > 0) {
-
-            console.log(sseller);
-
             $.ajax({
                 url: 'mysql_search.php',
                 method: 'POST',
-                data: {sseller:sseller},
+                data: {sseller_pricing:sseller,db:db},
                 success: function (data) {
                     $(event.target).next().html(data);
                 }
-
             });
-        };
-
+        }
     });
-    $(document).off('keyup.trade').on('keyup.trade', '#trade, .sync_trade', function(event){
 
+    /*ПОИСКОВАЯ СТРОКА ТОВАР ПРИ РАСЦЕНКЕ*/
+    $(document).off('keyup.trade_pricing').on('keyup.trade_pricing', '#trade', function(event){
+        var db = $('#pricingwindow').attr('database');
         var strade = $(event.target).val();
-
         if (strade.length > 0) {
-
-            console.log(strade);
-
             $.ajax({
                 url: 'mysql_search.php',
                 method: 'POST',
-                data: {strade:strade},
+                data: {strade_pricing:strade, db:db},
                 success: function (data) {
                     $(event.target).next().html(data);
                 }
-
             });
-        };
+        }
+    });
+
+    /*ПОИСКОВАЯ СТРОКА ПОСТАВЩИК ПРИ СИНХРОНИЗАЦИИ*/
+    $(document).off('keyup.seller_sync').on('keyup.seller_sync', '.sync_seller', function(event){
+        var sseller = $(event.target).val();
+        if (sseller.length > 0) {
+            $.ajax({
+                url: 'mysql_search.php',
+                method: 'POST',
+                data: {sseller_sync:sseller},
+                success: function (data) {
+                    $(event.target).next().html(data);
+                }
+            });
+        }
+    });
+
+    /*ПОИСКОВАЯ СТРОКА ТОВАР ПРИ СИНХРОНИЗАЦИИ*/
+    $(document).off('keyup.trade_sync').on('keyup.trade_sync', '.sync_trade', function(event){
+        var strade = $(event.target).val();
+        if (strade.length > 0) {
+            $.ajax({
+                url: 'mysql_search.php',
+                method: 'POST',
+                data: {strade_sync:strade},
+                success: function (data) {
+                    $(event.target).next().html(data);
+                }
+            });
+        }
 
     });
 

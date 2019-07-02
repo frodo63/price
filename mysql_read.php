@@ -1292,8 +1292,8 @@ if (isset($_POST['positionid'])){
 if (isset($_POST['pricingid'])){
     $pricing_id=$_POST['pricingid'];
     try{
-        $pdo->beginTransaction();
-        $statement = $pdo->prepare("SELECT * FROM `pricings` as a  LEFT JOIN (SELECT created, req_positionid, 1c_num as num FROM req_positions LEFT JOIN requests ON req_positions.requestid = requests.requests_id) AS b on a.positionid=b.req_positionid WHERE `pricingid`=?");
+        $database->beginTransaction();
+        $statement = $database->prepare("SELECT * FROM `pricings` as a  LEFT JOIN (SELECT created, req_positionid, 1c_num as num FROM req_positions LEFT JOIN requests ON req_positions.requestid = requests.requests_id) AS b on a.positionid=b.req_positionid WHERE `pricingid`=?");
         $statement->execute(array($pricing_id));
         $result = $statement->fetch();
 

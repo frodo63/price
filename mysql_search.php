@@ -91,10 +91,62 @@ if (isset($_POST['sbyer'])){
     print $result;
 };
 
-//ПОИСК ТОВАРА///////////////////////////////////////////////////////////////////////////////////
-if (isset($_POST['strade'])){
+//ПОИСК ТОВАРА ПРИ РАСЦЕНКЕ///////////////////////////////////////////////////////////////////////////////////
+if (isset($_POST['strade_pricing'])){
     try {
-        $sline = $_POST['strade'];
+        $sline = $_POST['strade_pricing'];
+
+        $statement = $database->prepare("
+        SELECT name,nameid,trades_id,tare FROM `allnames`
+        INNER JOIN `trades` ON nameid=trades_nameid  
+        WHERE name LIKE '%{$sline}%' GROUP BY name");
+
+        $database->beginTransaction();
+        $statement->execute();
+        $database->commit();
+        $result ='<ul>';
+        $trades='';
+        foreach ($statement as $row){
+            $trades .= "<li category='trade' trades_id=".$row['trades_id']." nameid=" . $row['nameid'] . " tare=" . $row['tare'] . "><p> -- " . $row['tare'] . " -- " . $row['name'] . "</p><div class='note'>товар из ".$db_text_rus."</div></li>";
+        };
+        $result .= $trades;
+        $result .= "</ul>";
+        print $result;
+    } catch( PDOException $Exception ) {
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+    }
+};
+
+//ПОИСК ПОСТАВЩИКА ПРИ РАСЦЕНКЕ///////////////////////////////////////////////////////////////////////////////////
+if (isset($_POST['sseller_pricing'])){
+    try {
+        $sline = $_POST['sseller_pricing'];
+
+        $statement = $database->prepare("
+            SELECT name, nameid, sellers_id FROM `allnames`
+            INNER JOIN `sellers` ON nameid=sellers_nameid  
+            WHERE name LIKE '%{$sline}%' GROUP BY nameid");
+
+        $database->beginTransaction();
+        $statement->execute();
+        $database->commit();
+        $result ='<ul>';
+        $sellers='';
+        foreach ($statement as $row){
+            $sellers .= "<li category='seller' sellers_id=".$row['sellers_id']." nameid=" . $row['nameid'] . "><p>" . $row['name'] . "</p><div class='note'>поставщик из ".$db_text_rus."</div></li>";
+        };
+        $result .= $sellers;
+        $result .= "</ul>";
+        print $result;
+    } catch( PDOException $Exception ) {
+    print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+    }
+};
+
+//ПОИСК ТОВАРА ПРИ СИНХРОНИЗАЦИИ///////////////////////////////////////////////////////////////////////////////////
+if (isset($_POST['strade_sync'])){
+    try {
+        $sline = $_POST['strade_sync'];
 
         $statement = $pdo->prepare("
         SELECT name,nameid,trades_id,tare FROM `allnames`
@@ -118,25 +170,29 @@ if (isset($_POST['strade'])){
     }
 };
 
-//ПОИСК ПОСТАВЩИКА///////////////////////////////////////////////////////////////////////////////////
-if (isset($_POST['sseller'])){
-    $sline = $_POST['sseller'];
+//ПОИСК ПОСТАВЩИКА ПРИ СИНХРОНИЗАЦИИ///////////////////////////////////////////////////////////////////////////////////
+if (isset($_POST['sseller_sync'])){
+    try {
+        $sline = $_POST['sseller_sync'];
 
-    $statement = $pdo->prepare("
-        SELECT name, nameid, sellers_id FROM `allnames`
-        INNER JOIN `sellers` ON nameid=sellers_nameid  
-        WHERE name LIKE '%{$sline}%' GROUP BY nameid");
+        $statement = $pdo->prepare("
+            SELECT name, nameid, sellers_id FROM `allnames`
+            INNER JOIN `sellers` ON nameid=sellers_nameid  
+            WHERE name LIKE '%{$sline}%' GROUP BY nameid");
 
-    $statement->execute();
-    $result ='<ul>';
-    $sellers='';
-    foreach ($statement as $row){
-        $sellers .= "<li category='seller' sellers_id=".$row['sellers_id']." nameid=" . $row['nameid'] . "><p>" . $row['name'] . "</p><div class='note'>поставщик</div></li>";
-    };
-    $result .= $sellers;
-    $result .= "</ul><!--<script src='js/mysql_searching.js'>-->";
+        $statement->execute();
+        $result ='<ul>';
+        $sellers='';
+        foreach ($statement as $row){
+            $sellers .= "<li category='seller' sellers_id=".$row['sellers_id']." nameid=" . $row['nameid'] . "><p>" . $row['name'] . "</p><div class='note'>поставщик</div></li>";
+        };
+        $result .= $sellers;
+        $result .= "</ul><!--<script src='js/mysql_searching.js'>-->";
 
-    print $result;
+        print $result;
+    } catch( PDOException $Exception ) {
+    print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+    }
 };
 
 //ПОИСК номера в 1С///////////////////////////////////////////////////////////////////////////////////

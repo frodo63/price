@@ -639,9 +639,9 @@ if(isset($_POST['sync_file'])){
                         break;
                 }
 
-                //echo "<pre>";
-                //print_r($file_array_trimmed);
-                //echo "</pre>";
+                echo "<pre>";
+                print_r($file_array_trimmed);
+                echo "</pre>";
 
                 //Рисование из массива
                 foreach ($file_array_trimmed as $k=>$v){
