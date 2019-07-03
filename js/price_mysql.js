@@ -374,6 +374,7 @@ $(document).ready(function(){
                 console.log(firstoh+" типа "+typeof(firstoh));
 
                 var formData =
+                    '&db=' + db +
                     '&trade=' + $('#trade').attr('trade_id') +
                     '&seller=' + $('#seller').attr('seller_id') +
                     '&zak=' + Number($('#zak').val()) +
@@ -403,7 +404,7 @@ $(document).ready(function(){
                     $.ajax({
                         url: 'mysql_save.php',
                         method: 'POST',
-                        data: formData, db:db,
+                        data: formData,
                         success: function (data) {
                             $('#editmsg').css("display", "block"). delay(1000).slideUp(300).html(data);
                         },
@@ -429,7 +430,7 @@ $(document).ready(function(){
                     $.ajax({
                         url: 'mysql_save.php',
                         method: 'POST',
-                        data: formData, db:db,
+                        data: formData,
                         success: function (data) {
                             $('#editmsg').css("display", "block"). delay(1000).slideUp(300).html(data);
                         },

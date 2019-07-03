@@ -185,6 +185,7 @@ if (isset($_POST['post_trade_hist']) && isset($_POST['trade_posid_hist'])){
                 break;
         }
 
+        // 2. Получаем данные с баз
         foreach ($dbs_array as $database){
 
             $getname_trade = $database[0]->prepare("SELECT name FROM trades LEFT JOIN allnames ON trades.trades_nameid = allnames.nameid WHERE trades_uid = ?");//Имя товара
@@ -234,6 +235,7 @@ if (isset($_POST['post_trade_hist']) && isset($_POST['trade_posid_hist'])){
 
         krsort($resulting_purs);
 
+    // 3. Рисуем красоту
     $result = "<input class='button_enlarge' type='button' value='↕'><br><span>Покупали \"".$trade_name."\"</span><br><table class='hystory-seller'><thead><tr> 
                     <th>когда</th>                   
                     <th>ВхДок</th>
@@ -264,9 +266,52 @@ if (isset($_POST['post_seller_hist'])){
 
     /*
      * 1.Получаем uid
-     * 2.Получаем данные из таблицы purchases
+     * 2.Получаем имена
+     * 3.Получаем данные из таблицы purchases
      * */
 
+    /*
+     * 1. Дополняем массив dbs_array() четвертым значением для каждой базы  - это юайдишник поставщика
+     * */
+    switch($_POST['db']){
+        case 'ltk':
+            try{
+                $get_uids = $pdo->prepare("SELECT a.sellers_uid as ltk_uid, b.sellers_uid as ip_uid FROM prices.sellers as a LEFT JOIN prices_ip.sellers as b ON a.ip_uid=b.sellers_uid WHERE a.sellers_id=?");
+                $pdo->beginTransaction();
+                $get_uids->execute(array($sellerid));
+                $pdo->commit();
+                $get_uids_fetched = $get_uids->fetch(PDO::FETCH_ASSOC);
+                $dbs_array[0][4] = $get_uids_fetched['ltk_uid'];
+                $dbs_array[1][4] = $get_uids_fetched['ip_uid'];
+
+                //print ($dbs_array[0][4]);
+                //print ("<br>");
+                //print ($dbs_array[1][4]);
+
+            }catch( PDOException $Exception ) {$pdo->rollback();print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );}
+
+            break;
+
+        case 'ip':
+            try{
+                $get_uids = $pdoip->prepare("SELECT a.trades_uid as ltk_uid, b.trades_uid as ip_uid FROM prices_ip.trades as b LEFT JOIN prices.trades as a ON b.trades_uid=a.ip_uid WHERE b.trades_id=?");
+                $pdoip->beginTransaction();
+                $get_uids->execute(array($sellerid));
+                $pdoip->commit();
+                $get_uids_fetched = $get_uids->fetch(PDO::FETCH_ASSOC);
+                $dbs_array[0][4] = $get_uids_fetched['ltk_uid'];
+                $dbs_array[1][4] = $get_uids_fetched['ip_uid'];
+
+                //print ($dbs_array[0][4]);
+                //print ("<br>");
+                //print ($dbs_array[1][4]);
+
+            }catch( PDOException $Exception ) {$pdoip->rollback();print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );}
+            break;
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     try{
         $get_uid=$pdo->prepare("SELECT sellers_uid FROM sellers WHERE sellers_id = ?");
         $get_purchases = $pdo->prepare("SELECT * FROM purchases WHERE seller_uid = ? ORDER BY incdoc_date DESC");

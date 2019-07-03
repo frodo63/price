@@ -64,11 +64,11 @@ if(isset($_POST['read_winid'])){
 
     //Задача - добыть имя Поставщика - победителя. Из расценки его вытащим
     //Запрос:
-    $getvars = $pdo->prepare("SELECT `name`,`price`,`kol`,`rent` FROM (SELECT sellerid,pricingid,price,kol,rent FROM pricings WHERE pricingid = ?) AS a LEFT JOIN (SELECT sellers_id,name FROM sellers LEFT JOIN allnames ON sellers.sellers_nameid=allnames.nameid) AS b ON a.sellerid = b.sellers_id");
+    $getvars = $database->prepare("SELECT `name`,`price`,`kol`,`rent` FROM (SELECT sellerid,pricingid,price,kol,rent FROM pricings WHERE pricingid = ?) AS a LEFT JOIN (SELECT sellers_id,name FROM sellers LEFT JOIN allnames ON sellers.sellers_nameid=allnames.nameid) AS b ON a.sellerid = b.sellers_id");
     try{
-        $pdo->beginTransaction();
+        $database->beginTransaction();
         $getvars->execute(array($winid));
-        $pdo->commit();
+        $database->commit();
 
         $w = $getvars->fetchAll(PDO::FETCH_ASSOC);
         print json_encode(array(
@@ -79,7 +79,7 @@ if(isset($_POST['read_winid'])){
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };

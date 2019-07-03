@@ -7,7 +7,6 @@ function number_f($num)
     return number_format(round($num, 2), 2, '.', ' ');
 }
 
-
 /*ЧТЕНИЕ ВСЕГО ПОЛНЫМИ И НЕ СОВСЕМ ПОЛНЫМИ ТАБЛИЦАМИ*/
 if(isset($_POST['table'])){
     $table = $_POST['table'];
@@ -272,9 +271,6 @@ if(isset($_POST['table'])){
                     /*Создаем пустой массив, кидаем все результаты в массив ids*/
                     $ids = array();
                     foreach ($getids_ip as $row) {$ids[] = $row['reqid'];};
-                    echo"<pre>";
-                    print_r($ids);
-                    echo"</pre>";
 
                     $new_array_of_ids = array_values(array_unique($ids));
 
