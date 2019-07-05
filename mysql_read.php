@@ -496,7 +496,6 @@ if(isset($_POST['table'])){
     }
     else if ($table == 'givaways') {
         try {
-
             /*ОПЦИИ ДАТЫ*/
             /*Смотрим, какой период сейчас выставлен по умолчанию*/
             $ga_period = $pdo->prepare("SELECT * FROM `options` WHERE options_id = 'general'");
@@ -522,16 +521,28 @@ if(isset($_POST['table'])){
             //Сейчс скрипт берет всех покупателей из базы
             $statement = $pdo->prepare("SELECT byers.byers_id AS b_id,byers.byers_nameid AS b_nid,allnames.name AS b_name FROM `byers` LEFT JOIN `allnames` ON byers.byers_nameid=allnames.nameid ORDER BY b_name");
             $gotrequests = $pdo->prepare("SELECT requests_id FROM requests WHERE (requests.byersid = ? AND requests.r1_hidden = 0)");
+            $gotrequests_ip = $pdoip->prepare("SELECT requests_id FROM requests WHERE (requests.byersid = ? AND requests.r1_hidden = 0)");
+            //Нужно из byersid ltk получить byersid ip
+            $getbyersidip = $pdo->prepare("SELECT prices_ip.byers.byers_id as byersid_ip FROM prices.byers LEFT JOIN prices_ip.byers ON prices.byers.ip_uid = prices_ip.byers.byers_uid WHERE prices.byers.byers_id = ?");
             $statement->execute();
             $result = "<ul class='byer_req_list'>";
 
             foreach ($statement as $row) {
                 $ga_bid = $row['b_id'];
+                $getbyersidip->execute(array($ga_bid));
+                $getbyersidip_fetched = $getbyersidip->fetch(PDO::FETCH_ASSOC);
+
                 //Проверка ан наличие заявок
                 $gotsome = array();
+                $gotsome_ip = array();
                 $gotrequests->execute(array($ga_bid));
+                if($getbyersidip_fetched['byersid_ip']){
+                    $gotrequests_ip->execute(array($getbyersidip_fetched['byersid_ip']));
+                    $gotsome_ip = $gotrequests_ip->fetchall(PDO::FETCH_ASSOC);
+                }
+
                 $gotsome = $gotrequests->fetchall(PDO::FETCH_ASSOC);
-                if(count($gotsome)>0){
+                if(count($gotsome)>0 || count($gotsome_ip)>0){
 
                     $result .= "<li byerid =" . $row['b_id'] . "><input type='button' name =" . $row['b_nid'] . " ga_byer =" . $row['b_id'] . " value='♢' class='collapse_ga_byer w'>
                                 <span class='name'>" . $row['b_name'] . "</span>
