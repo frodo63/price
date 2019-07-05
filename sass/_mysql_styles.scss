@@ -780,9 +780,10 @@ tr[pricingid] td {border: 1px solid black}
     font-size: 18px;
   }
   th:nth-child(1){width: 10%}
-  th:nth-child(2){width: 70%}
+  th:nth-child(2){width: 50%}
   th:nth-child(3){width: 10%}
   th:nth-child(4){width: 10%}
+  th:nth-child(5){width: 10%}
   tr:hover{
     background-color: green;
     color: white;
@@ -805,7 +806,7 @@ tr[pricingid] td {border: 1px solid black}
   th:nth-child(2){width: 10%}
   th:nth-child(3){width: 50%}
   th:nth-child(4){width: 10%}
-  th:nth-child(4){width: 10%}
+  th:nth-child(5){width: 10%}
   tr:hover{
     background-color: green;
     color: white;
