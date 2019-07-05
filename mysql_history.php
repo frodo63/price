@@ -6,17 +6,17 @@ if (isset($_POST['post_byersid']) && isset($_POST['post_tradeid'])){
     $post_trade = $_POST['post_tradeid'];
     $n = 1;
 
-    $statement=$pdo->prepare("SELECT created,name,requests_id,req_positionid,pricingid,tradeid,sellerid,zak,price,rent FROM 
+    $statement=$database->prepare("SELECT created,name,requests_id,req_positionid,pricingid,tradeid,sellerid,zak,price,rent FROM 
 (SELECT byersid,requests_id,req_positionid,created FROM `requests` LEFT JOIN `req_positions` ON requests.requests_id=req_positions.requestid WHERE byersid=?) 
 AS a LEFT JOIN (SELECT * FROM (SELECT * FROM `pricings` LEFT JOIN sellers ON pricings.sellerid=sellers.sellers_id) AS s LEFT JOIN allnames ON s.sellers_nameid=allnames.nameid) as pr ON a.req_positionid=pr.positionid WHERE pr.winner=1 AND pr.tradeid=? ORDER BY created DESC");
-    $byerinfo=$pdo->prepare("SELECT * FROM byers WHERE byers_id=?");
+    $byerinfo=$database->prepare("SELECT * FROM byers WHERE byers_id=?");
 
     try{
-        $pdo->beginTransaction();
+        $database->beginTransaction();
         $statement->execute(array($post_byer,$post_trade));
         $byerinfo->execute(array($post_byer));
         $b_info = $byerinfo->fetch();
-        $pdo->commit();
+        $database->commit();
 
         $result = "<br><input class='button_enlarge' type='button' value='↕'><br><span>Обнал:&nbsp".$b_info['ov_firstobp']."&nbspЕнот:&nbsp".$b_info['ov_tp']."&nbspОтсрочка:&nbsp".$b_info['ov_wt']."&nbspКоммент:&nbsp".$b_info['comment']."</span><br><br>";
         $result .= "<table class='hystory-list'><thead><tr>
@@ -46,11 +46,7 @@ AS a LEFT JOIN (SELECT * FROM (SELECT * FROM `pricings` LEFT JOIN sellers ON pri
 
         print $result;
 
-    }catch( PDOException $Exception ) {
-        // Note The Typecast To An Integer!
-        $pdo->rollback();
-        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
-    }
+    }catch( PDOException $e ) {$database->rollback();print "Error!: " . $e->getMessage() . "<br/>" . (int)$e->getCode( );}
 };
 
 //Показываем базе поставщика и тару, чтобы посмотреть, почем возили к себе из обеих баз
@@ -542,11 +538,11 @@ if (isset($_POST['transports_history'])){
     $posid = $_POST['transports_history'];
 
     try{
-        $get_purchased=$pdo->prepare("SELECT purchased FROM req_positions WHERE req_positionid = ?");
-        $get_transports_history = $pdo->prepare("SELECT seller_uid, incdoc_date, sum FROM transports WHERE incdoc_date BETWEEN ? AND ? ORDER BY incdoc_date ASC");
-        $get_seller_name = $pdo->prepare("SELECT name FROM sellers LEFT JOIN allnames ON sellers.sellers_nameid = allnames.nameid WHERE sellers_uid = ?");
+        $get_purchased=$database->prepare("SELECT purchased FROM req_positions WHERE req_positionid = ?");
+        $get_transports_history = $database->prepare("SELECT seller_uid, incdoc_date, sum FROM transports WHERE incdoc_date BETWEEN ? AND ? ORDER BY incdoc_date ASC");
+        $get_seller_name = $database->prepare("SELECT name FROM sellers LEFT JOIN allnames ON sellers.sellers_nameid = allnames.nameid WHERE sellers_uid = ?");
 
-        $pdo->beginTransaction();
+        $database->beginTransaction();
         $get_purchased->execute(array($posid));
         $get_purchased_fetched = $get_purchased->fetch(PDO::FETCH_ASSOC);
 
@@ -559,7 +555,7 @@ if (isset($_POST['transports_history'])){
 
             $get_transports_history_fetched = $get_transports_history->fetchAll(PDO::FETCH_ASSOC);
 
-            $pdo->commit();
+            $database->commit();
 
             $phpdate = strtotime( $from );
             $mysqlfrom = date( 'd.m.y', $phpdate );
@@ -602,7 +598,7 @@ if (isset($_POST['transports_history'])){
 
     }catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 }

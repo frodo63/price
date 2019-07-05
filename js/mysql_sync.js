@@ -438,40 +438,52 @@ $(document).ready(function(){
         var date_to_attach = $(event.target).attr('date');
         var pur_id_to_attach = $(event.target).attr('pur_id');
         var db = $(event.target).attr('database');
+        var dbprwindow = $('#pricingwindow').attr('database');
 
+        //Сравнить db  с db
+        if(db == dbprwindow){
+            console.log('База раценки и база закупки совпадают.')
 
-        if($('#pricingwindow').attr('positionid') == '-'){
-            var position_to_attach = $('#pricingwindow').attr('preditposid');
-        }else{
-           var position_to_attach = $('#pricingwindow').attr('positionid');
-        }
+            if($('#pricingwindow').attr('positionid') == '-'){
+                var position_to_attach = $('#pricingwindow').attr('preditposid');
+            }else{
+                var position_to_attach = $('#pricingwindow').attr('positionid');
+            }
 
-        if(date_to_attach !='' && date_to_attach && pur_id_to_attach && pur_id_to_attach !=''){
-            $.ajax({
-                url: 'mysql_sync.php',
-                method: 'POST',
-                data: {attach_pur_date:date_to_attach, attach_pur_id:pur_id_to_attach, position_to_attach:position_to_attach, db:db},
-                success: function (data) {
-                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
-                    //отобразить изменившиеся данные
-                    var trade = $('#trade').attr('trade_id');
-                    if($('#pricingwindow').attr('preditposid') == '-'){
-                        var posid = $('#pricingwindow').attr('positionid');
-                    }else{
-                        var posid = $('#pricingwindow').attr('preditposid');
-                    }
-                    $.ajax({
-                        url: 'mysql_history.php',
-                        method: 'POST',
-                        data: {post_trade_hist: trade, trade_hist_posid: posid},
-                        success: function (data) {
-                            $('.history_trade').html(data);
+            if(date_to_attach !='' && date_to_attach && pur_id_to_attach && pur_id_to_attach !=''){
+                $.ajax({
+                    url: 'mysql_sync.php',
+                    method: 'POST',
+                    data: {attach_pur_date:date_to_attach, attach_pur_id:pur_id_to_attach, position_to_attach:position_to_attach, db:db},
+                    success: function (data) {
+                        $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                        //отобразить изменившиеся данные
+                        var trade = $('#trade').attr('trade_id');
+                        if($('#pricingwindow').attr('preditposid') == '-'){
+                            var posid = $('#pricingwindow').attr('positionid');
+                        }else{
+                            var posid = $('#pricingwindow').attr('preditposid');
                         }
-                    });
+                        $.ajax({
+                            url: 'mysql_history.php',
+                            method: 'POST',
+                            data: {post_trade_hist: trade, trade_hist_posid: posid},
+                            success: function (data) {
+                                $('.history_trade').html(data);
+                            }
+                        });
 
-                }
-            });
+                    }
+                });
+            }
+
+        }else{
+            console.log('База раценки и база закупки НЕ совпадают.')
+            alert('Расценка - из базы '+dbprwindow+', а закупка - из базы '+db+'. Невозможно закрепить такое.')
         }
+
+
+
     });
 
     $(document).off('click.sh').on('click.sh', '.show_hide', function (event) {
