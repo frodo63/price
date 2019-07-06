@@ -17,7 +17,7 @@ $(document).ready(function(){
         $('#sync_requests, #sync_ip_requests, #sync_payments, #sync_ip_payments, #sync_executes, #sync_ip_executes,' +
             '#sync_byers, #sync_ip_byers, #sync_sellers, #sync_ip_sellers, #sync_trades, #sync_ip_trades,' +
             '#sync_positions, #sync_ip_positions, #sync_purchases, #sync_ip_purchases,' +
-            ' #sync_transports, #sync_ip_transports').removeClass('green');
+            '#sync_transports, #sync_ip_transports').removeClass('green');
         $(event.target).addClass('green');
 
         var sync_file = ($(event.target).attr("id")).substring(5);

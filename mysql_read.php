@@ -1470,10 +1470,10 @@ if(isset($_POST['byersid']) && isset($_POST['give_id'])){
     $byersid = $_POST['byersid'];
 
     try{
-        $pdo->beginTransaction();
-        $statement = $pdo->prepare("SELECT * FROM `giveaways` WHERE giveaways_id=? AND byersid=?");
+        $database->beginTransaction();
+        $statement = $database->prepare("SELECT * FROM `giveaways` WHERE giveaways_id=? AND byersid=?");
         $statement->execute(array($giveawayid,$byersid));
-        $pdo->commit();
+        $database->commit();
         $result = $statement->fetch();
         echo json_encode($result);/*Перевели массив расценки в формат JSON*/
     } catch( PDOException $Exception ) {

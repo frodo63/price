@@ -586,6 +586,7 @@ $(document).ready(function(){
     /*СПИСОК ПЛАТЕЖЕЙ, НАЧИСЛЕНИЙ И ВЫДАЧ В РАМКАХ ОДНОЙ ЗАЯВКИ///////////////////////////////////////////////////////*/
     $(document).off('click.ga_contents').on('click.ga_contents', '.collapse_ga_request', function (event) {
         var the_request = $(event.target).attr('ga_request');
+        var db = $(event.target).attr('database');
         var the_byer = $(event.target).parents('li[byerid]').attr('byerid');
 
         if($(event.target).val() == 'X'){//Закрываем просто
@@ -594,6 +595,7 @@ $(document).ready(function(){
             $('.ga_c_payments, .ga_c_giveaways, .ga_c_positions').removeClass('min-h')//Правила для трех папок по высоте
             $('.ga_requests_date_range').show();//Дейтпикер
             $('.collapse_ga_byer.x').show();//Верхний красный крест
+            $('.ga_requests_period').show();//Строка о периоде
             $(event.target).val('♢').css({'background':'white','color':'black'});
             $('tr[ga_request]').not('tr[ga_request='+the_request+']').slideDown();
             $('.ga_contents').slideUp();//Спрятали содержимое заявок
@@ -608,15 +610,16 @@ $(document).ready(function(){
             });
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             return false;
-        };
+        }
         $(event.target).val('X').css({'background':'red','color':'white'});
         /*Прятание*/
         $('.ga_requests_date_range').hide();//Дейтпикер
         $('.collapse_ga_byer.x').hide();//Верхний красный крест
+        $('.ga_requests_period').hide();//Строка о периоде
         $('tr[ga_request]').not('tr[ga_request='+the_request+']').hide();
         $(event.target).parents('.ga_byer_requests').addClass('ga_shrinken');
         $(event.target).parent().addClass('ga_widen');
-        $('.ga_c_payments, .ga_c_giveaways, .ga_c_positions').addClass('min-h')//Правила для трех папок по высоте
+        $('.ga_c_payments, .ga_c_giveaways, .ga_c_positions').addClass('min-h');//Правила для трех папок по высоте
 
 
         $.ajax({
@@ -624,11 +627,10 @@ $(document).ready(function(){
             method: 'POST',
             dataType: 'json',
             cache: false,
-            data: {the_request:the_request},
+            data: {the_request:the_request, db:db},
             success: function (data) {
                 $('.ga_contents[ga_request='+the_request+'] .ga_c_payments').html(data.data1);
                 $('.ga_contents[ga_request='+the_request+'] .ga_c_positions').html(data.data2);
-                /*$('.ga_contents[ga_request='+the_request+'] .ga_c_giveaways').html(data.data3);*/
                 $('.ga_contents[ga_request='+the_request+'] .ga_options').html(data.data4);
             }
         });
@@ -650,13 +652,23 @@ $(document).ready(function(){
     });
 
     $(document).off('click.comegiveaway').on('click.comegiveaway', '.add_giveaway', function () {
-        $('#add_giveaway').toggleClass('come_here', 1000);
+        if (!$('#add_giveaway').hasClass('come_here')){$('#add_giveaway').addClass('come_here', 1000);}
         console.log('Из большого скрипта');
         $('#add_giveaway>input[name=1]').val('');//Стираем все данные
         $('#add_giveaway>input[name=2]').val('');//Стираем все данные
         $('#add_giveaway>input[name=3]').val('');//Стираем все данные
-        //TODO: Добавить byersid заместо requestid
-        $('#button_add_giveaway').attr('byersid',''+$(event.target).attr('byersid')+'');//Добавляем в кнопку
+        var byersid = $(event.target).attr('byersid');
+        var database = $(event.target).attr('database');
+        $('#button_add_giveaway').attr('database',''+database+'');//Добавляем в кнопку
+        $('#button_add_giveaway').attr('byersid',''+byersid+'');//Добавляем в кнопку
+        switch(database){
+            case'ltk':
+                $('#add_giveaway #towhatbase').text('+Выдача в базу ЛТК');
+                break;
+            case'ip':
+                $('#add_giveaway #towhatbase').text('+Выдача в базу ИП УСВ');
+                break;
+        }
     });
 
     $(document).off('click.come1cnum').on('click.come1cnum', '.edit_1c_num', function (event) {
@@ -1125,6 +1137,7 @@ $(document).ready(function(){
 
         var byersid = $(event.target).attr("byersid");
         var giveid = $(event.target).attr("giveawayid");
+        var db = $(event.target).attr("database");
 
         /*Данные для заполнения выдачи*/
         var giveaway_date = $('#add_giveaway.come_here #add_giveaway_date').val();
@@ -1137,7 +1150,7 @@ $(document).ready(function(){
             $.ajax({
                 url: 'mysql_save.php',
                 method: 'POST',
-                data: {giveaway_date:giveaway_date, comment:comment, sum:sum, give_id:giveid},
+                data: {giveaway_date:giveaway_date, comment:comment, sum:sum, give_id:giveid, db:db},
                 success: function (data1) {
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data1);
                 }
@@ -1147,15 +1160,15 @@ $(document).ready(function(){
             $.ajax({
                 url: 'mysql_insert.php',
                 method: 'POST',
-                data: {byersid:byersid, giveaway_date:giveaway_date, comment:comment, sum:sum},
+                data: {byersid:byersid, giveaway_date:giveaway_date, comment:comment, sum:sum, db:db},
                 success: function (data2) {
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data2);
                 }
             });
         }
 
-        //Обновляем список
-        $.ajax({
+        //Обновляем список - под вопросом пока что
+        $.ajax({/*
             url: 'mysql_giveaways.php',
             method: 'POST',
             data: {the_byer:byersid},
@@ -1163,7 +1176,7 @@ $(document).ready(function(){
                 //Вставляем данные аякса
                 $('.ga_byer_requests[ga_byer='+byersid+']').html(data3);
             }
-        });
+        */});
 
     });
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

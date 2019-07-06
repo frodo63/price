@@ -169,7 +169,8 @@ echo"       <!--Добавить Платежку -->
               </div>
       <!--Добавить Выдачу -->
               <div id='add_giveaway'>
-                  <span>Вводим выдачу</span>
+                  <span id='towhatbase'></span>
+                  <br>
                   <br>
                   <label for='1'><span>Дата выдачи:</span></label><input id='add_giveaway_date' type='date' name='1'size='1'><br>
                   <label for='2'><span>Комментарий:</span></label><input id='add_giveaway_comment' type='text' name='2' size='20'><br>

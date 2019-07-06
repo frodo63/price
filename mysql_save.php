@@ -465,22 +465,20 @@ if(isset($_POST['giveaway_date']) && isset($_POST['comment']) && isset($_POST['s
     try{
 
         $sql = "UPDATE giveaways SET given_away = :given_away,comment = :comment,giveaway_sum = :giveaway_sum WHERE giveaways_id = :giveaways_id";
-        $statement = $pdo->prepare($sql);
+        $statement = $database->prepare($sql);
 
         $statement->bindValue(':given_away', $giveaway_date);
         $statement->bindValue(':comment', $comment);
         $statement->bindValue(':giveaway_sum', $sum);
         $statement->bindValue(':giveaways_id', $give_id);
 
-
-        $pdo->beginTransaction();
+        $database->beginTransaction();
         $statement->execute();
-        $pdo->commit();
+        $database->commit();
 
-        echo "<p>Номер заказа в 1С обновлен</p>";
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
     /**//////////////////////////////////////////////////////////////

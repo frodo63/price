@@ -34,6 +34,7 @@ $(document).ready(function() {
     $(document).off('click.comeeditgiveaway').on('click.comeeditgiveaway', '.editgiveaway', function (event) {
         var byersid = $(event.target).attr('byersid');
         var giveid = $(event.target).attr('g_id');
+        var db = $(event.target).attr('database');
         $('#add_giveaway').toggleClass('come_here', 1000);
         console.log('Из большого скрипта');
         $('#add_giveaway>input[name=1]').val('');//Стираем все данные
@@ -48,7 +49,7 @@ $(document).ready(function() {
             method: 'POST',
             dataType: 'json',
             cache: false,
-            data: {byersid:byersid,give_id:giveid},
+            data: {byersid:byersid,give_id:giveid, db:db},
             success: function (data) {
                 $('#add_giveaway input[name=1]').val(data.given_away);//Стираем все данные
                 $('#add_giveaway input[name=2]').val(data.comment);//Стираем все данные

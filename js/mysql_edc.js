@@ -531,6 +531,9 @@ $(document).ready(function() {
         $('.history_knam').html('');
         $('.history_kpok').html('');
         $('#request_info').text('');
+        $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports').removeClass('pushed');
+        $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports').hide();
+
 
 
         /*Скроллимся к только что открытой завяке*/

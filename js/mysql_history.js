@@ -3,16 +3,16 @@ $(document).ready(function(){
     //Показываем базе покупателя и товар, чтобы посмотреть старые цены
     $(document).off('click.give_hist_price').on('click.give_hist_price', '#button_history', function (event) {
         var trade = $(event.target).attr('hist_trade');
-        var byer = $(event.target).attr('hist_byer');
+        //var byer = $(event.target).attr('hist_byer');
         var prid = $('#pricingwindow').attr('pricingid');
         var db = $('#pricingwindow').attr('database');
         console.log(db);
 
-        console.log('trade: '+trade+', byer: '+byer+', pricing: '+prid)
+        console.log('trade: '+trade+', pricing: '+prid);
         $.ajax({
             url: 'mysql_history.php',
             method: 'POST',
-            data: {post_byersid:byer, post_tradeid:trade, db:db},
+            data: {post_tradeid:trade, db:db, prid:prid},
             success: function(data){
                 $('.history').html(data);
             },complete:function () {

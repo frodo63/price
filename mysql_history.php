@@ -1,52 +1,82 @@
 <?php
 include_once 'pdo_connect.php';
 //Показываем базе покупателя и товар, чтобы посмотреть старые цены из обеих баз
-if (isset($_POST['post_byersid']) && isset($_POST['post_tradeid'])){
-    $post_byer = $_POST['post_byersid'];
+if (isset($_POST['post_tradeid'])){
     $post_trade = $_POST['post_tradeid'];
-    $n = 1;
+    $hist_results = array();
 
-    $statement=$database->prepare("SELECT created,name,requests_id,req_positionid,pricingid,tradeid,sellerid,zak,price,rent FROM 
-(SELECT byersid,requests_id,req_positionid,created FROM `requests` LEFT JOIN `req_positions` ON requests.requests_id=req_positions.requestid WHERE byersid=?) 
-AS a LEFT JOIN (SELECT * FROM (SELECT * FROM `pricings` LEFT JOIN sellers ON pricings.sellerid=sellers.sellers_id) AS s LEFT JOIN allnames ON s.sellers_nameid=allnames.nameid) as pr ON a.req_positionid=pr.positionid WHERE pr.winner=1 AND pr.tradeid=? ORDER BY created DESC");
-    $byerinfo=$database->prepare("SELECT * FROM byers WHERE byers_id=?");
+    //Делаем историю из обеих баз
+    //Получить uid в обеих базах
+    switch($_POST['db']){
+        case 'ltk':
+            $get_uids = $pdo->prepare("SELECT prices.trades.trades_uid as uid,prices_ip.trades.trades_uid as ip_uid FROM prices.trades LEFT JOIN prices_ip.trades ON prices.trades.ip_uid = prices_ip.trades.trades_uid WHERE prices.trades.trades_id = ?");
+            break;
+        case 'ip':
+            $get_uids = $pdo->prepare("SELECT prices.trades.trades_uid as uid,prices_ip.trades.trades_uid as ip_uid FROM prices.trades LEFT JOIN prices_ip.trades ON prices.trades.ip_uid = prices_ip.trades.trades_uid WHERE prices_ip.trades.trades_id = ?");
+            break;
+    }
+    $get_uids->execute(array($post_trade));
+    $theuids=$get_uids->fetch(PDO::FETCH_ASSOC);
 
-    try{
-        $database->beginTransaction();
-        $statement->execute(array($post_byer,$post_trade));
-        $byerinfo->execute(array($post_byer));
-        $b_info = $byerinfo->fetch();
-        $database->commit();
+    $dbs_array[0][4]=$theuids['uid'];
+    $dbs_array[1][4]=$theuids['ip_uid'];
 
-        $result = "<br><input class='button_enlarge' type='button' value='↕'><br><span>Обнал:&nbsp".$b_info['ov_firstobp']."&nbspЕнот:&nbsp".$b_info['ov_tp']."&nbspОтсрочка:&nbsp".$b_info['ov_wt']."&nbspКоммент:&nbsp".$b_info['comment']."</span><br><br>";
-        $result .= "<table class='hystory-list'><thead><tr>
-                    <th>№</th>    
+    $getname_trade = $database->prepare("SELECT name FROM trades LEFT JOIN allnames a on trades.trades_nameid = a.nameid WHERE trades_id=?");
+    $getname_trade->execute(array($post_trade));
+    $trade_name = $getname_trade->fetch(PDO::FETCH_ASSOC);
+
+    echo "<span>Поставляли ".$trade_name['name']." :</span><br><br><input class='button_enlarge' type='button' value='↕'>";
+    echo "<table class='hystory-list'><thead><tr>   
                     <th>Когда</th>    
+                    <th>Для кого</th>    
                     <th>У кого</th>                    
                     <th>Закуп</th>
                     <th>Цена</th>
                     <th>Рент</th>
+                    <th>В базе</th>
                     </tr></thead><tbody>";
-        foreach ($statement as $row) {
-            $result .= "<tr post_reqid='".$row['requests_id']." post_posid='".$row['req_positionid']."' post_prid='".$row['pricingid']."'>";
 
-            $phpdate = strtotime( $row['created'] );
-            $mysqldate = date( 'd.m.y', $phpdate );
+    foreach($dbs_array as $dabase){
+        $statement=$dabase[0]->prepare("SELECT created,requests_id,req_positionid,pricingid,sellerid,byersid,zak,price,rent FROM pricings LEFT JOIN sellers ON sellerid=sellers_id LEFT JOIN req_positions ON pricingid = winnerid LEFT JOIN requests ON requestid = requests_id LEFT JOIN trades ON tradeid=trades_id WHERE winner=1 AND trades_uid=?");
+        $getname_seller = $dabase[0]->prepare("SELECT name FROM sellers LEFT JOIN allnames a on sellers.sellers_nameid = a.nameid WHERE sellers_id=?");
+        $getname_byer = $dabase[0]->prepare("SELECT name FROM byers LEFT JOIN allnames a on byers.byers_nameid = a.nameid WHERE byers_id=?");
+        try{
 
-            $result .="<td>".$n."</td><td>" . $mysqldate . "</td>
-                <td >" . $row['name'] . "</td>                
+            $dabase[0]->beginTransaction();
+            $statement->execute(array($dabase[4]));
+            $stated = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($stated as $row) {
+                $getname_seller->execute(array($row['sellerid']));
+                $getname_byer->execute(array($row['byersid']));
+
+
+                $seller_name = $getname_seller->fetch(PDO::FETCH_ASSOC);
+                $byer_name = $getname_byer->fetch(PDO::FETCH_ASSOC);
+
+
+                $hist_result = "<tr database='".$dabase[1]."' post_reqid='".$row['requests_id']."' post_posid='".$row['req_positionid']."' post_prid='".$row['pricingid']."'>";
+                $phpdate = strtotime( $row['created'] );
+                $mysqldate = date( 'd.m.y', $phpdate );
+                $hist_result .="<td>" . $mysqldate . "</td>
+                <td>" . $byer_name['name'] . "</td>                
+                <td>" . $seller_name['name'] . "</td>                
                 <td>" . $row['zak'] . "</td>
                 <td>" . $row['price'] . "</td>
-                <td>" . $row['rent'] . "</td>";
-            $result.="</div></td></tr>";
-            ++$n;
-        };
+                <td>" . $row['rent'] . "</td>
+                <td>" . $dabase[3] . "</td>";
+                $hist_result.="</tr>";
+                $hist_results[$row['created']]=$hist_result;
+            };
+            $dabase[0]->commit();
+        }catch( PDOException $e ) {$dabase[0]->rollback();print "Error!: " . $e->getMessage() . "<br/>" . (int)$e->getCode( );}
+    }
+    krsort($hist_results);
 
-        $result.="</tbody></table>";
-
-        print $result;
-
-    }catch( PDOException $e ) {$database->rollback();print "Error!: " . $e->getMessage() . "<br/>" . (int)$e->getCode( );}
+    foreach ($hist_results as $hr){
+        print $hr;
+    }
+    echo "</tbody></table>";
 };
 
 //Показываем базе поставщика и тару, чтобы посмотреть, почем возили к себе из обеих баз

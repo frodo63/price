@@ -639,9 +639,9 @@ if(isset($_POST['sync_file'])){
                         break;
                 }
 
-                echo "<pre>";
-                print_r($file_array_trimmed);
-                echo "</pre>";
+                //echo "<pre>";
+                //print_r($file_array_trimmed);
+                //echo "</pre>";
 
                 //Рисование из массива
                 foreach ($file_array_trimmed as $k=>$v){
@@ -716,43 +716,35 @@ if(isset($_POST['sync_file'])){
             break;
         case "purchases":
         case "ip_purchases":
-            if ($file){
+            try{
+                if ($file){
                 echo"<p>Файл найден</p>";
                 $file_array = file($path); // Считывание файла в массив $file_array
                 if (count($file_array) > 0){
                     echo"<p>Файл выгружен в массив</p>";
 
-                    /*switch($sync){
-                        case "purchases":
-                            $database = $pdo;
-                            break;
-                        case "ip_purchases":
-                            $database = $pdoip;
-                            break;
-                    }*/
-
                     /*Мехаинзм такой: Если закупка в 1С изменилась - она меняется в базе*/
 
                     $check_purchase = $database->prepare("SELECT purchases_uid FROM purchases WHERE purchases_uid = ? AND line_num = ?");
                     $insert_purchase = $database->prepare("INSERT INTO purchases (
-                                                    purchases_uid,
-                                                    seller_uid,
-                                                    incdoc_num,
-                                                    incdoc_date,
-                                                    line_num,
-                                                    trade_uid,
-                                                    kol,
-                                                    price,
-                                                    sum
-) VALUES(?,?,?,?,?,?,?,?,?)");
+                                                        purchases_uid,
+                                                        seller_uid,
+                                                        incdoc_num,
+                                                        incdoc_date,
+                                                        line_num,
+                                                        trade_uid,
+                                                        kol,
+                                                        price,
+                                                        sum
+    ) VALUES(?,?,?,?,?,?,?,?,?)");
                     $update_purchase = $database->prepare("UPDATE purchases SET seller_uid=?,
-                                                                                incdoc_num=?,
-                                                                                incdoc_date=?,
-                                                                                line_num=?,
-                                                                                trade_uid=?,
-                                                                                kol=?,
-                                                                                price=?,
-                                                                                sum=? WHERE purchases_uid=?");
+                                                                                    incdoc_num=?,
+                                                                                    incdoc_date=?,
+                                                                                    line_num=?,
+                                                                                    trade_uid=?,
+                                                                                    kol=?,
+                                                                                    price=?,
+                                                                                    sum=? WHERE purchases_uid=?");
 
                     foreach ($file_array as $row){
                         $temp_array = explode(';',$row);
@@ -770,43 +762,27 @@ if(isset($_POST['sync_file'])){
 
                         /*Проверяем, есть ли в системе такая закупка, если нет - то заносим в базу. Если есть - ничего не делаем
                          * */
+                        $database->beginTransaction();
                         $check_purchase->execute(array($temp_array[0], $temp_array[4]));
                         $check_purchase_fetched = $check_purchase->fetch(PDO::FETCH_ASSOC);
 
                         $good_date = substr($temp_array[2],6,4 )."-".substr($temp_array[2],3,2)."-".substr($temp_array[2],0,2);
 
-                        if(!$check_purchase_fetched['purchases_uid']){
-
-                            //uid заказа поставщику
-                            $temp_array[0];
-                            //uid поставщика
-                            $temp_array[1];
-                            //ДатаВходящегоДокумента
-                            $good_date;
-                            //№ВходящегоДокумента
-                            $temp_array[3];
-                            //Номер строки
-                            $temp_array[4];
-                            //uid товара
-                            $temp_array[5];
-                            //количество
-                            $temp_array[6];
-                            //цена
-                            $temp_array[7];
-                            //сумма
-                            $temp_array[8];
-
-                         $insert_purchase->execute(array($temp_array[0],$temp_array[1],$temp_array[3],$good_date,$temp_array[4],$temp_array[5],$temp_array[6],$temp_array[7],$temp_array[8]));
-                        }else{
+                        if(count($check_purchase_fetched) > 0){
                             $update_purchase->execute(array($temp_array[1],$temp_array[3],$good_date,$temp_array[4],$temp_array[5],$temp_array[6],$temp_array[7],$temp_array[8],$temp_array[0]));
+                        }else{
+                            $insert_purchase->execute(array($temp_array[0],$temp_array[1],$temp_array[3],$good_date,$temp_array[4],$temp_array[5],$temp_array[6],$temp_array[7],$temp_array[8]));
+
                         }
+                        $database->commit();
                     }
                     echo"Закупки пройдены.";
                 };
             }else{
                 echo"<p>Файл НЕ найден</p>";
             };
-            break;
+            }catch( PDOException $e ) {$database->rollback();print "Error!: " . $e->getMessage() . "<br/>" . (int)$e->getCode( );}
+                break;
         case "transports":
         case "ip_transports":
             if ($file){
