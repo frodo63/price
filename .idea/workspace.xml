@@ -2,14 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dfa4bab3-6ca8-4122-b16e-58238fa4669e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0b819afd-90f2-4934-ba9e-711b9c279d4d.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0b819afd-90f2-4934-ba9e-711b9c279d4d.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.sass-cache/fade1a5dc77b655e05dc7da774ceb09bde5f4fb3/_mysql_styles.scssc" beforeDir="false" afterPath="$PROJECT_DIR$/.sass-cache/fade1a5dc77b655e05dc7da774ceb09bde5f4fb3/_mysql_styles.scssc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/mysql_edc.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/mysql_edc.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/savename_ajax.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/savename_ajax.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysql_giveaways.php" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_giveaways.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysql_history.php" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_history.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_sync.php" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_sync.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_read.php" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_read.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pdo_face_page.php" beforeDir="false" afterPath="$PROJECT_DIR$/pdo_face_page.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sass/_mysql_styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/sass/_mysql_styles.scss" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -58,7 +59,7 @@
     <session id="-581314125">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="9" />
+          <entry key="project.closed" value="11" />
           <entry key="project.open.time.0" value="3" />
           <entry key="project.open.time.1" value="7" />
           <entry key="project.open.time.10" value="3" />
@@ -66,8 +67,9 @@
           <entry key="project.open.time.17" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.6" value="1" />
+          <entry key="project.open.time.7" value="2" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="18" />
+          <entry key="project.opened" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -76,15 +78,15 @@
           <entry key="byers" value="6" />
           <entry key="executes" value="3" />
           <entry key="giveaways" value="1" />
-          <entry key="js" value="65" />
-          <entry key="options" value="1" />
+          <entry key="js" value="68" />
+          <entry key="options" value="2" />
           <entry key="payments" value="1" />
-          <entry key="php" value="119" />
+          <entry key="php" value="129" />
           <entry key="pricings" value="4" />
           <entry key="purchases" value="14" />
           <entry key="req_positions" value="6" />
           <entry key="requests" value="7" />
-          <entry key="scss" value="12" />
+          <entry key="scss" value="13" />
           <entry key="sellers" value="6" />
           <entry key="sql" value="26" />
           <entry key="trades" value="16" />
@@ -94,31 +96,31 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Database Element" value="78" />
-          <entry key="JavaScript" value="65" />
-          <entry key="PHP" value="119" />
+          <entry key="Database Element" value="79" />
+          <entry key="JavaScript" value="68" />
+          <entry key="PHP" value="129" />
           <entry key="PLAIN_TEXT" value="4" />
-          <entry key="SCSS" value="12" />
+          <entry key="SCSS" value="13" />
           <entry key="Scratch" value="26" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="cell" value="23" />
-          <entry key="js" value="4863" />
-          <entry key="php" value="19237" />
-          <entry key="scss" value="424" />
+          <entry key="js" value="5634" />
+          <entry key="php" value="19819" />
+          <entry key="scss" value="614" />
           <entry key="sql" value="2582" />
           <entry key="txt" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="13" />
-          <entry key="JavaScript" value="4863" />
-          <entry key="PHP" value="19195" />
+          <entry key="HTML" value="18" />
+          <entry key="JavaScript" value="5634" />
+          <entry key="PHP" value="19772" />
           <entry key="PLAIN_TEXT" value="6" />
-          <entry key="SCSS" value="424" />
+          <entry key="SCSS" value="614" />
           <entry key="SQL" value="151" />
           <entry key="Scratch" value="2483" />
         </counts>
@@ -128,63 +130,61 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/mysql_history.js">
+        <entry file="file://$PROJECT_DIR$/js/mysql_edc.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="62" column="14" lean-forward="true" selection-start-line="62" selection-start-column="14" selection-end-line="62" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/mysql_history.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="193" lean-forward="true" selection-start-line="193" selection-end-line="193" />
+            <state relative-caret-position="488">
+              <caret line="500" column="29" lean-forward="true" selection-start-line="500" selection-start-column="19" selection-end-line="500" selection-end-column="29" />
               <folding>
-                <element signature="e#118#4072#0#PHP" />
-                <element signature="e#4164#11079#0#PHP" />
-                <element signature="e#5986#6746#0#PHP" />
-                <element signature="e#17637#22745#0#PHP" />
-                <element signature="e#22834#27861#0#PHP" />
-                <element signature="e#27886#30521#0#PHP" />
+                <element signature="e#30522#35374#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/0b819afd-90f2-4934-ba9e-711b9c279d4d/console.sql">
+        <entry file="file://$PROJECT_DIR$/pdo_face_page.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="150" selection-start-line="18" selection-start-column="150" selection-end-line="18" selection-end-column="150" />
+            <state relative-caret-position="768">
+              <caret line="56" column="26" selection-start-line="56" selection-start-column="17" selection-end-line="56" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sass/_mysql_styles.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="446">
+              <caret line="1017" column="21" selection-start-line="1017" selection-start-column="21" selection-end-line="1017" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/mysql_edc.js">
+        <entry file="file://$PROJECT_DIR$/mysql_read.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="579" column="74" lean-forward="true" selection-start-line="579" selection-start-column="74" selection-end-line="579" selection-end-column="74" />
+            <state relative-caret-position="206">
+              <caret line="1471" column="8" lean-forward="true" selection-start-line="1471" selection-start-column="8" selection-end-line="1471" selection-end-column="8" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#td#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pdo_connect.php">
+        <entry file="file://$PROJECT_DIR$/mysql_giveaways.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="10" lean-forward="true" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/price_mysql.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="375" column="30" lean-forward="true" selection-start-line="375" selection-start-column="30" selection-end-line="375" selection-end-column="30" />
+            <state relative-caret-position="1168">
+              <caret line="112" column="150" selection-start-line="112" selection-start-column="150" selection-end-line="112" selection-end-column="150" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -200,9 +200,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>button_history</find>
-      <find>post_tradeid</find>
-      <find>prices_ip</find>
       <find>button_history_seller</find>
       <find>enlarged</find>
       <find>.history</find>
@@ -220,7 +217,6 @@
       <find>collapse_ga_req</find>
       <find>save</find>
       <find>ga_shrinken</find>
-      <find>editpricing</find>
       <find>preditposid</find>
       <find>с момента</find>
       <find>button_history_tzrkpok</find>
@@ -230,6 +226,10 @@
       <find>pricingid</find>
       <find>knam</find>
       <find>$database</find>
+      <find>addpricing</find>
+      <find>editpricing</find>
+      <find>byer_info</find>
+      <find>byer</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -297,16 +297,16 @@
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/0b819afd-90f2-4934-ba9e-711b9c279d4d/console_3.sql" />
         <option value="$PROJECT_DIR$/js/mysql_history.js" />
         <option value="$PROJECT_DIR$/js/mysql_thunderclap.js" />
-        <option value="$PROJECT_DIR$/mysql_read.php" />
         <option value="$PROJECT_DIR$/js/mysql_scripts.js" />
-        <option value="$PROJECT_DIR$/sass/_mysql_styles.scss" />
         <option value="$PROJECT_DIR$/js/savename_ajax.js" />
-        <option value="$PROJECT_DIR$/mysql_giveaways.php" />
-        <option value="$PROJECT_DIR$/pdo_face_page.php" />
         <option value="$PROJECT_DIR$/mysql_sync.php" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/0b819afd-90f2-4934-ba9e-711b9c279d4d/console.sql" />
-        <option value="$PROJECT_DIR$/js/mysql_edc.js" />
+        <option value="$PROJECT_DIR$/mysql_giveaways.php" />
         <option value="$PROJECT_DIR$/mysql_history.php" />
+        <option value="$PROJECT_DIR$/js/mysql_edc.js" />
+        <option value="$PROJECT_DIR$/pdo_face_page.php" />
+        <option value="$PROJECT_DIR$/mysql_read.php" />
+        <option value="$PROJECT_DIR$/sass/_mysql_styles.scss" />
       </list>
     </option>
   </component>
@@ -413,7 +413,7 @@
     <property name="SearchEverywhereHistoryKey" value="catch(&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="MySQL" />
-    <property name="database.console.LAST_STATE" value="true" />
+    <property name="database.console.LAST_STATE" value="false" />
     <property name="last_opened_file_path" value="/samba/allaccess/1111/sync_ip_purchases.txt" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Language Defaults" />
   </component>
@@ -641,12 +641,14 @@
       <workItem from="1562316892073" duration="4776000" />
       <workItem from="1562328080220" duration="7296000" />
       <workItem from="1562337248978" duration="8392000" />
-      <workItem from="1562387206438" duration="62737000" />
+      <workItem from="1562387206438" duration="62885000" />
+      <workItem from="1562496469379" duration="265000" />
+      <workItem from="1562501309816" duration="8493000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1819823000" />
+    <option name="totallyTimeSpent" value="1828729000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -663,9 +665,7 @@
     <layout>
       <window_info id="Structure" order="0" weight="0.24908201" />
       <window_info id="Favorites" order="1" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.17022412" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" />
+      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.17342582" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32814237" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -674,9 +674,11 @@
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50428396" side_tool="true" weight="0.26362625" />
-      <window_info active="true" anchor="bottom" id="Database Console" order="8" sideWeight="0.49571604" visible="true" weight="0.26264802" />
+      <window_info anchor="bottom" id="Database Console" order="8" sideWeight="0.49571604" weight="0.26264802" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32814237" />
-      <window_info anchor="bottom" id="Terminal" order="10" weight="0.14101183" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.14101183" />
+      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="12" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -725,7 +727,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/mysql_history.php</url>
-          <line>223</line>
+          <line>236</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
@@ -775,7 +777,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="das://table:/3f064d7f/0b819afd-90f2-4934-ba9e-711b9c279d4d/prices_ip.pricings" />
     <entry file="das://table:/3f064d7f/0b819afd-90f2-4934-ba9e-711b9c279d4d/prices_ip.options" />
     <entry file="das://table:/3f064d7f/0b819afd-90f2-4934-ba9e-711b9c279d4d/prices_ip.req_positions" />
     <entry file="file://$PROJECT_DIR$/mysql_delete.php">
@@ -803,13 +804,6 @@
     <entry file="das://table:/3f064d7f/0b819afd-90f2-4934-ba9e-711b9c279d4d/prices_ip.sellers" />
     <entry file="das://table:/3f064d7f/0b819afd-90f2-4934-ba9e-711b9c279d4d/prices.byers" />
     <entry file="das://table:/3f064d7f/0b819afd-90f2-4934-ba9e-711b9c279d4d/prices.sellers" />
-    <entry file="file://$PROJECT_DIR$/mysql_options.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="23" lean-forward="true" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://table:/3f064d7f/0b819afd-90f2-4934-ba9e-711b9c279d4d/prices.req_positions" />
     <entry file="file://$PROJECT_DIR$/js/TODOS.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -908,34 +902,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/mysql_scripts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="612" column="9" selection-start-line="612" selection-start-column="9" selection-end-line="612" selection-end-column="9" />
-          <folding>
-            <element signature="e#19040#19939#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sass/_mysql_styles.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7260">
-          <caret line="484" column="83" selection-start-line="484" selection-start-column="83" selection-end-line="484" selection-end-column="83" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/mysql_searching.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="38" column="73" selection-start-line="38" selection-start-column="73" selection-end-line="38" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/mysql_sync.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="469">
-          <caret line="33" column="11" lean-forward="true" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -958,24 +928,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pdo_face_page.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="22" column="65" selection-start-line="22" selection-start-column="65" selection-end-line="22" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://0b819afd-90f2-4934-ba9e-711b9c279d4d/schema/prices_ip/table/trades">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysql_insert.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="391" column="8" lean-forward="true" selection-start-line="391" selection-start-column="8" selection-end-line="400" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -993,13 +949,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mysql_giveaways.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="56">
-          <caret line="309" column="64" selection-start-line="309" selection-start-column="64" selection-end-line="309" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://0b819afd-90f2-4934-ba9e-711b9c279d4d/schema/prices/table/purchases">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -1008,36 +957,6 @@
             <filter text="purchases_uid='b707c625-9a49-11e5-a8fc-50465d50a210'" />
             <filter text="purchases_uid='aa981d16-1fbf-11e9-ad55-6c626df87f88'" />
           </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysql_sync.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="752" column="26" selection-start-line="752" selection-start-column="26" selection-end-line="752" selection-end-column="26" />
-          <folding>
-            <element signature="e#5596#11376#0#PHP" />
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="e#11385#13235#0#PHP" />
-            <element signature="e#13244#15459#0#PHP" />
-            <element signature="e#15468#17721#0#PHP" />
-            <element signature="e#17730#20110#0#PHP" />
-            <element signature="e#20119#22827#0#PHP" />
-            <element signature="e#22836#27158#0#PHP" />
-            <element signature="n#style#0;n#span#0;n#li#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#li#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#li#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#li#0;n#!!top" expanded="true" />
-            <element signature="e#0#704#1" />
-            <element signature="e#0#762#1" />
-            <element signature="e#39540#42184#0#PHP" />
-            <element signature="e#42218#44535#0#PHP" />
-            <element signature="n#style#0;n#li#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#li#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1054,24 +973,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/price_mysql.js">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/0b819afd-90f2-4934-ba9e-711b9c279d4d/console.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="375" column="30" lean-forward="true" selection-start-line="375" selection-start-column="30" selection-end-line="375" selection-end-column="30" />
+        <state relative-caret-position="270">
+          <caret line="18" column="150" selection-start-line="18" selection-start-column="150" selection-end-line="18" selection-end-column="150" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mysql_read.php">
+    <entry file="file://$PROJECT_DIR$/js/price_mysql.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="1309" column="28" selection-start-line="1309" selection-start-column="28" selection-end-line="1309" selection-end-column="28" />
+        <state relative-caret-position="715">
+          <caret line="375" column="30" lean-forward="true" selection-start-line="375" selection-start-column="30" selection-end-line="375" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/mysql_history.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="62" column="14" lean-forward="true" selection-start-line="62" selection-start-column="14" selection-end-line="62" selection-end-column="14" />
+        <state relative-caret-position="715">
+          <caret line="62" column="14" selection-start-line="62" selection-start-column="14" selection-end-line="62" selection-end-column="14" />
         </state>
       </provider>
     </entry>
@@ -1082,32 +1001,111 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/0b819afd-90f2-4934-ba9e-711b9c279d4d/console.sql">
+    <entry file="file://$PROJECT_DIR$/js/mysql_scripts.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="150" selection-start-line="18" selection-start-column="150" selection-end-line="18" selection-end-column="150" />
+        <state relative-caret-position="29">
+          <caret line="629" column="39" selection-start-line="629" selection-start-column="39" selection-end-line="629" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/mysql_edc.js">
+    <entry file="das://0b819afd-90f2-4934-ba9e-711b9c279d4d/schema/prices/table/options">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysql_options.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="579" column="74" lean-forward="true" selection-start-line="579" selection-start-column="74" selection-end-line="579" selection-end-column="74" />
+        <state relative-caret-position="30">
+          <caret line="11" column="23" lean-forward="true" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysql_sync.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10089">
+          <caret line="752" column="26" selection-start-line="752" selection-start-column="26" selection-end-line="752" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/mysql_sync.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="33" column="11" lean-forward="true" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="11" />
+          <folding>
+            <element signature="e#4117#13944#0" />
+            <element signature="e#14109#16037#0" />
+            <element signature="e#16715#18910#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysql_insert.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="533">
+          <caret line="259" column="54" lean-forward="true" selection-start-line="259" selection-start-column="54" selection-end-line="259" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysql_giveaways.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1168">
+          <caret line="112" column="150" selection-start-line="112" selection-start-column="150" selection-end-line="112" selection-end-column="150" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mysql_history.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="193" lean-forward="true" selection-start-line="193" selection-end-line="193" />
+        <state relative-caret-position="960">
+          <caret line="177" column="62" selection-start-line="177" selection-start-column="62" selection-end-line="177" selection-end-column="62" />
           <folding>
-            <element signature="e#118#4072#0#PHP" />
-            <element signature="e#4164#11079#0#PHP" />
-            <element signature="e#5986#6746#0#PHP" />
-            <element signature="e#17637#22745#0#PHP" />
-            <element signature="e#22834#27861#0#PHP" />
-            <element signature="e#27886#30521#0#PHP" />
+            <element signature="e#4164#8715#0#PHP" />
+            <element signature="e#8811#12570#0#PHP" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/mysql_edc.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="488">
+          <caret line="500" column="29" lean-forward="true" selection-start-line="500" selection-start-column="19" selection-end-line="500" selection-end-column="29" />
+          <folding>
+            <element signature="e#30522#35374#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pdo_face_page.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="768">
+          <caret line="56" column="26" selection-start-line="56" selection-start-column="17" selection-end-line="56" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysql_read.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="206">
+          <caret line="1471" column="8" lean-forward="true" selection-start-line="1471" selection-start-column="8" selection-end-line="1471" selection-end-column="8" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#td#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sass/_mysql_styles.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="446">
+          <caret line="1017" column="21" selection-start-line="1017" selection-start-column="21" selection-end-line="1017" selection-end-column="21" />
         </state>
       </provider>
     </entry>

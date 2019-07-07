@@ -472,13 +472,8 @@ $(document).ready(function() {
                             $('#tp').val(data.tp);
                             $('#firstobp').val(data.firstobp);
                             $('#wtime').val(data.wt);
-                            console.log(data.op);
-                            console.log(data.tp);
-                            console.log(data.firstobp);
-                            console.log(data.wt);
                         }
                     });
-
                 }else if(queen == null){
                     console.log('Из заявки');
                     $.ajax({//БЕРЕМ ИЗ ЗАЯВКИ
@@ -492,13 +487,18 @@ $(document).ready(function() {
                             $('#tp').val(data.tp);
                             $('#firstobp').val(data.firstobp);
                             $('#wtime').val(data.wt);
-                            console.log(data.op);
-                            console.log(data.tp);
-                            console.log(data.firstobp);
-                            console.log(data.wt);
                         }
                     });
                 }
+            }
+        });
+        //АЯКС на информацию покупателя
+        $.ajax({
+            url: 'mysql_read.php',
+            method: 'POST',
+            data: {byerid_info:byerid, db:db},
+            success: function (data) {
+                $('#byer_info').html(data);
             }
         });
                 window.scrollTo(0, 0);
@@ -530,6 +530,7 @@ $(document).ready(function() {
         $('.history').html('');
         $('.history_knam').html('');
         $('.history_kpok').html('');
+        $('#byer_info').html('');
         $('#request_info').text('');
         $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports').removeClass('pushed');
         $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports').hide();
@@ -577,130 +578,132 @@ $(document).ready(function() {
             reqid = $(event.target).parents('.ga_contents').attr('ga_request');
             prid = $(event.target).attr('pricing');
             posid = $(event.target).attr('position');
-            byerid = $(event.target).parents('li[byerid]').attr('byerid');
+            byerid = $('td.ga_widen > input[ga_request]').attr('byerid');
             byername = $('.byer_req_list li[byerid='+byerid+'] span.name').text();
-
             trade = $(event.target).siblings('.ga_trade').text();
             tare = $(event.target).siblings('.ga_trade').attr('tare');
             seller = $(event.target).siblings('.ga_seller').text();
+
+            //ПОлучаем правильное значение byers_id.ТАк как в Р-1 в li[byerid] указан byerid из базы ЛТК,
+            //в случае, если у нас db = ip, надо дополнительно менять этот byerid
+
+        }
+        window.scrollTo(0, 0);
+        $('#pricingwindow').slideDown(200);
+        if($(event.target).parents('#reads')){
+        console.log('Мы в общем списке заявок, надо бы скрыть Результаты поиска');
         }
 
-                window.scrollTo(0, 0);
-                $('#pricingwindow').slideDown(200);
-                if($(event.target).parents('#reads')){
-                    console.log('Мы в общем списке заявок, надо бы скрыть Результаты поиска');
-                }
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //Очищаем окно расценки
+        $('#trade').attr({trade_id: '', tare:''}).val('');
+        $('#seller').attr('seller_id', '').val('');
+        $('#button_history').attr({hist_byer: '-', hist_trade: '-'});
+        $('#pricingwindow input[type="number"]').val('');
+        $('#pricingwindow input[type="text"]').text('');
+        $('#cases p,#obtzr,#tzr,#obtzrknam,#obtzrkpok,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
+        $('#pricingwindow').attr({positionid: '-', pricingid: '-', preditposid:'-', byerid:'-', requestid:'-', database:'-'});
+        $('#byer_name').text('');
+        $('.history').html('');
+        $('.history_knam').html('');
+        $('.history_kpok').html('');
+        $('#byer_info').html('');
+        $('#request_info').text('');
 
-                ////////////////////////////////////////////////////////////////////////////////////////////////////////
-                //Очищаем окно расценки
-                $('#trade').attr({trade_id: '', tare:''}).val('');
-                $('#seller').attr('seller_id', '').val('');
-                $('#button_history').attr({hist_byer: '-', hist_trade: '-'});
-                $('#pricingwindow input[type="number"]').val('');
-                $('#pricingwindow input[type="text"]').text('');
-                $('#cases p,#obtzr,#tzr,#obtzrknam,#obtzrkpok,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
-                $('#pricingwindow').attr({positionid: '-', pricingid: '-', preditposid:'-', byerid:'-', requestid:'-', database:'-'});
-                $('#byer_name').text('');
-                $('.history').html('');
-                $('.history_knam').html('');
-                $('.history_kpok').html('');
-                $('#request_info').text('');
+        /*Вставим прайсингайди в прайсингвиндоу ПРОБНОЕ!!!*/
+        $('#pricingwindow').attr({pricingid: prid, byerid:byerid, preditposid:posid, requestid:reqid, database:db});
+        console.log(byername);
+        $('#byer_name').text(byername);
+        /**/
 
-                /*Вставим прайсингайди в прайсингвиндоу ПРОБНОЕ!!!*/
-                $('#pricingwindow').attr({pricingid: prid, byerid:byerid, preditposid:posid, requestid:reqid, database:db});
-                console.log(byername);
-                $('#byer_name').text(byername);
-                /**/
+        //АЯКС на едитпрайсинг
+        $.ajax({
+            url: 'mysql_read.php',
+            method: 'POST',
+            data: {pricingid:prid, db:db},
+            success: function (data) {
+            var json = $.parseJSON(data);
+            /*ШАПКА*/
+            $('#trade').attr({trade_id : json.tradeid, tare : tare}).val(trade);
+            $('#seller').attr('seller_id', json.sellerid).val(seller);
+            $('#button_history').attr('hist_trade', json.tradeid);//Добавляем идентификатор Товара в инпут по истории
+            $('#request_info').text('№ '+json.num+' от '+json.created);
 
-                //АЯКС на едитпрайсинг
+            $('#zak').val(json.zak);
+            $('#kol').val(json.kol);
+            $('#tzr').text(json.tzr);
+            $('#tzrknam').val(json.tzrknam);
+            $('#tzrkpok').val(json.tzrkpok);
+            $('#wtime').val(json.wtime);
+            $('#wtimeday').text(json.wtimeday);
+            $('#wtr').text(json.wtr);
+
+            /*ЦЕНА и РЕНТАБЕЛЬНОСТЬ*/
+            $('#pr').val(Number(Number(json.price).toFixed(3)));
+            $('#rent h1').text(Number(Number(json.rent).toFixed(2)));
+            //Косметика
+            $('#fixate').removeClass('active').attr('value', 'Закрепить');
+            $('#pr').css({'font-weight': "normal", 'border': '2px solid white'});
+            $('#go').slideUp().animate({top:'10vh', right:'1vw'}).slideDown();
+            $('#fcount').css('opacity', '1');
+            $('#cases').slideUp();
+            $('#margediv').slideUp();
+            $('#rop, #rtp').val("");
+            $('#realop, #realtp').text("");
+            //Косметика
+            $('#op').val(json.op);
+            $('#tp').val(json.tp);
+            $('#firstobp').val(json.firstobp);
+            $('#opr').text(json.opr);
+            $('#tpr').text(json.tpr);
+            $('#firstoh').val(json.firstoh);
+            $('#clearp').text(json.clearp);
+            },/*История*/
+            complete: function(){
+                $('#button_history').attr('hist_byer', byerid);//Добавляем идентификатор Покупателя в инпут по истории
+                //Проверка на QUEEN
                 $.ajax({
-                    url: 'mysql_read.php',
+                    url: 'mysql_options.php',
                     method: 'POST',
-                    data: {pricingid:prid, db:db},
+                    dataType: 'json',
+                    cache: false,
+                    data: {name_and_queen:posid, db:db},
                     success: function (data) {
-                        var json = $.parseJSON(data);
-                        /*ШАПКА*/
-                        $('#trade').attr({trade_id : json.tradeid, tare : tare}).val(trade);
-                        $('#seller').attr('seller_id', json.sellerid).val(seller);
-                        $('#button_history').attr('hist_trade', json.tradeid);//Добавляем идентификатор Товара в инпут по истории
-                        $('#request_info').text('№ '+json.num+' от '+json.created);
-
-                        $('#zak').val(json.zak);
-                        $('#kol').val(json.kol);
-                        $('#tzr').text(json.tzr);
-                        $('#tzrknam').val(json.tzrknam);
-                        $('#tzrkpok').val(json.tzrkpok);
-                        $('#wtime').val(json.wtime);
-                        $('#wtimeday').text(json.wtimeday);
-                        $('#wtr').text(json.wtr);
-
-                        /*ЦЕНА и РЕНТАБЕЛЬНОСТЬ*/
-                        $('#pr').val(Number(Number(json.price).toFixed(3)));
-                        $('#rent h1').text(Number(Number(json.rent).toFixed(2)));
-
-                        console.log(json.fixed);
-                        if (json.fixed == 0){
-                            //Косметика
-                            $('#fixate').removeClass('active').attr('value', 'Закрепить');
-                            $('#pr').css({'font-weight': "normal", 'border': '2px solid white'});
-                            $('#go').slideUp().animate({top:'10vh', right:'1vw'}).slideDown();
-                            $('#fcount').css('opacity', '1');
-                            $('#cases').slideUp();
-                            $('#margediv').slideUp();
-                            $('#rop, #rtp').val("");
-                            $('#realop, #realtp').text("");
-                            console.log('Цена отпущена');
-                            //Косметика
-                            $('#op').val(json.op);
-                            $('#tp').val(json.tp);
-                            $('#firstobp').val(json.firstobp);
-                            $('#opr').text(json.opr);
-                            $('#tpr').text(json.tpr);
-                            $('#firstoh').val(json.firstoh);
-                            $('#clearp').text(json.clearp);
-                        }
-                    },/*История*/
-                    complete: function(){
-                        $('#button_history').attr('hist_byer', byerid);//Добавляем идентификатор Покупателя в инпут по истории
-                        //Проверка на QUEEN
-                        $.ajax({
-                            url: 'mysql_options.php',
-                            method: 'POST',
-                            dataType: 'json',
-                            cache: false,
-                            data: {name_and_queen:posid, db:db},
-                            success: function (data) {
-                                var queen = data.queen;
-                                console.log(queen+" "+typeof queen);
-                                if(queen == "1"){
-                                    $.ajax({//БЕРЕМ ИЗ ПОЗИЦИИ
-                                        url: 'mysql_options.php',
-                                        method: 'POST',
-                                        dataType: 'json',
-                                        cache: false,
-                                        data: {pos_options:posid, db:db},
-                                        success: function(data){
-                                            $('#op').val(data.op);
-                                            $('#tp').val(data.tp);
-                                            $('#firstobp').val(data.firstobp);
-                                            $('#wtime').val(data.wt);
-                                            console.log(data.op);
-                                            console.log(data.tp);
-                                            console.log(data.firstobp);
-                                            console.log(data.wt);
-                                        }
-                                    });
-
-                                }else if(queen == null){
-                                    console.log('queen has just almost killed this pricing, but i saved it!');
+                        var queen = data.queen;
+                        console.log(queen+" "+typeof queen);
+                        if(queen == "1"){
+                            $.ajax({//БЕРЕМ ИЗ ПОЗИЦИИ
+                                url: 'mysql_options.php',
+                                method: 'POST',
+                                dataType: 'json',
+                                cache: false,
+                                data: {pos_options:posid, db:db},
+                                success: function(data){
+                                    $('#op').val(data.op);
+                                    $('#tp').val(data.tp);
+                                    $('#firstobp').val(data.firstobp);
+                                    $('#wtime').val(data.wt);
                                     }
-                            }
-                        });
-                        /*Выводим сообщение о том что расценка выгружена*/
-                        $('#editmsg').css('display', 'block'). delay(2000).slideUp(300).html('Расценка ' + prid + ' выгружена.');
+                            });
+                        }else if(queen == null){
+                            console.log('queen has just almost killed this pricing, but i saved it!');
+                        }
                     }
                 });
+                /*Выводим сообщение о том что расценка выгружена*/
+                $('#editmsg').css('display', 'block'). delay(2000).slideUp(300).html('Расценка ' + prid + ' выгружена.');
+            }
+        });
 
+        //АЯКС на информацию покупателя
+        $.ajax({
+            url: 'mysql_read.php',
+            method: 'POST',
+            data: {byerid_info:byerid, db:db},
+            success: function (data) {
+                $('#byer_info').html(data);
+            }
+        });
     });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

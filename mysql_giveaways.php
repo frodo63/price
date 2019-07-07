@@ -110,7 +110,7 @@ if (isset($_POST['the_byer'])){
                 $mysqldate = date( 'd.m.y', $phpdate );
                 $result.="<td>".$mysqldate."</td>";
                 $result.="<td>".$row['1c_num']."</td>";
-                $result.="<td><input class='collapse_ga_request' ga_request='".$row['requests_id']."' type='button' value='♢' database='".$database[1]."'><div class='ga_contents' ga_request='". $row['requests_id'] ."'><div class='ga_options'></div><div class='ga_c_payments'></div><div class='ga_c_positions'></div></div></td>";
+                $result.="<td><input class='collapse_ga_request' ga_request='".$row['requests_id']."' type='button' value='♢' byerid = '".$database[4]."' database='".$database[1]."'><div class='ga_contents' ga_request='". $row['requests_id'] ."'><div class='ga_options'></div><div class='ga_c_payments'></div><div class='ga_c_positions'></div></div></td>";
                 $result.="<td>".$database[3]."</td>";
                 $result.="<td>";
                 //Вывести номер и дату накладной реализации

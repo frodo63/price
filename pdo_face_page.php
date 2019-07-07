@@ -53,7 +53,8 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
     </form>
         <input type='button' value='__' class='minimizepricing'>                
         <input type='button' value='X' class='closepricing'>
-        <span id='request_info'></span>                
+        <span id='request_info'></span> 
+        <div id='byer_info'></div>               
         <script src='js/price_mysql.js'></script>     
 </div>
 <div id='editmsg'></div>

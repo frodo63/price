@@ -181,12 +181,25 @@ if (isset($_POST['post_byer']) && isset($_POST['post_tare'])){
     $resulting_purs = array();
 
     //1. Дополняем массив dbs_array() четвертым значение для каждой базы  - это юайдишник итема
-    try{
-        $get_uids = $pdo->prepare("SELECT a.byers_uid as ltk_uid, b.byers_uid as ip_uid FROM prices.byers as a LEFT JOIN prices_ip.byers as b ON a.ip_uid=b.byers_uid WHERE a.byers_id=?");
-        $pdo->beginTransaction();
-        $get_uids->execute(array($post_byer));
-        $pdo->commit();
-    }catch( PDOException $Exception ) {$pdo->rollback();print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );}
+
+    switch($_POST['db']){
+        case 'ltk':
+            try{
+                $get_uids = $pdo->prepare("SELECT a.byers_uid as ltk_uid, b.byers_uid as ip_uid FROM prices.byers as a LEFT JOIN prices_ip.byers as b ON a.ip_uid=b.byers_uid WHERE a.byers_id=?");
+                $pdo->beginTransaction();
+                $get_uids->execute(array($post_byer));
+                $pdo->commit();
+            }catch( PDOException $Exception ) {$pdo->rollback();print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );}
+            break;
+        case 'ip':
+            try{
+                $get_uids = $pdoip->prepare("SELECT a.byers_uid as ltk_uid, b.byers_uid as ip_uid FROM prices.byers as a LEFT JOIN prices_ip.byers as b ON a.ip_uid=b.byers_uid WHERE b.byers_id=?");
+                $pdoip->beginTransaction();
+                $get_uids->execute(array($post_byer));
+                $pdoip->commit();
+            }catch( PDOException $Exception ) {$pdoip->rollback();print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );}
+            break;
+    }
 
     $get_uids_fetched = $get_uids->fetch(PDO::FETCH_ASSOC);
     $dbs_array[0][4] = $get_uids_fetched['ltk_uid'];

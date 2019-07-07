@@ -1483,3 +1483,19 @@ if(isset($_POST['byersid']) && isset($_POST['give_id'])){
 
 }
 /**/
+
+//ИНФА ПОКУПАТЕЛЯ В ОКНЕ РАСЦЕНКИ
+if(isset($_POST['byerid_info'])){
+    $byer = $_POST['byerid_info'];
+    $get_byer_info = $database->prepare("SELECT ov_firstobp,ov_tp,ov_wt,comment,name FROM byers LEFT JOIN allnames a on byers.byers_nameid = a.nameid WHERE byers_id = ?");
+    $get_byer_info->execute(array($byer));
+    $gbi_f = $get_byer_info->fetch(PDO::FETCH_ASSOC);
+
+echo "<table>
+<tr><td colspan='2'>".$gbi_f['name']."</td></tr>
+<tr><td>отсрочка</td><td>".$gbi_f['ov_wt']."</td></tr>
+<tr><td>енот</td><td>".$gbi_f['ov_tp']."</td></tr>
+<tr><td>обнал</td><td>".$gbi_f['ov_firstobp']."</td></tr>
+<tr><td>коммент</td><td>".$gbi_f['comment']."</td></tr>
+</table>";
+}
