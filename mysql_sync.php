@@ -729,27 +729,31 @@ if(isset($_POST['sync_file'])){
                     $insert_purchase = $database->prepare("INSERT INTO purchases (
                                                         purchases_uid,
                                                         seller_uid,
-                                                        incdoc_num,
                                                         incdoc_date,
+                                                        incdoc_num,                                                        
                                                         line_num,
                                                         trade_uid,
                                                         kol,
                                                         price,
                                                         sum
     ) VALUES(?,?,?,?,?,?,?,?,?)");
-                    $update_purchase = $database->prepare("UPDATE purchases SET seller_uid=?,
-                                                                                    incdoc_num=?,
-                                                                                    incdoc_date=?,
-                                                                                    line_num=?,
-                                                                                    trade_uid=?,
-                                                                                    kol=?,
-                                                                                    price=?,
-                                                                                    sum=? WHERE purchases_uid=?");
+                    $update_purchase = $database->prepare("UPDATE purchases SET 
+                                                                              seller_uid=?,
+                                                                              incdoc_date=?,
+                                                                              incdoc_num=?,                                                                              
+                                                                              trade_uid=?,
+                                                                              kol=?,
+                                                                              price=?,
+                                                                              sum=? WHERE (purchases_uid=? AND line_num=?)");
 
                     foreach ($file_array as $row){
                         $temp_array = explode(';',$row);
+                        //echo "<pre>";
+                        //print_r($temp_array);
+                        //echo "</pre>";
+
                         /*
-                         * $temp_array[0] - uid заказа поставщику
+                         * $temp_array[0] - uid реализации
                          * $temp_array[1] - uid поставщика
                          * $temp_array[2] - ДатаВходящегоДокумента
                          * $temp_array[3] - №ВходящегоДокумента
@@ -766,13 +770,16 @@ if(isset($_POST['sync_file'])){
                         $check_purchase->execute(array($temp_array[0], $temp_array[4]));
                         $check_purchase_fetched = $check_purchase->fetch(PDO::FETCH_ASSOC);
 
+                        //echo "<pre>";
+                        //print_r($check_purchase_fetched);
+                        //echo "</pre>";
+
                         $good_date = substr($temp_array[2],6,4 )."-".substr($temp_array[2],3,2)."-".substr($temp_array[2],0,2);
 
-                        if(count($check_purchase_fetched) > 0){
-                            $update_purchase->execute(array($temp_array[1],$temp_array[3],$good_date,$temp_array[4],$temp_array[5],$temp_array[6],$temp_array[7],$temp_array[8],$temp_array[0]));
+                        if(count($check_purchase_fetched['purchases_uid']) > 0){
+                            $update_purchase->execute(array($temp_array[1],$good_date,$temp_array[3],$temp_array[5],$temp_array[6],$temp_array[7],$temp_array[8],$temp_array[0],$temp_array[4]));
                         }else{
-                            $insert_purchase->execute(array($temp_array[0],$temp_array[1],$temp_array[3],$good_date,$temp_array[4],$temp_array[5],$temp_array[6],$temp_array[7],$temp_array[8]));
-
+                            $insert_purchase->execute(array($temp_array[0],$temp_array[1],$good_date,$temp_array[3],$temp_array[4],$temp_array[5],$temp_array[6],$temp_array[7],$temp_array[8]));
                         }
                         $database->commit();
                     }

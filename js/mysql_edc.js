@@ -573,14 +573,15 @@ $(document).ready(function() {
         console.log(db);
 
         //Если эдитпрайсинг открывается из окна Р-1, переменные берутся из другого места
-        //TODO:ПОка не трогаем, сделать когда буду заниматься Р-1
         if($(event.target).parents('.ga_contents').length>0){
-            var reqid = $(event.target).parents('.ga_contents').attr('ga_request');
-            var prid = $(event.target).attr('pricing');
-            var byerid = $(event.target).parents('li[byerid]').attr('byerid');
-            var byername = $('.byer_req_list li[byerid='+byerid+'] span.name').text();
+            reqid = $(event.target).parents('.ga_contents').attr('ga_request');
+            prid = $(event.target).attr('pricing');
+            posid = $(event.target).attr('position');
+            byerid = $(event.target).parents('li[byerid]').attr('byerid');
+            byername = $('.byer_req_list li[byerid='+byerid+'] span.name').text();
 
-            trade = $(event.target).siblings('span').text();
+            trade = $(event.target).siblings('.ga_trade').text();
+            tare = $(event.target).siblings('.ga_trade').attr('tare');
             seller = $(event.target).siblings('.ga_seller').text();
         }
 

@@ -274,7 +274,7 @@ if (isset($_POST['the_byer'])){
                 echo "<td>".$give['giveaway_sum']."</td>";
                 echo "<td>".$give['comment']."</td>";
                 echo "<td><input type='button' value='E' byersid='".$database[4]."' database='".$database[1]."' class='editgiveaway' g_id='".$give['giveaways_id']."'>
-            <input class='delgiveaway' type='button' value='X' give_id='".$give['giveaways_id']."'></td>";
+            <input class='delgiveaway' database='".$database[1]."' type='button' value='X' give_id='".$give['giveaways_id']."'></td>";
                 echo "</tr>";
             }
             unset($giveaways_fetched);
@@ -299,7 +299,7 @@ if (isset($_POST['the_byer'])){
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*СПИСОК ПЛАТЕЖЕЙ, НАЧИСЛЕНИЙ И ВЫДАЧ В РАМКАХ ОДНОЙ ЗАЯВКИ///////////////////////////////////////////////////////*/
+/*СПИСОК ПЛАТЕЖЕЙ И НАЧИСЛЕНИЙ В РАМКАХ ОДНОЙ ЗАЯВКИ///////////////////////////////////////////////////////*/
 if (isset($_POST['the_request'])){
     try {
         $the_request = $_POST['the_request'];
@@ -307,7 +307,7 @@ if (isset($_POST['the_request'])){
 
         $get_req_info = $database->prepare("SELECT created,req_sum,1c_num FROM `requests` WHERE requests_id=?");
         $get_payments = $database->prepare("SELECT payed,payments_id,number,sum,requestid FROM `payments` WHERE requestid=?");
-        $get_positions = $database->prepare("SELECT name, kol, oh, firstoh, pricingid FROM (SELECT * FROM (SELECT trades_id,name FROM trades LEFT JOIN allnames ON trades_nameid=nameid) AS a LEFT JOIN pricings ON a.trades_id=tradeid) AS b left join req_positions on b.pricingid=req_positions.winnerid WHERE req_positions.requestid=?");
+        $get_positions = $database->prepare("SELECT name, tare, kol, oh, firstoh, pricingid, req_positionid as position FROM (SELECT * FROM (SELECT trades_id,tare,name FROM trades LEFT JOIN allnames ON trades_nameid=nameid) AS a LEFT JOIN pricings ON a.trades_id=tradeid) AS b left join req_positions on b.pricingid=req_positions.winnerid WHERE req_positions.requestid=?");
         //Запросы для расценки
         $get_seller_name = $database->prepare("SELECT name, sellers_id FROM allnames LEFT JOIN sellers ON allnames.nameid = sellers.sellers_nameid LEFT JOIN pricings ON sellers_id=sellerid WHERE pricingid=?");
 
@@ -325,7 +325,7 @@ if (isset($_POST['the_request'])){
                 $phpdate = strtotime( $row['payed'] );
                 $mysqldate = date( 'd.m.y', $phpdate );
 
-                $result1 .= "<tr><td>" . $mysqldate . "</td><td>" . $row['number'] . "</td><td>" . $row['sum'] . "</td><td><input class='delpayment' type='button' value='X' pay_id='".$row['payments_id']."' req_id='".$row['requestid']."'><input class='editpayment' type='button' value='E' pay_id='".$row['payments_id']."' req_id='".$row['requestid']."'></td></tr>";
+                $result1 .= "<tr><td>" . $mysqldate . "</td><td>" . $row['number'] . "</td><td>" . $row['sum'] . "</td><td><input class='delpayment' database='".$db_text."' type='button' value='X' pay_id='".$row['payments_id']."' req_id='".$row['requestid']."'><input class='editpayment' database='".$db_text."' type='button' value='E' pay_id='".$row['payments_id']."' req_id='".$row['requestid']."'></td></tr>";
             };
             $result1 .= "</tbody></table>";
         };
@@ -345,7 +345,7 @@ if (isset($_POST['the_request'])){
                 $get_seller_name->execute(array($row['pricingid']));
                 $get_seller_name_fetched = $get_seller_name->fetch(PDO::FETCH_ASSOC);
 
-                $result2 .= "<tr pricingid = ".$row['pricingid']." sellerid = '".$get_seller_name_fetched['sellers_id']."'><td><span class='ga_trade'>" . $row['name'] . " от </span><span class='ga_seller'>".$get_seller_name_fetched['name']."</span><input value='↑ E ↑' type='button' class='editpricing' pricing = '".$row['pricingid']."'></td><td>" . $row['kol'] . "</td><td>" . $onhands . "</td><td>" . round($row['kol'],2) * round($onhands,2) . "</td></tr>";
+                $result2 .= "<tr pricingid = ".$row['pricingid']." sellerid = '".$get_seller_name_fetched['sellers_id']."'><td><span class='ga_trade' tare='".$row['tare']."'>" . $row['name'] . "</span> от <span class='ga_seller'>".$get_seller_name_fetched['name']."</span><input value='↑ E ↑' type='button' class='editpricing' position='".$row['position']."' pricing = '".$row['pricingid']."'></td><td>" . $row['kol'] . "</td><td>" . $onhands . "</td><td>" . round($row['kol'],2) * round($onhands,2) . "</td></tr>";
             };
             $result2 .= "</tbody></table>";
         };

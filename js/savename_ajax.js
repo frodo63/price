@@ -1,4 +1,3 @@
-/*$(document).off().on('click', 'input.savename', function(){*/
 $(document).off('click.savename').on('click.savename', 'input.savename', function(e){//Привязал вручную. Иначе (верхний вариант - скрипт не шел.
     var table = $('#theinput').parent().attr('category');
     var nameid = $('#theinput').attr('name');
