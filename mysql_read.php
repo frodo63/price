@@ -1477,6 +1477,7 @@ if(isset($_POST['byersid']) && isset($_POST['give_id'])){
         $result = $statement->fetch();
         echo json_encode($result);/*Перевели массив расценки в формат JSON*/
     } catch( PDOException $Exception ) {
+        $database->rollback();
         // Note The Typecast To An Integer!
         print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
@@ -1498,4 +1499,21 @@ echo "<table>
 <tr><td>обнал</td><td>".$gbi_f['ov_firstobp']."</td></tr>
 <tr><td>коммент</td><td>".$gbi_f['comment']."</td></tr>
 </table>";
+}
+
+if(isset($_POST['winner_trade'])){
+    $posid = $_POST['winner_trade'];
+    try{
+        $database->beginTransaction();
+        $stmt = $database->prepare("SELECT name,trades_id,tare FROM req_positions LEFT JOIN pricings ON winnerid=pricingid LEFT JOIN trades ON tradeid=trades_id LEFT JOIN allnames ON trades.trades_nameid = allnames.nameid WHERE req_positionid=?");
+        $stmt->execute(array($posid));
+        $database->commit();
+        $stmt_fetched = $stmt->fetch(PDO::FETCH_ASSOC);
+        print(json_encode(array('data1'=>$stmt_fetched['trades_id'],'data2'=>$stmt_fetched['name'],'data3'=>$stmt_fetched['tare'])));
+    }catch( PDOException $Exception ) {
+        $database->rollback();
+        // Note The Typecast To An Integer!
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+    }
+
 }

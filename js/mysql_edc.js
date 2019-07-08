@@ -501,7 +501,20 @@ $(document).ready(function() {
                 $('#byer_info').html(data);
             }
         });
-                window.scrollTo(0, 0);
+
+        //АЯКС на товар-победитель
+        $.ajax({
+            url: 'mysql_read.php',
+            method: 'POST',
+            data: {winner_trade:posid, db:db},
+            success: function (data) {
+                var json = $.parseJSON(data);
+                $('#trade').attr({trade_id: json.data1, tare: json.data3}).val(json.data2);
+                $('#button_history').attr('hist_trade', json.data1);
+            }
+        });
+
+        window.scrollTo(0, 0);
     });
 
 //Закрытие расценки.
