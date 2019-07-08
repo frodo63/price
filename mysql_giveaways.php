@@ -69,7 +69,7 @@ if (isset($_POST['the_byer'])){
         try {
             //Главный запрос
             //Выбираем все заявки из базы, попадающие по дате создания заказа, не убранные из Р-1 и по которым были накладные
-            $reqlist = $database[0]->prepare("SELECT created,requests_id,1c_num,name,req_sum,requests.requests_uid as requests_uid,executes_id FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid INNER JOIN executes ON requests.requests_uid=executes.requests_uid WHERE (requests.byersid = ?) AND (requests.created BETWEEN ? AND ?) AND (requests.r1_hidden = 0) ORDER BY created");
+            $reqlist = $database[0]->prepare("SELECT DISTINCT 1c_num, created, requests_id, req_sum,requests.requests_uid as requests_uid,executes_id FROM requests LEFT JOIN executes ON requests.requests_uid=executes.requests_uid WHERE (requests.byersid = ?) AND (requests.created BETWEEN ? AND ?) AND (requests.r1_hidden = 0) AND requests.requests_uid IS NOT NULL AND executes_id IS NOT NULL GROUP BY 1c_num");
             //$reqlist = $database[0]->prepare("SELECT created,requests_id,1c_num,name,req_sum,requests_uid FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE (requests.byersid = ? AND requests.created BETWEEN ? AND ? AND requests.r1_hidden = 0) ORDER BY created");
 
             //Запросы строго по каждой заявке
@@ -307,7 +307,7 @@ if (isset($_POST['the_request'])){
 
         $get_req_info = $database->prepare("SELECT created,req_sum,1c_num FROM `requests` WHERE requests_id=?");
         $get_payments = $database->prepare("SELECT payed,payments_id,number,sum,requestid FROM `payments` WHERE requestid=?");
-        $get_positions = $database->prepare("SELECT name, tare, kol, oh, firstoh, pricingid, req_positionid as position FROM (SELECT * FROM (SELECT trades_id,tare,name FROM trades LEFT JOIN allnames ON trades_nameid=nameid) AS a LEFT JOIN pricings ON a.trades_id=tradeid) AS b left join req_positions on b.pricingid=req_positions.winnerid WHERE req_positions.requestid=?");
+        $get_positions = $database->prepare("SELECT pos_name, name, tare, kol, oh, firstoh, pricingid, req_positionid as position FROM (SELECT * FROM (SELECT trades_id,tare,name FROM trades LEFT JOIN allnames ON trades_nameid=nameid) AS a LEFT JOIN pricings ON a.trades_id=tradeid) AS b left join req_positions on b.pricingid=req_positions.winnerid WHERE req_positions.requestid=?");
         //Запросы для расценки
         $get_seller_name = $database->prepare("SELECT name, sellers_id FROM allnames LEFT JOIN sellers ON allnames.nameid = sellers.sellers_nameid LEFT JOIN pricings ON sellers_id=sellerid WHERE pricingid=?");
 
@@ -345,7 +345,7 @@ if (isset($_POST['the_request'])){
                 $get_seller_name->execute(array($row['pricingid']));
                 $get_seller_name_fetched = $get_seller_name->fetch(PDO::FETCH_ASSOC);
 
-                $result2 .= "<tr pricingid = ".$row['pricingid']." sellerid = '".$get_seller_name_fetched['sellers_id']."'><td><span class='ga_trade' tare='".$row['tare']."'>" . $row['name'] . "</span> от <span class='ga_seller'>".$get_seller_name_fetched['name']."</span><input value='↑ E ↑' type='button' class='editpricing' position='".$row['position']."' pricing = '".$row['pricingid']."'></td><td>" . $row['kol'] . "</td><td>" . $onhands . "</td><td>" . round($row['kol'],2) * round($onhands,2) . "</td></tr>";
+                $result2 .= "<tr pricingid = ".$row['pricingid']." sellerid = '".$get_seller_name_fetched['sellers_id']."'><td><span>".$row['pos_name']."</span><br><br><span class='ga_trade' tare='".$row['tare']."'>" . $row['name'] . "</span> от <span class='ga_seller'>".$get_seller_name_fetched['name']."</span><input value='↑ E ↑' type='button' class='editpricing' position='".$row['position']."' pricing = '".$row['pricingid']."'></td><td>" . $row['kol'] . "</td><td>" . $onhands . "</td><td>" . round($row['kol'],2) * round($onhands,2) . "</td></tr>";
             };
             $result2 .= "</tbody></table>";
         };
