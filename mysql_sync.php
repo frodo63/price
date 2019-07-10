@@ -51,6 +51,11 @@ function in_multi_array($needle, $haystack, $strict = false) {
 if(isset($_POST['sync_file'])){
     $sync = $_POST['sync_file'];
     $path = '/samba/allaccess/1111/sync_'.$sync.'.txt';
+
+    if (file_exists($path)) {
+        echo "<br><span>В последний раз файл $sync был изменен: " . date('d.m.y H:i:s', filemtime($path))."</span>";
+    }
+
     $file = fopen($path,'r');
 
     $synched = array();
@@ -444,7 +449,6 @@ if(isset($_POST['sync_file'])){
         case "trades":
             if ($file){
 
-
                 echo"<p>Файл найден</p>";
                 $file_array = file($path); // Считывание файла в массив $file_array
                 if (count($file_array) > 0);
@@ -808,7 +812,7 @@ if(isset($_POST['sync_file'])){
                     }*/
 
                     $check_transport = $database->prepare("SELECT purchases_uid FROM transports WHERE purchases_uid = ?");
-                    $insert_transport = $database->prepare("INSERT INTO transports (purchases_uid,seller_uid,incdoc_date,incdoc_num,sum) VALUES(?,?,?,?,?)");
+                    $insert_transport = $database->prepare("INSERT INTO transports (purchases_uid,seller_uid,incdoc_date,incdoc_num,sum,comment) VALUES(?,?,?,?,?,?)");
 
                     foreach ($file_array as $row){
                         $temp_array = explode(';',$row);
@@ -818,6 +822,7 @@ if(isset($_POST['sync_file'])){
                          * $temp_array[2] - ДатаВходящегоДокумента
                          * $temp_array[3] - №ВходящегоДокумента
                          * $temp_array[4] - сумма
+                         * $temp_array[5] - сумма
                          */
 
                         /*Проверяем, есть ли в системе такая закупка, если нет - то заносим в базу. Если есть - ничего не делаем
@@ -836,8 +841,10 @@ if(isset($_POST['sync_file'])){
                             $temp_array[3];
                             //сумма
                             $temp_array[4];
+                            //Комментарий
+                            $temp_array[5];
 
-                            $insert_transport->execute(array($temp_array[0],$temp_array[1],$temp_array[2],$temp_array[3],$temp_array[4]));
+                            $insert_transport->execute(array($temp_array[0],$temp_array[1],$temp_array[2],$temp_array[3],$temp_array[4],$temp_array[5]));
                         }
                     }
                     echo"Транспортные пройдены.";

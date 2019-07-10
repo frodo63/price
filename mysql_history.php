@@ -477,7 +477,7 @@ if (isset($_POST['transports_history'])){
 
     try{
         $get_purchased=$database->prepare("SELECT purchased FROM req_positions WHERE req_positionid = ?");
-        $get_transports_history = $database->prepare("SELECT seller_uid, incdoc_date, sum FROM transports WHERE incdoc_date BETWEEN ? AND ? ORDER BY incdoc_date ASC");
+        $get_transports_history = $database->prepare("SELECT seller_uid, incdoc_date, sum, comment FROM transports WHERE incdoc_date BETWEEN ? AND ? ORDER BY incdoc_date ASC");
         $get_seller_name = $database->prepare("SELECT name FROM sellers LEFT JOIN allnames ON sellers.sellers_nameid = allnames.nameid WHERE sellers_uid = ?");
 
         $database->beginTransaction();
@@ -487,7 +487,7 @@ if (isset($_POST['transports_history'])){
         if ($get_purchased_fetched['purchased']){
 
             $from = $get_purchased_fetched['purchased'];
-            $to = date( 'Y-m-d', strtotime($from." + 1 week") );
+            $to = date( 'Y-m-d', strtotime($from." + 2 weeks") );
 
             $get_transports_history->execute(array($from, $to));
 
@@ -505,6 +505,7 @@ if (isset($_POST['transports_history'])){
                     <th>когда</th>                   
                     <th>кем</th>
                     <th>почем</th>
+                    <th>коммент</th>
                     </tr></thead><tbody>";
 
             foreach ($get_transports_history_fetched as $tran){
@@ -520,6 +521,7 @@ if (isset($_POST['transports_history'])){
                 $result .="<td>".$mysqldate."</td>";
                 $result .="<td>".$gotname['name']."</td>";
                 $result .="<td>".$tran['sum']."</td>";
+                $result .="<td>".$tran['comment']."</td>";
 
                 $result .= "</tr>";
 

@@ -65,6 +65,12 @@ if (isset($_POST['the_byer'])){
 
     }catch( PDOException $e ) {$pdo->rollback();print "Error!: " . $e->getMessage() . "<br/>" . (int)$e->getCode( );}
 
+    /*ПЕРЕМЕННЫЕ ИТОГОВЫЕ*/
+    /*НА КАЖДОГО ПОКУПАТЕЛЯ У НАС 3 ПЕРЕМЕННЫЕ*/
+    $total_sum=0;//Сумма заказа строку приводим к числу
+    $total_count = 0;//Начислено
+    $total_pay = 0;//Оплачено
+
     foreach ($dbs_array as $database){
         try {
             //Главный запрос
@@ -85,11 +91,7 @@ if (isset($_POST['the_byer'])){
             $requests_fetched = $reqlist->fetchAll(PDO::FETCH_ASSOC);
             $database[0]->commit();
 
-            /*ПЕРЕМЕННЫЕ ИТОГОВЫЕ*/
-            /*НА КАЖДОГО ПОКУПАТЕЛЯ У НАС 3 ПЕРЕМЕННЫЕ*/
-            $total_sum=0;//Сумма заказа строку приводим к числу
-            $total_count = 0;//Начислено
-            $total_pay = 0;//Оплачено
+
 
             foreach ($requests_fetched as $row){
                 /*Выполняем запросы*/
@@ -209,6 +211,9 @@ if (isset($_POST['the_byer'])){
     echo "</tbody></table>";
     echo "<br>";
 
+    $total_give = 0;//Отдано
+    $req_give = 0;//Отдано
+
     foreach ($dbs_array as $database){
         //Запросы общие
         //Выбираем все выдачи указанному покупателю, попадающие по дате выдачи
@@ -218,8 +223,7 @@ if (isset($_POST['the_byer'])){
 
         try {
             /*Расчет общего количества выдач*/
-            $total_give = 0;//Отдано
-            $req_give = 0;//Отдано
+
 
             $database[0]->beginTransaction();
             //$given_away_from - это дата первой в списке платежки
