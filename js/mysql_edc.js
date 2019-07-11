@@ -1045,7 +1045,7 @@ $(document).ready(function() {
                 }//Вводим измененные данные в таблицу
             });
 
-        };/*Сделали победителя и пересчитали рентабельность*/
+        }/*Сделали победителя и пересчитали рентабельность*/
 
 
     });
@@ -1070,6 +1070,29 @@ $(document).ready(function() {
 
     });
     /**/
+
+    $(document).off('click.count_rent_whole_byer').on('click.count_rent_whole_byer', '.count_rent_whole_byer', function (event) {
+        var thebyer = $(event.target).attr('byer');
+        $('.ga_byer_requests[ga_byer='+thebyer+'] tr[ga_request]').each(function () {
+            var therequest = $(this).attr('ga_request');
+            var db = $(this).attr('database');
+            $.ajax({
+                url: 'mysql_rent.php',
+                method: 'POST',
+                dataType: 'json',
+                cache: false,
+                data: {request:therequest, db:db},
+                success: function (data) {
+                    $('.ga_byer_requests[ga_byer='+thebyer+'] tr[ga_request='+therequest+'] td.sum_req_r1').html(data.data3);
+                    $('.ga_byer_requests[ga_byer='+thebyer+'] tr[ga_request='+therequest+'] td.count_req_r1').html(data.data4);
+                    console.log('Суммы заявок и суммы начислений обновлены');
+                    //$('tr[requestid='+reqid+'] .rentcount').toggle().html(data.data1);
+                    //$('tr[requestid='+reqid+'] .rent_whole').html(data.data2);
+                    //$('h3.req_header_'+reqid+' .reqsumma').html(data.data3);
+                }
+            });
+        })
+    });
 
 
 

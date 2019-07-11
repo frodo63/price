@@ -583,6 +583,22 @@ $(document).ready(function(){
     });
     /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    //ОБНОВЛЕНИЕ ПОКУПАТЕЛЯ В Р1 БЕЗ КОЛЛАПСОВ//////////////////////////////////////////////////////////////////////////
+    $(document).off('click.ga_req_refresh').on('click.ga_req_refresh', '.refresh_r1_byer', function (event) {
+        var thebyer = $(event.target).attr('byer');
+
+        $.ajax({
+            url: 'mysql_giveaways.php',
+            method: 'POST',
+            data: {the_byer:thebyer},
+            success: function (data) {
+                $('.ga_byer_requests[ga_byer=' + thebyer + ']').html(data);
+            }
+         })
+
+    });
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /*СПИСОК ПЛАТЕЖЕЙ, НАЧИСЛЕНИЙ И ВЫДАЧ В РАМКАХ ОДНОЙ ЗАЯВКИ///////////////////////////////////////////////////////*/
     $(document).off('click.ga_contents').on('click.ga_contents', '.collapse_ga_request', function (event) {
         var the_request = $(event.target).attr('ga_request');

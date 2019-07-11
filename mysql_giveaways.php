@@ -59,7 +59,7 @@ if (isset($_POST['the_byer'])){
         $dbs_array[1][4] = $getbyersidip_fetched['byersid_ip'];
 
         //datepicker
-        echo "<div class='ga_requests_date_range'><input class='from' size='10' placeholder='От'><input class='to' size='10' placeholder='До'><input class='filter_date' type='button' value='Отобразить'></div>";
+        echo "<div class='ga_requests_date_range'><input class='from' size='10' placeholder='От'><input class='to' size='10' placeholder='До'><input class='filter_date' type='button' value='Отобразить'></div><input byer ='".$the_byer."'  class='count_rent_whole_byer' type='button' value='Пересчитать рентабельность во всех заявках'><br><input byer ='".$the_byer."' class='refresh_r1_byer' type='button' value='ПЕРЕСЧИТАТЬ'>";
         echo "<br><span class='ga_requests_period'>Заявки за период c <b>".$from_norm."</b> по <b>".$to_norm."</b></span>";
         echo "<table><thead><tr><th>Дата</th><th>Номер заказа в 1С</th><th></th><th>База</th><th>Накладная</th><th>Сумма заявки</th><th>Начислено</th><th>Статус заявки</th></tr></thead><tbody>";
 
@@ -149,11 +149,11 @@ if (isset($_POST['the_byer'])){
                 unset($rc);
 
                 //Выводим сумму заявки
-                $result.="<td>".round($row['req_sum'],2)."</td>";
+                $result.="<td class='sum_req_r1'>".round($row['req_sum'],2)."</td>";
                 $total_sum += round($row['req_sum'],2);
 
                 //Выводим сумму начислений по заявке
-                $result.="<td>".round($req_count,2)."</td>";
+                $result.="<td class='count_req_r1'>".round($req_count,2)."</td>";
                 //Начисления к выдаче берутся лишь в том случае, если заказ оплачен. То есть, $req_pay_ostatok <=0
                 if ($req_pay_ostatok <= 0){
                     $total_count += round($req_count,2);
