@@ -519,7 +519,7 @@ if(isset($_POST['table'])){
             /*ОПЦИИ ДАТЫ*/
 
             //Сейчс скрипт берет всех покупателей из базы
-            $statement = $pdo->prepare("SELECT byers.byers_id AS b_id,byers.byers_nameid AS b_nid,allnames.name AS b_name FROM `byers` LEFT JOIN `allnames` ON byers.byers_nameid=allnames.nameid ORDER BY b_name");
+            $statement = $pdo->prepare("SELECT byers.byers_id AS b_id,byers.byers_nameid AS b_nid,allnames.name AS b_name FROM `byers` LEFT JOIN `allnames` ON byers.byers_nameid=allnames.nameid WHERE (byers.ov_tp > 0 OR byers.ov_tp <> NULL) ORDER BY b_name");
             $gotrequests = $pdo->prepare("SELECT requests_id FROM requests WHERE (requests.byersid = ? AND requests.r1_hidden = 0)");
             $gotrequests_ip = $pdoip->prepare("SELECT requests_id FROM requests WHERE (requests.byersid = ? AND requests.r1_hidden = 0)");
             //Нужно из byersid ltk получить byersid ip
