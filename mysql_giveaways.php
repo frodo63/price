@@ -73,6 +73,26 @@ if (isset($_POST['the_byer'])){
 
     foreach ($dbs_array as $database){
         try {
+
+
+            /*
+             //Список платежей для Р-1
+            SELECT payed, requestid FROM payments LEFT JOIN requests ON payments.requestid = requests.requests_id WHERE byersid = 49 AND payed BETWEEN '2019-01-01' AND '2019-07-14' ORDER BY payed ASC
+/*Список заказов для Р-1
+SELECT DISTINCT 1c_num, payed, created, requests_id, req_sum,requests.requests_uid as requests_uid,executes_id
+FROM requests
+  LEFT JOIN executes ON requests.requests_uid = executes.requests_uid
+  LEFT JOIN payments ON payments.requestid = requests.requests_id
+//WHERE (requests.created BETWEEN '2019-01-01' AND '2019-07-14') //нужно не requests.created, а payed из платежек
+WHERE (payments.payed BETWEEN '2019-03-01' AND '2019-05-14')
+      AND (requests.byersid = 46)
+            AND (requests.r1_hidden = 0)
+            AND requests.requests_uid IS NOT NULL
+            AND executes_id IS NOT NULL
+GROUP BY 1c_num
+             */
+
+
             //Главный запрос
             //Выбираем все заявки из базы, попадающие по дате создания заказа, не убранные из Р-1 и по которым были накладные
             $reqlist = $database[0]->prepare("SELECT DISTINCT 1c_num, created, requests_id, req_sum,requests.requests_uid as requests_uid,executes_id FROM requests LEFT JOIN executes ON requests.requests_uid=executes.requests_uid WHERE (requests.byersid = ?) AND (requests.created BETWEEN ? AND ?) AND (requests.r1_hidden = 0) AND requests.requests_uid IS NOT NULL AND executes_id IS NOT NULL GROUP BY 1c_num");
@@ -219,7 +239,7 @@ if (isset($_POST['the_byer'])){
         //Выбираем все выдачи указанному покупателю, попадающие по дате выдачи
         $req_giveaways = $database[0]->prepare("SELECT given_away,giveaways_id,giveaway_sum,comment FROM giveaways WHERE (byersid = ?) AND (given_away BETWEEN ? AND ?) ORDER BY given_away");
         //Выбираем все платежки от указанного покупателя, попадающие по дате платежа
-        $req_all_payments = $database[0]->prepare("SELECT payed FROM payments LEFT JOIN requests ON payments.requestid = requests.requests_id WHERE byersid = ? AND payed BETWEEN ? AND ? ORDER BY payed ASC");
+        $req_all_payments = $database[0]->prepare("SELECT payed,requestid FROM payments LEFT JOIN requests ON payments.requestid = requests.requests_id WHERE byersid = ? AND payed BETWEEN ? AND ? ORDER BY payed ASC");
 
         try {
             /*Расчет общего количества выдач*/
