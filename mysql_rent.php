@@ -90,7 +90,7 @@ if (isset($_POST['request'])){
     $wincount = 0;
     $getvars = $database->prepare("SELECT `req_positionid`,`winnerid` FROM req_positions WHERE `req_positions`.`requestid` = ?");
     $nam == 0;//Переменная, в зависимости от того, зафиксирована расценка или нет
-    $countrent = $database->prepare("SELECT * FROM (SELECT `winnerid` FROM `req_positions` WHERE `requestid` = ? AND `winnerid` != 0 ) AS a LEFT JOIN (SELECT `kol`,`price`,`rop`,`opr`,`fixed`,`wtime`,`pricingid`,`name`,`tradeid` FROM `pricings` AS c LEFT JOIN (SELECT `trades_id`,`name` FROM `trades` LEFT JOIN `allnames` ON `trades`.`trades_nameid`=`allnames`.`nameid`) AS d ON c.`tradeid`=d.`trades_id`) AS b ON a.`winnerid` = b.`pricingid`");
+    $countrent = $database->prepare("SELECT * FROM (SELECT `winnerid` FROM `req_positions` WHERE `requestid` = ? AND `winnerid` != 0 ) AS a LEFT JOIN (SELECT `kol`,`price`,`rop`,`opr`,`fixed`,`wtime`,`pricingid`,`name`,`tradeid`,`firstoh`,`oh` FROM `pricings` AS c LEFT JOIN (SELECT `trades_id`,`name` FROM `trades` LEFT JOIN `allnames` ON `trades`.`trades_nameid`=`allnames`.`nameid`) AS d ON c.`tradeid`=d.`trades_id`) AS b ON a.`winnerid` = b.`pricingid`");
     $save_rent = $database->prepare("UPDATE `requests` SET `req_rent`=? WHERE `requests_id`=?");
     $save_sum = $database->prepare("UPDATE `requests` SET `req_sum`=? WHERE `requests_id`=?");
     try{
@@ -135,12 +135,15 @@ if (isset($_POST['request'])){
         $dem_top;
         $dem_bot;
         /*ФОРМУЛА РАСЧЕТА*/
-
+        unset($req_total_count);
         foreach ($c as $row){
+
             /*Временные переменные для приведения к числу*/
             $pricingid=$row['pricingid'];
             $price = round($row['price'], 3);
             $fixed=$row['fixed'];
+            $firstoh = round($row['firstoh'], 2);
+            $oh = round($row['oh'], 2);
             $opr = round($row['opr'], 2);
             $rop = round($row['rop'], 2);
             $kol = round($row['kol'], 2);
@@ -151,6 +154,12 @@ if (isset($_POST['request'])){
                 break;
                 case 1:$nam = $rop;
                 break;
+            };
+            switch ($fixed) {
+                case 0:$firstoh = $firstoh;
+                    break;
+                case 1:$firstoh = $oh;
+                    break;
             };
             $result.= "<tr><td class ='pricingid'>" . $row['name'] . "</td>";
             $result .="<td class ='nam'>" . round($nam, 2) . "</td>";
@@ -168,6 +177,8 @@ if (isset($_POST['request'])){
             $dem_top .=$nam . " * " . $kol . " + ";
             $dem_bot .="(" . round($row['price'],2) . " * " . $row['kol'].") + ";
             /*Закончилась показательная дробь*/
+            $req_total_count += ($firstoh*$kol);
+
         };
         $result .="</table><br>";
 
@@ -189,7 +200,8 @@ if (isset($_POST['request'])){
             print (json_encode(array(
                 "data1"=>"<span>Расчет общей суммы и рентабельности невозможен.<br><br>Назначьте хотя бы одного победителя.</span><br>",
                 "data2"=>"0.00",
-                "data3"=>"0.00")));
+                "data3"=>"0.00",
+                "data4"=>"0.00")));
 
         };
         if ($c_count > 0){
@@ -213,7 +225,7 @@ if (isset($_POST['request'])){
             $database->beginTransaction();
             $save_sum->execute(array($bot, $reqid));
             $database->commit();
-            print (json_encode(array("data1"=>"Расчет рентабельности: <br><br><table class ='demo'><tr><td>" . $dem_top . "</td></tr><tr><td>" . $dem_bot . "</td></tr></table><br><br><span> Общая рентабельность: " . $rent . " % </span> " . $result . " <br><br>","data2"=>$rent,"data3"=>number_format($bot,2,'.',' ')." руб.")));
+            print (json_encode(array("data1"=>"Расчет рентабельности: <br><br><table class ='demo'><tr><td>" . $dem_top . "</td></tr><tr><td>" . $dem_bot . "</td></tr></table><br><br><span> Общая рентабельность: " . $rent . " % </span> " . $result . " <br><br>","data2"=>$rent,"data3"=>number_format($bot,2,'.',' ')." руб.","data4"=>$req_total_count)));
         };
 
     } catch( PDOException $Exception ) {

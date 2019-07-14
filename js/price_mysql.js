@@ -364,6 +364,7 @@ $(document).ready(function(){
                 var pricingID = $('#pricingwindow').attr('pricingid');
                 var preditposID = $('#pricingwindow').attr('preditposid');
                 var reqid = $('.collapsepos[position='+preditposID+']').attr('request');
+                var thebyer = $('#pricingwindow').attr('byerid');
                 var db = $('#pricingwindow').attr('database');
 
 
@@ -463,9 +464,13 @@ $(document).ready(function(){
                                                     cache: false,
                                                     data: {request:reqid, db:db},
                                                     success: function (data) {
+                                                        //Изменяем данные таблицы в общем списке заявок
                                                         $('tr[requestid='+reqid+'] .rent_whole').html(data.data2);
                                                         $('tr[requestid='+reqid+'] .sum_whole').html(data.data3);
                                                         $('h3.req_header_'+reqid+' .reqsumma').html(data.data3);
+                                                        //Изменяем данные таблицы в Р-1
+                                                        $('.ga_byer_requests[ga_byer='+thebyer+'] tr[ga_request='+reqid+'] td.sum_req_r1').html(data.data3);
+                                                        $('.ga_byer_requests[ga_byer='+thebyer+'] tr[ga_request='+reqid+'] td.count_req_r1').html(data.data4);
                                                     }
                                                 });
                                             }
