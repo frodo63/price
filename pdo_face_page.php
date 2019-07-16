@@ -176,6 +176,12 @@ echo"       <!--Добавить Платежку -->
                   <label for='1'><span>Дата выдачи:</span></label><input id='add_giveaway_date' type='date' name='1'size='1'><br>
                   <label for='2'><span>Комментарий:</span></label><input id='add_giveaway_comment' type='text' name='2' size='20'><br>
                   <label for='3'><span>Сумма, руб.:</span></label><input id='add_giveaway_sum' type='text' name='3' size='20'><br>
+                  <label for='4'><span>Год привязки:</span></label>                  
+                  <select id='add_giveaway_year' name='4' size='1'>
+                      <option value='2018'>2018</option>
+                      <option value='2019'>2019</option>
+                  </select>
+                  <br>
                   <span class='ready_comment'></span><br>
                   
                   <input id='button_add_giveaway' type='button' name='add_giveaway' byersid='-' giveawayid='-' value='Сохранить выдачу'>

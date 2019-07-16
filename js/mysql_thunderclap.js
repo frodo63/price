@@ -13,6 +13,7 @@ $(document).ready(function() {
 
         $('#button_add_payment').attr('requestid',''+reqid+'');//Добавляем в кнопку
         $('#button_add_payment').attr('paymentid',''+payid+'');//Добавляем в кнопку
+        $('#button_add_payment').attr('database',''+db+'');//Добавляем в кнопку
 
         //Аякс в базу для значений
         $.ajax({
@@ -40,8 +41,10 @@ $(document).ready(function() {
         $('#add_giveaway>input[name=1]').val('');//Стираем все данные
         $('#add_giveaway>input[name=2]').val('');//Стираем все данные
         $('#add_giveaway>input[name=3]').val('');//Стираем все данные
+        $('#add_giveaway>select[name=4]').val('');//Стираем все данные
         $('#button_add_giveaway').attr('byersid',''+byersid+'');//Добавляем в кнопку
         $('#button_add_giveaway').attr('giveawayid',''+giveid+'');//Добавляем в кнопку
+        $('#button_add_giveaway').attr('database',''+db+'');//Добавляем в кнопку
 
         //Аякс в базу для значений
         $.ajax({
@@ -54,6 +57,7 @@ $(document).ready(function() {
                 $('#add_giveaway input[name=1]').val(data.given_away);//Стираем все данные
                 $('#add_giveaway input[name=2]').val(data.comment);//Стираем все данные
                 $('#add_giveaway input[name=3]').val(data.giveaway_sum);//Стираем все данные
+                $('#add_giveaway select[name=4]').val(data.year_given);//Стираем все данные
             }
         });
     });

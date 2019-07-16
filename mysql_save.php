@@ -427,7 +427,7 @@ if(isset($_POST['reqid']) && isset($_POST['payment_date']) && isset($_POST['num'
     try{
 
         $sql = "UPDATE payments SET payed = :payed,number = :number,sum = :sum WHERE requestid = :requestid AND payments_id = :payments_id";
-        $statement = $pdo->prepare($sql);
+        $statement = $database->prepare($sql);
 
         $statement->bindValue(':payed', $payment_date);
         $statement->bindValue(':number', $num);
@@ -435,14 +435,14 @@ if(isset($_POST['reqid']) && isset($_POST['payment_date']) && isset($_POST['num'
         $statement->bindValue(':requestid', $reqid);
         $statement->bindValue(':payments_id', $pay_id);
 
-        $pdo->beginTransaction();
+        $database->beginTransaction();
         $statement->execute();
-        $pdo->commit();
+        $database->commit();
 
         echo "<p>Номер заказа в 1С обновлен</p>";
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
     /**//////////////////////////////////////////////////////////////
@@ -453,23 +453,31 @@ if(isset($_POST['reqid']) && isset($_POST['payment_date']) && isset($_POST['num'
 //////////////////////////////////////////////////////////////////////
 ///
 /// //Редактирование ВЫДАЧИ///////////////////////////////////////////////////
-if(isset($_POST['giveaway_date']) && isset($_POST['comment']) && isset($_POST['sum']) && isset($_POST['give_id'])){
+if(isset($_POST['giveaway_date']) && isset($_POST['comment']) && isset($_POST['sum']) && isset($_POST['give_id']) && isset($_POST['give_year'])){
 
     $giveaway_date = $_POST['giveaway_date'];
     $comment = $_POST['comment'];
     $sum = $_POST['sum'];
     $give_id = $_POST['give_id'];
+    $give_year = $_POST['give_year'];
 
     /**//////////////////////////////////////////////////////////////
 
     try{
 
-        $sql = "UPDATE giveaways SET given_away = :given_away,comment = :comment,giveaway_sum = :giveaway_sum WHERE giveaways_id = :giveaways_id";
-        $statement = $database->prepare($sql);
+        $statement = $database->prepare("UPDATE giveaways 
+SET 
+`given_away`=:given_away,
+`comment`=:comment,
+`giveaway_sum`=:giveaway_sum,
+`year_given`=:year_given 
+WHERE 
+giveaways_id=:giveaways_id");
 
         $statement->bindValue(':given_away', $giveaway_date);
         $statement->bindValue(':comment', $comment);
         $statement->bindValue(':giveaway_sum', $sum);
+        $statement->bindValue(':year_given', $give_year);
         $statement->bindValue(':giveaways_id', $give_id);
 
         $database->beginTransaction();

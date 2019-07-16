@@ -7,47 +7,15 @@ function date_sort($a, $b) {
 }
 
 /*СПИСОК ЗАЯВОК В РАМКАХ ОДНОГО ПОКУПАТЕЛЯ///////////////////////////////////////////////////////*/
-if (isset($_POST['the_byer'])){
-    try {
-//Проверяем общую опцию даты
-        $ga_period = $pdo->prepare("SELECT * FROM `options` WHERE options_id = 'general'");
-        $ga_period->execute();
-        $ga_period_fetched = $ga_period->fetch(PDO::FETCH_ASSOC);
-        $ga_period_current = $ga_period_fetched['ga_period'];
+if (isset($_POST['the_byer']) && isset($_POST['year'])){
 
-        switch ($ga_period_current){
-            case 'year':
-                $from = date("Y")."-01-01";
-                break;
-            case 'quarter':
-                //Найти начало квартала
-                $month = date("n");
-                $n = 12-$month;
-                //Первый кватал
-                if($n <= 11 && $n > 8){$from = date("Y")."-01-01";}
-                //Второй квартал
-                if($n <= 8 && $n > 5){$from = date("Y")."-04-01";}
-                //Третий квартал
-                if($n <= 5 && $n > 2){$from = date("Y")."-07-01";}
-                //Четвертый квартал
-                if($n < 3){$from = date("Y")."-10-01";}
-                break;
-            case 'month':
-                $from = date("Y-m")."-01";
-                break;
-        }
-        $to = date("Y-m-d");
+    try {
+        $the_year = $_POST['year'];
+        $from = $the_year."-01-01";
+        $to = $the_year."-12-31";
         //Приводим к читаемому виду
         $to_norm = substr($to,8,2).'-'.substr($to,5,2).'-'.substr($to,0,4);
         $from_norm = substr($from,8,2).'-'.substr($from,5,2).'-'.substr($from,0,4);
-        //С другой стороны, даты могут быть прямо определены вручную
-        if(isset($_POST['from']) && isset($_POST['to'])){
-            $from = $_POST['from'];
-            $to = $_POST['to'];
-
-            $from_norm = substr($from,8,2).'-'.substr($from,5,2).'-'.substr($from,0,4);
-            $to_norm = substr($to,8,2).'-'.substr($to,5,2).'-'.substr($to,0,4);
-        }
         //Определилилсь с $from и $to
 
         $the_byer = $_POST['the_byer'];
@@ -58,9 +26,8 @@ if (isset($_POST['the_byer'])){
         $dbs_array[0][4] = $the_byer;
         $dbs_array[1][4] = $getbyersidip_fetched['byersid_ip'];
 
-        //datepicker
-        echo "<div class='ga_requests_date_range'><input class='from' size='10' placeholder='От'><input class='to' size='10' placeholder='До'><input class='filter_date' type='button' value='Отобразить'></div><input byer ='".$the_byer."'  class='count_rent_whole_byer' type='button' value='Пересчитать рентабельность во всех заявках'><br><input byer ='".$the_byer."' class='refresh_r1_byer' type='button' value='ПЕРЕСЧИТАТЬ'>";
-        echo "<br><span class='ga_requests_period'>Заявки за период c <b>".$from_norm."</b> по <b>".$to_norm."</b></span>";
+        echo "<br><br><input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2018'><input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2019'><br><br>";
+        echo "<br><span class='ga_requests_period'><b>Заявки за ".$the_year." год:</b></span><br><br>";
         echo "<table><thead><tr><th>Дата</th><th>Номер заказа в 1С</th><th></th><th>База</th><th>Накладная</th><th>Сумма заявки</th><th>Начислено</th><th>Статус заявки</th></tr></thead><tbody>";
 
     }catch( PDOException $e ) {$pdo->rollback();print "Error!: " . $e->getMessage() . "<br/>" . (int)$e->getCode( );}
@@ -234,10 +201,13 @@ GROUP BY 1c_num
     $total_give = 0;//Отдано
     $req_give = 0;//Отдано
 
+    echo "<br><br><span><b>Выдачи за ".$the_year." год:</b></span><br><br>";
+    echo "<table class='ga_give_list'><thead><th>Дата выдачи</th><th>Год привязки</th><th>Сумма выдачи</th><th>Комментарий</th><th>Опции</th></thead><tbody>";
+
     foreach ($dbs_array as $database){
         //Запросы общие
         //Выбираем все выдачи указанному покупателю, попадающие по дате выдачи
-        $req_giveaways = $database[0]->prepare("SELECT given_away,giveaways_id,giveaway_sum,comment FROM giveaways WHERE (byersid = ?) AND (given_away BETWEEN ? AND ?) ORDER BY given_away");
+        $req_giveaways = $database[0]->prepare("SELECT given_away,giveaways_id,giveaway_sum,comment,year_given FROM giveaways WHERE (byersid = ?) AND (year_given = ?) ORDER BY given_away");
         //Выбираем все платежки от указанного покупателя, попадающие по дате платежа
         $req_all_payments = $database[0]->prepare("SELECT payed,requestid FROM payments LEFT JOIN requests ON payments.requestid = requests.requests_id WHERE byersid = ? AND payed BETWEEN ? AND ? ORDER BY payed ASC");
 
@@ -246,37 +216,11 @@ GROUP BY 1c_num
 
 
             $database[0]->beginTransaction();
-            //$given_away_from - это дата первой в списке платежки
-            //$given_away_to - это дата следующей, не вошедшей в список платежки (а если ее нет - то дата последней платежки + 2 недели)
 
-            //Добыть дату следующей платежки:
-            $req_all_payments->execute(array($database[4],$from,$to));
-            $req_all_payments_fetched = $req_all_payments->fetchAll(PDO::FETCH_ASSOC);
-
-            $next_payment = $database[0]->prepare("SELECT payed FROM payments LEFT JOIN requests ON payments.requestid = requests.requests_id WHERE byersid = 46 AND payed > ? ORDER BY payed ASC");
-            $last_payment = end($req_all_payments_fetched);
-            $next_payment->execute(array($last_payment['payed']));
-            $next_payment_fetched = $next_payment->fetchAll(PDO::FETCH_ASSOC);
-            if(!$next_payment_fetched[0]['payed'] || strtotime($next_payment_fetched[0]['payed']) < strtotime(date('Y-m-d'))){
-                $next_payment_fetched[0]['payed'] = date('Y-m-d');
-            }
-
-            $giveaways_start_date = $req_all_payments_fetched[0]['payed'];
-            $giveaways_end_date = $next_payment_fetched[0]['payed'];
-
-            if(!$giveaways_start_date || $giveaways_start_date == ''){
-                $giveaways_start_date = $from;
-            }
-
-            if(!$giveaways_end_date || $giveaways_end_date == ''){
-                $giveaways_end_date = $to;
-            }
-
-            echo "<br><br><span>Выдачи за период с ".$giveaways_start_date." по ".$giveaways_end_date."</span><br>";
             echo "<input type='button' database = '".$database[1]."' byersid='".$database[4]."' value='+Выдача в базу ".$database[3]."' class='add_giveaway'>";
-            echo "<table><thead><th>Дата выдачи</th><th>Сумма выдачи</th><th>Комментарий</th><th>Опции</th></thead><tbody>";
 
-            $req_giveaways->execute(array($database[4],$giveaways_start_date,$giveaways_end_date));
+
+            $req_giveaways->execute(array($database[4],$the_year));
             $giveaways_fetched = $req_giveaways->fetchAll(PDO::FETCH_ASSOC);
             $database[0]->commit();
 
@@ -286,23 +230,26 @@ GROUP BY 1c_num
                 $req_give+=round($rg['giveaway_sum'],2);
             }
             $total_give += $req_give;
+            unset($req_give);
 
             //Рисуем список выдач
+            if(count($giveaways_fetched)>0){echo "<tr><td>из базы ".$database[3]."</td><td></td><td></td><td></td><td></td></tr>";}
+
             foreach ($giveaways_fetched as $give){
-                echo "<tr><td></td><td>из базы ".$database[3]."</td><td></td><td></td></tr>";
                 echo "<tr giveaways_id='".$give['giveaways_id']."'>";
                 $phpdate = strtotime( $give['given_away'] );
                 $mysqldate = date( 'd.m.y', $phpdate );
 
                 echo "<td>".$mysqldate."</td>";
+                echo "<td>".$give['year_given']."</td>";
                 echo "<td>".$give['giveaway_sum']."</td>";
                 echo "<td>".$give['comment']."</td>";
                 echo "<td><input type='button' value='E' byersid='".$database[4]."' database='".$database[1]."' class='editgiveaway' g_id='".$give['giveaways_id']."'>
             <input class='delgiveaway' database='".$database[1]."' type='button' value='X' give_id='".$give['giveaways_id']."'></td>";
                 echo "</tr>";
             }
-            unset($giveaways_fetched);
-            echo "</tbody></table>";
+            //unset($giveaways_fetched);
+
 
         }catch( PDOException $e ) {$database[0]->rollback();print "Error!: " . $e->getMessage() . "<br/>" . (int)$e->getCode( );}
     }
@@ -349,7 +296,7 @@ if (isset($_POST['the_request'])){
                 $phpdate = strtotime( $row['payed'] );
                 $mysqldate = date( 'd.m.y', $phpdate );
 
-                $result1 .= "<tr><td>" . $mysqldate . "</td><td>" . $row['number'] . "</td><td>" . $row['sum'] . "</td><td><input class='delpayment' database='".$db_text."' type='button' value='X' pay_id='".$row['payments_id']."' req_id='".$row['requestid']."'><input class='editpayment' database='".$db_text."' type='button' value='E' pay_id='".$row['payments_id']."' req_id='".$row['requestid']."'></td></tr>";
+                $result1 .= "<tr><td>" . $mysqldate . "</td><td>" . $row['number'] . "</td><td>" . $row['sum'] . "</td><td><input class='editpayment' database='".$db_text."' type='button' value='E' pay_id='".$row['payments_id']."' req_id='".$row['requestid']."'><input class='delpayment' database='".$db_text."' type='button' value='X' pay_id='".$row['payments_id']."' req_id='".$row['requestid']."'></td></tr>";
             };
             $result1 .= "</tbody></table>";
         };

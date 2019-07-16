@@ -498,7 +498,7 @@ if(isset($_POST['table'])){
         try {
             /*ОПЦИИ ДАТЫ*/
             /*Смотрим, какой период сейчас выставлен по умолчанию*/
-            $ga_period = $pdo->prepare("SELECT * FROM `options` WHERE options_id = 'general'");
+            /*$ga_period = $pdo->prepare("SELECT * FROM `options` WHERE options_id = 'general'");
             $ga_period->execute();
             $ga_period_fetched = $ga_period->fetch(PDO::FETCH_ASSOC);
             $ga_period_current = $ga_period_fetched['ga_period'];
@@ -506,16 +506,16 @@ if(isset($_POST['table'])){
                 array("year",'С начала года'),
                 array("quarter",'С начала квартала'),
                 array("month",'С начала месяца')
-            );
+            );*/
             //ТЕКУЩУЮ ОПЦИЮ ВЫДЕЛИТЬ ЗЕЛЕНЫМ ЦВЕТОМ
-            foreach($ga_periods as $gap){
+            /*foreach($ga_periods as $gap){
                 if($gap[0] == $ga_period_current){
                     echo "<input type='button' class='date_option green' period='".$gap[0]."' value='".$gap[1]."'>";
 
                 }else{
                     echo "<input type='button' class='date_option' period='".$gap[0]."' value='".$gap[1]."'>";
                 }
-            };
+            };*/
             /*ОПЦИИ ДАТЫ*/
 
             //Сейчс скрипт берет всех покупателей из базы
@@ -532,7 +532,7 @@ if(isset($_POST['table'])){
                 $getbyersidip->execute(array($ga_bid));
                 $getbyersidip_fetched = $getbyersidip->fetch(PDO::FETCH_ASSOC);
 
-                //Проверка ан наличие заявок
+                //Проверка на наличие заявок
                 $gotsome = array();
                 $gotsome_ip = array();
                 $gotrequests->execute(array($ga_bid));

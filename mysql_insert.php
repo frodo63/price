@@ -451,22 +451,24 @@ if(isset($_POST['number']) && isset($_POST['payed']) && isset($_POST['uid']) && 
 //////////////////////////////////////////////////////////////////////
 
 //ДОБАВЛЕНИЕ ВЫДАЧИ///////////////////////////////////////////////////
-if(isset($_POST['byersid']) && isset($_POST['giveaway_date']) && isset($_POST['comment']) && isset($_POST['sum'])){
+if(isset($_POST['byersid']) && isset($_POST['giveaway_date']) && isset($_POST['comment']) && isset($_POST['sum']) && isset($_POST['give_year'])){
 
     $byersid = $_POST['byersid'];
     $giveaway_date = $_POST['giveaway_date'];
     $comment = $_POST['comment'];
     $sum = $_POST['sum'];
+    $give_year = $_POST['give_year'];
 
     /**//////////////////////////////////////////////////////////////
 
     try {
-        $statement = $database->prepare("INSERT INTO `giveaways`(`byersid`,`given_away`,`comment`,`giveaway_sum`) VALUES(?,?,?,?)");
+        $statement = $database->prepare("INSERT INTO `giveaways`(`byersid`,`given_away`,`comment`,`giveaway_sum`,`year_given`) VALUES(?,?,?,?,?)");
 
         $statement->bindParam(1, $byersid);
         $statement->bindParam(2, $giveaway_date);
         $statement->bindParam(3, $comment);
         $statement->bindParam(4, $sum);
+        $statement->bindParam(5, $give_year);
 
         $database->beginTransaction();
         $statement->execute();

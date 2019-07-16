@@ -686,6 +686,19 @@ tr[pricingid] td {border: 1px solid black}
     th:nth-child(7){width: 5%}
     th:nth-child(8){width: 10%}
   }
+  table.ga_give_list{
+    tr{
+      &:hover td.ga_widen{background-color: white}
+      &:hover{background-color: #F0F0F0}
+    }
+    text-align: center;
+    td:nth-child(3){text-align: left}
+    th:nth-child(1){width: 3%}
+    th:nth-child(2){width: 3%}
+    th:nth-child(3){width: 3%}
+    th:nth-child(4){width: 6%}
+    th:nth-child(5){width: 2%}
+  }
 }
 
 .byer_req_list{
