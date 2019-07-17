@@ -26,6 +26,8 @@ if (isset($_POST['the_byer']) && isset($_POST['year'])){
         $dbs_array[0][4] = $the_byer;
         $dbs_array[1][4] = $getbyersidip_fetched['byersid_ip'];
 
+        echo "<input byer ='".$the_byer."'  class='count_rent_whole_byer' type='button' value='Пересчитать рентабельность во всех заявках'><br>";
+        echo "<input byer ='".$the_byer."' class='refresh_r1_byer' type='button' value='ПЕРЕСЧИТАТЬ'>";
         echo "<br><br><input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2018'><input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2019'><br><br>";
         echo "<br><span class='ga_requests_period'><b>Заявки за ".$the_year." год:</b></span><br><br>";
         echo "<table><thead><tr><th>Дата</th><th>Номер заказа в 1С</th><th></th><th>База</th><th>Накладная</th><th>Сумма заявки</th><th>Начислено</th><th>Статус заявки</th></tr></thead><tbody>";
@@ -40,17 +42,39 @@ if (isset($_POST['the_byer']) && isset($_POST['year'])){
 
     foreach ($dbs_array as $database){
         try {
-            //Список заявок для Р-1
-            $reqlist = $database[0]->prepare("SELECT DISTINCT 1c_num, payed, created, requests_id, req_sum,requests.requests_uid as requests_uid,executes_id
+            //17.07.19//////////////////////////////////////////////////////////////////////////////////////////////////
+            //Главное в Р-1 это платежки,  последние платежки в каждой из заявок. Если Заявка 2018 года, в ней была платежки в 2018 году,
+            //но последняя платежка в ней - 2019 года - то заявка расчитывается в 2019 году.
+
+            //Нужно получить список последних платежек.
+            //Получить список заявок, в которм есть платежки, прошедшие в этом году
+            $reqlist=$database[0]->prepare("
+SELECT DISTINCT 1c_num, payed, created, requests_id, req_sum,r.requests_uid requests_uid,executes_id
+FROM requests r
+                          LEFT JOIN payments p ON r.requests_id = p.requestid
+                          LEFT JOIN executes e ON r.requests_uid = e.requests_uid
+WHERE (r.byersid=?)
+  AND (payed BETWEEN ? AND ?)
+  AND (r.r1_hidden = 0)
+  AND r.requests_uid IS NOT NULL
+  AND executes_id IS NOT NULL
+GROUP BY requests_id ORDER BY created ASC");
+            //Получить последние
+
+
+
+            //17.07.19//////////////////////////////////////////////////////////////////////////////////////////////////
+
+            /*$reqlist = $database[0]->prepare("SELECT DISTINCT 1c_num, payed, created, requests_id, req_sum,requests.requests_uid as requests_uid,executes_id
 FROM requests
   LEFT JOIN executes ON requests.requests_uid = executes.requests_uid
   LEFT JOIN payments ON payments.requestid = requests.requests_id
 WHERE (requests.byersid = ?)
-      AND (payments.payed IN(SELECT MAX(payed) FROM payments WHERE payed BETWEEN ? AND ? GROUP BY requestid) )
+      AND (payments.payments_id IN(SELECT payments_id FROM (SELECT MAX(payed),payments_id FROM payments WHERE payed BETWEEN ? AND ? GROUP BY requestid)) )
             AND (requests.r1_hidden = 0)
             AND requests.requests_uid IS NOT NULL
             AND executes_id IS NOT NULL
-GROUP BY 1c_num");
+GROUP BY 1c_num");*/
 
             //Запросы строго по каждой заявке
             //Накладные - для визуального отображения
@@ -165,6 +189,13 @@ GROUP BY 1c_num");
                     $result .="<td>
                                <div class='yellow'>
                                    <span>Оплата < 100% К оплате :".$req_pay_ostatok."</span>
+                                   <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$database[4]."'>                                       
+                               </div>
+                           </td>";
+                }elseif(round($req_sum,2) > 0 && $req_pay_ostatok < 0){
+                    $result .="<td>
+                               <div class='pink'>
+                                   <span>Оплата > 100% Переплата :".$req_pay_ostatok."</span>
                                    <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$database[4]."'>                                       
                                </div>
                            </td>";

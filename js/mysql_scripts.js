@@ -496,7 +496,7 @@ $(document).ready(function(){
                 $('.byer_req_list>li[byerid]').css('display', 'block');
 
                 return false;
-            }
+            }/*
             else {
                 //Скрытие открытых
                 $('li[byerid].ga_widen .ga_byer_requests').html('');//Очищаем html аякса
@@ -514,11 +514,11 @@ $(document).ready(function(){
                         $(event.target).parent('li[byerid]').addClass('ga_widen');
                         //Вставляем данные аякса
                         $('.ga_byer_requests[ga_byer='+the_byer+']').html(data);
-                        /*Скроллимся к только что открытой завяке*/
+                        //Скроллимся к только что открытой завяке
                         var e = $('.ga_widen').offset().top;
                         console.log(e);
                         $('html, body').animate({scrollTop: e}, 1000);
-                        /**/
+
                         $(event.target).switchClass('w','x').val('X');//Кнопочка
                         $(event.target).next('span').css({'font-size' : 30});//Увеличивается шрифт
                         $('.ga_byer_requests[ga_byer='+the_byer+']').slideDown();//Показывается контейнер
@@ -527,21 +527,9 @@ $(document).ready(function(){
                         //Прячем все лишки кроме нужной
                         $('.byer_req_list>li[byerid]').slideUp();
                         $('.byer_req_list>li[byerid='+the_byer+']').slideDown();
-
-                    },complete:function () {
-                        $('.from,.to').datepicker({//Подключение дейтпикера
-                            dateFormat: "dd-mm-yy",
-                            showButtonPanel: true,
-                            dayNames: [ "Воскресение", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота" ],
-                            dayNamesMin: [ "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб" ],
-                            dayNamesShort: [ "Вос", "Пон", "Втр", "Срд", "Чтв", "Пят", "Суб" ],
-                            monthNames: [ "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" ],
-                            monthNamesShort: [ "Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Нов", "Дек" ]
-                        });//Подключение дейтпикера
-                        $('.from,.to').val('');//Очистка дейтпикера
                     }
                 });
-            }
+            }*/
 
         }else{
 
@@ -563,23 +551,13 @@ $(document).ready(function(){
                     $(event.target).switchClass('w','x').val('X');//Кнопочка
                     $(event.target).next('span').css({'font-size' : 30});//Увеличивается шрифт
                     $('.ga_byer_requests[ga_byer='+the_byer+']').slideDown();//Показывается контейнер
+                    $('.ga_byer_requests[ga_byer='+the_byer+']').attr('year', year);//Атрибут года в контейнер для заявок
                     console.log('clear open from 2');
 
                     //Прячем все лишки кроме нужной
                     $('.byer_req_list>li[byerid]').css('display', 'none');
                     $('.byer_req_list>li[byerid='+the_byer+']').css('display', 'block');
 
-                },complete:function () {
-                    $('.from,.to').datepicker({//Подключение дейтпикера
-                        dateFormat: "dd-mm-yy",
-                        showButtonPanel: true,
-                        dayNames: [ "Воскресение", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота" ],
-                        dayNamesMin: [ "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб" ],
-                        dayNamesShort: [ "Вос", "Пон", "Втр", "Срд", "Чтв", "Пят", "Суб" ],
-                        monthNames: [ "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" ],
-                        monthNamesShort: [ "Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Нов", "Дек" ]
-                    });//Подключение дейтпикера
-                    $('.from,.to').val('');//Очистка дейтпикера
                 }
             });
         }
