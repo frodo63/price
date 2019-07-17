@@ -546,7 +546,7 @@ if(isset($_POST['table'])){
 
                     $result .= "<li byerid =" . $row['b_id'] . "><input type='button' name =" . $row['b_nid'] . " ga_byer =" . $row['b_id'] . " value='♢' class='collapse_ga_byer w'>
                                 <span class='name'>" . $row['b_name'] . "</span>
-                                <div class='ga_byer_requests' ga_byer ='" . $row['b_id'] . "'></div>
+                                <div class='ga_byer_requests' ga_byer ='" . $row['b_id'] . "' year></div>
                             </li>";
                 }
             }

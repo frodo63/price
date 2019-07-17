@@ -190,7 +190,7 @@ if(isset($_POST['sync_file'])){
                         }
                     }else{
                         $rid = $gotrid['requests_id'];
-                        $status = "<span style='color: green'>Заказ найден</span>";
+                        $status = "<span style='color: green'>Заказ найден: ".$gotrid['1c_num']." от ".$gotrid['created']."</span>";
                     }
 
                     //Дата

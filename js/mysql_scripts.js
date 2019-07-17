@@ -489,6 +489,7 @@ $(document).ready(function(){
                 $('input.collapse_ga_byer[value = "X"]').next('span').css({'font-size' : '1em'});//Все увеличенные шрифты уменьшаются обратно
                 $('input.collapse_ga_byer[value = "X"]').switchClass('x','w').val('♢');//Кнопочка
                 $('.ga_byer_requests:visible').slideUp();//Скрывается контейнер
+                $('.ga_byer_requests[ga_byer='+the_byer+']').attr('year', year);//Атрибут года в контейнер для заявок
                 console.log('about to false');
 
                 //Прячем все лишки кроме нужной
@@ -590,12 +591,14 @@ $(document).ready(function(){
         var thebyer = $(event.target).attr('ga_byer');
         var year = $(event.target).val();
 
+
         $.ajax({
             url: 'mysql_giveaways.php',
             method: 'POST',
             data: {the_byer:thebyer, year:year},
             success: function (data) {
                 $('.ga_byer_requests[ga_byer=' + thebyer + ']').html(data);
+                $('.ga_byer_requests[ga_byer=' + thebyer + ']').attr('year',year);
             }
          })
 
@@ -607,12 +610,12 @@ $(document).ready(function(){
         var the_request = $(event.target).attr('ga_request');
         var db = $(event.target).attr('database');
         var the_byer = $(event.target).parents('li[byerid]').attr('byerid');
+        var the_year = $(event.target).parents('.ga_byer_requests').attr('year');
 
         if($(event.target).val() == 'X'){//Закрываем просто
             $(event.target).parents('.ga_byer_requests').removeClass('ga_shrinken');
             $(event.target).parent().removeClass('ga_widen');
             $('.ga_c_payments, .ga_c_giveaways, .ga_c_positions').removeClass('min-h')//Правила для трех папок по высоте
-            $('.ga_requests_date_range').show();//Дейтпикер
             $('.collapse_ga_byer.x').show();//Верхний красный крест
             $('.ga_requests_period').show();//Строка о периоде
             $(event.target).val('♢').css({'background':'white','color':'black'});
@@ -622,7 +625,7 @@ $(document).ready(function(){
             $.ajax({
                 url: 'mysql_giveaways.php',
                 method: 'POST',
-                data: {the_byer: the_byer},
+                data: {the_byer: the_byer, year:the_year},
                 success: function (data) {
                     $('.ga_byer_requests[ga_byer=' + the_byer + ']').html(data);
                 }
@@ -632,7 +635,6 @@ $(document).ready(function(){
         }
         $(event.target).val('X').css({'background':'red','color':'white'});
         /*Прятание*/
-        $('.ga_requests_date_range').hide();//Дейтпикер
         $('.collapse_ga_byer.x').hide();//Верхний красный крест
         $('.ga_requests_period').hide();//Строка о периоде
         $('tr[ga_request]').not('tr[ga_request='+the_request+']').hide();

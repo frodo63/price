@@ -40,30 +40,17 @@ if (isset($_POST['the_byer']) && isset($_POST['year'])){
 
     foreach ($dbs_array as $database){
         try {
-
-
-            /*
-             //Список платежей для Р-1
-            SELECT payed, requestid FROM payments LEFT JOIN requests ON payments.requestid = requests.requests_id WHERE byersid = 49 AND payed BETWEEN '2019-01-01' AND '2019-07-14' ORDER BY payed ASC
-/*Список заказов для Р-1
-SELECT DISTINCT 1c_num, payed, created, requests_id, req_sum,requests.requests_uid as requests_uid,executes_id
+            //Список заявок для Р-1
+            $reqlist = $database[0]->prepare("SELECT DISTINCT 1c_num, payed, created, requests_id, req_sum,requests.requests_uid as requests_uid,executes_id
 FROM requests
   LEFT JOIN executes ON requests.requests_uid = executes.requests_uid
   LEFT JOIN payments ON payments.requestid = requests.requests_id
-//WHERE (requests.created BETWEEN '2019-01-01' AND '2019-07-14') //нужно не requests.created, а payed из платежек
-WHERE (payments.payed BETWEEN '2019-03-01' AND '2019-05-14')
-      AND (requests.byersid = 46)
+WHERE (requests.byersid = ?)
+      AND (payments.payed IN(SELECT MAX(payed) FROM payments WHERE payed BETWEEN ? AND ? GROUP BY requestid) )
             AND (requests.r1_hidden = 0)
             AND requests.requests_uid IS NOT NULL
             AND executes_id IS NOT NULL
-GROUP BY 1c_num
-             */
-
-
-            //Главный запрос
-            //Выбираем все заявки из базы, попадающие по дате создания заказа, не убранные из Р-1 и по которым были накладные
-            $reqlist = $database[0]->prepare("SELECT DISTINCT 1c_num, created, requests_id, req_sum,requests.requests_uid as requests_uid,executes_id FROM requests LEFT JOIN executes ON requests.requests_uid=executes.requests_uid WHERE (requests.byersid = ?) AND (requests.created BETWEEN ? AND ?) AND (requests.r1_hidden = 0) AND requests.requests_uid IS NOT NULL AND executes_id IS NOT NULL GROUP BY 1c_num");
-            //$reqlist = $database[0]->prepare("SELECT created,requests_id,1c_num,name,req_sum,requests_uid FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid WHERE (requests.byersid = ? AND requests.created BETWEEN ? AND ? AND requests.r1_hidden = 0) ORDER BY created");
+GROUP BY 1c_num");
 
             //Запросы строго по каждой заявке
             //Накладные - для визуального отображения
@@ -111,14 +98,12 @@ GROUP BY 1c_num
                 $result.="</td>";
                 /*ПЕРЕМЕННЫЕ НА СТАТУС ЗАКАЗА*/
                 /*НА КАЖДЫЙ ЗАКАЗ У НА 3 ПЕРЕМЕННЫЕ*/
-                $req_sum=round($row['req_sum'],2);//Сумма заказа строку приводим к числу
+                if($row['req_sum']>0){$req_sum=round($row['req_sum'],2);}//Сумма заказа строку приводим к числу
                 $req_pay = 0;//Оплачено
                 $req_count = 0;//Начислено
 
                 /*Расчет общего количества оплат*/
-                foreach ($req_payments_fetched as $rp){
-                    $req_pay+=round($rp['sum'],2);
-                }
+                foreach ($req_payments_fetched as $rp){$req_pay+=round($rp['sum'],2);}
                 $total_pay += $req_pay;
 
                 /*Подготовка переходных переменных*/
