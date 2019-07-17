@@ -58,19 +58,16 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         <script src='js/price_mysql.js'></script>     
 </div>
 <div id='editmsg'></div>
-<input id='thesearch' type='text' placeholder='Начните вводить наименование поставщика, покупателя, товара или название заявки'category='' theID=''>
+<input id='thesearch' type='text' placeholder='Начните вводить наименование поставщика, покупателя, товара или номер в 1С заявки'category='' theID=''>
 <div id='sres'></div>
 <br>
 <div id='reads'>                                                                                                               
       <ul>
         <li id='tab_requests'><a href='#requests'>Заявки</a></li>
+        <li id='tab_giveaways'><a href='#givaways'>Р-1</a></li>
         <li id='tab_byers'><a href='#byers'>Покупатели</a></li>
         <li id='tab_sellers'><a href='#sellers'>Поставщики</a></li>
-        <li id='tab_trades'><a href='#trades'>Товары</a></li>
-        <li id='tab_giveaways'><a href='#givaways'>Р-1</a></li>
-        <li id='tab_payments'><a href='#payments'>Платежки</a></li>
-        <li id='tab_vidachi'><a href='#vidachi'>Выдачи</a></li>
-        <li id='tab_totals'><a href='#totals'>Долги</a></li>
+        <li id='tab_trades'><a href='#trades'>Товары</a></li>        
         <li id='tab_search'><a href='#search'>Результаты поиска</a></li>
         <li id='tab_sync'><a href='#sync'>Синхронизация</a></li>
       </ul>
@@ -190,22 +187,7 @@ echo"       <!--Добавить Платежку -->
       
           <div class='givaways_list'>          
           </div>      
-      </div>
-      
-      <div id='vidachi'>
-      <input type='button' class='show_list' value='ВЫДАЧИ⏎'><br><br>
-          <div class='vidachi_list'></div>      
-      </div>
-      
-      <div id='payments'>
-      <input type='button' class='show_list' value='ПЛАТЕЖКИ⏎'><br><br>
-          <div class='payments_list'></div>      
-      </div>
-      
-      <div id='totals'>
-      <input type='button' class='show_list' value='ДОЛГИ⏎'><br><br>
-          <div class='totals_list'></div>
-      </div>
+      </div>     
       
       <div id='search'>
           <div class='search_list'></div>
@@ -300,7 +282,7 @@ echo "    <div id='sync'>
               <br>
               <span>Наименование:</span> <span id='trade_options_name'></span><br><br>
 
-                  <input id='edit_trade_name' type='text' name='1' type='text' size='55'>
+                  <input id='edit_trade_name' type='text' name='1' type='text' size='45'>
                   <br>
                   <input cc='1' id='button_edit_trade_name' disabled type='button' nameid='' value='Изменить наименование'>
                                          
@@ -320,6 +302,38 @@ echo "    <div id='sync'>
                   
               <br><br><span class='ready_comment'></span>    
               </div> 
+              
+              <div id='edit_options_byer' database>
+              <br>
+              <span id='byer_options_name'></span>
+              
+              <div>
+              <label for='1'>Наименование:</label><input name='1' id='edit_byer_name' type='text' size='30'>
+              <br><input cc='1' id='button_edit_byer_name' disabled type='button' value='Изменить наименование' byerid><br>
+              <span class='ready_comment'></span>   
+              </div>
+              <div>
+              <label for='2'>Енот:</label><input name='2' id='edit_byer_tp' type='number' min='0' step='0.01' size='2'>
+              <br><input cc='2' id='button_edit_byer_tp' disabled type='button' value='Изменить Енотопроцент' byerid><br>
+              <span class='ready_comment'></span> 
+              </div>
+              <div>
+              <label for='3'>Обнал:</label><input name='3' id='edit_byer_firstobp' type='number' min='0' step='0.01' size='2'>
+              <br><input cc='3' id='button_edit_byer_firstobp' disabled type='button' value='Изменить Обнал' byerid><br> 
+              <span class='ready_comment'></span> 
+              </div>
+              <div>
+              <label for='4'>Отсрочка:</label><input name='4' id='edit_byer_wt' type='number' min='0' step='0.03' size='2'>
+              <br><input cc='4' id='button_edit_byer_wt' disabled type='button' value='Изменить Отсрочку' byerid><br> 
+              <span class='ready_comment'></span> 
+              </div>
+              <div>
+              <label for='5'>Коммент:</label><input name='5' id='edit_byer_comment' type='text' size='40'>
+              <br><input cc='5' id='button_edit_byer_comment' disabled type='button' value='Изменить Коммент' byerid>                                       
+              <span class='ready_comment'></span>   
+              </div>
+              <input class='close_edit_options_byer' type='button' value='X'>   
+              </div>
               
               
 

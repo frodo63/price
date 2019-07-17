@@ -647,6 +647,40 @@ tr[pricingid] td {border: 1px solid black}
   }
 }
 
+#edit_options_byer {
+  padding: 15px;
+  border-radius: 5px;
+  border: 2px solid black;
+  color: black;
+  font-size: 20px;
+  background: white;
+  left:calc(100%/2);
+
+  #edit_byer_name{
+    font-size: 25px;
+  }
+
+  position: fixed;
+  top: -700px;
+  width: 700px;
+  height:500px;
+  span,input[type="text"],input[type="number"] {
+    font-size: 25px;
+  }
+  &.come_here {
+    top: calc(100%/3);
+  }
+  input[cc]{
+    font-size: 20px;
+  }
+  .close_edit_options_byer{
+    position: absolute;
+    top:15px;
+    right:15px;
+    padding: 10px;
+  }
+}
+
 #button_add_giveaway,#button_add_payment{
   position: absolute;
   bottom: 10px;

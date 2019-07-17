@@ -30,19 +30,24 @@ $(document).ready(function(){
                 return false;
             } else{
                 $('#edit_trade_name').switchClass('not_ready','ready');
-                $('#edit_trade_name').siblings('.ready_comment')/*.text('Можно сохранять.')*/.switchClass('not-ok','ok');
+                $('#edit_trade_name').siblings('.ready_comment').text('Можно сохранять.').switchClass('not-ok','ok');
                 $('#button_edit_trade_name').prop('disabled', false);
                 return true;
             }
         }
-    };
-    function check_one_name(newname){
+    }
+    function check_one_name(newname,oldname){
         if(newname.length > 0){
             if(newname.indexOf("'") >= 0 || newname.indexOf("\"") >= 0){
                 //Есть ковычки
                 return 1;
             }else{
-                return 3;
+                if(newname == oldname){
+                    return 4
+                }else{
+                    return 3;
+                }
+
             }
         }else{
             //Пустое значение
@@ -52,21 +57,36 @@ $(document).ready(function(){
 
     }
 
-    //ПРОВЕРКА ТЕКСТОВОГО ЗНАЧЕНИЯ ИМЕНИ, ВВОДИМОГ О В БАЗУ
-    $(document).off('keyup.checkname').on('keyup.checkname', '.add_trade_name, .add_byer_name, .add_seller_name', function(event){
-        var checkname = $(event.target).val();
 
-        if(check_one_name(checkname) == 3){
+    //ПРОВЕРКА ТЕКСТОВОГО ЗНАЧЕНИЯ ИМЕНИ, ВВОДИМОГО В БАЗУ
+    $(document).off('keyup.checkname, focusin.checkname').on('keyup.checkname, focusin.checkname', '.add_trade_name, .add_byer_name, .add_seller_name, #edit_byer_name, #edit_byer_comment, #edit_byer_tp, #edit_byer_firstobp, #edit_byer_wt', function(event){
+        var checkname = $(event.target).val();
+        var oldname = $(event.target).attr('olddata');
+
+        if(check_one_name(checkname,oldname) == 3){
             $(event.target).siblings('input[type="button"]').prop('disabled',false);
             $(event.target).siblings('.ready_comment').text('Можно сохранять.').switchClass('not-ok','ok');
-        }else if(check_one_name(checkname) == 1){
+        }else if(check_one_name(checkname,oldname) == 1){
             $(event.target).siblings('input[type="button"]').prop('disabled',true);
             $(event.target).siblings('.ready_comment').text('Ковычки уберите.База их не любит.').switchClass('ok','not-ok');
-        }else if(check_one_name(checkname) == 2){
+        }else if(check_one_name(checkname,oldname) == 2){
             $(event.target).siblings('input[type="button"]').prop('disabled',true);
             $(event.target).siblings('.ready_comment').text('Пустое поле \"Наименование\".').switchClass('ok','not-ok');
+        }else if(check_one_name(checkname,oldname) == 4){
+            $(event.target).siblings('input[type="button"]').prop('disabled',true);
+            $(event.target).siblings('.ready_comment').text('Ничего не изменилось же.').switchClass('ok','not-ok');
         }
     });
+
+    //ПО потере фокуса скрываем реди коммент и закрываем кнопку добавления
+    $(document).off('focusout.checkname').on('focusout.checkname', '.add_trade_name, .add_byer_name, .add_seller_name, #edit_byer_name, #edit_byer_comment, #edit_byer_tp, #edit_byer_firstobp, #edit_byer_wt', function(event){
+            $(event.target).siblings('.ready_comment').text('');
+            //$(event.target).siblings('input[type="button"]').prop('disabled',true);
+    });
+
+
+
+
 
 
     /*Проверка типа тары*///////////////////////////////////////////////////////////////////////////////////////////////
@@ -850,6 +870,49 @@ $(document).ready(function(){
         $('#edit_options_trade').toggleClass('come_here', "fast");
     });
 
+    //ВЫЗОВ ОКНА ОПЦИЙ ПОКУПАТЕЛЯ
+    $(document).off('click.comebyeroptions').on('click.comebyeroptions', '.edit_options_byer', function (event) {
+        $('#edit_options_byer>input[name=1]').val('');//Стираем все данные
+        $('#edit_options_byer>input[name=2]').val('');//Стираем все данные
+        $('#edit_options_byer>input[name=3]').val('');//Стираем все данные
+        $('#edit_options_byer>input[name=4]').val('');//Стираем все данные
+        $('#edit_options_byer>input[name=5]').val('');//Стираем все данные
+
+        var byerid = $(event.target).attr('byerid');
+        var db = $(event.target).parents('tr[database]').attr('database');
+
+        //Запрос в базу для текущих опций
+        if($('#edit_options_byer').hasClass('come_here')){
+            return false;
+        }else{
+            $.ajax({
+                url: 'mysql_options.php',
+                method: 'POST',
+                dataType: 'json',
+                cache: false,
+                data: {byer_options:byerid, db:db},
+                success: function (data) {
+
+                    $('#byer_options_name').text(data.name).attr('olddata',data.name);
+                    $('#edit_byer_name').val(data.name).attr('olddata',data.name);
+                    $('#edit_byer_tp').val(data.ov_tp).attr('olddata',data.ov_tp);
+                    $('#edit_byer_firstobp').val(data.ov_firstobp).attr('olddata',data.ov_firstobp);
+                    $('#edit_byer_wt').val(data.ov_wt).attr('olddata',data.ov_wt);
+                    $('#edit_byer_comment').val(data.comment).attr('olddata',data.comment);
+
+                    $('#button_edit_byer_name').attr('byerid',byerid);
+                    $('#button_edit_byer_tp').attr('byerid',byerid);
+                    $('#button_edit_byer_firstobp').attr('byerid',byerid);
+                    $('#button_edit_byer_wt').attr('byerid',byerid);
+                    $('#button_edit_byer_comment').attr('byerid',byerid);
+
+                    $('#edit_options_byer').attr('database', db);
+                }
+            });
+        }
+        $('#edit_options_byer').toggleClass('come_here', "fast");
+    });
+
     /*Закрытие окна редактирования опций товара*/
     $(document).off('click.gotradeoptions').on('click.gotradeoptions', '.close_edit_options_trade', function () {
         $('#edit_options_trade').removeClass('come_here', 'fast');
@@ -865,10 +928,32 @@ $(document).ready(function(){
 
         $('#button_edit_trade_name').attr('nameid', 'xxx').prop('disabled', true);
         $('#button_edit_trade_tare').attr('tradeid', 'xxx').prop('disabled', true);
+    });
 
+    /*Закрытие окна редактирования опций покупателя*/
+    $(document).off('click.gobyeroptions').on('click.gobyeroptions', '.close_edit_options_byer', function () {
+        $('#edit_options_byer').removeClass('come_here', 'fast');
 
+        $('#button_edit_byer_name,' +
+            '#button_edit_byer_tp,' +
+            '#button_edit_byer_firstobp,' +
+            '#button_edit_byer_wt,' +
+            '#button_edit_byer_comment').removeClass('ready not_ready');
+        $('.ready_comment').text('').removeClass('ok not-ok');
 
+        //Надо как-то подсветить товар, который только что изменили
+        var byerid = $('#button_edit_byer_name').attr('byerid');
+        $('span.name[byerid='+byerid+']').parent('tr[database]').addClass('flash');
+        console.log(byerid);
+        $('#byer_options_name').text('');
 
+        $('#button_edit_byer_name').attr('byerid', 'xxx').prop('disabled', true);
+        $('#button_edit_byer_tp').attr('byerid', 'xxx').prop('disabled', true);
+        $('#button_edit_byer_firstobp').attr('byerid', 'xxx').prop('disabled', true);
+        $('#button_edit_byer_wt').attr('byerid', 'xxx').prop('disabled', true);
+        $('#button_edit_byer_comment').attr('byerid', 'xxx').prop('disabled', true);
+
+        $('#edit_options_byer').attr('database', '-');
 
     });
 
@@ -1023,8 +1108,9 @@ $(document).ready(function(){
     /*Проверка текстовых значений*//////////////////////////////////////////////////////////////////////////////////////
     $(document).off('keyup.input.tradename').on('keyup.input.tradename', '#edit_trade_name', function (event) {
         /*Данные для заполнения выдачи*/
-        var newname = $('#edit_trade_name').val();
+        var newname = $(event.target).val();
         var oldname = $('#trade_options_name').text();
+
         checkname(newname,oldname);
     });
     $(document).off('change.input.tare').on('change.input.tare', '#edit_trade_tare', function (event) {
@@ -1429,11 +1515,7 @@ $(document).ready(function(){
                 }, complete: function () {//Нужно обновить данные
                     $('#trade_options_tare').text(newtare);//Обновляем имя в самой менюшке
                     $('.trades_list td[tradeid='+tradeid+']>span').text(newtare);//Обновляем имя в списке
-
-                    //TODO: ВРЕМЕННО !!! ВЕШАЮ ТРИГГЕР НА ЗАКРЫТИЕ окна опций, чтобы все заполнить ,scnhj. Потом уберу
                     $('.close_edit_options_trade').trigger('click.gotradeoptions');
-
-
                 }
             });
         }
@@ -1452,6 +1534,61 @@ $(document).ready(function(){
 
     /**/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /*ИЗМЕНЕНИЕ ОПЦИЙ ПОКУПАТЕЛЯ КРОМЕ ИМЕНИ*/
+    $(document).off('click.edit_byer').on('click.edit_byer', '#button_edit_byer_tp, #button_edit_byer_firstobp, #button_edit_byer_wt, #button_edit_byer_comment', function(event){
+        var byerid = $(event.target).attr('byerid');
+        var input = $(event.target).siblings('input[name]');
+        var newdata = input.val();
+        var db = $('#edit_options_byer').attr('database');
+        var x = input.attr('id').substr(10);
+
+        switch(x){
+            case 'tp':
+                var column = 'ov_tp';
+                break;
+            case 'firstobp':
+                column = 'ov_firstobp';
+                break;
+            case 'wt':
+                column = 'ov_wt';
+                break;
+            case 'comment':
+                column = 'comment';
+                break;
+        }
+
+        $.ajax({
+            url: 'mysql_save.php',
+            method: 'POST',
+            data: {newdata_byer:newdata, byerid:byerid, column:column, db:db},
+            success: function (data) {
+                $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+            }, complete: function () {//Нужно обновить данные
+                $.ajax({
+                    url: 'mysql_options.php',
+                    method: 'POST',
+                    dataType: 'json',
+                    cache: false,
+                    data: {byer_options:byerid, db:db},
+                    success: function (data) {
+                        $('#byer_options_name').text(data.name).attr('olddata',data.name);
+                        $('#edit_byer_name').val(data.name).attr('olddata',data.name);
+                        $('#edit_byer_tp').val(data.ov_tp).attr('olddata',data.ov_tp);
+                        $('#edit_byer_firstobp').val(data.ov_firstobp).attr('olddata',data.ov_firstobp);
+                        $('#edit_byer_wt').val(data.ov_wt).attr('olddata',data.ov_wt);
+                        $('#edit_byer_comment').val(data.comment).attr('olddata',data.comment);
+                    },complete:function () {
+                        $('#byers .show_list').trigger('click.readtab');
+                    }
+                });
+
+            }
+        });
+
+    });
+
+
+    /*///*/
 
     /*Отображение заявок одного покупателя*/////////////////////////////////////////////////////////////////////////////
     $(document).off('dblclick.sort_byer').on('dblclick.sort_byer', '.requests_list td[byerid]', function(event){

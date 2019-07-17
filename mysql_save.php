@@ -524,3 +524,42 @@ if(
     }
 };
 /**/
+
+/*РЕДАКТИРОВАНИЕ ОПЦИЙ ПОКУПАТЕЛЯ*/
+if(isset($_POST['newdata_byer']) && isset($_POST['byerid']) && isset($_POST['column'])){
+    $newdata_byer = $_POST['newdata_byer'];
+    $byerid = $_POST['byerid'];
+    $column = $_POST['column'];
+
+    switch ($column){
+        case 'ov_tp':
+            $statement=$database->prepare("UPDATE byers SET `ov_tp` = ? WHERE `byers_id` = ?");
+            break;
+        case 'ov_firstobp':
+            $statement=$database->prepare("UPDATE byers SET `ov_firstobp` = ? WHERE `byers_id` = ?");
+            break;
+        case 'ov_wt':
+            $statement=$database->prepare("UPDATE byers SET `ov_wt` = ? WHERE `byers_id` = ?");
+            break;
+        case 'comment':
+            $statement=$database->prepare("UPDATE byers SET `comment` = ? WHERE `byers_id` = ?");
+            break;
+
+    }
+
+    try{
+        $database->beginTransaction();
+        $statement->execute(array($newdata_byer,$byerid));
+        $database->commit();
+
+        echo "Все получилось! Поле ".$column." заданного покупателя изменено.";
+
+    }catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        $database->rollback();
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+    }
+
+
+}
+/**/

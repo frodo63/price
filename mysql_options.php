@@ -19,8 +19,6 @@ if (isset($_POST['period'])){
     }
 }
 
-
-
 //Чтение ОПЦИЙ ЗАЯВКИ все 4 для добавления в расценку
 if (isset($_POST['req_options'])){
     $reqid = $_POST['req_options'];
@@ -128,4 +126,22 @@ if ( isset($_POST['minus_queen'])){
 
         } catch( PDOException $Exception ) {$database->rollback();print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );}
     }
+/**/
+
+/*ЧТЕНИЕ ОПЦИЙ ПОКУПАТЕЛЯ*/
+if (isset($_POST['byer_options'])){
+    $byerid = $_POST['byer_options'];
+
+    $statement = $database->prepare("SELECT `byers_id`,`nameid`,`name`,`ov_tp`,`ov_firstobp`,`ov_wt`,`comment` FROM `byers` LEFT JOIN `allnames` ON allnames.nameid=`byers`.`byers_nameid` WHERE `byers_id` = ?");
+    try {
+        $database->beginTransaction();
+        $statement->execute(array($byerid));
+        $database->commit();
+
+        $result = $statement->fetch();
+
+        print(json_encode(array('name'=>$result['name'],'ov_tp'=>round($result['ov_tp'],2),'ov_firstobp'=>round($result['ov_firstobp'],2),'ov_wt'=>round($result['ov_wt'],2),'comment'=>$result['comment'])));
+
+    } catch( PDOException $Exception ) {$database->rollback();print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );}
+}
 /**/
