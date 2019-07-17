@@ -51,7 +51,7 @@ if (isset($_POST['the_byer']) && isset($_POST['year'])){
             $reqlist=$database[0]->prepare("
 SELECT DISTINCT 1c_num, payed, created, requests_id, req_sum,r.requests_uid requests_uid,executes_id
 FROM requests r
-                          LEFT JOIN payments p ON r.requests_id = p.requestid
+                          INNER JOIN payments p ON r.requests_id = p.requestid
                           LEFT JOIN executes e ON r.requests_uid = e.requests_uid
 WHERE (r.byersid=?)
   AND (payed BETWEEN ? AND ?)
@@ -122,7 +122,7 @@ GROUP BY 1c_num");*/
                 $result.="</td>";
                 /*ПЕРЕМЕННЫЕ НА СТАТУС ЗАКАЗА*/
                 /*НА КАЖДЫЙ ЗАКАЗ У НА 3 ПЕРЕМЕННЫЕ*/
-                if($row['req_sum']>0){$req_sum=round($row['req_sum'],2);}//Сумма заказа строку приводим к числу
+                $req_sum=round($row['req_sum'],2);//Сумма заказа строку приводим к числу
                 $req_pay = 0;//Оплачено
                 $req_count = 0;//Начислено
 
@@ -160,7 +160,7 @@ GROUP BY 1c_num");*/
                     $result .="<td>
                                <div class='green'>
                                    <span>Оплата 100% Начислений не было</span>
-                                   <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$database[4]."'>
+                                   <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."' byerid='".$database[4]."'>
                                        
                                </div>
                            </td>";
@@ -168,35 +168,35 @@ GROUP BY 1c_num");*/
                     $result .="<td>
                                <div class='lightgreen'>
                                    <span>Оплата 100% Начислено: ".round($req_count,2)."</span>
-                                   <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$database[4]."'>                                       
+                                   <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."' byerid='".$database[4]."'>                                       
                                </div>
                            </td>";
                 }elseif (round($req_sum,2) == 0){
                     $result .="<td>
                                <div class='red'>
                                    <span>Назначьте победителя</span>
-                                   <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$database[4]."'>                                       
+                                   <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."' byerid='".$database[4]."'>                                       
                                </div>
                            </td>";
                 }elseif (round($req_sum,2) > 0 && round($req_pay,2) == 0){
                     $result .="<td>
                                <div class='lightblue'>
                                    <span>Оплат не поступало</span>
-                                   <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$database[4]."'>
+                                   <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."' byerid='".$database[4]."'>
                                </div>
                            </td>";
                 }elseif(round($req_sum,2) > 0 && $req_pay_ostatok > 0){
                     $result .="<td>
                                <div class='yellow'>
                                    <span>Оплата < 100% К оплате :".$req_pay_ostatok."</span>
-                                   <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$database[4]."'>                                       
+                                   <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."' byerid='".$database[4]."'>                                       
                                </div>
                            </td>";
                 }elseif(round($req_sum,2) > 0 && $req_pay_ostatok < 0){
                     $result .="<td>
                                <div class='pink'>
-                                   <span>Оплата > 100% Переплата :".$req_pay_ostatok."</span>
-                                   <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."'byerid='".$database[4]."'>                                       
+                                   <span>Оплата > 100% Переплата :".$req_pay_ostatok.". К выдаче: ".round($req_count,2)."</span>
+                                   <input type='button' value='X' class='r1_hide' requestid='".$row['requests_id']."' byerid='".$database[4]."'>                                       
                                </div>
                            </td>";
                 }
@@ -215,43 +215,37 @@ GROUP BY 1c_num");*/
     echo "<br>";
 
     $total_give = 0;//Отдано
-    $req_give = 0;//Отдано
+
 
     echo "<br><br><span><b>Выдачи за ".$the_year." год:</b></span><br><br>";
     echo "<table class='ga_give_list'><thead><th>Дата выдачи</th><th>Год привязки</th><th>Сумма выдачи</th><th>Комментарий</th><th>Опции</th></thead><tbody>";
 
     foreach ($dbs_array as $database){
         //Запросы общие
-        //Выбираем все выдачи указанному покупателю, попадающие по дате выдачи
-        $req_giveaways = $database[0]->prepare("SELECT given_away,giveaways_id,giveaway_sum,comment,year_given FROM giveaways WHERE (byersid = ?) AND (year_given = ?) ORDER BY given_away");
-        //Выбираем все платежки от указанного покупателя, попадающие по дате платежа
-        $req_all_payments = $database[0]->prepare("SELECT payed,requestid FROM payments LEFT JOIN requests ON payments.requestid = requests.requests_id WHERE byersid = ? AND payed BETWEEN ? AND ? ORDER BY payed ASC");
+        //Выбираем все выдачи указанному покупателю, попадающие по дате и году выдачи
+        $year_giveaways = $database[0]->prepare("SELECT given_away,giveaways_id,giveaway_sum,comment,year_given FROM giveaways WHERE (byersid = ?) AND (year_given = ?) ORDER BY given_away");
 
         try {
             /*Расчет общего количества выдач*/
-
 
             $database[0]->beginTransaction();
 
             echo "<input type='button' database = '".$database[1]."' byersid='".$database[4]."' value='+Выдача в базу ".$database[3]."' class='add_giveaway'>";
 
-
-            $req_giveaways->execute(array($database[4],$the_year));
-            $giveaways_fetched = $req_giveaways->fetchAll(PDO::FETCH_ASSOC);
+            $year_giveaways->execute(array($database[4],$the_year));
+            $year_giveaways_fetched = $year_giveaways->fetchAll(PDO::FETCH_ASSOC);
             $database[0]->commit();
 
-            unset($req_all_payments_fetched);
-
-            foreach ($giveaways_fetched as $rg){
+            $req_give = 0;//Отдано в текущей базе (ЛТК или ИП)
+            foreach ($year_giveaways_fetched as $rg){
                 $req_give+=round($rg['giveaway_sum'],2);
             }
-            $total_give += $req_give;
-            unset($req_give);
+            $total_give += $req_give;//Отдано всего (в обеих базах)
 
             //Рисуем список выдач
-            if(count($giveaways_fetched)>0){echo "<tr><td>из базы ".$database[3]."</td><td></td><td></td><td></td><td></td></tr>";}
+            if(count($year_giveaways_fetched)>0){echo "<tr><td>из базы ".$database[3]."</td><td></td><td></td><td></td><td></td></tr>";}
 
-            foreach ($giveaways_fetched as $give){
+            foreach ($year_giveaways_fetched as $give){
                 echo "<tr giveaways_id='".$give['giveaways_id']."'>";
                 $phpdate = strtotime( $give['given_away'] );
                 $mysqldate = date( 'd.m.y', $phpdate );
@@ -264,9 +258,6 @@ GROUP BY 1c_num");*/
             <input class='delgiveaway' database='".$database[1]."' type='button' value='X' give_id='".$give['giveaways_id']."'></td>";
                 echo "</tr>";
             }
-            //unset($giveaways_fetched);
-
-
         }catch( PDOException $e ) {$database[0]->rollback();print "Error!: " . $e->getMessage() . "<br/>" . (int)$e->getCode( );}
     }
     echo "</tbody></table>";

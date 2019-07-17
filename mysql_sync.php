@@ -143,7 +143,7 @@ if(isset($_POST['sync_file'])){
                 echo"<p>Файл выгружен в массив</p>";
 
                 $getuid = $database->prepare("SELECT payments_uid FROM payments WHERE payments_uid = ?");
-                $getrequestid = $database->prepare("SELECT requests_id, 1c_num, created, req_sum FROM requests WHERE requests_uid = ?");
+                $getrequestid = $database->prepare("SELECT requests_id, 1c_num, created, req_sum,name FROM requests r LEFT JOIN byers b ON r.byersid=b.byers_id LEFT JOIN allnames a on b.byers_nameid = a.nameid WHERE requests_uid = ?");
                 $getpayments = $database->prepare("SELECT payed, onec_id, number, sum FROM payments WHERE requestid = ?");
 
                 foreach ($file_array as $row){
@@ -190,7 +190,7 @@ if(isset($_POST['sync_file'])){
                         }
                     }else{
                         $rid = $gotrid['requests_id'];
-                        $status = "<span style='color: green'>Заказ найден: ".$gotrid['1c_num']." от ".$gotrid['created']."</span>";
+                        $status = "<span style='color: green'>Заказ найден:</span><span>".$gotrid['name']." - ".$gotrid['1c_num']." от ".$gotrid['created']."</span>";
                     }
 
                     //Дата

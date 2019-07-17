@@ -621,6 +621,8 @@ $(document).ready(function(){
         $('.ga_c_payments, .ga_c_giveaways, .ga_c_positions').addClass('min-h');//Правила для трех папок по высоте
 
 
+
+        //Этот аякс копируется в button_add_payment, там он используется для обносления после добавления/изменения платежки
         $.ajax({
             url: 'mysql_giveaways.php',
             method: 'POST',
@@ -1039,20 +1041,20 @@ $(document).ready(function(){
 
         var reqid = $(event.target).attr("requestid");
         var payid = $(event.target).attr("paymentid");
+        var db = $(event.target).attr("database");
+
         /*Данные для заполнения платежки*/
         var payment_date = $('#add_payment.come_here #add_payment_date').val();
         var num = $('#add_payment.come_here #add_payment_1c_num').val();
         var sum = Number(Number($('#add_payment.come_here #add_payment_sum').val()).toFixed(2));
 
-
-        //TODO:ПРОВЕРКА, ЕСТЬ ЛИ В event.target paymentid. Если paymentid !='-', отправляем на mysql.save, в противном - на insert.
         if($(event.target).attr('paymentid') !='-'){
             console.log('ушло на mysql_save.php');
             //Аякс на mysql_save.php
             $.ajax({
                 url: 'mysql_save.php',
                 method: 'POST',
-                data: {reqid:reqid, payment_date:payment_date, num:num, sum:sum, pay_id:payid},
+                data: {reqid:reqid, payment_date:payment_date, num:num, sum:sum, pay_id:payid, db:db},
                 success: function (data) {
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                     console.log(data);
@@ -1062,18 +1064,19 @@ $(document).ready(function(){
                         method: 'POST',
                         dataType: 'json',
                         cache: false,
-                        data: {the_request:reqid},
+                        data: {the_request:reqid, db:db},
                         success: function (data) {
                             $('.ga_contents[ga_request='+reqid+'] .ga_c_payments').html(data.data1);
                             $('.ga_contents[ga_request='+reqid+'] .ga_c_positions').html(data.data2);
-                            $('.ga_contents[ga_request='+reqid+'] .ga_c_giveaways').html(data.data3);
                             $('.ga_contents[ga_request='+reqid+'] .ga_options').html(data.data4);
+
                             $('#add_payment').toggleClass('come_here');
                             $('#add_payment input[name=1]').val('');//Стираем все данные
                             $('#add_payment input[name=2]').val('');//Стираем все данные
                             $('#add_payment input[name=3]').val('');//Стираем все данные
                             $('#button_add_payment').attr('requestid','-');//Стираем номер заявки из кнопки добавления
                             $('#button_add_payment').attr('paymentid','-');//Стираем номер платежки из кнопки добавления
+                            $('#button_add_payment').attr('database','-');//Стираем базу данных из кнопки добавления
                         }
                     });
                 }
@@ -1083,7 +1086,7 @@ $(document).ready(function(){
             $.ajax({
                 url: 'mysql_insert.php',
                 method: 'POST',
-                data: {reqid:reqid, payment_date:payment_date, num:num, sum:sum},
+                data: {reqid:reqid, payment_date:payment_date, num:num, sum:sum, db:db},
                 success: function (data) {
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
                     console.log(data);
@@ -1093,18 +1096,19 @@ $(document).ready(function(){
                         method: 'POST',
                         dataType: 'json',
                         cache: false,
-                        data: {the_request:reqid},
+                        data: {the_request:reqid, db:db},
                         success: function (data) {
                             $('.ga_contents[ga_request='+reqid+'] .ga_c_payments').html(data.data1);
                             $('.ga_contents[ga_request='+reqid+'] .ga_c_positions').html(data.data2);
-                            $('.ga_contents[ga_request='+reqid+'] .ga_c_giveaways').html(data.data3);
                             $('.ga_contents[ga_request='+reqid+'] .ga_options').html(data.data4);
+
                             $('#add_payment').toggleClass('come_here');
                             $('#add_payment input[name=1]').val('');//Стираем все данные
                             $('#add_payment input[name=2]').val('');//Стираем все данные
                             $('#add_payment input[name=3]').val('');//Стираем все данные
                             $('#button_add_payment').attr('requestid','-');//Стираем номер заявки из кнопки добавления
                             $('#button_add_payment').attr('paymentid','-');//Стираем номер платежки из кнопки добавления
+                            $('#button_add_payment').attr('database','-');//Стираем базу данных из кнопки добавления
                         }
                     });
                 }
@@ -1587,11 +1591,11 @@ $(document).ready(function(){
 
     });
 
-    $(document).off('click.show_hr1').on('click.show_hr1', '.green, .lightgreen, .yellow, .lightblue, .red', function(event){
+    $(document).off('click.show_hr1').on('click.show_hr1', '.green, .lightgreen, .yellow, .lightblue, .red, .pink', function(event){
         $(event.target).children('input').toggle();
     });
 
-    $(document).off('click.r1span').on('click.r1span', '.green span, .lightgreen span, .yellow span, .lightblue span, .red span', function(event){
+    $(document).off('click.r1span').on('click.r1span', '.green span, .lightgreen span, .yellow span, .lightblue span, .red span, .pink span', function(event){
         $(event.target).next('input').trigger('click.show_hr1');
     });
 

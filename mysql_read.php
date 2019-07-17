@@ -1428,11 +1428,11 @@ if ( isset($_POST['pos_c_c']) &&  isset($_POST['posid'])){
                 break;
         }
 
-        $statement=$pdo->prepare("SELECT $column FROM `req_positions` WHERE req_positionid = ?");
+        $statement=$database->prepare("SELECT $column FROM `req_positions` WHERE req_positionid = ?");
 
-        $pdo->beginTransaction();
+        $database->beginTransaction();
         $statement->execute(array($posid));
-        $pdo->commit();
+        $database->commit();
 
         $result = $statement->fetch();
 
@@ -1440,7 +1440,7 @@ if ( isset($_POST['pos_c_c']) &&  isset($_POST['posid'])){
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $pdo->rollback();
+        $database->rollback();
         print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 };
@@ -1451,14 +1451,15 @@ if(isset($_POST['pay_reqid']) && isset($_POST['pay_id'])){
     $paymentid = $_POST['pay_id'];
     $requestid = $_POST['pay_reqid'];
     try{
-        $pdo->beginTransaction();
-        $statement = $pdo->prepare("SELECT * FROM `payments` WHERE payments_id=? AND requestid=?");
+        $database->beginTransaction();
+        $statement = $database->prepare("SELECT * FROM `payments` WHERE payments_id=? AND requestid=?");
         $statement->execute(array($paymentid,$requestid));
-        $pdo->commit();
+        $database->commit();
         $result = $statement->fetch();
         echo json_encode($result);/*Перевели массив расценки в формат JSON*/
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
+        $database->rollback();
         print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
     }
 }
