@@ -183,6 +183,13 @@ $(document).ready(function(){
     })
 
 
+    //Скрывание/показываение информации о покупателе
+    $(document).off('click.hide_show_byer_info').on('click.hide_show_byer_info', '#toggle_byer_info', function (event) {
+        console.log('s_h_b_i pushed');
+        $(event.target).toggleClass('green');
+        $('#byer_info').toggle();
+    })
+
 
 
 

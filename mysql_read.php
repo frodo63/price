@@ -1077,13 +1077,13 @@ if(isset($_POST['byerid_info'])){
     $get_byer_info->execute(array($byer));
     $gbi_f = $get_byer_info->fetch(PDO::FETCH_ASSOC);
 
-echo "<table>
-<tr><td colspan='2'>".$gbi_f['name']."</td></tr>
-<tr><td>отсрочка</td><td>".$gbi_f['ov_wt']."</td></tr>
-<tr><td>енот</td><td>".$gbi_f['ov_tp']."</td></tr>
-<tr><td>обнал</td><td>".$gbi_f['ov_firstobp']."</td></tr>
-<tr><td>коммент</td><td>".$gbi_f['comment']."</td></tr>
-</table>";
+echo"<div>
+<span>".$gbi_f['name']."</span><br>
+<span>отсрочка</span> - <span>".$gbi_f['ov_wt']."</span><br>
+<span>енот</span> - <span>".$gbi_f['ov_tp']."</span><br>
+<span>обнал</span> - <span>".$gbi_f['ov_firstobp']."</span><br>
+<span>".$gbi_f['comment']."</span>
+</div>";
 }
 
 if(isset($_POST['winner_trade'])){
@@ -1102,3 +1102,29 @@ if(isset($_POST['winner_trade'])){
     }
 
 }
+
+
+//ИНФА список накладных в расценке
+if(isset($_POST['executes_list'])){
+    $reqid= $_POST['executes_list'];
+    $get_exe_list = $database->prepare("SELECT executed,execute_1c_num,sum FROM executes LEFT JOIN requests ON executes.requests_uid=requests.requests_uid WHERE requests_id = ?");
+
+    try{
+        $get_exe_list->execute(array($reqid));
+        $get_exe_list_fetched = $get_exe_list->fetchAll(PDO::FETCH_ASSOC);
+        echo "<ul>";
+        foreach($get_exe_list_fetched as $exe){
+            echo "<li>".$exe['execute_1c_num']." от ".$exe['executed']." - ".$exe['sum']."</li>";
+        }
+        echo "</ul>";
+
+    }catch( PDOException $Exception ) {
+    $database->rollback();
+    // Note The Typecast To An Integer!
+    print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+}
+
+
+
+}
+

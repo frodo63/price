@@ -1541,55 +1541,76 @@ tr[pricingid] td {
   right: 1vw;
   height: 4vw;
   width: 12vw;
-  font-size: 3vh;
+  font-size: 2.5vh;
   text-align: right;
 }
 
 /* line 1064, ../sass/_mysql_styles.scss */
+#toggle_byer_info {
+  /*&:hover{
+    background-color: green;
+    color: white;
+  }*/
+  position: absolute;
+  top: 8vw;
+  right: 1vw;
+  font-size: 3vh;
+  font-weight: bold;
+}
+
+/* line 1075, ../sass/_mysql_styles.scss */
 #byer_info {
+  display: none;
+  border: 1px solid black;
   position: absolute;
   right: 1vw;
-  top: 8vw;
-  height: 8vw;
-  width: 16vw;
+  top: 11vw;
+  text-align: right;
+  font-size: 2.5vh;
+  padding: 5px;
 }
-/* line 1066, ../sass/_mysql_styles.scss */
+/* line 1077, ../sass/_mysql_styles.scss */
 #byer_info table tr:first-child td {
   text-align: center;
 }
-/* line 1067, ../sass/_mysql_styles.scss */
+/* line 1078, ../sass/_mysql_styles.scss */
 #byer_info table td {
   border: 1px solid grey;
-  font-size: 3vh;
+  font-size: 2.5vh;
 }
-/* line 1068, ../sass/_mysql_styles.scss */
+/* line 1079, ../sass/_mysql_styles.scss */
 #byer_info table td:first-child {
   width: 30%;
   text-align: left;
 }
-/* line 1069, ../sass/_mysql_styles.scss */
+/* line 1080, ../sass/_mysql_styles.scss */
 #byer_info table td:nth-child(2) {
   width: 70%;
   text-align: right;
 }
 
-/* line 1082, ../sass/_mysql_styles.scss */
+/* line 1096, ../sass/_mysql_styles.scss */
 .pointed {
   color: white;
   background-color: black;
 }
 
-/* line 1088, ../sass/_mysql_styles.scss */
+/* line 1102, ../sass/_mysql_styles.scss */
 #towhatbase {
   color: green;
   font-weight: 600;
 }
 
-/* line 1093, ../sass/_mysql_styles.scss */
+/* line 1107, ../sass/_mysql_styles.scss */
 .givaways_list h2 {
   margin: 0;
   padding: 0;
   font-size: 2vh;
+}
+
+/* line 1113, ../sass/_mysql_styles.scss */
+.up {
+  display: block;
 }
 
 /* line 1, ../sass/_price.scss */

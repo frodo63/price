@@ -871,7 +871,7 @@ if(isset($_POST['sync_file'])){
                     }*/
 
                     $check_executes = $database->prepare("SELECT executes_uid FROM executes WHERE executes_uid = ?");
-                    $insert_execute = $database->prepare("INSERT INTO executes (executes_uid,requests_uid,executed,execute_1c_num) VALUES(?,?,?,?)");
+                    $insert_execute = $database->prepare("INSERT INTO executes (executes_uid,requests_uid,executed,execute_1c_num,sum) VALUES(?,?,?,?,?)");
 
                     foreach ($file_array as $row){
                         $temp_array = explode(';',$row);
@@ -881,6 +881,7 @@ if(isset($_POST['sync_file'])){
                          * $temp_array[1] - uid заказа
                          * $temp_array[2] - Номер реализации
                          * $temp_array[3] - Дата реализации
+                         * $temp_array[4] - Сумма
                          */
 
                         /*Проверяем, есть ли в системе такая реализация, если нет - то заносим в базу. Если есть - ничего не делаем
@@ -892,7 +893,8 @@ if(isset($_POST['sync_file'])){
                             $temp_array[1];//uid заказа
                             $temp_array[2];//Номер реализации
                             $temp_array[3] = substr($temp_array[3],6,4 )."-".substr($temp_array[3],3,2)."-".substr($temp_array[3],0,2);//Дата реализации
-                            $insert_execute->execute(array($temp_array[0], $temp_array[1],$temp_array[3], $temp_array[2]));
+                            $temp_array[4];//Сумма
+                            $insert_execute->execute(array($temp_array[0], $temp_array[1],$temp_array[3], $temp_array[2], $temp_array[4]));
                         }
                     }
                     echo"Реализации пройдены.";

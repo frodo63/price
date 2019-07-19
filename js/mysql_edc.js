@@ -514,6 +514,16 @@ $(document).ready(function() {
             }
         });
 
+        //АЯКС на список накладных
+        $.ajax({
+            url: 'mysql_read.php',
+            method: 'POST',
+            data: {executes_list:reqid, db:db},
+            success: function (data) {
+                $('#executes_list').html(data);
+            }
+        });
+
         window.scrollTo(0, 0);
     });
 
@@ -544,6 +554,7 @@ $(document).ready(function() {
         $('.history_knam').html('');
         $('.history_kpok').html('');
         $('#byer_info').html('');
+        $('#executes_list').html('');
         $('#request_info').text('');
         $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports').removeClass('pushed');
         $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports').hide();
@@ -621,6 +632,7 @@ $(document).ready(function() {
         $('.history_knam').html('');
         $('.history_kpok').html('');
         $('#byer_info').html('');
+        $('#executes_list').html('');
         $('#request_info').text('');
 
         /*Вставим прайсингайди в прайсингвиндоу ПРОБНОЕ!!!*/
@@ -715,6 +727,16 @@ $(document).ready(function() {
             data: {byerid_info:byerid, db:db},
             success: function (data) {
                 $('#byer_info').html(data);
+            }
+        });
+
+        //АЯКС на список накладных
+        $.ajax({
+            url: 'mysql_read.php',
+            method: 'POST',
+            data: {executes_list:reqid, db:db},
+            success: function (data) {
+                $('#executes_list').html(data);
             }
         });
     });
