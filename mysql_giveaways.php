@@ -27,7 +27,7 @@ if (isset($_POST['the_byer']) && isset($_POST['year'])){
         $dbs_array[1][4] = $getbyersidip_fetched['byersid_ip'];
 
         echo "<input byer ='".$the_byer."'  class='count_rent_whole_byer' type='button' value='Пересчитать рентабельность во всех заявках'><br>";
-        echo "<input byer ='".$the_byer."' class='refresh_r1_byer' type='button' value='ПЕРЕСЧИТАТЬ'>";
+        echo "<input byer ='".$the_byer."' class='refresh_r1_byer single' type='button' value='ПЕРЕСЧИТАТЬ'>";
         echo "<br><br><input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2018'><input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2019'><br><br>";
         echo "<br><span class='ga_requests_period'><b>Заявки за ".$the_year." год:</b></span><br><br>";
         echo "<table><thead><tr><th>Дата</th><th>Номер заказа в 1С</th><th></th><th>База</th><th>Накладная</th><th>Сумма заявки</th><th>Начислено</th><th>Статус заявки</th></tr></thead><tbody>";
@@ -150,8 +150,9 @@ GROUP BY 1c_num");*/
 
                 //Выводим сумму начислений по заявке
                 $result.="<td class='count_req_r1'>".round($req_count,2)."</td>";
-                //Начисления к выдаче берутся лишь в том случае, если заказ оплачен. То есть, $req_pay_ostatok <=0
+                //НАчисления к выдаче берутся только если по заказу точно будет движение, то есть когда есть какие-то платежи входящие
                 if ($req_pay_ostatok <= 0){
+                //if ($req_pay > 0){
                     $total_count += round($req_count,2);
                 }
 

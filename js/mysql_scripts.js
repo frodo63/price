@@ -588,8 +588,14 @@ $(document).ready(function(){
     $(document).off('click.ga_req_refresh').on('click.ga_req_refresh', '.refresh_r1_byer', function (event) {
         var thebyer = $(event.target).attr('ga_byer');
         var year = $(event.target).val();
+        //ЕСЛИ НАЖАТА кнопка "ПЕРЕСЧИТАТЬ", год берется из другого места
+        if($(event.target).hasClass('single')){
+            year = $(event.target).parent('.ga_byer_requests').attr('year');
+            thebyer = $(event.target).attr('byer');
+        }
 
-
+        console.log(year);
+        console.log(thebyer);
         $.ajax({
             url: 'mysql_giveaways.php',
             method: 'POST',
