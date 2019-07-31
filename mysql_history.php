@@ -298,7 +298,7 @@ if (isset($_POST['post_trade_hist']) && isset($_POST['trade_posid_hist'])){
 
             $getname_trade = $database[0]->prepare("SELECT name FROM trades LEFT JOIN allnames ON trades.trades_nameid = allnames.nameid WHERE trades_uid = ?");//Имя товара
             $get_purchases = $database[0]->prepare("SELECT * FROM purchases WHERE trade_uid = ? ORDER BY incdoc_date DESC");//Показываем все закупки с этим товаром
-            $getname_seller = $database[0]->prepare("SELECT name FROM sellers LEFT JOIN allnames ON sellers.sellers_nameid = allnames.nameid WHERE sellers_uid = ?");//Из закупки берем uid поставщика и получаем его имя
+            $getname_seller = $database[0]->prepare("SELECT name,sellers_id FROM sellers LEFT JOIN allnames ON sellers.sellers_nameid = allnames.nameid WHERE sellers_uid = ?");//Из закупки берем uid поставщика и получаем его имя
             $get_position_data = $database[0]->prepare("SELECT purchased, purchase_id FROM req_positions WHERE req_positionid = ?");//Получаем данные по привязанным закупкам у текущей позиции
 
             $database[0]->beginTransaction();
@@ -319,6 +319,7 @@ if (isset($_POST['post_trade_hist']) && isset($_POST['trade_posid_hist'])){
                 $getname_seller->execute(array($pur['seller_uid']));
                 $getname_seller_fetched = $getname_seller->fetch(PDO::FETCH_ASSOC);
                 $seller_name = $getname_seller_fetched['name'];
+                $seller_id = $getname_seller_fetched['sellers_id'];
 
                 $phpdate = strtotime($pur['incdoc_date']);
                 $mysqldate = date('d.m.Y', $phpdate);
@@ -330,11 +331,11 @@ if (isset($_POST['post_trade_hist']) && isset($_POST['trade_posid_hist'])){
                 }
                 $respur .="<td>".$mysqldate."</td>";
                 $respur .="<td>".$pur['incdoc_num']."</td>";
-                $respur .="<td>".$seller_name."</td>";
+                $respur .="<td class='pur_seller_name'>".$seller_name."</td>";
                 $respur .="<td>".$pur['kol']."</td>";
-                $respur .="<td>".number_format($pur['price'],2,'.',' ')."</td>";
+                $respur .="<td class='pur_price'>".number_format($pur['price'],2,'.',' ')."</td>";
                 $respur .="<td>".$database[3]."</td>";
-                $respur .="<td><input type='button' value='+' class='attach_pur' date='".$pur['incdoc_date']."' pur_id='".$pur['purchases_id']."'database = '".$database[1]."'></td>";
+                $respur .="<td><input type='button' value='+' class='attach_pur' sellerid='".$seller_id."' date='".$pur['incdoc_date']."' pur_id='".$pur['purchases_id']."'database = '".$database[1]."'></td>";
                 $respur .="</tr>";
                 $resulting_purs[$pur['incdoc_date']] = $respur;
             }

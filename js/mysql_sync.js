@@ -439,10 +439,19 @@ $(document).ready(function(){
         var pur_id_to_attach = $(event.target).attr('pur_id');
         var db = $(event.target).attr('database');
         var dbprwindow = $('#pricingwindow').attr('database');
+        var sellers_id = $(event.target).attr('sellerid');
+        var pur_price = $(event.target).parents('td').siblings('.pur_price').text();
+        var seller_name = $(event.target).parents('td').siblings('.pur_seller_name').text();
+
+        console.log(sellers_id);
+        console.log(pur_price);
+        console.log(typeof(pur_price));
+        console.log(seller_name);
 
         //Сравнить db  с db
         if(db == dbprwindow){
-            console.log('База раценки и база закупки совпадают.')
+            console.log('База раценки и база закупки совпадают.');
+
 
             if($('#pricingwindow').attr('positionid') == '-'){
                 var position_to_attach = $('#pricingwindow').attr('preditposid');
@@ -457,6 +466,15 @@ $(document).ready(function(){
                     data: {attach_pur_date:date_to_attach, attach_pur_id:pur_id_to_attach, position_to_attach:position_to_attach, db:db},
                     success: function (data) {
                         $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+
+                        //Добавить Цену закупа в zak
+                        //Добавить Поставщика в seller
+                        //В кнопке должно быть еще и sellerid, имя поставщика и закупочная цена
+
+                        $('#seller').attr('seller_id', sellers_id);
+                        $('#seller').val(seller_name);
+                        $('#zak').val(parseFloat(pur_price.replace(' ', '')));
+
                         //отобразить изменившиеся данные
                         var trade = $('#trade').attr('trade_id');
                         if($('#pricingwindow').attr('preditposid') == '-'){
