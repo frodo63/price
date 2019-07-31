@@ -42,7 +42,8 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         <input id='button_history' hist_byer='' hist_trade='' type='button' value='?'>
         <input name='fixate' id='fixate' type='button' value='Закрепить'/>
         </div>
-        <div id='rent'><h2>Рентабельность:</h2><h1>0</h1><input id='rent_in' type='number' name='rent_in' value='0' min='0' step='0.01' size='2'  placeholder='Задать рентабельность' ></div>        
+        <div id='rent'><h2>Рентабельность:</h2><h1>0</h1></div>        
+        <div id='rent_input'><h2>Задать рентабельность:</h2><br><input id='rent_in' type='number' value='0' min='0' step='0.01' size='2'  placeholder='Задать' ></div>        
         <div class='history'></div>
         <div class='history_knam'></div>
         <div class='history_kpok'></div>

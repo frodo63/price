@@ -1,28 +1,84 @@
 $(document).ready(function(){
 
+    function differ(a,b){return Math.abs(a-b);}
+
+    function compareRents(rent, rent_in, op, callback){
+        console.log('Inside compareRents');
+        var diff = differ(rent,rent_in);
+        var pace;
+
+        if(diff <= 0.05){
+            console.log(1);
+            return false;
+        }else if(diff > 0.05 && diff < 0.1 ){
+            pace = 0.1;
+            console.log(6+'шаг = 0.1');
+        }
+        else if(diff > 0.1 && diff < 0.5 ){
+            pace = 0.2;
+            console.log(5+'шаг = 0.2');
+        }
+        else if(diff > 0.5 && diff < 1){
+            pace = 1;
+            console.log(4+'шаг = 1');
+        }
+        else if(diff > 1){
+            pace = 2;
+            console.log(3+'шаг = 2');
+        }
+        else if(diff > 2){
+            pace = 4;
+            console.log(2+'шаг = 4');
+        }
+
+        if (rent > rent_in){
+            console.log('больше');
+            op = op - pace;
+        }
+        if (rent < rent_in){
+            console.log('меньше');
+            op = op + pace;
+        }
+
+        $('#op').val(op);
+
+        callback();
+        return true;
+    }
+
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
     //Задать рентабельность
-    $('#rent_in').change(function () {
-        var zak = Number(Number($('#zak').val()).toFixed(3));      //Закупочная цена (на шт)
-        var tzrknam = Number(Number($('#tzrknam').text()).toFixed(3));      //Транспортные (на шт)
-        var tzrkpok = Number(Number($('#tzrkpok').text()).toFixed(3));      //Транспортные (на шт)
-        var tzr = tzrknam + tzrkpok;
-        var a = zak+tzr;
-        var wtr = Number(Number($('#wtr').text()).toFixed(2));
-        var opr = Number(Number($('#opr').text()).toFixed(2));
+    $('#rent_in').off('change.rent_in').on('change.rent_in', function () {
+        console.log('Inside change.rent');
+        var op = Number(Number($('#op').val()).toFixed(3));
+        var rent = Number(Number($('#rent h1').text()).toFixed(3));
+        var rent_in = Number(Number($('#rent_in').val()).toFixed(3));
 
-        var rent = $('#rent_in').val();
+        //console.log(typeof(rent)+rent);
+        //console.log(typeof(rent_in)+rent_in);
+        //console.log(differ(rent,rent_in));
 
-        //Функция приведения к рентабельности.
-        //Формула рентабельности: Наши/Цену = Рентабельность. Цена = Наши/Рентабельность
-        //Наши = сколько рублей мы получим с единицы товара, то есть opr.
-        //1. Из opr получить op:
-        var op = opr*100/(a + wtr);
-        $('#op').val(op);
-        //2. Функция по изменению всего вокруг в зависимости от op
-        $('#op').trigger('change');
-        //3. Получение цены по общей формуле.
-        givePrice();
+        //Функция вызывается только если некоторые переменные не undefined
+
+        if(typeof rent === 'undefined' || typeof rent_in === 'undefined' || typeof op === 'undefined' || rent === '' || rent_in === '' || op === '' || isNaN(rent) || isNaN(rent_in) || isNaN(op)){
+            alert("Данных недостаточно");
+            return false;
+        }else{
+            var f = compareRents(rent,rent_in,op, function (){
+                changeOp(function(){
+                    givePrice();
+                });
+            });
+
+            f;//Это самый настоящий вызов функции =))
+
+            if (!f){
+                return false;
+
+            }else{$('#rent_in').trigger('change.rent_in');}
+        }
+
+
     });
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
@@ -204,9 +260,15 @@ $(document).ready(function(){
     });
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
     //ИЗМЕНЕНИЕ НАШЕГО ПРОЦЕНТА
-    $('#op').off('change.op').on('change.op', (function(){
-    //$('#op').change(function(){
-        console.log('Изменился наш процент');
+    $('#op').off('change.op').on('change.op', function(){
+        console.log('Inside change.op');
+        changeOp(function(){
+            givePrice();
+        })
+    });
+    function changeOp(callback){
+        console.log('Inside changeOp function');
+        //console.log('Изменился наш процент');
         //Переменные
         var zak = Number(Number($('#zak').val()).toFixed(3));      //Закупочная цена (на шт)
         var tzr = Number(Number($('#tzr').text()).toFixed(3));      //Транспортные (на шт)
@@ -221,7 +283,7 @@ $(document).ready(function(){
         $('#opr').text(Number(((a+wtr)*op/100).toFixed(2)));
 
         var opr = Number($('#opr').text());
-        console.log('zak+kol ='+a+', wtr = '+wtr+', op='+op+'. opr ='+opr);
+        //console.log('zak+kol ='+a+', wtr = '+wtr+', op='+op+'. opr ='+opr);
 
         //Изменение еноторублей
         $('#tpr').text(Number(((a+wtr+opr)*tp/100).toFixed(2)));
@@ -237,8 +299,8 @@ $(document).ready(function(){
         //Стираем переменнные
         zak=tzr=a=tp=op=firstobp=wt=wtr=opr=tpr=firstobpr=null;
         //Идет расчет цены
-        givePrice();
-    }));
+        callback();
+    }
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
     //ИЗМЕНЕНИЕ ЕНОТОПРОЦЕНТА
     $('#tp').change(function(){
@@ -322,9 +384,9 @@ $(document).ready(function(){
 
 
     });
-
     //Главная функция
     function givePrice(){
+        console.log('Inside givePrice');
         //Переменные
         var lzak = Number($('#zak').val());                         //Закупочная цена (за 1 единицу товара)
         var lkol = Number($('#kol').val());                         //Количество товара
@@ -339,7 +401,6 @@ $(document).ready(function(){
         var firstoh = Number(Number($('#firstoh').val()).toFixed(2));
 
         //РАСЧЕТ ЦЕНЫ И РЕНТАБЕЛЬНОСТИ
-        console.log('inactive fixate');
         //Расчет цены
         var fixed = 0;
         var la = (lzak + ltzr);             //Сумма закупа и тзр, именуемое "А"
@@ -362,9 +423,9 @@ $(document).ready(function(){
         //Расчет рентабельности
         //var opr = Number((Number($('#opr').text())).toFixed(2));
         var lrentS = lnam/lprice*100;
-        $('#rent h1').text((lrentS).toFixed(3) + ' %');
-        console.log('Проверка расчета рентабельности. Наше: '+lnam+'. Цена: '+lprice+'. Рентабельность: '+lrentS+'.');
-        console.log('Отношение наших к цене: '+lnam/lprice);
+        $('#rent h1').text((lrentS).toFixed(3));
+        //console.log('Проверка расчета рентабельности. Наше: '+lnam+'. Цена: '+lprice+'. Рентабельность: '+lrentS+'.');
+        //console.log('Отношение наших к цене: '+lnam/lprice);
 
         //Разбили прайстекст на составляющие
         var pricetext = '<p>Цена: <b>' + (lprice).toFixed(2) + '</b> При расчете :<br>' +
@@ -377,11 +438,11 @@ $(document).ready(function(){
             (lim).toFixed(2) + 'руб. за шт.' +
             '<br>Чистыми : ' + (clearp).toFixed(3) + ' %' +
             '<br> На руки: ' + (Number((lim).toFixed(2)) - firstobpr).toFixed(2) + ' руб. с 1 шт.' +
-            '<br>При рентабельности: ' + (lrentS).toFixed(3) + ' % <input type="button" name="save" id="save" value="Сохранить этот результат" />';
+            '<br>При рентабельности: ' + (lrentS).toFixed(3) + ' % ' +
+            '<input type="button" name="save" id="save" value="Сохранить этот результат" />';
         $('#cases').html(pricetext);
         pricetext = null;
         $('#cases').slideDown();
-
         $('#obnal').slideDown();
 
         /*////////////////////////БЛОК ОТПРАВКИ ФОРМЫ В БАЗУ///////////////////////////*/
@@ -403,9 +464,6 @@ $(document).ready(function(){
 
                 lprice = Number(Number($('#pr').val()).toFixed(3));
                 firstoh = Number(Number($('#firstoh').val()).toFixed(2));
-
-                console.log(lprice+" типа "+typeof(lprice));
-                console.log(firstoh+" типа "+typeof(firstoh));
 
                 var formData =
                     '&db=' + db +
@@ -433,7 +491,7 @@ $(document).ready(function(){
                     '&wtimeday=' + Number(Number($('#wtimeday').text()).toFixed(2));
                 if(positionID != '-'){//Если это первое сохранение расценки
                     formData += '&positionid=' + positionID;
-                    console.log(formData);
+                    //console.log(formData);
                     //Аякс скрипт на savepricing
                     $.ajax({
                         url: 'mysql_save.php',
@@ -459,7 +517,7 @@ $(document).ready(function(){
                     //это preditposid
 
                     formData += '&pricingid=' + pricingID;
-                    console.log(formData);
+                    //console.log(formData);
                     //Аякс скрипт на editpricing
                     $.ajax({
                         url: 'mysql_save.php',
@@ -520,6 +578,7 @@ $(document).ready(function(){
             }
         });
     }
+
 
 
 

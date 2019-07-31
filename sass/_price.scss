@@ -88,9 +88,37 @@ p {
     width: 7vw;
 }
 
-#op{
+#op, #rent_in{
     border: 5px solid green;
 }
+
+#rent_input{
+  position: absolute;
+  top: 21.5vh;
+  right: 20vh;
+  width: 13vw;
+  #rent_in{
+    font-size: 2.5vh;
+    width: 150px;
+  }
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
 
 #obtzr, #obtzrknam, #obtzrkpok, #op+p, #tp+p, #obp+p, #marge, #margek, #obpr, #firstobp+p, #id, p#byer, p#seller, p#trade, #onhands, #cases p, #realop, #realtp, #firstoh, #realop, #realtp, #wtimeday, #clearp, #oh, #wtr, #clearpnar
 {
