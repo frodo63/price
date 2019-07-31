@@ -1648,8 +1648,12 @@ p {
   left: 39vw;
   width: 20vw;
 }
+/* line 29, ../sass/_price.scss */
+#rent input {
+  text-align: center;
+}
 
-/* line 31, ../sass/_price.scss */
+/* line 35, ../sass/_price.scss */
 #result {
   position: absolute;
   top: 10vh;
@@ -1657,13 +1661,13 @@ p {
   width: 16vw;
 }
 
-/* line 39, ../sass/_price.scss */
+/* line 43, ../sass/_price.scss */
 .active {
   border: solid 5px white;
   font-size: 20px;
 }
 
-/* line 46, ../sass/_price.scss */
+/* line 50, ../sass/_price.scss */
 #fixate {
   display: none;
   line-height: 5vh;
@@ -1672,22 +1676,22 @@ p {
   font-weight: bold;
 }
 
-/* line 57, ../sass/_price.scss */
+/* line 61, ../sass/_price.scss */
 #rent {
   clear: left;
 }
 
-/* line 61, ../sass/_price.scss */
+/* line 65, ../sass/_price.scss */
 #price {
   margin: 0;
 }
 
-/* line 66, ../sass/_price.scss */
+/* line 70, ../sass/_price.scss */
 .pricing_container {
   border: 3px solid lightgray;
 }
 
-/* line 70, ../sass/_price.scss */
+/* line 74, ../sass/_price.scss */
 #price,
 #price input,
 #save {
@@ -1695,22 +1699,27 @@ p {
   font-weight: bold;
 }
 
-/* line 77, ../sass/_price.scss */
+/* line 81, ../sass/_price.scss */
 #zak, #kol, #tzr, #tzrknam, #tzrkpok, #rop, #rtp {
   width: 10vw;
 }
 
-/* line 82, ../sass/_price.scss */
+/* line 86, ../sass/_price.scss */
 #op, #tp, #obp, #firstobp, #wtime {
   width: 7vw;
 }
 
-/* line 87, ../sass/_price.scss */
+/* line 91, ../sass/_price.scss */
+#op {
+  border: 5px solid green;
+}
+
+/* line 95, ../sass/_price.scss */
 #obtzr, #obtzrknam, #obtzrkpok, #op + p, #tp + p, #obp + p, #marge, #margek, #obpr, #firstobp + p, #id, p#byer, p#seller, p#trade, #onhands, #cases p, #realop, #realtp, #firstoh, #realop, #realtp, #wtimeday, #clearp, #oh, #wtr, #clearpnar {
   display: inline;
 }
 
-/* line 92, ../sass/_price.scss */
+/* line 100, ../sass/_price.scss */
 #obnal, #margediv {
   display: none;
   padding: 1vh;
@@ -1720,7 +1729,7 @@ p {
 {
     border: solid 1px green;
 }*/
-/* line 103, ../sass/_price.scss */
+/* line 111, ../sass/_price.scss */
 #go {
   position: absolute;
   top: 10vh;
@@ -1730,7 +1739,7 @@ p {
   width: 15vw;
 }
 
-/* line 112, ../sass/_price.scss */
+/* line 120, ../sass/_price.scss */
 #archive, #create {
   position: absolute;
   top: 1vh;
@@ -1738,7 +1747,7 @@ p {
   font-size: 4vh;
 }
 
-/* line 119, ../sass/_price.scss */
+/* line 127, ../sass/_price.scss */
 #cases {
   position: absolute;
   width: 25vw;
@@ -1748,7 +1757,7 @@ p {
   font-size: 3vh;
 }
 
-/* line 128, ../sass/_price.scss */
+/* line 136, ../sass/_price.scss */
 #cases input {
   font-size: 3vh;
 }
@@ -1801,7 +1810,7 @@ th {
     color: white;
 }*/
 /*РАЗМЕР САМОГО ОКНА*/
-/* line 185, ../sass/_price.scss */
+/* line 193, ../sass/_price.scss */
 #editp, #copyp {
   position: relative;
   height: 0vh;
@@ -1809,7 +1818,7 @@ th {
 }
 
 /*Онформационное окошко*/
-/* line 192, ../sass/_price.scss */
+/* line 200, ../sass/_price.scss */
 #msg {
   position: fixed;
   top: 85vh;
@@ -1822,23 +1831,23 @@ th {
   text-align: center;
 }
 
-/* line 202, ../sass/_price.scss */
+/* line 210, ../sass/_price.scss */
 #msg p {
   background: green;
   color: white;
 }
 
-/* line 208, ../sass/_price.scss */
+/* line 216, ../sass/_price.scss */
 #editmsg p, #copymsg p, #hide {
   background-color: green;
 }
 
-/* line 211, ../sass/_price.scss */
+/* line 219, ../sass/_price.scss */
 #editmsg, #copymsg, #hide {
   background-color: green;
 }
 
-/* line 215, ../sass/_price.scss */
+/* line 223, ../sass/_price.scss */
 #hide {
   cursor: pointer;
   position: absolute;
@@ -1854,40 +1863,40 @@ th {
 }
 
 /*Вещи, специфические для add_request*/
-/* line 240, ../sass/_price.scss */
+/* line 248, ../sass/_price.scss */
 #go_request {
   font-size: 10vh;
 }
 
-/* line 245, ../sass/_price.scss */
+/* line 253, ../sass/_price.scss */
 tr[id^="inside"] {
   display: none;
 }
 
-/* line 249, ../sass/_price.scss */
+/* line 257, ../sass/_price.scss */
 tr[id^="inside"] td:hover {
   background-color: black;
   color: white;
   border: 1px solid white;
 }
 
-/* line 255, ../sass/_price.scss */
+/* line 263, ../sass/_price.scss */
 tr[id^="inside"] td input {
   display: inline;
   vertical-align: top;
 }
 
-/* line 260, ../sass/_price.scss */
+/* line 268, ../sass/_price.scss */
 tr[id^="inside"] td {
   text-align: left;
 }
 
-/* line 264, ../sass/_price.scss */
+/* line 272, ../sass/_price.scss */
 #creating {
   display: none;
 }
 
-/* line 268, ../sass/_price.scss */
+/* line 276, ../sass/_price.scss */
 .savename {
   background-color: red;
   color: white;
