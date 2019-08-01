@@ -46,6 +46,50 @@ $(document).ready(function(){
         return true;
     }
 
+    function comparePrices(price, price_in, op, callback){
+        console.log('Inside comparePrices');
+        var diff = differ(price,price_in);
+        var pace;
+
+        if(diff <= 1){
+            console.log(1);
+            return false;
+        }else if(diff > 1 && diff < 10 ){
+            pace = 0.1;
+            console.log(6+'шаг = 0.1');
+        }
+        else if(diff > 10 && diff < 100 ){
+            pace = 0.5;
+            console.log(5+'шаг = 0.5');
+        }
+        else if(diff > 100 && diff < 1000){
+            pace = 1;
+            console.log(4+'шаг = 1');
+        }
+        else if(diff > 1000){
+            pace = 5;
+            console.log(3+'шаг = 5');
+        }
+        else if(diff > 2){
+            pace = 4;
+            console.log(2+'шаг = 4');
+        }
+
+        if (price > price_in){
+            console.log('больше');
+            op = op - pace;
+        }
+        if (price < price_in){
+            console.log('меньше');
+            op = op + pace;
+        }
+
+        $('#op').val(op);
+
+        callback();
+        return true;
+    }
+
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
     //Задать рентабельность
     $('#rent_in').off('change.rent_in').on('change.rent_in', function () {
@@ -77,8 +121,42 @@ $(document).ready(function(){
 
             }else{$('#rent_in').trigger('change.rent_in');}
         }
+    });
+    /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
+    /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+    //Задать цену
+    $('#pr_in').off('change.price').on('change.price', function () {
+        console.log('Inside change.price');
+        var op = Number(Number($('#op').val()).toFixed(3));
+        //var rent = Number(Number($('#rent h1').text()).toFixed(3));
+        //var rent_in = Number(Number($('#rent_in').val()).toFixed(3));
+        var price = Number(Number($('#pr').val()).toFixed(3));
+        var price_in = Number(Number($('#pr_in').val()).toFixed(3));
 
+        //console.log(typeof(rent)+rent);
+        //console.log(typeof(rent_in)+rent_in);
+        //console.log(differ(rent,rent_in));
+
+        //Функция вызывается только если некоторые переменные не undefined
+
+        if(typeof price === 'undefined' || typeof price_in === 'undefined' || typeof op === 'undefined' || price === '' || price_in === '' || op === '' || isNaN(price) || isNaN(price_in) || isNaN(op)){
+            alert("Данных недостаточно");
+            return false;
+        }else{
+            var f = comparePrices(price,price_in,op, function (){
+                changeOp(function(){
+                    givePrice();
+                });
+            });
+
+            f;//Это самый настоящий вызов функции =))
+
+            if (!f){
+                return false;
+
+            }else{$('#pr_in').trigger('change.price');}
+        }
     });
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
@@ -436,7 +514,7 @@ $(document).ready(function(){
             'НЕ НАМ: '+
             //Им чистыми за 1 шт
             (lim).toFixed(2) + 'руб. за шт.' +
-            '<br>Чистыми : ' + (clearp).toFixed(3) + ' %' +
+            '<br>Чистыми : ' + (clearpnar).toFixed(3) + ' %' +
             '<br> На руки: ' + (Number((lim).toFixed(2)) - firstobpr).toFixed(2) + ' руб. с 1 шт.' +
             '<br>При рентабельности: ' + (lrentS).toFixed(3) + ' % ' +
             '<input type="button" name="save" id="save" value="Сохранить этот результат" />';

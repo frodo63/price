@@ -12,18 +12,18 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
     <form id='price'><div class='sres'></div>
         <input id='button_history_trade' type='button' value='?'><label for='trade'>Товар</label><input trade_id = 'blank' tare='-' autocomplete='off' type='text' name='trade' id='trade' placeholder='Введите товар' size='70'/><div class='sres'></div>
         <input id='button_history_seller' type='button' value='?'><label for='seller'>Поставщик:</label><input seller_id = 'blank' autocomplete='off' type='text' name='seller' id='seller' placeholder='Введите поставщика' size='70'/><div class='sres'></div><br />
-        <label for='zakup'>ЗАКУП ЗА 1 ШТ:</label> <input type='number' name='zak' id='zak' min='1' step='1'/> руб.<br />
-        <label for='kol'>Кол-во:</label> <input type='number' name='kol' id='kol'  min='1'/><br /><br />
-        <label for='tzrknam'>Довезти 1шт ДО НАС:</label><input id='button_history_tzrknam' type='button' value='?'><input type='number' name='tzrknam' id='tzrknam'  min='0' step='1'/> руб. &nbsp&nbsp&nbspС обналом:&nbsp<p id='obtzrknam'></p> руб.<br />
-        <label for='tzrkpok'>Довезти 1шт ДО <span id='byer_name'></span>:</label><input id='button_history_tzrkpok' type='button' value='?'><input type='number' name='tzrkpok' id='tzrkpok'  min='0' step='1'/> руб. &nbsp&nbsp&nbspС обналом:&nbsp<p id='obtzrkpok'></p> руб.<br />
+        <label for='zakup'>ЗАКУП ЗА 1 ШТ:</label><input type='number' name='zak' id='zak' min='1' step='1'/> руб.<br><br>
+        <label for='kol'>Кол-во:</label> <input type='number' name='kol' id='kol'  min='1'/><br><br><br>
+        <label for='tzrknam'>Довезти 1шт ДО НАС:</label><input id='button_history_tzrknam' type='button' value='?'><span id='spacer1'></span><input type='number' name='tzrknam' id='tzrknam'  min='0' step='1'/> руб. &nbsp&nbsp&nbspС обналом:&nbsp<p id='obtzrknam'></p> руб.<br />
+        <label for='tzrkpok'>Довезти 1шт ДО <span id='byer_name'></span>:</label><input id='button_history_tzrkpok' type='button' value='?'><span id='spacer2'></span><input type='number' name='tzrkpok' id='tzrkpok'  min='0' step='1'/> руб. &nbsp&nbsp&nbspС обналом:&nbsp<p id='obtzrkpok'></p> руб.<br />
         
         <label for='tzr'>ТЗР на ШТУКЕ:</label> <span id='tzr'></span> руб.<br /><br />
-        <input type='button' value='Кем и почем возили в течение 14 дней с даты накладной' id='button_history_transports'><br />
+        <input type='button' value='Кем возили' id='button_history_transports'><br />
         <div id='fcount'>
-            <label for='wtime'>ОТСРОЧКА:</label> <input type='number' size='2' name='wtime' id='wtime'  min='0' step='0.03'/> мес. <p id='wtimeday'></p> дней.&nbsp(От поставщика + От покупателя)&nbsp<span id='wtr'></span>.руб<br />           
-            <label for='op'>НАШ ПРОЦЕНТ:</label> <input type='number' size='4' name='op' id='op'  min='1' step='0.01'/>% / <p id='opr'></p> руб.<br />
-            <label for='tp'>ЕНОТ:</label> <input type='number' size='2' name='tp' id='tp'  min='0' step='0.01'/>% / <p id='tpr'></p> руб.(<p id='clearp'></p>&nbspот цены) НА РУКИ : <input id='firstoh' type='number' step='0.01' min='0'></input> руб.(<p id='clearpnar'></p>&nbspот цены) <br/>
-            <label for='firstobp'>ОБНАЛ:</label> <input type='number' size='2' name='firstobp' id='firstobp'  min='0' step='0.1'/>% / <p id='firstobpr'></p> руб.<br />
+            <label for='wtime'>ОТСРОЧКА:</label><span id='spacer3'></span><input type='number' size='2' name='wtime' id='wtime'  min='0' step='0.03'/> мес. <p id='wtimeday'></p> дней.&nbsp(От поставщика + От покупателя)&nbsp<span id='wtr'></span>.руб<br />           
+            <label for='op'>НАШ ПРОЦЕНТ:</label><span id='spacer4'></span><input type='number' size='4' name='op' id='op'  min='1' step='0.01'/>% / <p id='opr'></p> руб.<br />
+            <label for='tp'>ЕНОТ:</label><span id='spacer5'></span><input type='number' size='2' name='tp' id='tp'  min='0' step='0.01'/>% / <p id='tpr'></p> руб.(<p id='clearp'></p>&nbspот цены) НА РУКИ : <input id='firstoh' type='number' step='0.01' min='0'></input> руб.(<p id='clearpnar'></p>&nbspот цены) <br/>
+            <label for='firstobp'>ОБНАЛ:</label><span id='spacer6'></span><input type='number' size='2' name='firstobp' id='firstobp'  min='0' step='0.1'/>% / <p id='firstobpr'></p> руб.<br />
         </div>
                 
         <div id='margediv'>
@@ -38,12 +38,12 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         </div>
         <div id='result'>
         <h2>Итоговая цена:</h2>
-        <input type='number' name='price' id='pr' value='0' min='0' step='0.001'/>
+        <input type='number' name='price' id='pr' value='0' min='0' step='0.001'/>        
         <input id='button_history' hist_byer='' hist_trade='' type='button' value='?'>
+        <input type='number' id='pr_in' value='0' min='0' step='0.01' placeholder='Задать'/>
         <input name='fixate' id='fixate' type='button' value='Закрепить'/>
         </div>
-        <div id='rent'><h2>Рентабельность:</h2><h1>0</h1></div>        
-        <div id='rent_input'><h2>Задать рентабельность:</h2><br><input id='rent_in' type='number' value='0' min='0' step='0.01' size='2'  placeholder='Задать' ></div>        
+        <div id='rent'><h2>Рентабельность:</h2><h1>0</h1><br><br><input id='rent_in' type='number' value='0' min='0' step='0.01' size='2'  placeholder='Задать' ></div>      
         <div class='history'></div>
         <div class='history_knam'></div>
         <div class='history_kpok'></div>
@@ -51,8 +51,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         <div class='history_trade'></div>
         <div class='history_transports'></div>
         <div id='cases'></div>
-    </form>
-        <input type='button' value='__' class='minimizepricing'>                
+    </form>               
         <input type='button' value='X' class='closepricing'>
         <span id='request_info'></span>
         <span>Накладные по заявке:</span>

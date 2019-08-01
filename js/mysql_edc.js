@@ -446,7 +446,7 @@ $(document).ready(function() {
         $('#button_history').attr('hist_byer', byerid);//Дбавляем идентификатор ПОкупателя в инпут по истории
         console.log(byername);
         $('#byer_name').text(byername);
-        $('#request_info').text('№ '+num+' от '+created);
+        $('#request_info').text('Заказ № '+num+' от '+created);
 
         //Запрос в базу за опциями покупателя
         //Проверка на QUEEN
@@ -652,7 +652,7 @@ $(document).ready(function() {
             $('#trade').attr({trade_id : json.tradeid, tare : tare}).val(trade);
             $('#seller').attr('seller_id', json.sellerid).val(seller);
             $('#button_history').attr('hist_trade', json.tradeid);//Добавляем идентификатор Товара в инпут по истории
-            $('#request_info').text('№ '+json.num+' от '+json.created);
+            $('#request_info').text('Заказ № '+json.num+' от '+json.created);
 
             $('#zak').val(json.zak);
             $('#kol').val(json.kol);
