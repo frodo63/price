@@ -21,7 +21,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         <input type='button' value='Кем возили' id='button_history_transports'><br />
         <div id='fcount'>
             <label for='wtime'>ОТСРОЧКА:</label><span id='spacer3'></span><input type='number' size='2' name='wtime' id='wtime'  min='0' step='0.03'/> мес. <p id='wtimeday'></p> дней.&nbsp(От поставщика + От покупателя)&nbsp<span id='wtr'></span>.руб<br />           
-            <label for='op'>НАШ ПРОЦЕНТ:</label><span id='spacer4'></span><input type='number' size='4' name='op' id='op'  min='1' step='0.01'/>% / <p id='opr'></p> руб.<br />
+            <label for='op'>НАШ ПРОЦЕНТ:</label><span id='spacer4'></span><input type='number' size='4' name='op' id='op'  min='0.01' step='0.01'/>% / <p id='opr'></p> руб.<br />
             <label for='tp'>ЕНОТ:</label><span id='spacer5'></span><input type='number' size='2' name='tp' id='tp'  min='0' step='0.01'/>% / <p id='tpr'></p> руб.(<p id='clearp'></p>&nbspот цены) НА РУКИ : <input id='firstoh' type='number' step='0.01' min='0'></input> руб.(<p id='clearpnar'></p>&nbspот цены) <br/>
             <label for='firstobp'>ОБНАЛ:</label><span id='spacer6'></span><input type='number' size='2' name='firstobp' id='firstobp'  min='0' step='0.1'/>% / <p id='firstobpr'></p> руб.<br />
         </div>
@@ -55,7 +55,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         <span>Накладные по заявке:</span>
         <div id='executes_list'></div>
         <br>
-        <input type='button' id='toggle_byer_info' value='?'>
+        <input type='button' id='toggle_byer_info' value='Покупатель info'>
         <div id='byer_info'></div>               
         <script src='js/price_mysql.js'></script>     
 </div>

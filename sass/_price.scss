@@ -45,23 +45,27 @@ $pricecolor : #F0F0F0;
   border-radius: 3px;
   padding:5px;
   background: $pricecolor;
-  height: 14vh;
+  height: 17vh;
   input{
     text-align: center;
   }
   #rent_in{
     font-size: 3vh;
     font-weight: bold;
-    width: 12vw;
+    width: 10vw;
     background: $pricecolor;
+    position: relative;
+    left: 1vw;
   }
   h1{
     display: inline-block;
     height: 38px;
     text-align: center;
-    width: 12vw;
+    width: 10vw;
     margin-top: 0;
     margin-bottom: 0;
+    position: relative;
+    left: 1vw;
   }
 
 }
@@ -75,7 +79,7 @@ $pricecolor : #F0F0F0;
   border-radius: 3px;
   padding: 5px;
   background: $pricecolor;
-  height: 14vh;
+  height: 17vh;
   #pr,#pr_in{
     width: 18vw;
     font-weight: bold;
@@ -121,15 +125,30 @@ $pricecolor : #F0F0F0;
     border: 3px solid lightgray;
 }
 
-#price input,
 #save {
     font-size: 3vh;
+    font-weight: bold;
+}
+
+#price input{
+  font-size: 3vh;
+  font-weight: bold;
+}
+#price #button_history_transports,
+#price #button_history,
+#price #button_history_tzrkpok,
+#price #button_history_tzrknam{
+    font-size: 2vh;
     font-weight: bold;
 }
 
 #zak, #kol, #tzr, #tzrknam, #tzrkpok, #rop, #rtp, #op, #tp, #obp, #firstobp, #wtime {
   width: 10vw;
   text-align: center;
+  font-size:3vh;
+}
+#wtr{
+  font-size:3vh;
 }
 
 

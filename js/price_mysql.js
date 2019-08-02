@@ -2,7 +2,7 @@ $(document).ready(function(){
 
     function differ(a,b){return Math.abs(a-b);}
 
-    function compareRents(rent, rent_in, op, callback){
+    /*function compareRents(rent, rent_in, op, callback){
         console.log('Inside compareRents');
         var diff = differ(rent,rent_in);
         var pace;
@@ -44,8 +44,8 @@ $(document).ready(function(){
 
         callback();
         return true;
-    }
-    function comparePrices(price, price_in, op, callback){
+    }*/
+    /*function comparePrices(price, price_in, op, callback){
         console.log('Inside comparePrices');
         var diff = differ(price,price_in);
         var pace;
@@ -84,9 +84,9 @@ $(document).ready(function(){
 
         callback();
         return true;
-    }
+    }*/
 
-    function compareFastPrices(tick,price,price_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh,callback){
+    function compareFastPrices(pr_index,tick,price,price_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh,callback){
             //console.log('Inside compareFastPrices');
             var diff = differ(price,price_in);
             var pace;
@@ -120,10 +120,10 @@ $(document).ready(function(){
                 //console.log('recursion starts');
                 //console.log('Итерация:'+f[2]+', Цена: '+f[0]+', Рентабельность: '+f[1]);
                 console.log('Итерация:'+f[2]+', Цена: '+f[0]);
-                compareFastPrices(f[2],f[0],price_in,op,lzak,ltzr,ltp,ltpr,wt,firstoh,callback);
+                compareFastPrices(f[4],f[2],f[0],price_in,op,lzak,ltzr,ltp,ltpr,wt,firstoh,callback);
             }
     }
-    function compareFastRents(tick,rent,rent_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh,callback){
+    function compareFastRents(pr_index,tick,rent,rent_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh,callback){
         //console.log('Inside compareFastRents');
         var diff = differ(rent,rent_in);
         var pace;
@@ -154,7 +154,7 @@ $(document).ready(function(){
             //console.log('recursion starts');
             console.log('Итерация:'+f[2]+', Рентабельность: '+f[1]);
             //console.log('Итерация:'+f[2]+', Цена: '+f[0]);
-            compareFastRents(f[2],f[1],rent_in,op,lzak,ltzr,ltp,ltpr,wt,firstoh,callback);
+            compareFastRents(f[4],f[2],f[1],rent_in,op,lzak,ltzr,ltp,ltpr,wt,firstoh,callback);
         }
     }
 
@@ -221,19 +221,23 @@ $(document).ready(function(){
     });*/
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
-    //Задать цену быстрой функцией - РАБОТАЕТ
+    //Задать рентабельность быстрой функцией - РАБОТАЕТ
     $('#rent_in').off('change.fastrent').on('change.fastrent', function () {
         //console.log('Inside changefast.rent');
         var rent = Number(Number($('#rent').val()).toFixed(3));
         var rent_in = Number(Number($('#rent_in').val()).toFixed(3));
         var lzak = Number($('#zak').val());
         var ltzr = Number($('#tzr').text());
+        var lwt = Number($('#wtr').text());
+        var lnam = Number($('#opr').text());
+        var lim = Number($('#tpr').text());
         var ltp = Number(Number($('#tp').val()).toFixed(2));
         var ltpr = Number((Number($('#tpr').text())).toFixed(2));
         var wt = Number(Number($('#wtime').val()).toFixed(2));
         var lop = Number(Number($('#op').val()).toFixed(2));
         var firstoh = Number(Number($('#firstoh').val()).toFixed(2));
         var tick = 0;
+        var pr_index = ltzr + lwt + lnam + lim; //Индекс цены - для определения минимального увеличения цены
         //Функция вызывается только если некоторые переменные не undefined
 
         if(
@@ -244,7 +248,7 @@ $(document).ready(function(){
             alert("Данных недостаточно");
             return false;
         }else{
-            compareFastRents(tick,rent,rent_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh, fastPrice);
+            compareFastRents(pr_index,tick,rent,rent_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh, fastPrice);
         }
     });
 
@@ -256,12 +260,16 @@ $(document).ready(function(){
         var price_in = Number(Number($('#pr_in').val()).toFixed(3));
         var lzak = Number($('#zak').val());
         var ltzr = Number($('#tzr').text());
+        var lwt = Number($('#wtr').text());
+        var lnam = Number($('#opr').text());
+        var lim = Number($('#tpr').text());
         var ltp = Number(Number($('#tp').val()).toFixed(2));
         var ltpr = Number((Number($('#tpr').text())).toFixed(2));
         var wt = Number(Number($('#wtime').val()).toFixed(2));
         var lop = Number(Number($('#op').val()).toFixed(2));
         var firstoh = Number(Number($('#firstoh').val()).toFixed(2));
         var tick = 0;
+        var pr_index = ltzr + lwt + lnam + lim; //Индекс цены - для определения минимального увеличения цены
         //Функция вызывается только если некоторые переменные не undefined
 
         if(
@@ -272,7 +280,7 @@ $(document).ready(function(){
             alert("Данных недостаточно");
             return false;
         }else{
-            compareFastPrices(tick,price,price_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh, fastPrice);
+            compareFastPrices(pr_index,tick,price,price_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh, fastPrice);
         }
     });
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
@@ -578,19 +586,12 @@ $(document).ready(function(){
     });
     //Для быстрого расчета
     function fastPrice(tick,lzak,ltzr,ltp,ltpr,wt,lop,firstoh){
-        //console.log(lzak);
-        //console.log(ltzr);
-        //console.log(ltp);
-        //console.log(ltpr);
-        //console.log(wt);
-        //console.log(lop);
-        //console.log(firstoh);
-
         //Расчет цены
         var la = (lzak + ltzr);
         var lwt = la*0.0125*wt;
         var lnam = (la+lwt)*lop/100;
         var lim = (la+lwt+lnam)*ltp/100;
+        var pr_index = ltzr + lwt + lnam + lim;
 
         var lprice = Number((la + lwt + lim + lnam).toFixed(3));
         //Даем цену
@@ -612,7 +613,7 @@ $(document).ready(function(){
             return false;
         }else{
             tick++;
-            return [lprice, lrentS, tick, lop];
+            return [lprice, lrentS, tick, lop, pr_index];
         }
 
     }

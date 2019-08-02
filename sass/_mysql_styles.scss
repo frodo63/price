@@ -1055,21 +1055,21 @@ tr[pricingid] td {border: 1px solid black}
 
 #request_info{
   position: absolute;
-  top: 5.5vh;
+  top: 11.7vh;
   right: 0.9vw;
   height: 6vw;
   width: 12vw;
   font-size: 2.6vh;
   text-align: right;
-  border: 1px solid black;
   border-radius: 5px;
-  padding:5px;
+  padding: 5px;
+  background: #F0F0F0;
 }
 #toggle_byer_info{
   position: absolute;
-  top: 18.5vh;
+  top: 6.5vh;
   right: 1vw;
-  font-size: 3vh;
+  font-size: 2vh;
   font-weight: bold;
 }
 #byer_info{
@@ -1083,16 +1083,15 @@ tr[pricingid] td {border: 1px solid black}
     }
   }
   display: none;
-  border:1px solid black;
   position: absolute;
   right: 0.9vw;
-  top: 23vh;
+  top: 25vh;
   text-align: right;
   font-size: 2.5vh;
-  padding:5px;
+  padding: 5px;
   border-radius: 5px;
   width: 12vw;
-  background: white;
+  background: #F0F0F0;
 }
 
 
