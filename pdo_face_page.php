@@ -37,13 +37,11 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         </div><br />
         </div>
         <div id='result'>
-        <h2>Итоговая цена:</h2>
-        <input type='number' name='price' id='pr' value='0' min='0' step='0.001'/>        
-        <input id='button_history' hist_byer='' hist_trade='' type='button' value='?'>
-        <input type='number' id='pr_in' value='0' min='0' step='0.01' placeholder='Задать'/>
-        <input name='fixate' id='fixate' type='button' value='Закрепить'/>
+        <h2>Итоговая цена:</h2><br><br><input type='number' name='price' id='pr' value='0' min='0' step='0.001'/><input type='number' id='pr_in' value='0' min='0' step='0.01' placeholder='Задать'/>
         </div>
-        <div id='rent'><h2>Рентабельность:</h2><h1>0</h1><br><br><input id='rent_in' type='number' value='0' min='0' step='0.01' size='2'  placeholder='Задать' ></div>      
+        <input id='button_history' hist_byer='' hist_trade='' type='button' value='Почем продавали раньше'>
+        <div id='rent'>
+        <h2>Рентабельность:</h2><br><br><h1>0</h1><input id='rent_in' type='number' value='0' min='0' step='0.01' size='2'  placeholder='Задать' ></div>      
         <div class='history'></div>
         <div class='history_knam'></div>
         <div class='history_kpok'></div>

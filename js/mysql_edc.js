@@ -595,7 +595,7 @@ $(document).ready(function() {
         var byername = $('tr[requestid="'+reqid+'"] td[byerid] span').text();
 
         var db = $(event.target).parents('tr[database]').attr('database');
-        console.log(db);
+        //console.log(db);
 
         //Если эдитпрайсинг открывается из окна Р-1, переменные берутся из другого места
         if($(event.target).parents('.ga_contents').length>0){
@@ -615,7 +615,7 @@ $(document).ready(function() {
         window.scrollTo(0, 0);
         $('#pricingwindow').slideDown(200);
         if($(event.target).parents('#reads')){
-        console.log('Мы в общем списке заявок, надо бы скрыть Результаты поиска');
+        //console.log('Мы в общем списке заявок, надо бы скрыть Результаты поиска');
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -637,7 +637,7 @@ $(document).ready(function() {
 
         /*Вставим прайсингайди в прайсингвиндоу ПРОБНОЕ!!!*/
         $('#pricingwindow').attr({pricingid: prid, byerid:byerid, preditposid:posid, requestid:reqid, database:db});
-        console.log(byername);
+        //console.log(byername);
         $('#byer_name').text(byername);
         /**/
 
@@ -695,7 +695,7 @@ $(document).ready(function() {
                     data: {name_and_queen:posid, db:db},
                     success: function (data) {
                         var queen = data.queen;
-                        console.log(queen+" "+typeof queen);
+                        //console.log(queen+" "+typeof queen);
                         if(queen == "1"){
                             $.ajax({//БЕРЕМ ИЗ ПОЗИЦИИ
                                 url: 'mysql_options.php',
@@ -711,7 +711,7 @@ $(document).ready(function() {
                                     }
                             });
                         }else if(queen == null){
-                            console.log('queen has just almost killed this pricing, but i saved it!');
+                            //console.log('queen has just almost killed this pricing, but i saved it!');
                         }
                     }
                 });

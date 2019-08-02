@@ -3,7 +3,7 @@ $(document).ready(function(){
 
 
     $(document).off('click.out').on('click.out', 'body', function () {
-        console.log('Сработал click.out');
+        //console.log('Сработал click.out');
         $('#sres ul').html('');
         $('.sres ul').html('');
         $('#byer+div ul').html('');
@@ -19,7 +19,7 @@ $(document).ready(function(){
     });
 
     $(document).off('click.sres', 'click.out').on('click.sres', '#sres ul li', function (event) {
-        console.log('Сработал click.sres');
+        //console.log('Сработал click.sres');
         /*После выпадения списка в бпс при клике попадает текст итема.*/
         $('#thesearch').val($(this).children('span').text());
         /*А атрибуты - категория и айдишник*/
@@ -42,7 +42,7 @@ $(document).ready(function(){
                     $('#tab_search a').trigger('click');
                     $('#search .search_list').html(data);
                 },complete: function(){
-                    console.log('Триггерим клик на кнопку Рез поиска');
+                    //console.log('Триггерим клик на кнопку Рез поиска');
                 }
             });
         }
@@ -122,7 +122,7 @@ $(document).ready(function(){
         } else{
             //ВО ВСЕХ ОСТАЛЬНЫХ СЛУЧАЯХ  - ПРОСТО ПРОДОЛЖАЕМ ЗАПРОСЫ К БАЗЕ И ПОИСК
             if (sline.length > 0) {
-                console.log(sline);
+                //console.log(sline);
                 $.ajax({
                     context : $('#thesearch'),
                     url: 'mysql_search.php',

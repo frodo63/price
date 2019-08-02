@@ -56,10 +56,12 @@ $pricecolor : #F0F0F0;
     background: $pricecolor;
   }
   h1{
+    display: inline-block;
+    height: 38px;
+    text-align: center;
+    width: 12vw;
     margin-top: 0;
     margin-bottom: 0;
-    font-weight: normal;
-    text-align: center;
   }
 
 }

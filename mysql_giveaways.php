@@ -116,7 +116,7 @@ GROUP BY 1c_num");*/
                 //Вывести номер и дату накладной реализации
                 if(count($req_executals_fetched) > 0){
                     foreach($req_executals_fetched as $exe){
-                        $result .="<span style='color: green'>".$exe['execute_1c_num']." от ".$exe['executed']."</span><br>";
+                        $result .="<span style='color: green'>".$exe['execute_1c_num']." - ".$exe['sum']."</span><br>";
                     }
                 };
                 $result.="</td>";
