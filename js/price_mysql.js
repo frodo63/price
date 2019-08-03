@@ -1,5 +1,9 @@
 $(document).ready(function(){
 
+    /*ФОРМУЛЯ ДЛЯ ПОЛУЧЕНИЯ НАШЕГО ПРОЦЕНТА ИЗ ЦЕНЫ ПРИ ПРОЧИХ РАВНЫХ
+    * lop = 100/(100+ltp) * (lprice*100/(lzak+ltzr+lwt) - 100 - ltp);
+    * */
+
     function differ(a,b){return Math.abs(a-b);}
     function compareFastPrices(tick,price,price_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh,callback){
             //console.log('Inside compareFastPrices');
