@@ -1,25 +1,23 @@
 $(document).ready(function(){
 
     function differ(a,b){return Math.abs(a-b);}
-    function compareFastPrices(pr_index,tick,price,price_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh,callback){
+    function compareFastPrices(tick,price,price_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh,callback){
             //console.log('Inside compareFastPrices');
             var diff = differ(price,price_in);
             var pace;
             var op = lop;
-            if(diff <= 1 || tick >= 150){
+            if(diff <= price_in*0.005 || tick >= 150){
                 console.log(1);
                 //Обновить данные актуальные по цене из изменения нашего процента и цены
                 $('#op').val(Number(op.toFixed(2))).trigger('change.op');
                 if(tick >= 150){console.log('over 150')}
                 return false;
             }
-            else if(diff > 1 && diff < 2 ){pace = 0.01;console.log('Разница :'+diff+' шаг = 0.01');}
-            else if(diff > 2 && diff < 10 ){pace = 0.05;console.log('Разница :'+diff+' шаг = 0.05');}
-            else if(diff > 10 && diff < 50 ){pace = 0.5;console.log('Разница :'+diff+' шаг = 0.5');}
-            else if(diff > 50 && diff < 100 ){pace = 1;console.log('Разница :'+diff+' шаг = 1');}
-            else if(diff > 100 && diff < 500){pace = 3;console.log('Разница :'+diff+' шаг = 3');}
-            else if(diff > 500 && diff < 1000){pace = 5;console.log('Разница :'+diff+' шаг = 5');}
-            else if(diff > 1000){pace = 10;console.log('Разница :'+diff+' шаг = 10');}
+            else if(diff > (price_in*0.005) && diff <= (price_in*0.02) ){pace = 0.1;console.log('Разница :'+diff+' шаг = 0.01');}
+            else if(diff > (price_in*0.02) && diff <= (price_in*0.05) ){pace = 0.5;console.log('Разница :'+diff+' шаг = 0.05');}
+            else if(diff > (price_in*0.05) && diff <= (price_in*0.1) ){pace = 2;console.log('Разница :'+diff+' шаг = 2');}
+            else if(diff > (price_in*0.1) && diff <= (price_in*0.25) ){pace = 5;console.log('Разница :'+diff+' шаг = 5');}
+            else if(diff > (price_in*0.25)){pace = 10;console.log('Разница :'+diff+' шаг = 10');}
 
 
             if (price > price_in){console.log('больше');op = op - pace;}
@@ -35,21 +33,22 @@ $(document).ready(function(){
                 //console.log('recursion starts');
                 //console.log('Итерация:'+f[2]+', Цена: '+f[0]+', Рентабельность: '+f[1]);
                 console.log('Итерация:'+f[2]+', Цена: '+f[0]);
-                compareFastPrices(f[4],f[2],f[0],price_in,op,lzak,ltzr,ltp,ltpr,wt,firstoh,callback);
+                compareFastPrices(f[2],f[0],price_in,op,lzak,ltzr,ltp,ltpr,wt,firstoh,callback);
             }
     }
-    function compareFastRents(pr_index,tick,rent,rent_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh,callback){
+    function compareFastRents(tick,rent,rent_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh,callback){
         //console.log('Inside compareFastRents');
         var diff = differ(rent,rent_in);
         var pace;
         var op = lop;
-        if(diff <= 1 || tick >= 150){
+        if(diff <= 0.1 || tick >= 150){
             console.log(1);
             //Обновить данные актуальные по цене из изменения нашего процента и цены
             $('#op').val(op).trigger('change.op');
             if(tick >= 150){console.log('over 150')}
             return false;
         }
+        else if(diff > 0.1 && diff < 1 ){pace = 0.1;console.log(diff+' шаг = 0.1');}
         else if(diff > 1 && diff < 2 ){pace = 0.2;console.log(diff+' шаг = 0.2');}
         else if(diff > 2 && diff < 5 ){pace = 1;console.log(diff+' шаг = 1');}
         else if(diff > 5 && diff < 10 ){pace = 2;console.log(diff+' шаг = 2');}
@@ -69,7 +68,7 @@ $(document).ready(function(){
             //console.log('recursion starts');
             console.log('Итерация:'+f[2]+', Рентабельность: '+f[1]);
             //console.log('Итерация:'+f[2]+', Цена: '+f[0]);
-            compareFastRents(f[4],f[2],f[1],rent_in,op,lzak,ltzr,ltp,ltpr,wt,firstoh,callback);
+            compareFastRents(f[2],f[1],rent_in,op,lzak,ltzr,ltp,ltpr,wt,firstoh,callback);
         }
     }
     //Задать рентабельность быстрой функцией - РАБОТАЕТ
@@ -88,7 +87,6 @@ $(document).ready(function(){
         var lop = Number(Number($('#op').val()).toFixed(2));
         var firstoh = Number(Number($('#firstoh').val()).toFixed(2));
         var tick = 0;
-        var pr_index = ltzr + lwt + lnam + lim; //Индекс цены - для определения минимального увеличения цены
         //Функция вызывается только если некоторые переменные не undefined
 
         if(
@@ -99,7 +97,7 @@ $(document).ready(function(){
             alert("Данных недостаточно");
             return false;
         }else{
-            compareFastRents(pr_index,tick,rent,rent_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh, fastPrice);
+            compareFastRents(tick,rent,rent_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh, fastPrice);
             $('#op').focus();
         }
     });
@@ -120,7 +118,6 @@ $(document).ready(function(){
         var lop = Number(Number($('#op').val()).toFixed(2));
         var firstoh = Number(Number($('#firstoh').val()).toFixed(2));
         var tick = 0;
-        var pr_index = ltzr + lwt + lnam + lim; //Индекс цены - для определения минимального увеличения цены
         //Функция вызывается только если некоторые переменные не undefined
 
         if(
@@ -131,7 +128,7 @@ $(document).ready(function(){
             alert("Данных недостаточно");
             return false;
         }else{
-            compareFastPrices(pr_index,tick,price,price_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh, fastPrice);
+            compareFastPrices(tick,price,price_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh, fastPrice);
             $('#op').focus();
         }
     });
@@ -443,7 +440,6 @@ $(document).ready(function(){
         var lwt = la*0.0125*wt;
         var lnam = (la+lwt)*lop/100;
         var lim = (la+lwt+lnam)*ltp/100;
-        var pr_index = ltzr + lwt + lnam + lim;
 
         var lprice = Number((la + lwt + lim + lnam).toFixed(3));
         //Даем цену
@@ -465,7 +461,7 @@ $(document).ready(function(){
             return false;
         }else{
             tick++;
-            return [lprice, lrentS, tick, lop, pr_index];
+            return [lprice, lrentS, tick, lop];
         }
     }
     //Главная функция
