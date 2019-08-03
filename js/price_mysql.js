@@ -17,8 +17,8 @@ $(document).ready(function(){
             else if(diff > 2 && diff < 10 ){pace = 0.05;console.log('Разница :'+diff+' шаг = 0.05');}
             else if(diff > 10 && diff < 50 ){pace = 0.5;console.log('Разница :'+diff+' шаг = 0.5');}
             else if(diff > 50 && diff < 100 ){pace = 1;console.log('Разница :'+diff+' шаг = 1');}
-            else if(diff > 100 && diff < 500){pace = 5;console.log('Разница :'+diff+' шаг = 5');}
-            else if(diff > 500 && diff < 1000){pace = 10;console.log('Разница :'+diff+' шаг = 10');}
+            else if(diff > 100 && diff < 500){pace = 3;console.log('Разница :'+diff+' шаг = 3');}
+            else if(diff > 500 && diff < 1000){pace = 5;console.log('Разница :'+diff+' шаг = 5');}
             else if(diff > 1000){pace = 10;console.log('Разница :'+diff+' шаг = 10');}
 
 
@@ -467,7 +467,6 @@ $(document).ready(function(){
             tick++;
             return [lprice, lrentS, tick, lop, pr_index];
         }
-
     }
     //Главная функция
     function givePrice(){

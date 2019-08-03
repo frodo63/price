@@ -12,7 +12,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
     <form id='price'><div class='sres'></div>
         <input id='button_history_trade' type='button' value='?'><label for='trade'>Товар</label><input trade_id = 'blank' tare='-' autocomplete='off' type='text' name='trade' id='trade' placeholder='Введите товар' size='70'/><div class='sres'></div>
         <input id='button_history_seller' type='button' value='?'><label for='seller'>Поставщик:</label><input seller_id = 'blank' autocomplete='off' type='text' name='seller' id='seller' placeholder='Введите поставщика' size='70'/><div class='sres'></div><br />
-        <label for='zakup'>ЗАКУП ЗА 1 ШТ:</label><input type='number' name='zak' id='zak' min='1' step='1'/> руб.<br><br>
+        <label for='zakup'>ЗАКУП ЗА 1 ШТ:</label><input type='number' name='zak' id='zak' min='1' step='0.01'/> руб.<br><br>
         <label for='kol'>Кол-во:</label> <input type='number' name='kol' id='kol'  min='1'/><br><br><br>
         <label for='tzrknam'>Довезти 1шт ДО НАС:</label><input id='button_history_tzrknam' type='button' value='?'><span id='spacer1'></span><input type='number' name='tzrknam' id='tzrknam'  min='0' step='1'/> руб. &nbsp&nbsp&nbspС обналом:&nbsp<p id='obtzrknam'></p> руб.<br />
         <label for='tzrkpok'>Довезти 1шт ДО <span id='byer_name'></span>:</label><input id='button_history_tzrkpok' type='button' value='?'><span id='spacer2'></span><input type='number' name='tzrkpok' id='tzrkpok'  min='0' step='1'/> руб. &nbsp&nbsp&nbspС обналом:&nbsp<p id='obtzrkpok'></p> руб.<br />
