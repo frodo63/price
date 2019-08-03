@@ -1770,42 +1770,43 @@ p {
 #price #button_history_transports,
 #price #button_history,
 #price #button_history_tzrkpok,
-#price #button_history_tzrknam {
+#price #button_history_tzrknam,
+#price #cut_kops {
   font-size: 2vh;
   font-weight: bold;
 }
 
-/* line 145, ../sass/_price.scss */
+/* line 146, ../sass/_price.scss */
 #zak, #kol, #tzr, #tzrknam, #tzrkpok, #rop, #rtp, #op, #tp, #obp, #firstobp, #wtime {
   width: 10vw;
   text-align: center;
   font-size: 3vh;
 }
 
-/* line 150, ../sass/_price.scss */
+/* line 151, ../sass/_price.scss */
 #wtr {
   font-size: 3vh;
 }
 
-/* line 155, ../sass/_price.scss */
+/* line 156, ../sass/_price.scss */
 #op {
   border: 5px solid green;
 }
 
-/* line 159, ../sass/_price.scss */
+/* line 160, ../sass/_price.scss */
 #trade, #seller {
   position: absolute;
   left: 13vw;
   width: 72vw;
 }
 
-/* line 164, ../sass/_price.scss */
+/* line 165, ../sass/_price.scss */
 #zak, #kol {
   position: absolute;
   left: 20vw;
 }
 
-/* line 171, ../sass/_price.scss */
+/* line 172, ../sass/_price.scss */
 .loader {
   border: 16px solid #f3f3f3;
   /* Light grey */
@@ -1825,12 +1826,12 @@ p {
     transform: rotate(360deg);
   }
 }
-/* line 188, ../sass/_price.scss */
+/* line 189, ../sass/_price.scss */
 #obtzr, #obtzrknam, #obtzrkpok, #op + p, #tp + p, #obp + p, #marge, #margek, #obpr, #firstobp + p, #id, p#byer, p#seller, p#trade, #onhands, #cases p, #realop, #realtp, #firstoh, #realop, #realtp, #wtimeday, #clearp, #oh, #wtr, #clearpnar {
   display: inline;
 }
 
-/* line 193, ../sass/_price.scss */
+/* line 194, ../sass/_price.scss */
 #obnal, #margediv {
   display: none;
   padding: 1vh;
@@ -1840,7 +1841,7 @@ p {
 {
     border: solid 1px green;
 }*/
-/* line 204, ../sass/_price.scss */
+/* line 205, ../sass/_price.scss */
 #go {
   position: absolute;
   top: 10vh;
@@ -1850,7 +1851,7 @@ p {
   width: 15vw;
 }
 
-/* line 213, ../sass/_price.scss */
+/* line 214, ../sass/_price.scss */
 #archive, #create {
   position: absolute;
   top: 1vh;
@@ -1858,7 +1859,7 @@ p {
   font-size: 4vh;
 }
 
-/* line 220, ../sass/_price.scss */
+/* line 221, ../sass/_price.scss */
 #cases {
   position: absolute;
   width: 25vw;
@@ -1868,42 +1869,42 @@ p {
   font-size: 3vh;
 }
 
-/* line 229, ../sass/_price.scss */
+/* line 230, ../sass/_price.scss */
 #spacer1, #spacer2, #spacer3, #spacer4, #spacer5, #spacer6 {
   display: inline-block;
 }
 
-/* line 232, ../sass/_price.scss */
+/* line 233, ../sass/_price.scss */
 #spacer1 {
   width: 4vw;
 }
 
-/* line 233, ../sass/_price.scss */
+/* line 234, ../sass/_price.scss */
 #spacer2 {
   width: 2vw;
 }
 
-/* line 234, ../sass/_price.scss */
+/* line 235, ../sass/_price.scss */
 #spacer3 {
   width: 12vw;
 }
 
-/* line 235, ../sass/_price.scss */
+/* line 236, ../sass/_price.scss */
 #spacer4 {
   width: 9.5vw;
 }
 
-/* line 236, ../sass/_price.scss */
+/* line 237, ../sass/_price.scss */
 #spacer5 {
   width: 15vw;
 }
 
-/* line 237, ../sass/_price.scss */
+/* line 238, ../sass/_price.scss */
 #spacer6 {
   width: 14vw;
 }
 
-/* line 239, ../sass/_price.scss */
+/* line 240, ../sass/_price.scss */
 #cases input {
   font-size: 3vh;
 }
@@ -1956,7 +1957,7 @@ th {
     color: white;
 }*/
 /*РАЗМЕР САМОГО ОКНА*/
-/* line 296, ../sass/_price.scss */
+/* line 297, ../sass/_price.scss */
 #editp, #copyp {
   position: relative;
   height: 0vh;
@@ -1964,7 +1965,7 @@ th {
 }
 
 /*Онформационное окошко*/
-/* line 303, ../sass/_price.scss */
+/* line 304, ../sass/_price.scss */
 #msg {
   position: fixed;
   top: 85vh;
@@ -1977,23 +1978,23 @@ th {
   text-align: center;
 }
 
-/* line 313, ../sass/_price.scss */
+/* line 314, ../sass/_price.scss */
 #msg p {
   background: green;
   color: white;
 }
 
-/* line 319, ../sass/_price.scss */
+/* line 320, ../sass/_price.scss */
 #editmsg p, #copymsg p, #hide {
   background-color: green;
 }
 
-/* line 322, ../sass/_price.scss */
+/* line 323, ../sass/_price.scss */
 #editmsg, #copymsg, #hide {
   background-color: green;
 }
 
-/* line 326, ../sass/_price.scss */
+/* line 327, ../sass/_price.scss */
 #hide {
   cursor: pointer;
   position: absolute;
@@ -2009,40 +2010,40 @@ th {
 }
 
 /*Вещи, специфические для add_request*/
-/* line 351, ../sass/_price.scss */
+/* line 352, ../sass/_price.scss */
 #go_request {
   font-size: 10vh;
 }
 
-/* line 356, ../sass/_price.scss */
+/* line 357, ../sass/_price.scss */
 tr[id^="inside"] {
   display: none;
 }
 
-/* line 360, ../sass/_price.scss */
+/* line 361, ../sass/_price.scss */
 tr[id^="inside"] td:hover {
   background-color: black;
   color: white;
   border: 1px solid white;
 }
 
-/* line 366, ../sass/_price.scss */
+/* line 367, ../sass/_price.scss */
 tr[id^="inside"] td input {
   display: inline;
   vertical-align: top;
 }
 
-/* line 371, ../sass/_price.scss */
+/* line 372, ../sass/_price.scss */
 tr[id^="inside"] td {
   text-align: left;
 }
 
-/* line 375, ../sass/_price.scss */
+/* line 376, ../sass/_price.scss */
 #creating {
   display: none;
 }
 
-/* line 379, ../sass/_price.scss */
+/* line 380, ../sass/_price.scss */
 .savename {
   background-color: red;
   color: white;

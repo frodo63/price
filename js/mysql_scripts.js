@@ -1742,6 +1742,14 @@ $(document).ready(function(){
         $(event.target).next('input').trigger('click.show_hr1');
     });
 
+    //КНОПКА ОТРЕЗАТЬ КОПЕЙКИ В РАСЦЕНКЕ
+    $(document).off('click.cut_kops').on('click.cut_kops', '#cut_kops', function(event){
+        var price = $('#pr').val();
+        price = price - (price%1);
+        $('#pr').val(price);
+    });
+
+
 
 
 

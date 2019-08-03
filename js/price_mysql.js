@@ -1,91 +1,6 @@
 $(document).ready(function(){
 
     function differ(a,b){return Math.abs(a-b);}
-
-    /*function compareRents(rent, rent_in, op, callback){
-        console.log('Inside compareRents');
-        var diff = differ(rent,rent_in);
-        var pace;
-
-        if(diff <= 0.05){
-            console.log(1);
-            return false;
-        }else if(diff > 0.05 && diff < 0.1 ){
-            pace = 0.1;
-            console.log(6+'шаг = 0.1');
-        }
-        else if(diff > 0.1 && diff < 0.5 ){
-            pace = 0.2;
-            console.log(5+'шаг = 0.2');
-        }
-        else if(diff > 0.5 && diff < 1){
-            pace = 1;
-            console.log(4+'шаг = 1');
-        }
-        else if(diff > 1){
-            pace = 2;
-            console.log(3+'шаг = 2');
-        }
-        else if(diff > 2){
-            pace = 4;
-            console.log(2+'шаг = 4');
-        }
-
-        if (rent > rent_in){
-            console.log('больше');
-            op = op - pace;
-        }
-        if (rent < rent_in){
-            console.log('меньше');
-            op = op + pace;
-        }
-
-        $('#op').val(op);
-
-        callback();
-        return true;
-    }*/
-    /*function comparePrices(price, price_in, op, callback){
-        console.log('Inside comparePrices');
-        var diff = differ(price,price_in);
-        var pace;
-
-        if(diff <= 1){
-            console.log(1+' - Результат: '+price);
-            return false;
-        }
-        else if(diff > 1 && diff < 5 ){
-            pace = 0.05;
-            console.log(7+' шаг = 0.05');
-        }
-        else if(diff > 5 && diff < 100 ){
-            pace = 0.3;
-            console.log(5+' шаг = 0.3');
-        }
-        else if(diff > 100 && diff < 1000){
-            pace = 1.5;
-            console.log(4+' шаг = 1.5');
-        }
-        else if(diff > 1000){
-            pace = 3;
-            console.log(3+' шаг = 3');
-        }
-
-        if (price > price_in){
-            console.log('больше');
-            op = op - pace;
-        }
-        if (price < price_in){
-            console.log('меньше');
-            op = op + pace;
-        }
-
-        $('#op').val(op);
-
-        callback();
-        return true;
-    }*/
-
     function compareFastPrices(pr_index,tick,price,price_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh,callback){
             //console.log('Inside compareFastPrices');
             var diff = differ(price,price_in);
@@ -94,18 +9,18 @@ $(document).ready(function(){
             if(diff <= 1 || tick >= 150){
                 console.log(1);
                 //Обновить данные актуальные по цене из изменения нашего процента и цены
-                $('#op').val(op).trigger('change.op');
+                $('#op').val(Number(op.toFixed(2))).trigger('change.op');
                 if(tick >= 150){console.log('over 150')}
                 return false;
             }
-            else if(diff > 1 && diff < 10 ){pace = 0.1;console.log(diff+' шаг = 0.1');}
-            else if(diff > 10 && diff < 50 ){pace = 0.3;console.log(diff+' шаг = 0.3');}
-            else if(diff > 50 && diff < 100 ){pace = 1;console.log(diff+' шаг = 1');}
-            else if(diff > 100 && diff < 500){pace = 2;console.log(diff+' шаг = 2');}
-            else if(diff > 500 && diff < 1000){pace = 3;console.log(diff+' шаг = 3');}
-            else if(diff > 1000 && diff < 2000){pace = 6;console.log(diff+' шаг = 6');}
-            else if(diff > 2000 && diff < 4000){pace = 10;console.log(diff+' шаг = 10');}
-            else if(diff > 4000 && diff < 8000){pace = 20;console.log(diff+' шаг = 20');}
+            else if(diff > 1 && diff < 2 ){pace = 0.01;console.log('Разница :'+diff+' шаг = 0.01');}
+            else if(diff > 2 && diff < 10 ){pace = 0.05;console.log('Разница :'+diff+' шаг = 0.05');}
+            else if(diff > 10 && diff < 50 ){pace = 0.5;console.log('Разница :'+diff+' шаг = 0.5');}
+            else if(diff > 50 && diff < 100 ){pace = 1;console.log('Разница :'+diff+' шаг = 1');}
+            else if(diff > 100 && diff < 500){pace = 5;console.log('Разница :'+diff+' шаг = 5');}
+            else if(diff > 500 && diff < 1000){pace = 10;console.log('Разница :'+diff+' шаг = 10');}
+            else if(diff > 1000){pace = 10;console.log('Разница :'+diff+' шаг = 10');}
+
 
             if (price > price_in){console.log('больше');op = op - pace;}
             if (price < price_in){console.log('меньше');op = op + pace;}
@@ -157,70 +72,6 @@ $(document).ready(function(){
             compareFastRents(f[4],f[2],f[1],rent_in,op,lzak,ltzr,ltp,ltpr,wt,firstoh,callback);
         }
     }
-
-    /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-    //Задать рентабельность - ВРЕМЕННО КОММЕНТИМ, делаем быструю функцию
-    /*$('#rent_in').off('change.rent_in').on('change.rent_in', function () {
-        console.log('Inside change.rent');
-        var op = Number(Number($('#op').val()).toFixed(3));
-        var rent = Number(Number($('#rent h1').text()).toFixed(3));
-        var rent_in = Number(Number($('#rent_in').val()).toFixed(3));
-
-        //console.log(typeof(rent)+rent);
-        //console.log(typeof(rent_in)+rent_in);
-        //console.log(differ(rent,rent_in));
-
-        //Функция вызывается только если некоторые переменные не undefined
-
-        if(typeof rent === 'undefined' || typeof rent_in === 'undefined' || typeof op === 'undefined' || rent === '' || rent_in === '' || op === '' || isNaN(rent) || isNaN(rent_in) || isNaN(op)){
-            alert("Данных недостаточно");
-            return false;
-        }else{
-            var f = compareRents(rent,rent_in,op, function (){
-                changeOp(function(){
-                    givePrice();
-                });
-            });
-
-            f;//Это самый настоящий вызов функции =))
-
-            if (!f){
-                return false;
-
-            }else{$('#rent_in').trigger('change.rent_in');}
-        }
-    });*/
-    /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-    /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-    //Задать цену - ВРЕМЕННО КОММЕНТИМ, делаем быструю функцию
-    /*$('#pr_in').off('change.price').on('change.price', function () {
-        console.log('Inside change.price');
-        var op = Number(Number($('#op').val()).toFixed(3));
-        var price = Number(Number($('#pr').val()).toFixed(3));
-        var price_in = Number(Number($('#pr_in').val()).toFixed(3));
-
-        //Функция вызывается только если некоторые переменные не undefined
-
-        if(typeof price === 'undefined' || typeof price_in === 'undefined' || typeof op === 'undefined' || price === '' || price_in === '' || op === '' || isNaN(price) || isNaN(price_in) || isNaN(op)){
-            alert("Данных недостаточно");
-            return false;
-        }else{
-            var f = comparePrices(price,price_in,op, function (){
-                changeOp(function(){
-                    givePrice();
-                });
-            });
-
-            f;//Это самый настоящий вызов функции =))
-
-            if (!f){
-                return false;
-
-            }else{$('#pr_in').trigger('change.price');}
-        }
-    });*/
-    /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-
     //Задать рентабельность быстрой функцией - РАБОТАЕТ
     $('#rent_in').off('change.fastrent').on('change.fastrent', function () {
         //console.log('Inside changefast.rent');
@@ -249,9 +100,9 @@ $(document).ready(function(){
             return false;
         }else{
             compareFastRents(pr_index,tick,rent,rent_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh, fastPrice);
+            $('#op').focus();
         }
     });
-
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
     //Задать цену быстрой функцией - РАБОТАЕТ
     $('#pr_in').off('change.fastprice').on('change.fastprice', function () {
@@ -281,6 +132,7 @@ $(document).ready(function(){
             return false;
         }else{
             compareFastPrices(pr_index,tick,price,price_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh, fastPrice);
+            $('#op').focus();
         }
     });
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
@@ -672,7 +524,8 @@ $(document).ready(function(){
             '<br>Чистыми : ' + (clearpnar).toFixed(3) + ' %' +
             '<br> На руки: ' + (Number((lim).toFixed(2)) - firstobpr).toFixed(2) + ' руб. с 1 шт.' +
             '<br>При рентабельности: ' + (lrentS).toFixed(3) + ' % ' +
-            '<input type="button" name="save" id="save" value="Сохранить этот результат" />';
+            '<br><input type="button" name="cut_kops" id="cut_kops" value="Отрезать копейки" />' +
+            '<br><input type="button" name="save" id="save" value="Сохранить этот результат" />';
         $('#cases').html(pricetext);
         pricetext = null;
         $('#cases').slideDown();
