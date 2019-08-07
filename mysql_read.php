@@ -465,7 +465,14 @@ if(isset($_POST['table'])){
 
                     if(count($get_executals_fetched) > 0){
                         foreach($get_executals_fetched as $exe){
-                            $result .="<span style='color: green'>Накладная № ".$exe['execute_1c_num']." от ".$exe['executed']."</span><br>";
+
+                            /*Заголовок дата////////////////////////////////////////////////////////////////////////////////////////////////*/
+                            $phpdate = strtotime( $exe['executed'] );
+                            $mysqldate = date( 'd.m.y', $phpdate );
+                            /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+                            $result .="<span style='color: green'>Накладная № ".$exe['execute_1c_num']." от ".$mysqldate." на сумму ".$exe['sum']."</span><br>";
+                            unset($mysqldate);
                         }
                     }
                     /*$result .="<span class='name'>&nbsp ".$row['req_name']."</span>";*/
@@ -1082,7 +1089,8 @@ echo"<div>
 <span>отсрочка</span> - <span>".$gbi_f['ov_wt']."</span><br>
 <span>енот</span> - <span>".$gbi_f['ov_tp']."</span><br>
 <span>обнал</span> - <span>".$gbi_f['ov_firstobp']."</span><br>
-<span>".$gbi_f['comment']."</span>
+<span>".$gbi_f['comment']."</span><br>
+<input type='button' value='Заполнить' id='byer_info_fill' wt='".$gbi_f['ov_wt']."' tp='".$gbi_f['ov_tp']."' firstobp='".$gbi_f['ov_firstobp']."'>
 </div>";
 }
 
@@ -1114,7 +1122,14 @@ if(isset($_POST['executes_list'])){
         $get_exe_list_fetched = $get_exe_list->fetchAll(PDO::FETCH_ASSOC);
         echo "<ul>";
         foreach($get_exe_list_fetched as $exe){
-            echo "<li>".$exe['execute_1c_num']." от ".$exe['executed']." - ".$exe['sum']."</li>";
+
+            /*Заголовок заказа////////////////////////////////////////////////////////////////////////////////////////////////*/
+            $phpdate = strtotime( $exe['executed'] );
+            $mysqldate = date( 'd.m.y', $phpdate );
+            /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+            echo "<li>".$exe['execute_1c_num']." от ".$mysqldate." - ".$exe['sum']."</li>";
+            unset($mysqldate);
         }
         echo "</ul>";
 

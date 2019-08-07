@@ -2,32 +2,34 @@ $(document).ready(function(){
 
     /*ФОРМУЛЯ ДЛЯ ПОЛУЧЕНИЯ НАШЕГО ПРОЦЕНТА ИЗ ЦЕНЫ ПРИ ПРОЧИХ РАВНЫХ
     * lop = 100/(100+ltp) * (lprice*100/(lzak+ltzr+lwt) - 100 - ltp);
+    *
     * */
 
     function differ(a,b){return Math.abs(a-b);}
-    function compareFastPrices(tick,price,price_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh,callback){
-            //console.log('Inside compareFastPrices');
+    //Рекурсивная функция прекрасно работает, но формула - круче и быстрее, поэтому рекурсивную функцию пока что комментим
+    /*function compareFastPrices(tick,price,price_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh,callback){
+
+
+
             var diff = differ(price,price_in);
             var pace;
             var op = lop;
-            if(diff <= price_in*0.005 || tick >= 150){
+            if(diff <= price_in*0.004 || tick >= 150){//стоп-условие
                 console.log(1);
                 //Обновить данные актуальные по цене из изменения нашего процента и цены
                 $('#op').val(Number(op.toFixed(2))).trigger('change.op');
                 if(tick >= 150){console.log('over 150')}
                 return false;
             }
-            else if(diff > (price_in*0.005) && diff <= (price_in*0.02) ){pace = 0.1;console.log('Разница :'+diff+' шаг = 0.01');}
+            else if(diff > (price_in*0.004) && diff <= (price_in*0.02) ){pace = 0.1;console.log('Разница :'+diff+' шаг = 0.01');}
             else if(diff > (price_in*0.02) && diff <= (price_in*0.05) ){pace = 0.5;console.log('Разница :'+diff+' шаг = 0.05');}
             else if(diff > (price_in*0.05) && diff <= (price_in*0.1) ){pace = 2;console.log('Разница :'+diff+' шаг = 2');}
             else if(diff > (price_in*0.1) && diff <= (price_in*0.25) ){pace = 5;console.log('Разница :'+diff+' шаг = 5');}
             else if(diff > (price_in*0.25)){pace = 10;console.log('Разница :'+diff+' шаг = 10');}
 
-
             if (price > price_in){console.log('больше');op = op - pace;}
             if (price < price_in){console.log('меньше');op = op + pace;}
 
-            //console.log('first callback');
             var f = callback(tick,lzak,ltzr,ltp,ltpr,wt,op,firstoh);
 
 
@@ -37,9 +39,10 @@ $(document).ready(function(){
                 //console.log('recursion starts');
                 //console.log('Итерация:'+f[2]+', Цена: '+f[0]+', Рентабельность: '+f[1]);
                 console.log('Итерация:'+f[2]+', Цена: '+f[0]);
+                //рекурсивный вызов
                 compareFastPrices(f[2],f[0],price_in,op,lzak,ltzr,ltp,ltpr,wt,firstoh,callback);
             }
-    }
+    }*/
     function compareFastRents(tick,rent,rent_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh,callback){
         //console.log('Inside compareFastRents');
         var diff = differ(rent,rent_in);
@@ -124,6 +127,8 @@ $(document).ready(function(){
         var tick = 0;
         //Функция вызывается только если некоторые переменные не undefined
 
+        var recommended_lop = 100/(100+ltp) * (price_in*100/(lzak+ltzr+lwt) - 100 - ltp);
+
         if(
             typeof price == 'undefined' || typeof price_in == 'undefined' || typeof lop == 'undefined' ||
             price === '' || price_in === '' || lop === '' ||
@@ -132,8 +137,10 @@ $(document).ready(function(){
             alert("Данных недостаточно");
             return false;
         }else{
-            compareFastPrices(tick,price,price_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh, fastPrice);
-            $('#op').focus();
+              //compareFastPrices(tick,price,price_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh, fastPrice);
+              $('#op').val(Number(recommended_lop.toFixed(2))).trigger('change.op');
+              $('#op').focus();
+              console.log('Рекоммендованная наценка: '+recommended_lop);
         }
     });
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
@@ -314,13 +321,11 @@ $(document).ready(function(){
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
     //ИЗМЕНЕНИЕ НАШЕГО ПРОЦЕНТА
     $('#op').off('change.op').on('change.op', function(){
-        console.log('Inside change.op');
         changeOp(function(){
             givePrice();
         })
     });
     function changeOp(callback){
-        console.log('Inside changeOp function');
         //console.log('Изменился наш процент');
         //Переменные
         var zak = Number(Number($('#zak').val()).toFixed(3));      //Закупочная цена (на шт)
@@ -357,7 +362,6 @@ $(document).ready(function(){
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
     //ИЗМЕНЕНИЕ ЕНОТОПРОЦЕНТА
     $('#tp').change(function(){
-        console.log('Изменился енотопроцент');
         //Переменные
         var zak = Number(Number($('#zak').val()).toFixed(3));      //Закупочная цена (на шт)
         var tzr = Number(Number($('#tzr').text()).toFixed(3));      //Транспортные (на шт)
@@ -470,7 +474,6 @@ $(document).ready(function(){
     }
     //Главная функция
     function givePrice(){
-        console.log('Inside givePrice');
         //Переменные
         var lzak = Number($('#zak').val());                         //Закупочная цена (за 1 единицу товара)
         var lkol = Number($('#kol').val());                         //Количество товара

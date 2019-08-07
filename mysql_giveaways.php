@@ -116,7 +116,14 @@ GROUP BY 1c_num");*/
                 //Вывести номер и дату накладной реализации
                 if(count($req_executals_fetched) > 0){
                     foreach($req_executals_fetched as $exe){
-                        $result .="<span style='color: green'>".$exe['execute_1c_num']." - ".$exe['sum']."</span><br>";
+
+                        /*Заголовок дата////////////////////////////////////////////////////////////////////////////////////////////////*/
+                        $phpdate = strtotime( $exe['executed'] );
+                        $mysqldate = date( 'd.m.y', $phpdate );
+                        /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+                        $result .="<span style='color: green'>".$exe['execute_1c_num']." - ".$exe['sum']." от ".$mysqldate."</span><br>";
+                        unset($mysqldate);
                     }
                 };
                 $result.="</td>";

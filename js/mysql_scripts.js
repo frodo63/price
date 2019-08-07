@@ -1750,6 +1750,18 @@ $(document).ready(function(){
     });
 
 
+    //КНОПКА ЗАПОЛНИТЬ данные покупателя(енот, отсрочка, обнал)
+    $(document).off('click.fill_enot').on('click.fill_enot', '#byer_info_fill', function(event){
+        var wt = $(event.target).attr('wt');
+        var tp = $(event.target).attr('tp');
+        var firstobp = $(event.target).attr('firstobp');
+
+        $('#wtime').val(wt);
+        $('#tp').val(tp);
+        $('#firstobp').val(firstobp);
+    });
+
+
 
 
 
