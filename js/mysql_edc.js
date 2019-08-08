@@ -742,104 +742,34 @@ $(document).ready(function() {
     });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /*Переименование*/
+    /*Переименование позиции*/
 //По клику на кнопку "Переименовать":
     $(document).off('click.rename').on('click.rename', '.edit', function (event) {
         var db = $(event.target).parents('tr[database]').attr('database');
-        console.log('клик на Переименовать');
         event.stopImmediatePropagation();
         //Все переменные берутся сразу
-        //Если позиция
-        if($(event.target).attr('position')){
-            nameID = $(event.target).attr('position');
-        }else{//Если итем или заявка
-            var nameID = $(event.target).attr('name');
-        };
-
-        if($(event.target).attr('position')){//Позиция
-            var theTd = $('tr[position="'+nameID+'"]').children('td[category="positions"]');
-            var nameOld = theTd.children('span').text();
-        }
-        else if($(event.target).attr('requestid')){//Заявка
-            theTd = $('td[category="requests"][name="'+nameID+'"]');
-            nameOld = theTd.children('span').text();
-        }else {
-            var theTd = $('td[name=' + nameID + ']');//Итемы
-            var nameOld = theTd.text();
-        };
-
-        console.log(nameID+' , '+nameOld);//Для проверки
+        var nameID = $(event.target).attr('position');
+        var theTd = $('tr[position="'+nameID+'"] td[category="positions"]');
+        var nameOld = theTd.children('span.name').text();
 
         if ($('#theinput').length == 1 && $('#theinput').attr('name')!= nameID) { //Если нажато Переименовать при уже открытом зэинпуте на другом элементе:
+            var nameRealOld = $('#theinput').attr('placeholder');//Перед удалением берем из зэинпута плейсхолдер для старого имени и неймайди для селекта на след круге старого тп
+            var nameIDold = $('#theinput').attr('name');
+            console.log(nameRealOld);
+            console.log(nameIDold);
 
-            if ($(event.target).attr('requestid')){//Если нажато "Переименовать заявку, а до этого зэинпут был на позиции"
-                var nameRealOld = $('#theinput').attr('placeholder');//Перед удалением берем из зэинпута плейсхолдер для старого имени и нейайди для селекта на след круге старого тп
-                var nameIDold = $('#theinput').attr('name');
-                var thebuttons = $('#theinput').parent().siblings('td.req_buttons').children('input');
-
-                /*Выносим условие возвращения кнопки сейвнейм взад на общий уровень*/
-                /*Проверяем соответствующие инпуты на наличие класса savename*/
-                if($('.savename')){$('.savename').addClass('edit').removeClass('savename').val('R')};
-
-                if($('#theinput').parent().attr('category') == 'positions'){
-                    $('#theinput').remove();
-                    $('input.collapsepos[position="'+nameIDold+'"]').after($('<span class="name">' + nameRealOld + '</span>'));
-                }else{
-                    $('#theinput').remove();
-                    $('td[name="'+nameIDold+'"]').children('input').after($('<span class="name">' + nameRealOld + '</span>'));
-                }
-
-            } else if ($(event.target).attr('position')){//Если нажато "Переименовать позицию, а до этого зэинпут был на заявке"
-                var nameRealOld = $('#theinput').attr('placeholder');//Перед удалением берем из зэинпута плейсхолдер для старого имени и нейайди для селекта на след круге старого тп
-                var nameIDold = $('#theinput').attr('name');
-                var thebuttons = $('#theinput').parent().siblings('td.pos_buttons').children('input');
-
-                /*Выносим условие возвращения кнопки сейвнейм взад на общий уровень*/
-                /*Проверяем соответствующие инпуты на наличие класса savename*/
-                if($('.savename')){$('.savename').addClass('edit').removeClass('savename').val('R')};
-
-                if($('#theinput').parent().attr('category') == 'requests'){
-                    $('#theinput').remove();
-                    $('td[name="'+nameIDold+'"]').children('input').after($('<span class="name">' + nameRealOld + '</span>'));
-                }else{
-                    $('#theinput').remove();
-                    $('input.collapsepos[position="'+nameIDold+'"]').after($('<span class="name">' + nameRealOld + '</span>'));
-                }
-
-            } else {//Если пепреименовывется итем
-                var thebuttons = $('#theinput').parent().siblings('td.item_buttons').children('input');
-
-                //*Выносим условие возвращения кнопки сейвнейм взад на общий уровень*/
-                /*Проверяем соответствующие инпуты на наличие класса savename*/
-                if($('.savename')){$('.savename').addClass('edit').removeClass('savename').val('R')};
-
-                $('#theinput').parent().html($('#theinput').attr('placeholder'));//закрываем текущий зэинпут и открываем новый
-                theTd.html($('<input type="text" name="' + nameID + '" id="theinput" value="' + nameOld + '" placeholder="' + nameOld + '" >'));
-                $('#theinput').focus().select();
-                var nameSaved = nameOld;
-            }
+            /*Проверяем соответствующие инпуты на наличие класса savename*/
+            if($('.savename')){$('.savename').addClass('edit').removeClass('savename').val('R')};
+            $('#theinput').remove();
+            $('tr[position="'+nameIDold+'"] td[category="positions"] span.name').text(nameRealOld);
         }
 
-        if ($('#theinput').length == 0) { //Проверяем, идет ли уже где-то процесс переименования. если нет - то:
-            if ($(event.target).attr('requestid')){//При нолике если заявка:
-                nameOld = theTd.children('span').text(); //Перезапись дефолтной переменной
-                theTd.children('span').remove();
-                theTd.children('input').after($('<input type="text" name="' + nameID + '" id="theinput" value="' + nameOld + '" placeholder="' + nameOld + '" >'));
-                $('#theinput').focus().select();
-            } else if ($(event.target).attr('position')){//При нолике если позиция:
-                nameID = $(event.target).attr('position');
-                theTd = $('tr[position="'+nameID+'"]').children('td[category="positions"]');
-                nameOld = theTd.children('span').text(); //Перезапись дефолтной переменной
-                theTd.children('span').remove(); //спан удаляется
-                theTd.children('input:first').after($('<input type="text" name="' + nameID + '" id="theinput" value="' + nameOld + '" placeholder="' + nameOld + '" >'));
-                $('#theinput').focus().select();
-            } else {//При нолике если итем(товар пост пок)
-                theTd.html($('<input type="text" name="' + nameID + '" id="theinput" value="' + nameOld + '" placeholder="' + nameOld + '" >'));
-                $('#theinput').focus().select();
-                var nameSaved = nameOld;
-            }
-        }
+        theTd.children('span.name').text(''); //спан опустошается
+        theTd.children('input:first').after($('<input type="text" name="' + nameID + '" id="theinput" value="' + nameOld + '" placeholder="' + nameOld + '" >'));
+        $('#theinput').focus().select();
     });
+
+
 //Чтобы можно было кликать на зэинпут без схлопываний
     $(document).off('click.theinput').on('click.theinput', '#theinput', function (event) {
         console.log("Клик на зэинпут без схлопываний");

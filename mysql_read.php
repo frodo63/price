@@ -494,8 +494,9 @@ if(isset($_POST['table'])){
             </td>
                 <td class = 'rent_whole'>".round($row['rent'], 2)."</td>
                 <td class = 'sum_whole'>" .number_format(round($row['sum'], 2), 2, '.', ' '). "</td>
-                <td class = 'req_buttons'><input type='button' requestid =" . $row['req_id'] . " value='R' class='edit' name =".$row['req_nameid'].">
-                <input type='button' requestid =" . $row['req_id'] . " value='X' class='reqdelete' name =".$row['req_nameid']."></td></tr>";
+                <td class = 'req_buttons'>";
+                //<td class = 'req_buttons'><input type='button' requestid =" . $row['req_id'] . " value='R' class='edit' name =".$row['req_nameid'].">
+        $result .= "<input type='button' requestid =" . $row['req_id'] . " value='X' class='reqdelete' name =".$row['req_nameid']."></td></tr>";
                 }
             }
         $result .= "</table>";
