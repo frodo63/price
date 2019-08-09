@@ -752,9 +752,11 @@ $(document).ready(function() {
         var theTd = $('tr[position="'+nameID+'"] td[category="positions"]');
         var nameOld = theTd.children('span.name').text();
 
+
         if ($('#theinput').length == 1 && $('#theinput').attr('name')!= nameID) { //Если нажато Переименовать при уже открытом зэинпуте на другом элементе:
             var nameRealOld = $('#theinput').attr('placeholder');//Перед удалением берем из зэинпута плейсхолдер для старого имени и неймайди для селекта на след круге старого тп
             var nameIDold = $('#theinput').attr('name');
+            $('#theinput').attr('placeholder', '');
             console.log(nameRealOld);
             console.log(nameIDold);
 
@@ -762,10 +764,12 @@ $(document).ready(function() {
             if($('.savename')){$('.savename').addClass('edit').removeClass('savename').val('R')};
             $('#theinput').remove();
             $('tr[position="'+nameIDold+'"] td[category="positions"] span.name').text(nameRealOld);
+
         }
 
         theTd.children('span.name').text(''); //спан опустошается
-        theTd.children('input:first').after($('<input type="text" name="' + nameID + '" id="theinput" value="' + nameOld + '" placeholder="' + nameOld + '" >'));
+        theTd.children('input:first').after($('<textarea rows="2" name="' + nameID + '" id="theinput" value="' + nameOld + '" placeholder="' + nameOld + '" ></textarea>'));
+
         $('#theinput').focus().select();
     });
 
