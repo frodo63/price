@@ -723,6 +723,10 @@ tr[pricingid] td {border: 1px solid black}
     th:nth-child(6){width: 5%}
     th:nth-child(7){width: 5%}
     th:nth-child(8){width: 10%}
+    .count_req_r1{
+      &.red_letters{color: red}
+      &.green_letters{color: green}
+    }
   }
   table.ga_give_list{
     tr{

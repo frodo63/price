@@ -155,12 +155,15 @@ GROUP BY 1c_num");*/
                 $result.="<td class='sum_req_r1'>".round($row['req_sum'],2)."</td>";
                 $total_sum += round($row['req_sum'],2);
 
-                //Выводим сумму начислений по заявке
-                $result.="<td class='count_req_r1'>".round($req_count,2)."</td>";
+
                 //Начисления к выдаче берутся только если по заказ полностью оплачен
                 if ($req_pay_ostatok <= 0){
-                //if ($req_pay > 0){
+                    //Выводим сумму начислений по заявке и зачисляем начисление в общую суму начислений
+                    $result.="<td class='count_req_r1 green_letters'>".round($req_count,2)."</td>";
                     $total_count += round($req_count,2);
+                }else{
+                    //Выводим сумму начислений по заявке и НЕ зачисляем начисление в общую суму начислений
+                    $result.="<td class='count_req_r1 red_letters'>".round($req_count,2)."</td>";
                 }
 
                 /*УСЛОВИЯ ПО СТАТУСУ ЗАКАЗА*/
