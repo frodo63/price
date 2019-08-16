@@ -300,9 +300,11 @@ $(document).ready(function() {
         var thetab = $('#reads li.ui-state-active').attr('id').substr(4);
         var db = $(event.target).parents('tr[database]').attr('database');
 
+        //Если есть открытая заявка, надо сначала ее закрыть
         if($('div.contents:visible').length > 0){
 
             if ($(event.target).val() == 'X'){//Закрываем открытое
+                $(event.target).siblings('.req_executals, .req_paymentals').css({'display' : 'none'});//Кнопки ТОРГ-12 и ₽
                 $(event.target).val('♢').css({'background' : 'white', 'color' : 'black'}).siblings('div div.positions').html('');
                 $(event.target).siblings('div.contents').slideUp(400);
                 $('.'+thetab+'_list').removeClass('shrinken');
@@ -311,6 +313,7 @@ $(document).ready(function() {
                 return false;
             }
             //Закрываем старое
+            $('.req_executals, .req_paymentals').css({'display' : 'none'});//Кнопки ТОРГ-12 и ₽
             $('input.collapse[value = "X"]').css('background', 'white');
             $('input.collapse[value = "X"]').css('color', 'black');
             $('input.collapse[value = "X"] ~ div div.positions').html('');
@@ -325,6 +328,7 @@ $(document).ready(function() {
             $(event.target).css('background', 'red');
             $(event.target).css('color', 'white');
             $(event.target).siblings('div.contents').slideDown(400);
+            $(event.target).siblings('.req_executals, .req_paymentals').css({'display' : 'block'});//Кнопки ТОРГ-12 и ₽
             $('.'+thetab+'_list').addClass('shrinken');//Сужаем другие столбцы
             $(event.target).parent().addClass('widen');//Расширяем окно заявки
 
@@ -351,8 +355,9 @@ $(document).ready(function() {
             $(event.target).siblings('div').slideDown(400);
             $(event.target).css({'background' : 'red', 'color' : 'white'});
             $(event.target).val('X');
-            $('.'+thetab+'_list').addClass('shrinken')//Сужаем другие столбцы
+            $('.'+thetab+'_list').addClass('shrinken');//Сужаем другие столбцы
             $(event.target).parent().addClass('widen');//Расширяем окно заявки
+            $(event.target).siblings('.req_executals, .req_paymentals').css({'display' : 'block'});//Кнопки ТОРГ-12 и ₽
 
             $.ajax({
                 url: 'mysql_read.php',
@@ -371,14 +376,11 @@ $(document).ready(function() {
                 scrollTop: $(".widen").offset().top
             }, 1000);
             /**/
-        };
-
-
+        }
     });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Чтение позиции. Строится список расценок. Айди берется из инпута плюса////////////////////////////////////////////
-    /*$('input.collapsepos').off('click.collapsepos').on('click.collapsepos', function(){*/
     $(document).off('click.collapsepos').on('click.collapsepos', 'input.collapsepos', function(event){
         var positionid = $(event.target).attr('position');
         var requestid = $(event.target).attr('request');

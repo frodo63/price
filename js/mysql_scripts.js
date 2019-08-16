@@ -1761,6 +1761,16 @@ $(document).ready(function(){
         $('#firstobp').val(firstobp);
     });
 
+    //Показать накладные и платежки по заявке
+    $(document).off('click.show_executals').on('click.show_executals', '.show_executals', function(event){
+        $(event.target).next('.req_executals').toggle();
+    });
+    $(document).off('click.show_paymentals').on('click.show_paymentals', '.show_paymentals', function(event){
+        $(event.target).next('.req_paymentals').toggle();
+    });
+
+
+
 
 
 

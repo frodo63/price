@@ -451,6 +451,10 @@ if(isset($_POST['table'])){
                     $get_executals->execute(array($row['req_uid']));
                     $get_executals_fetched = $get_executals->fetchAll(PDO::FETCH_ASSOC);
 
+                    $get_paymentals = $database[0]->prepare("SELECT * FROM payments WHERE requestid = ?");
+                    $get_paymentals->execute(array($row['req_id']));
+                    $get_paymentals_fetched = $get_paymentals->fetchAll(PDO::FETCH_ASSOC);
+
                     /*Заголовок заказа////////////////////////////////////////////////////////////////////////////////////////////////*/
                     $phpdate = strtotime( $row['req_date'] );
                     $mysqldate = date( 'd.m.y', $phpdate );
@@ -465,6 +469,7 @@ if(isset($_POST['table'])){
                     $result .="<input type='button' requestid =".$row['req_id']." value=♢ class='collapse' name =".$row['req_nameid'].">";
 
                     if(count($get_executals_fetched) > 0){
+                        //$result .="<br><input type='button' value='ТОРГ-12' class='show_executals'><div style='display: none;' class='req_executals'>";
                         foreach($get_executals_fetched as $exe){
 
                             /*Заголовок дата////////////////////////////////////////////////////////////////////////////////////////////////*/
@@ -475,8 +480,22 @@ if(isset($_POST['table'])){
                             $result .="<span style='color: green'>Накладная № ".$exe['execute_1c_num']." от ".$mysqldate." на сумму ".$exe['sum']."</span><br>";
                             unset($mysqldate);
                         }
+                        $result .="</div>";
                     }
-                    /*$result .="<span class='name'>&nbsp ".$row['req_name']."</span>";*/
+
+                    if(count($get_paymentals_fetched) > 0){
+                        //$result .="<input type='button' value='₽' class='show_paymentals'><div style='display: none;' class='req_paymentals'>";
+                        foreach($get_paymentals_fetched as $pay){
+                            /*Заголовок дата////////////////////////////////////////////////////////////////////////////////////////////////*/
+                            $phpdate = strtotime( $pay['payed'] );
+                            $mysqldate = date( 'd.m.y', $phpdate );
+                            /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+                            $result .="<span style='color: blue'>Платеж № ".$pay['number']." от ".$mysqldate." на сумму ".$pay['sum']."</span><br>";
+                            unset($mysqldate);
+                        }
+                        $result .="</div>";
+                    }
 
                     $result .="<div class='contents' id=".$row['req_nameid'].">
                 <h3 class='req_header_".$row['req_id']."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму <span class='reqsumma'>".number_format($row['sum'],2,'.',' ')."&nbsp</span><br> Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h3/><br>
