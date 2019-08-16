@@ -748,7 +748,7 @@ if(isset($_POST['table'])){
 if (isset($_POST['requestid'])){
     $req_id=$_POST['requestid'];
     try{
-        $nowinners = $database->prepare("SELECT `pos_name`, `req_positionid`, `line_num`, `winnerid` FROM `req_positions` WHERE `requestid`=?");
+        $nowinners = $database->prepare("SELECT `pos_name`, `req_positionid`, `line_num`, `winnerid` FROM `req_positions` WHERE `requestid`=? ORDER BY `line_num` ASC");
         $winners = $database->prepare("SELECT `requestid`, `req_positionid`, `line_num`, `pos_name`, `name`, `rent`, `price`, `kol` FROM (SELECT * FROM ((SELECT * FROM `pricings`) AS a LEFT JOIN (SELECT `sellers_id`, `name` FROM(sellers LEFT JOIN allnames ON sellers.sellers_nameid=allnames.nameid)) AS b ON a.`sellerid` = b.`sellers_id`)) AS a LEFT JOIN req_positions ON a.`pricingid` = req_positions.winnerid WHERE `req_positionid`=?");
         $nowinners->execute(array($req_id));
         $nowinners_fetched = $nowinners->fetchAll(PDO::FETCH_ASSOC);
