@@ -207,6 +207,7 @@ echo "    <div id='sync'>
               <input type='button' id='sync_purchases' value='Закупки ЛТК' database='ltk'>
               <input type='button' id='sync_executes' value='Реализации ЛТК' database='ltk'>
               <input type='button' id='sync_transports' value='Транспортные ЛТК' database='ltk'>
+              <input type='button' id='sync_exec_trades' value='Товары в закупках ЛТК' database='ltk'>
               <br>       
               <input type='button' id='sync_ip_byers' value='Покупателей ИП' database='ip'>
               <input type='button' id='sync_ip_sellers' value='Поставщиков ИП' database='ip'>
@@ -216,7 +217,8 @@ echo "    <div id='sync'>
               <input type='button' id='sync_ip_payments' value='Платежки ИП' database='ip'>              
               <input type='button' id='sync_ip_purchases' value='Закупки ИП' database='ip'>
               <input type='button' id='sync_ip_executes' value='Реализации ИП' database='ip'>
-              <input type='button' id='sync_ip_transports' value='Транспортные ИП' database='ip'>              
+              <input type='button' id='sync_ip_transports' value='Транспортные ИП' database='ip'>   
+              <input type='button' id='sync_ip_exec_trades' value='Товары в закупках ИП' database='ip'>           
               <div id='sync_add_to_base' class='up'>              
               </div>
               

@@ -903,6 +903,55 @@ if(isset($_POST['sync_file'])){
                 echo"<p>Файл НЕ найден</p>";
             };
             break;
+        case "exec_trades":
+        case "ip_exec_trades":
+            if ($file){
+                echo"<p>Файл найден</p>";
+                $file_array = file($path); // Считывание файла в массив $file_array
+                if (count($file_array) > 0){
+                    echo"<p>Файл выгружен в массив</p>";
+
+                    $check_exec_trades = $database->prepare("SELECT exec_trades_uid FROM exec_trades WHERE exec_trades_uid = ? AND line_num = ?");
+                    $insert_exec_trades = $database->prepare("INSERT INTO exec_trades (exec_trades_uid,byers_uid,executed,exec_1c_num,line_num,trades_uid,kol,price,sum) VALUES(?,?,?,?,?,?,?,?,?)");
+
+                    foreach ($file_array as $row){
+                        $temp_array = explode(';',$row);
+
+                         //$temp_array[0] - uid реализации      - exec_trades_uid
+                         //$temp_array[1] - uid покупателя      - byers_uid
+                         //$temp_array[2] - Дата реализации     - executed
+                         //$temp_array[3] - Номер накладной     - exec_1c_num
+                         //$temp_array[4] - Номер строки        - line_num
+                         //$temp_array[5] - uid товара          - trades_uid
+                         //$temp_array[6] - количество          - kol
+                         //$temp_array[7] - цена                - price
+                         //$temp_array[8] - сумма               - sum
+
+                        //Проверяем, есть ли в системе такая реализация, если нет - то заносим в базу. Если есть - ничего не делаем
+
+                        $check_exec_trades->execute(array($temp_array[0],$temp_array[4]));
+                        $check_exec_trades_fetched = $check_exec_trades->fetch(PDO::FETCH_ASSOC);
+                        if(!$check_exec_trades_fetched['exec_trades_uid']){
+
+                            $temp_array[0];// - uid реализации      - exec_trades_uid
+                            $temp_array[1];// - uid покупателя      - byers_uid
+                            $temp_array[2] = substr($temp_array[2],6,4 )."-".substr($temp_array[2],3,2)."-".substr($temp_array[2],0,2);//Дата реализации
+                            $temp_array[3];// - Номер накладной     - exec_1c_num
+                            $temp_array[4];// - Номер строки        - line_num
+                            $temp_array[5];// - uid товара          - trades_uid
+                            $temp_array[6];// - количество          - kol
+                            $temp_array[7];// - цена                - price
+                            $temp_array[8];// - сумма               - sum
+
+                            $insert_exec_trades->execute(array($temp_array[0], $temp_array[1],$temp_array[2], $temp_array[3], $temp_array[4], $temp_array[5], $temp_array[6], $temp_array[7], $temp_array[8]));
+                        }
+                    }
+                    echo"Товары в реализациях пройдены.";
+                };
+            }else{
+                echo"<p>Файл НЕ найден</p>";
+            };
+            break;
     }
 }
 

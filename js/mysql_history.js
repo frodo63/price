@@ -180,7 +180,7 @@ $(document).ready(function(){
 
     $(document).off('click.enlarge').on('click.enlarge', '.button_enlarge', function (event) {
         $(event.target).parent('[class*="history"]').toggleClass('enlarged');
-    })
+    });
 
 
     //Скрывание/показываение информации о покупателе
