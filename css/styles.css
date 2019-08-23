@@ -1177,7 +1177,7 @@ tr[pricingid] td {
 }
 
 /* line 805, ../sass/_mysql_styles.scss */
-#button_history.pushed, #button_history_tzrkpok.pushed, #button_history_tzrknam.pushed, #button_history_trade.pushed, #button_history_seller.pushed, #button_history_transports.pushed {
+#button_history.pushed, #button_history_tzrkpok.pushed, #button_history_tzrknam.pushed, #button_history_trade.pushed, #button_history_seller.pushed, #button_history_transports.pushed, #button_exec_trade_history.pushed {
   color: white;
   background: green;
 }
@@ -1193,7 +1193,7 @@ tr[pricingid] td {
 }
 
 /* line 821, ../sass/_mysql_styles.scss */
-.history, .history_knam, .history_kpok, .history_seller, .history_trade, .history_transports {
+.history, .history_knam, .history_kpok, .history_seller, .history_trade, .history_transports, .history_exec_trade {
   z-index: 100;
   background: white;
   position: relative;
@@ -1203,25 +1203,25 @@ tr[pricingid] td {
   border-top: none;
 }
 /* line 825, ../sass/_mysql_styles.scss */
-.history .button_enlarge, .history_knam .button_enlarge, .history_kpok .button_enlarge, .history_seller .button_enlarge, .history_trade .button_enlarge, .history_transports .button_enlarge {
+.history .button_enlarge, .history_knam .button_enlarge, .history_kpok .button_enlarge, .history_seller .button_enlarge, .history_trade .button_enlarge, .history_transports .button_enlarge, .history_exec_trade .button_enlarge {
   position: absolute;
   top: 0;
   right: 0;
 }
 /* line 832, ../sass/_mysql_styles.scss */
-.history tbody tr:hover, .history_knam tbody tr:hover, .history_kpok tbody tr:hover, .history_seller tbody tr:hover, .history_trade tbody tr:hover, .history_transports tbody tr:hover {
+.history tbody tr:hover, .history_knam tbody tr:hover, .history_kpok tbody tr:hover, .history_seller tbody tr:hover, .history_trade tbody tr:hover, .history_transports tbody tr:hover, .history_exec_trade tbody tr:hover {
   background: green;
   color: white;
   cursor: pointer;
 }
 /* line 837, ../sass/_mysql_styles.scss */
-.history td, .history_knam td, .history_kpok td, .history_seller td, .history_trade td, .history_transports td {
+.history td, .history_knam td, .history_kpok td, .history_seller td, .history_trade td, .history_transports td, .history_exec_trade td {
   text-align: center;
   font-size: 20px;
 }
 
 /* line 846, ../sass/_mysql_styles.scss */
-.history_knam.enlarged, .history_kpok.enlarged, .history_seller.enlarged, .history_transports.enlarged {
+.history.enlarged, .history_knam.enlarged, .history_kpok.enlarged, .history_seller.enlarged, .history_trade.enlarged, .history_transports.enlarged, .history_exec_trade.enlarged {
   position: absolute;
   top: 0;
   left: 11px;
@@ -1230,35 +1230,35 @@ tr[pricingid] td {
   z-index: 10000;
 }
 /* line 854, ../sass/_mysql_styles.scss */
-.history_knam td, .history_kpok td, .history_seller td, .history_transports td {
+.history td, .history_knam td, .history_kpok td, .history_seller td, .history_trade td, .history_transports td, .history_exec_trade td {
   font-size: 18px;
 }
 /* line 857, ../sass/_mysql_styles.scss */
-.history_knam th:nth-child(1), .history_kpok th:nth-child(1), .history_seller th:nth-child(1), .history_transports th:nth-child(1) {
+.history th:nth-child(1), .history_knam th:nth-child(1), .history_kpok th:nth-child(1), .history_seller th:nth-child(1), .history_trade th:nth-child(1), .history_transports th:nth-child(1), .history_exec_trade th:nth-child(1) {
   width: 10%;
 }
 /* line 858, ../sass/_mysql_styles.scss */
-.history_knam th:nth-child(2), .history_kpok th:nth-child(2), .history_seller th:nth-child(2), .history_transports th:nth-child(2) {
+.history th:nth-child(2), .history_knam th:nth-child(2), .history_kpok th:nth-child(2), .history_seller th:nth-child(2), .history_trade th:nth-child(2), .history_transports th:nth-child(2), .history_exec_trade th:nth-child(2) {
   width: 30%;
 }
 /* line 859, ../sass/_mysql_styles.scss */
-.history_knam th:nth-child(3), .history_kpok th:nth-child(3), .history_seller th:nth-child(3), .history_transports th:nth-child(3) {
+.history th:nth-child(3), .history_knam th:nth-child(3), .history_kpok th:nth-child(3), .history_seller th:nth-child(3), .history_trade th:nth-child(3), .history_transports th:nth-child(3), .history_exec_trade th:nth-child(3) {
   width: 10%;
 }
 /* line 860, ../sass/_mysql_styles.scss */
-.history_knam th:nth-child(4), .history_kpok th:nth-child(4), .history_seller th:nth-child(4), .history_transports th:nth-child(4) {
+.history th:nth-child(4), .history_knam th:nth-child(4), .history_kpok th:nth-child(4), .history_seller th:nth-child(4), .history_trade th:nth-child(4), .history_transports th:nth-child(4), .history_exec_trade th:nth-child(4) {
   width: 10%;
 }
 /* line 861, ../sass/_mysql_styles.scss */
-.history_knam th:nth-child(5), .history_kpok th:nth-child(5), .history_seller th:nth-child(5), .history_transports th:nth-child(5) {
+.history th:nth-child(5), .history_knam th:nth-child(5), .history_kpok th:nth-child(5), .history_seller th:nth-child(5), .history_trade th:nth-child(5), .history_transports th:nth-child(5), .history_exec_trade th:nth-child(5) {
   width: 10%;
 }
 /* line 862, ../sass/_mysql_styles.scss */
-.history_knam th:nth-child(5), .history_kpok th:nth-child(5), .history_seller th:nth-child(5), .history_transports th:nth-child(5) {
+.history th:nth-child(5), .history_knam th:nth-child(5), .history_kpok th:nth-child(5), .history_seller th:nth-child(5), .history_trade th:nth-child(5), .history_transports th:nth-child(5), .history_exec_trade th:nth-child(5) {
   width: 10%;
 }
 /* line 863, ../sass/_mysql_styles.scss */
-.history_knam tbody tr:hover, .history_kpok tbody tr:hover, .history_seller tbody tr:hover, .history_transports tbody tr:hover {
+.history tbody tr:hover, .history_knam tbody tr:hover, .history_kpok tbody tr:hover, .history_seller tbody tr:hover, .history_trade tbody tr:hover, .history_transports tbody tr:hover, .history_exec_trade tbody tr:hover {
   background-color: green;
   color: white;
 }
@@ -1781,6 +1781,7 @@ p {
 
 /* line 137, ../sass/_price.scss */
 #price #button_history_transports,
+#price #button_exec_trade_history,
 #price #button_history,
 #price #button_history_tzrkpok,
 #price #button_history_tzrknam,
@@ -1789,37 +1790,37 @@ p {
   font-weight: bold;
 }
 
-/* line 146, ../sass/_price.scss */
+/* line 147, ../sass/_price.scss */
 #zak, #kol, #tzr, #tzrknam, #tzrkpok, #rop, #rtp, #op, #tp, #obp, #firstobp, #wtime {
   width: 10vw;
   text-align: center;
   font-size: 3vh;
 }
 
-/* line 151, ../sass/_price.scss */
+/* line 152, ../sass/_price.scss */
 #wtr {
   font-size: 3vh;
 }
 
-/* line 156, ../sass/_price.scss */
+/* line 157, ../sass/_price.scss */
 #op {
   border: 5px solid green;
 }
 
-/* line 160, ../sass/_price.scss */
+/* line 161, ../sass/_price.scss */
 #trade, #seller {
   position: absolute;
   left: 13vw;
   width: 72vw;
 }
 
-/* line 165, ../sass/_price.scss */
+/* line 166, ../sass/_price.scss */
 #zak, #kol {
   position: absolute;
   left: 20vw;
 }
 
-/* line 172, ../sass/_price.scss */
+/* line 173, ../sass/_price.scss */
 .loader {
   border: 16px solid #f3f3f3;
   /* Light grey */
@@ -1839,12 +1840,12 @@ p {
     transform: rotate(360deg);
   }
 }
-/* line 189, ../sass/_price.scss */
+/* line 190, ../sass/_price.scss */
 #obtzr, #obtzrknam, #obtzrkpok, #op + p, #tp + p, #obp + p, #marge, #margek, #obpr, #firstobp + p, #id, p#byer, p#seller, p#trade, #onhands, #cases p, #realop, #realtp, #firstoh, #realop, #realtp, #wtimeday, #clearp, #oh, #wtr, #clearpnar {
   display: inline;
 }
 
-/* line 194, ../sass/_price.scss */
+/* line 195, ../sass/_price.scss */
 #obnal, #margediv {
   display: none;
   padding: 1vh;
@@ -1854,7 +1855,7 @@ p {
 {
     border: solid 1px green;
 }*/
-/* line 205, ../sass/_price.scss */
+/* line 206, ../sass/_price.scss */
 #go {
   position: absolute;
   top: 10vh;
@@ -1864,7 +1865,7 @@ p {
   width: 15vw;
 }
 
-/* line 214, ../sass/_price.scss */
+/* line 215, ../sass/_price.scss */
 #archive, #create {
   position: absolute;
   top: 1vh;
@@ -1872,7 +1873,7 @@ p {
   font-size: 4vh;
 }
 
-/* line 221, ../sass/_price.scss */
+/* line 222, ../sass/_price.scss */
 #cases {
   position: absolute;
   width: 25vw;
@@ -1882,42 +1883,42 @@ p {
   font-size: 3vh;
 }
 
-/* line 230, ../sass/_price.scss */
+/* line 231, ../sass/_price.scss */
 #spacer1, #spacer2, #spacer3, #spacer4, #spacer5, #spacer6 {
   display: inline-block;
 }
 
-/* line 233, ../sass/_price.scss */
+/* line 234, ../sass/_price.scss */
 #spacer1 {
   width: 4vw;
 }
 
-/* line 234, ../sass/_price.scss */
+/* line 235, ../sass/_price.scss */
 #spacer2 {
   width: 2vw;
 }
 
-/* line 235, ../sass/_price.scss */
+/* line 236, ../sass/_price.scss */
 #spacer3 {
   width: 12vw;
 }
 
-/* line 236, ../sass/_price.scss */
+/* line 237, ../sass/_price.scss */
 #spacer4 {
   width: 9.5vw;
 }
 
-/* line 237, ../sass/_price.scss */
+/* line 238, ../sass/_price.scss */
 #spacer5 {
   width: 15vw;
 }
 
-/* line 238, ../sass/_price.scss */
+/* line 239, ../sass/_price.scss */
 #spacer6 {
   width: 14vw;
 }
 
-/* line 240, ../sass/_price.scss */
+/* line 241, ../sass/_price.scss */
 #cases input {
   font-size: 3vh;
 }
@@ -1970,7 +1971,7 @@ th {
     color: white;
 }*/
 /*РАЗМЕР САМОГО ОКНА*/
-/* line 297, ../sass/_price.scss */
+/* line 298, ../sass/_price.scss */
 #editp, #copyp {
   position: relative;
   height: 0vh;
@@ -1978,7 +1979,7 @@ th {
 }
 
 /*Онформационное окошко*/
-/* line 304, ../sass/_price.scss */
+/* line 305, ../sass/_price.scss */
 #msg {
   position: fixed;
   top: 85vh;
@@ -1991,23 +1992,23 @@ th {
   text-align: center;
 }
 
-/* line 314, ../sass/_price.scss */
+/* line 315, ../sass/_price.scss */
 #msg p {
   background: green;
   color: white;
 }
 
-/* line 320, ../sass/_price.scss */
+/* line 321, ../sass/_price.scss */
 #editmsg p, #copymsg p, #hide {
   background-color: green;
 }
 
-/* line 323, ../sass/_price.scss */
+/* line 324, ../sass/_price.scss */
 #editmsg, #copymsg, #hide {
   background-color: green;
 }
 
-/* line 327, ../sass/_price.scss */
+/* line 328, ../sass/_price.scss */
 #hide {
   cursor: pointer;
   position: absolute;
@@ -2023,40 +2024,40 @@ th {
 }
 
 /*Вещи, специфические для add_request*/
-/* line 352, ../sass/_price.scss */
+/* line 353, ../sass/_price.scss */
 #go_request {
   font-size: 10vh;
 }
 
-/* line 357, ../sass/_price.scss */
+/* line 358, ../sass/_price.scss */
 tr[id^="inside"] {
   display: none;
 }
 
-/* line 361, ../sass/_price.scss */
+/* line 362, ../sass/_price.scss */
 tr[id^="inside"] td:hover {
   background-color: black;
   color: white;
   border: 1px solid white;
 }
 
-/* line 367, ../sass/_price.scss */
+/* line 368, ../sass/_price.scss */
 tr[id^="inside"] td input {
   display: inline;
   vertical-align: top;
 }
 
-/* line 372, ../sass/_price.scss */
+/* line 373, ../sass/_price.scss */
 tr[id^="inside"] td {
   text-align: left;
 }
 
-/* line 376, ../sass/_price.scss */
+/* line 377, ../sass/_price.scss */
 #creating {
   display: none;
 }
 
-/* line 380, ../sass/_price.scss */
+/* line 381, ../sass/_price.scss */
 .savename {
   background-color: red;
   color: white;

@@ -1698,7 +1698,7 @@ $(document).ready(function(){
             window.scrollTo(0, 99 * window.innerHeight/100);
         }else{
             window.scrollTo(0, 0);
-        };
+        }
 
     });
     /**/

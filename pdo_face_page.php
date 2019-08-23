@@ -39,7 +39,8 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         <div id='result'>
         <h2>Итоговая цена:</h2><br><br><input type='number' name='price' id='pr' value='0' min='0' step='0.001'/><input type='number' id='pr_in' value='0' min='0' step='0.01' placeholder='Задать'/>
         </div>
-        <input id='button_history' hist_byer='' hist_trade='' type='button' value='Почем продавали раньше'>
+        <input id='button_history' hist_byer='' hist_trade='' type='button' value='Почем расценивали раньше(данные из программы)'>
+        <input id='button_exec_trade_history' hist_trade='' type='button' value='Почем продавали раньше(данные из 1С)'>
         <div id='rent'>
         <h2>Рентабельность:</h2><br><br><h1>0</h1><input id='rent_in' type='number' value='0' min='0' step='0.01' size='2'  placeholder='Задать' ></div>      
         <div class='history'></div>
@@ -47,6 +48,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         <div class='history_kpok'></div>
         <div class='history_seller'></div>
         <div class='history_trade'></div>
+        <div class='history_exec_trade'></div>
         <div class='history_transports'></div>
         <div id='cases'></div>
     </form>               

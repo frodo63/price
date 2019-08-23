@@ -801,7 +801,7 @@ tr[pricingid] td {border: 1px solid black}
 .current_pricing{
   color: green;
 }
-#button_history, #button_history_tzrkpok, #button_history_tzrknam, #button_history_trade, #button_history_seller, #button_history_transports{
+#button_history, #button_history_tzrkpok, #button_history_tzrknam, #button_history_trade, #button_history_seller, #button_history_transports, #button_exec_trade_history{
   &.pushed{
     color: white;
     background: green;
@@ -818,7 +818,7 @@ tr[pricingid] td {border: 1px solid black}
   }
 }
 
-.history, .history_knam, .history_kpok, .history_seller, .history_trade, .history_transports{
+.history, .history_knam, .history_kpok, .history_seller, .history_trade, .history_transports, .history_exec_trade{
   z-index: 100;
   background: white;
   position: relative;
@@ -842,7 +842,7 @@ tr[pricingid] td {border: 1px solid black}
   border-top: none;
 }
 
-.history_knam, .history_kpok, .history_seller, .history_transports{
+.history, .history_knam, .history_kpok, .history_seller, .history_trade, .history_transports, .history_exec_trade{
   &.enlarged{
     position: absolute;
     top: 0;

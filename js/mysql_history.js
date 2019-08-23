@@ -21,9 +21,36 @@ $(document).ready(function(){
                     $('.history').hide();
                     $(event.target).toggleClass('pushed');
                 }else{
-                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports').removeClass('pushed');
-                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports').hide();
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports, #button_exec_trade_history').removeClass('pushed');
+                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports, .history_exec_trade').hide();
                     $('.history').show();
+                    $(event.target).toggleClass('pushed');
+                }
+            }
+        });
+    });
+
+    //Показываем базе товар, чтобы посмотреть, почем и кому этот товар точно продавали (данные из реализаций 1С)
+    $(document).off('click.give_hist_exec_trade').on('click.give_hist_exec_trade', '#button_exec_trade_history', function (event) {
+        var trade = $(event.target).attr('hist_trade');
+        var prid = $('#pricingwindow').attr('pricingid');
+        var db = $('#pricingwindow').attr('database');
+        console.log('trade: '+trade+', pricing: '+prid+', db: '+db);
+        $.ajax({
+            url: 'mysql_history.php',
+            method: 'POST',
+            data: {post_exec_tradeid:trade, db:db, prid:prid},
+            success: function(data){
+                $('.history_exec_trade').html(data);
+            },complete:function () {
+                $('.hystory-list tr[post_prid='+prid+']').addClass('current_pricing');
+                if($('.history_exec_trade:visible').length > 0){
+                    $('.history_exec_trade').hide();
+                    $(event.target).toggleClass('pushed');
+                }else{
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports, #button_exec_trade_history').removeClass('pushed');
+                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports, .history_exec_trade').hide();
+                    $('.history_exec_trade').show();
                     $(event.target).toggleClass('pushed');
                 }
             }
@@ -48,8 +75,8 @@ $(document).ready(function(){
                     $('.history_knam').hide();
                     $(event.target).toggleClass('pushed');
                 }else{
-                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports').removeClass('pushed');
-                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports').hide();
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports, #button_exec_trade_history').removeClass('pushed');
+                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports, .history_exec_trade').hide();
                     $('.history_knam').show();
                     $(event.target).toggleClass('pushed');
                 }
@@ -75,8 +102,8 @@ $(document).ready(function(){
                     $('.history_kpok').hide();
                     $(event.target).toggleClass('pushed');
                 }else{
-                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports').removeClass('pushed');
-                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports').hide();
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports, #button_exec_trade_history').removeClass('pushed');
+                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports, .history_exec_trade').hide();
                     $('.history_kpok').toggle();
                     $(event.target).toggleClass('pushed');
                 }
@@ -109,8 +136,8 @@ $(document).ready(function(){
                     $('.history_trade').hide();
                     $(event.target).toggleClass('pushed');
                 }else{
-                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports').removeClass('pushed');
-                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports').hide();
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports, #button_exec_trade_history').removeClass('pushed');
+                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports, .history_exec_trade').hide();
                     $('.history_trade').toggle();
                     $(event.target).toggleClass('pushed');
                 }
@@ -134,8 +161,8 @@ $(document).ready(function(){
                     $('.history_seller').hide();
                     $(event.target).toggleClass('pushed');
                 }else{
-                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports').removeClass('pushed');
-                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports').hide();
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports, #button_exec_trade_history').removeClass('pushed');
+                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports, .history_exec_trade').hide();
                     $('.history_seller').toggle();
                     $(event.target).toggleClass('pushed');
                 }
@@ -166,8 +193,8 @@ $(document).ready(function(){
                     $('.history_transports').hide();
                     $(event.target).toggleClass('pushed');
                 }else{
-                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller').removeClass('pushed');
-                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller').hide();
+                    $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports, #button_exec_trade_history').removeClass('pushed');
+                    $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports, .history_exec_trade').hide();
                     $('.history_transports').toggle();
                     $(event.target).toggleClass('pushed');
                 }

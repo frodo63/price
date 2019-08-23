@@ -362,6 +362,99 @@ if (isset($_POST['post_trade_hist']) && isset($_POST['trade_posid_hist'])){
     print $result;
 }
 
+//Показываем базе товар, чтобы посмотреть, почем и кому этот товар точно продавали (данные из реализаций 1С)
+if (isset($_POST['post_exec_tradeid']) && isset($_POST['prid'])){
+    $tradeid = $_POST['post_exec_tradeid'];
+    $pricingid = $_POST['prid'];
+    $resulting_executals = array();
+    //1. Дополняем массив dbs_array() четвертым значение для каждой базы  - это юайдишник итема
+    switch($_POST['db']){
+        case 'ltk':
+            try{
+                $get_uids = $pdo->prepare("SELECT a.trades_uid as ltk_uid, b.trades_uid as ip_uid FROM prices.trades as a LEFT JOIN prices_ip.trades as b ON a.ip_uid=b.trades_uid WHERE a.trades_id=?");
+                $pdo->beginTransaction();
+                $get_uids->execute(array($tradeid));
+                $pdo->commit();
+            }catch( PDOException $Exception ) {$pdo->rollback();print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );}
+            break;
+        case 'ip':
+            try{
+                $get_uids = $pdoip->prepare("SELECT a.trades_uid as ltk_uid, b.trades_uid as ip_uid FROM prices_ip.trades as b LEFT JOIN prices.trades as a ON b.trades_uid=a.ip_uid WHERE b.trades_id=?");
+                $pdoip->beginTransaction();
+                $get_uids->execute(array($tradeid));
+                $pdoip->commit();
+            }catch( PDOException $Exception ) {$pdoip->rollback();print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );}
+            break;
+    }
+    $get_uids_fetched = $get_uids->fetch(PDO::FETCH_ASSOC);
+    $dbs_array[0][4] = $get_uids_fetched['ltk_uid'];
+    $dbs_array[1][4] = $get_uids_fetched['ip_uid'];
+    // 2. Получаем данные с баз
+    foreach ($dbs_array as $database){
+
+        $getname_trade = $database[0]->prepare("SELECT name FROM trades LEFT JOIN allnames ON trades.trades_nameid = allnames.nameid WHERE trades_uid = ?");//Имя товара
+
+        $get_exec_trades = $database[0]->prepare("SELECT * FROM exec_trades WHERE trades_uid = ? ORDER BY executed DESC");//Показываем все продажи с этим товаром
+        $getname_byer = $database[0]->prepare("SELECT name,byers_id FROM byers LEFT JOIN allnames ON byers.byers_nameid = allnames.nameid WHERE byers_uid = ?");//Из продажи берем uid покупателя и получаем его имя
+        //Данные для расенки? под ? $get_position_data = $database[0]->prepare("SELECT purchased, purchase_id FROM req_positions WHERE req_positionid = ?");//Получаем данные по привязанным закупкам у текущей позиции
+
+        $database[0]->beginTransaction();
+
+        $get_exec_trades->execute(array($database[4]));
+        $get_exec_trades_fetched = $get_exec_trades->fetchAll(PDO::FETCH_ASSOC);
+
+        if($database[4] !='') {
+            $getname_trade->execute(array($database[4]));
+            $getname_trade_fetched = $getname_trade->fetch(PDO::FETCH_ASSOC);
+            $trade_name = $getname_trade_fetched['name'];
+        }
+
+        //$get_position_data->execute(array($posid));
+        //$get_position_data_fetched = $get_position_data->fetch(PDO::FETCH_ASSOC);
+
+        foreach ($get_exec_trades_fetched as $pur) {
+            $getname_byer->execute(array($pur['byers_uid']));
+            $getname_byer_fetched = $getname_byer->fetch(PDO::FETCH_ASSOC);
+            $byer_name = $getname_byer_fetched['name'];
+            $byer_id = $getname_byer_fetched['byers_id'];
+
+            $phpdate = strtotime($pur['executed']);
+            $mysqldate = date('d.m.Y', $phpdate);
+
+            /*if($get_position_data_fetched['purchase_id'] == $pur['purchases_id']){
+                $respur ="<tr class='pointed'>";
+            }else{
+                $respur ="<tr>";
+            }*/
+            $respur .="<td>".$mysqldate."</td>";
+            $respur .="<td>".$pur['exec_1c_num']."</td>";
+            $respur .="<td class='exec_byer_name'>".$byer_name."</td>";
+            $respur .="<td>".$pur['kol']."</td>";
+            $respur .="<td class='exec_price'>".number_format($pur['price'],2,'.',' ')."</td>";
+            $respur .="<td>".$database[3]."</td>";
+            $respur .="</tr>";
+            $resulting_purs[$pur['executed']] = $respur;
+            unset($respur);
+        }
+        $database[0]->commit();
+    }
+    //krsort($resulting_purs);
+    // 3. Рисуем красоту
+    $result = "<input class='button_enlarge' type='button' value='↕'><br><span>Покупали \"".$trade_name."\"</span><br><table class='history-exec-trade'><thead><tr> 
+                    <th>когда</th>                   
+                    <th>номер накл.</th>
+                    <th>кому</th>
+                    <th>сколько</th>
+                    <th>почем</th>
+                    <th>в базе</th>
+                    </tr></thead><tbody>";
+    foreach($resulting_purs as $k=>$purchase){
+        $result .= $purchase;
+    }
+    $result .="</tbody></table>";
+    print $result;
+}
+
 //Показываем базе поставщика, чтобы посмотреть, что от него вообще возили из обеих баз
 if (isset($_POST['post_seller_hist'])){
     $sellerid = $_POST['post_seller_hist'];

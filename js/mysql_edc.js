@@ -445,7 +445,7 @@ $(document).ready(function() {
         $('#pricingwindow').slideDown().attr({ positionid:posid, byerid:byerid, requestid:reqid, database:db });
         $('#trade').attr('trade_id', '').val('');
         $('#seller').attr('seller_id', '').val('');
-        $('#button_history').attr('hist_byer', byerid);//Дбавляем идентификатор ПОкупателя в инпут по истории
+        $('#button_history').attr('hist_byer', byerid);//Добавляем идентификатор ПОкупателя в инпут по истории
         console.log(byername);
         $('#byer_name').text(byername);
         $('#request_info').text('Заказ № '+num+' от '+created);
@@ -513,6 +513,7 @@ $(document).ready(function() {
                 var json = $.parseJSON(data);
                 $('#trade').attr({trade_id: json.data1, tare: json.data3}).val(json.data2);
                 $('#button_history').attr('hist_trade', json.data1);
+                $('#button_exec_trade_history').attr('hist_trade', json.data1);
             }
         });
 
@@ -547,6 +548,7 @@ $(document).ready(function() {
         $('#trade').attr({trade_id: '', tare:''}).val('');
         $('#seller').attr('seller_id', '').val('');
         $('#button_history').attr({hist_byer: '-', hist_trade: '-'});
+        $('#button_exec_trade_history').attr({hist_trade: '-'});
         $('#pricingwindow input[type="number"]').val('');
         $('#pricingwindow input[type="text"]').text('');
         $('#cases p,#obtzr,#tzr,#obtzrknam,#obtzrkpok,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
@@ -625,6 +627,7 @@ $(document).ready(function() {
         $('#trade').attr({trade_id: '', tare:''}).val('');
         $('#seller').attr('seller_id', '').val('');
         $('#button_history').attr({hist_byer: '-', hist_trade: '-'});
+        $('#button_exec_trade_history').attr({hist_trade: '-'});
         $('#pricingwindow input[type="number"]').val('');
         $('#pricingwindow input[type="text"]').text('');
         $('#cases p,#obtzr,#tzr,#obtzrknam,#obtzrkpok,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
@@ -633,6 +636,7 @@ $(document).ready(function() {
         $('.history').html('');
         $('.history_knam').html('');
         $('.history_kpok').html('');
+        $('.history_exec_trade').html('');
         $('#byer_info').html('');
         $('#executes_list').html('');
         $('#request_info').text('');
@@ -654,6 +658,7 @@ $(document).ready(function() {
             $('#trade').attr({trade_id : json.tradeid, tare : tare}).val(trade);
             $('#seller').attr('seller_id', json.sellerid).val(seller);
             $('#button_history').attr('hist_trade', json.tradeid);//Добавляем идентификатор Товара в инпут по истории
+            $('#button_exec_trade_history').attr('hist_trade', json.tradeid);//Добавляем идентификатор Товара в инпут по истории
             $('#request_info').text('Заказ № '+json.num+' от '+json.created);
 
             $('#zak').val(json.zak);
