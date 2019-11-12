@@ -223,8 +223,6 @@ $(document).ready(function(){
                 'onec_id': onec_id
             }).prop("disabled", false);
             add_select.focus();
-
-
         }
         if($('#sinchronize_byers').length > 0){
             if ($('#sync_add_to_base').hasClass('up')){

@@ -88,6 +88,7 @@ if(isset($_POST['read_winid'])){
 if (isset($_POST['request'])){
     $reqid = $_POST['request'];
     $wincount = 0;
+    $totalnam = 0;
     $getvars = $database->prepare("SELECT `req_positionid`,`winnerid` FROM req_positions WHERE `req_positions`.`requestid` = ?");
     $nam == 0;//Переменная, в зависимости от того, зафиксирована расценка или нет
     $countrent = $database->prepare("SELECT * FROM (SELECT `winnerid` FROM `req_positions` WHERE `requestid` = ? AND `winnerid` != 0 ) AS a LEFT JOIN (SELECT `kol`,`price`,`rop`,`opr`,`fixed`,`wtime`,`pricingid`,`name`,`tradeid`,`firstoh`,`oh` FROM `pricings` AS c LEFT JOIN (SELECT `trades_id`,`name` FROM `trades` LEFT JOIN `allnames` ON `trades`.`trades_nameid`=`allnames`.`nameid`) AS d ON c.`tradeid`=d.`trades_id`) AS b ON a.`winnerid` = b.`pricingid`");
@@ -136,6 +137,7 @@ if (isset($_POST['request'])){
         $dem_bot;
         /*ФОРМУЛА РАСЧЕТА*/
         unset($req_total_count);
+
         foreach ($c as $row){
 
             /*Временные переменные для приведения к числу*/
@@ -179,8 +181,11 @@ if (isset($_POST['request'])){
             /*Закончилась показательная дробь*/
             $req_total_count += ($firstoh*$kol);
 
+            $totalnam=$totalnam+($nam*$kol);
+
         };
         $result .="</table><br>";
+        $result .="<p>Всего получим если выгорит: ".number_format($totalnam,2,'.',' ')." руб.</p>";
 
         //Убрал расчет разницы, заменил на сравнение rowCount($c)  с 0
         //$countdif = round($poscount,0) - round($wincount,0);

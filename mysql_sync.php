@@ -20,7 +20,7 @@ foreach($getgas as $giveaway){
     $setgabyersid->execute(array($byersid['byersid'], $giveaway['requestid']));
 
 }*/
-//////////////////////////////////////////////////////////////////
+//
 
 function is_array_empty($array, $check_all_elements = false)
 {
@@ -612,7 +612,7 @@ if(isset($_POST['sync_file'])){
                     $file_array_trimmed[$k]=[$t_a];
                 }
 
-                //Массив для дубрилующих элементво массива. Сюда будут стекаться ключи и он будет ограничивать проход по массиву
+                //Массив для дубрилующих элементов массива. Сюда будут стекаться ключи и он будет ограничивать проход по массиву
                 $a2del = array();
                 //Всякое с массивом
                 foreach($file_array_trimmed as $k2 => $v2){
