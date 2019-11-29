@@ -90,7 +90,7 @@ if (isset($_POST['request'])){
     $wincount = 0;
     $totalnam = 0;
     $getvars = $database->prepare("SELECT `req_positionid`,`winnerid` FROM req_positions WHERE `req_positions`.`requestid` = ?");
-    $nam == 0;//Переменная, в зависимости от того, зафиксирована расценка или нет
+    $nam = 0;//Переменная, в зависимости от того, зафиксирована расценка или нет
     $countrent = $database->prepare("SELECT * FROM (SELECT `winnerid` FROM `req_positions` WHERE `requestid` = ? AND `winnerid` != 0 ) AS a LEFT JOIN (SELECT `kol`,`price`,`rop`,`opr`,`fixed`,`wtime`,`pricingid`,`name`,`tradeid`,`firstoh`,`oh` FROM `pricings` AS c LEFT JOIN (SELECT `trades_id`,`name` FROM `trades` LEFT JOIN `allnames` ON `trades`.`trades_nameid`=`allnames`.`nameid`) AS d ON c.`tradeid`=d.`trades_id`) AS b ON a.`winnerid` = b.`pricingid`");
     $save_rent = $database->prepare("UPDATE `requests` SET `req_rent`=? WHERE `requests_id`=?");
     $save_sum = $database->prepare("UPDATE `requests` SET `req_sum`=? WHERE `requests_id`=?");
@@ -133,10 +133,11 @@ if (isset($_POST['request'])){
 
 
         //Переменные для демонстрационной дроби
-        $dem_top;
-        $dem_bot;
+        $dem_top = 0;
+        $dem_bot = 0;
         /*ФОРМУЛА РАСЧЕТА*/
         unset($req_total_count);
+        $req_total_count = 0;
 
         foreach ($c as $row){
 
@@ -150,6 +151,7 @@ if (isset($_POST['request'])){
             $rop = round($row['rop'], 2);
             $kol = round($row['kol'], 2);
             $wtime = round($row['wtime'], 2);
+
 
             switch ($fixed) {
                 case 0:$nam = $opr;

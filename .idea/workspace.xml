@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebacd80-a44c-46e9-91ce-96f94f6c86c5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysql_history.php" afterPath="$PROJECT_DIR$/mysql_history.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysql_read.php" afterPath="$PROJECT_DIR$/mysql_read.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pdo_connect.php" afterPath="$PROJECT_DIR$/pdo_connect.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysql_giveaways.php" afterPath="$PROJECT_DIR$/mysql_giveaways.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mysql_rent.php" afterPath="$PROJECT_DIR$/mysql_rent.php" />
     </list>
     <ignored path="prices.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,163 +26,67 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="mysql_read.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mysql_read.php">
+      <file leaf-file-name="mysql_giveaways.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mysql_giveaways.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="755" column="15" selection-start-line="755" selection-start-column="15" selection-end-line="755" selection-end-column="15" />
+            <state relative-caret-position="305">
+              <caret line="92" column="23" selection-start-line="92" selection-start-column="23" selection-end-line="92" selection-end-column="23" />
               <folding>
-                <marker date="1575057646779" expanded="true" signature="1253:1296" placeholder="SELECT ip_ui... byers" />
-                <marker date="1575057646779" expanded="true" signature="1588:2627" placeholder="SELECT a.cre... " />
-                <marker date="1575057646779" expanded="true" signature="3200:4303" placeholder="SELECT a.cre... " />
-                <marker date="1575057646779" expanded="true" signature="5177:6219" placeholder="SELECT a.cre... " />
-                <marker date="1575057646779" expanded="true" signature="6272:7314" placeholder="SELECT a.cre... " />
-                <marker date="1575057646779" expanded="true" signature="8795:9061" placeholder="SELECT b.`re... sellerid" />
-                <marker date="1575057646779" expanded="true" signature="8845:8891" placeholder="SELECT `sell... pricings" />
-                <marker date="1575057646779" expanded="true" signature="8910:8967" placeholder="SELECT `req_... req_positions" />
-                <marker date="1575057646779" expanded="true" signature="9110:9514" placeholder="SELECT b.`re... sellerid" />
-                <marker date="1575057646779" expanded="true" signature="9181:9329" placeholder="SELECT `sell... pricings" />
-                <marker date="1575057646779" expanded="true" signature="9348:9405" placeholder="SELECT `req_... req_positions" />
-                <marker date="1575057646779" expanded="true" signature="9570:9617" placeholder="SELECT ip_ui... sellers" />
-                <marker date="1575057646779" expanded="true" signature="10533:11537" placeholder="SELECT a.cre... " />
-                <marker date="1575057646779" expanded="true" signature="12555:13559" placeholder="SELECT a.cre... " />
-                <marker date="1575057646779" expanded="true" signature="14107:14365" placeholder="SELECT b.`re... tradeid" />
-                <marker date="1575057646779" expanded="true" signature="14157:14202" placeholder="SELECT `trad... pricings" />
-                <marker date="1575057646779" expanded="true" signature="14215:14272" placeholder="SELECT `req_... req_positions" />
-                <marker date="1575057646779" expanded="true" signature="14413:14671" placeholder="SELECT b.`re... tradeid" />
-                <marker date="1575057646779" expanded="true" signature="14463:14508" placeholder="SELECT `trad... pricings" />
-                <marker date="1575057646779" expanded="true" signature="14521:14578" placeholder="SELECT `req_... req_positions" />
-                <marker date="1575057646779" expanded="true" signature="15186:16186" placeholder="SELECT a.cre... " />
-                <marker date="1575057646779" expanded="true" signature="16819:16951" placeholder="SELECT b.tra... trades" />
-                <marker date="1575057646779" expanded="true" signature="17647:18626" placeholder="SELECT a.cre... " />
-                <marker date="1575057646779" expanded="true" signature="19449:20603" placeholder="SELECT a.cre... " />
-                <marker date="1575057646779" expanded="true" signature="21678:21721" placeholder="SELECT ip_ui... byers" />
-                <marker date="1575057646779" expanded="true" signature="22034:23578" placeholder="SELECT a.cre... " />
-                <marker date="1575057646779" expanded="true" signature="24375:25920" placeholder="SELECT a.cre... " />
-                <marker date="1575057646779" expanded="true" signature="26676:27788" placeholder="SELECT a.cre... " />
-                <marker date="1575057646779" expanded="true" signature="29155:29200" placeholder="SELECT * FRO... executes" />
-                <marker date="1575057646779" expanded="true" signature="29424:29466" placeholder="SELECT * FRO... payments" />
-                <marker date="1575057646779" expanded="true" signature="31409:31421" placeholder="..." />
-                <marker date="1575057646779" expanded="true" signature="32406:32417" placeholder="..." />
-                <marker date="1575057646779" expanded="true" signature="36088:36304" placeholder="SELECT byers... byers" />
-                <marker date="1575057646779" expanded="true" signature="36350:36438" placeholder="SELECT reque... requests" />
-                <marker date="1575057646779" expanded="true" signature="36489:36577" placeholder="SELECT reque... requests" />
-                <marker date="1575057646779" expanded="true" signature="36679:36851" placeholder="SELECT price... byers" />
-                <marker date="1575057646779" expanded="true" signature="38785:38952" placeholder="SELECT name,... ${$table}" />
-                <marker date="1575057646779" expanded="true" signature="38997:39168" placeholder="SELECT name,... ${$table}" />
-                <marker date="1575057646779" expanded="true" signature="40353:40364" placeholder="..." />
-                <marker date="1575057646779" expanded="true" signature="40439:40450" placeholder="..." />
-                <marker date="1575057646779" expanded="true" signature="40641:40849" placeholder="..." />
-                <marker date="1575057646779" expanded="true" signature="42065:42252" placeholder="..." />
-                <marker date="1575057646779" expanded="true" signature="42662:42801" placeholder="SELECT `trad... trades" />
-                <marker date="1575057646779" expanded="true" signature="42846:42976" placeholder="SELECT `trad... trades" />
-                <marker date="1575057646779" expanded="true" signature="43819:43830" placeholder="..." />
-                <marker date="1575057646779" expanded="true" signature="43911:43922" placeholder="..." />
-                <marker date="1575057646779" expanded="true" signature="44120:44356" placeholder="..." />
-                <marker date="1575057646779" expanded="true" signature="45214:45225" placeholder="..." />
-                <marker date="1575057646779" expanded="true" signature="45306:45317" placeholder="..." />
-                <marker date="1575057646779" expanded="true" signature="45515:45751" placeholder="..." />
-                <marker date="1575057646779" expanded="true" signature="46157:46257" placeholder="SELECT * FRO... sellers" />
-                <marker date="1575057646779" expanded="true" signature="46306:46406" placeholder="SELECT * FRO... sellers" />
-                <marker date="1575057646779" expanded="true" signature="48456:48580" placeholder="SELECT `pos_... req_positions" />
-                <marker date="1575057646779" expanded="true" signature="48623:49019" placeholder="SELECT `requ... *" />
-                <marker date="1575057646779" expanded="true" signature="48722:48922" placeholder="SELECT * FRO... *" />
-                <marker date="1575057646779" expanded="true" signature="48738:48762" placeholder="SELECT * FRO... pricings" />
-                <marker date="1575057646779" expanded="true" signature="48780:48882" placeholder="SELECT `sell... sellers" />
-                <marker date="1575057646779" expanded="true" signature="52716:54628" placeholder="SELECT c.pri... *" />
-                <marker date="1575057646779" expanded="true" signature="54057:54445" placeholder="SELECT * FRO... pricingid" />
-                <marker date="1575057646779" expanded="true" signature="54072:54263" placeholder="SELECT `pric... pricings" />
-                <marker date="1575057646779" expanded="true" signature="54281:54412" placeholder="SELECT `name... allnames" />
-                <marker date="1575057646779" expanded="true" signature="54463:54597" placeholder="SELECT `name... allnames" />
-                <marker date="1575057646779" expanded="true" signature="54986:55533" placeholder="..." />
-                <marker date="1575057646779" expanded="true" signature="54993:55533" placeholder="..." />
-                <marker date="1575057646779" expanded="true" signature="54997:55525" placeholder="..." />
-                <marker date="1575057646779" expanded="true" signature="57184:57435" placeholder="..." />
-                <marker date="1575057646779" expanded="true" signature="57230:57435" placeholder="..." />
-                <marker date="1575057646779" expanded="true" signature="58517:58751" placeholder="SELECT * FRO... pricings" />
-                <marker date="1575057646779" expanded="true" signature="58559:58692" placeholder="SELECT creat... req_positions" />
-                <marker date="1575057646779" expanded="true" signature="59486:59536" placeholder="SELECT creat... requests" />
-                <marker date="1575057646779" expanded="true" signature="60186:60235" placeholder="SELECT 1c_nu... requests" />
-                <marker date="1575057646779" expanded="true" signature="61231:61283" placeholder="SELECT ${$co... requests" />
-                <marker date="1575057646779" expanded="true" signature="62255:62315" placeholder="SELECT ${$co... req_positions" />
-                <marker date="1575057646779" expanded="true" signature="62969:63029" placeholder="SELECT * FRO... payments" />
-                <marker date="1575057646779" expanded="true" signature="63695:63755" placeholder="SELECT * FRO... giveaways" />
-                <marker date="1575057646779" expanded="true" signature="64330:64457" placeholder="SELECT ov_fi... byers" />
-                <marker date="1575057646779" expanded="true" signature="64568:64979" placeholder="..." />
-                <marker date="1575057646779" expanded="true" signature="65142:65350" placeholder="SELECT name,... req_positions" />
-                <marker date="1575057646779" expanded="true" signature="65979:66115" placeholder="SELECT execu... executes" />
+                <marker date="1575059710926" expanded="true" signature="808:980" placeholder="SELECT price... byers" />
+                <marker date="1575059710926" expanded="true" signature="2874:3330" placeholder="SELECT DISTI... requests" />
+                <marker date="1575059710926" expanded="true" signature="4290:4335" placeholder="SELECT * FRO... executes" />
+                <marker date="1575059710926" expanded="true" signature="4434:4602" placeholder="SELECT reque... requests" />
+                <marker date="1575059710926" expanded="true" signature="4698:4840" placeholder="SELECT reque... req_positions" />
+                <marker date="1575059710926" expanded="true" signature="7168:7180" placeholder="..." />
+                <marker date="1575059710926" expanded="true" signature="9448:9834" placeholder="..." />
+                <marker date="1575059710926" expanded="true" signature="9499:9801" placeholder="..." />
+                <marker date="1575059710926" expanded="true" signature="9997:10403" placeholder="..." />
+                <marker date="1575059710926" expanded="true" signature="10053:10370" placeholder="..." />
+                <marker date="1575059710926" expanded="true" signature="10491:10864" placeholder="..." />
+                <marker date="1575059710926" expanded="true" signature="10540:10831" placeholder="..." />
+                <marker date="1575059710926" expanded="true" signature="10977:11315" placeholder="..." />
+                <marker date="1575059710926" expanded="true" signature="11032:11282" placeholder="..." />
+                <marker date="1575059710926" expanded="true" signature="11425:11825" placeholder="..." />
+                <marker date="1575059710926" expanded="true" signature="11477:11792" placeholder="..." />
+                <marker date="1575059710926" expanded="true" signature="11935:12369" placeholder="..." />
+                <marker date="1575059710926" expanded="true" signature="11985:12336" placeholder="..." />
+                <marker date="1575059710926" expanded="true" signature="13256:13394" placeholder="SELECT given... giveaways" />
+                <marker date="1575059710926" expanded="true" signature="14774:15047" placeholder="..." />
+                <marker date="1575059710926" expanded="true" signature="16232:16297" placeholder="SELECT creat... requests" />
+                <marker date="1575059710926" expanded="true" signature="16345:16424" placeholder="SELECT payed... payments" />
+                <marker date="1575059710926" expanded="true" signature="16473:16808" placeholder="SELECT pos_n... " />
+                <marker date="1575059710926" expanded="true" signature="16890:17049" placeholder="SELECT name,... allnames" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mysql_history.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/mysql_history.php">
+      <file leaf-file-name="mysql_rent.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/mysql_rent.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="431" column="24" selection-start-line="431" selection-start-column="24" selection-end-line="431" selection-end-column="24" />
+            <state relative-caret-position="237">
+              <caret line="145" column="31" selection-start-line="145" selection-start-column="31" selection-end-line="145" selection-end-column="31" />
               <folding>
-                <marker date="1575057866686" expanded="true" signature="378:588" placeholder="SELECT price... trades" />
-                <marker date="1575057866686" expanded="true" signature="669:882" placeholder="SELECT price... trades" />
-                <marker date="1575057866686" expanded="true" signature="1126:1223" placeholder="SELECT name trades" />
-                <marker date="1575057866686" expanded="true" signature="1498:1829" placeholder="..." />
-                <marker date="1575057866686" expanded="true" signature="1505:1822" placeholder="..." />
-                <marker date="1575057866686" expanded="true" signature="1509:1814" placeholder="..." />
-                <marker date="1575057866686" expanded="true" signature="1910:2212" placeholder="SELECT creat... pricings" />
-                <marker date="1575057866686" expanded="true" signature="2263:2364" placeholder="SELECT name sellers" />
-                <marker date="1575057866686" expanded="true" signature="2413:2506" placeholder="SELECT name byers" />
-                <marker date="1575057866686" expanded="true" signature="4559:4720" placeholder="SELECT a.sel... sellers" />
-                <marker date="1575057866686" expanded="true" signature="5105:5266" placeholder="SELECT a.sel... sellers" />
-                <marker date="1575057866686" expanded="true" signature="5877:5969" placeholder="SELECT name sellers" />
-                <marker date="1575057866686" expanded="true" signature="6035:6778" placeholder="SELECT selle... sellers_uid" />
-                <marker date="1575057866686" expanded="true" signature="6105:6537" placeholder="SELECT selle... sellers_uid" />
-                <marker date="1575057866686" expanded="true" signature="6207:6344" placeholder="SELECT selle... pricings" />
-                <marker date="1575057866686" expanded="true" signature="6380:6493" placeholder="SELECT trade... trades" />
-                <marker date="1575057866686" expanded="true" signature="6567:6675" placeholder="SELECT creat... requests" />
-                <marker date="1575057866686" expanded="true" signature="8343:8603" placeholder="..." />
-                <marker date="1575057866686" expanded="true" signature="8350:8596" placeholder="..." />
-                <marker date="1575057866686" expanded="true" signature="8354:8588" placeholder="..." />
-                <marker date="1575057866686" expanded="true" signature="9256:9405" placeholder="SELECT a.bye... byers" />
-                <marker date="1575057866686" expanded="true" signature="9788:9937" placeholder="SELECT a.bye... byers" />
-                <marker date="1575057866686" expanded="true" signature="10539:10625" placeholder="SELECT name byers" />
-                <marker date="1575057866686" expanded="true" signature="10687:11354" placeholder="SELECT byers... sellerid" />
-                <marker date="1575057866686" expanded="true" signature="10755:11048" placeholder="SELECT selle... pricings" />
-                <marker date="1575057866686" expanded="true" signature="10884:10997" placeholder="SELECT trade... trades" />
-                <marker date="1575057866686" expanded="true" signature="11078:11249" placeholder="SELECT creat... requests" />
-                <marker date="1575057866686" expanded="true" signature="12874:13134" placeholder="..." />
-                <marker date="1575057866686" expanded="true" signature="12881:13127" placeholder="..." />
-                <marker date="1575057866686" expanded="true" signature="12885:13119" placeholder="..." />
-                <marker date="1575057866686" expanded="true" signature="13770:13925" placeholder="SELECT a.tra... trades" />
-                <marker date="1575057866686" expanded="true" signature="14338:14493" placeholder="SELECT a.tra... trades" />
-                <marker date="1575057866686" expanded="true" signature="15126:15231" placeholder="SELECT name trades" />
-                <marker date="1575057866686" expanded="true" signature="15299:15368" placeholder="SELECT * FRO... purchases" />
-                <marker date="1575057866686" expanded="true" signature="15464:15584" placeholder="SELECT name,... sellers" />
-                <marker date="1575057866686" expanded="true" signature="15696:15769" placeholder="SELECT purch... req_positions" />
-                <marker date="1575057866686" expanded="true" signature="18067:18393" placeholder="..." />
-                <marker date="1575057866686" expanded="true" signature="18074:18386" placeholder="..." />
-                <marker date="1575057866686" expanded="true" signature="18078:18378" placeholder="..." />
-                <marker date="1575057866686" expanded="true" signature="19105:19260" placeholder="SELECT a.tra... trades" />
-                <marker date="1575057866686" expanded="true" signature="19641:19796" placeholder="SELECT a.tra... trades" />
-                <marker date="1575057866686" expanded="true" signature="20393:20498" placeholder="SELECT name trades" />
-                <marker date="1575057866686" expanded="true" signature="20565:20634" placeholder="SELECT * FRO... exec_trades" />
-                <marker date="1575057866686" expanded="true" signature="20724:20834" placeholder="SELECT name,... byers" />
-                <marker date="1575057866686" expanded="true" signature="23047:23337" placeholder="..." />
-                <marker date="1575057866686" expanded="true" signature="23054:23330" placeholder="..." />
-                <marker date="1575057866686" expanded="true" signature="23058:23322" placeholder="..." />
-                <marker date="1575057866686" expanded="true" signature="23988:24149" placeholder="SELECT a.sel... sellers" />
-                <marker date="1575057866686" expanded="true" signature="24533:24694" placeholder="SELECT a.sel... sellers" />
-                <marker date="1575057866686" expanded="true" signature="25487:25596" placeholder="SELECT name sellers" />
-                <marker date="1575057866686" expanded="true" signature="25704:25774" placeholder="SELECT * FRO... purchases" />
-                <marker date="1575057866686" expanded="true" signature="25879:25984" placeholder="SELECT name trades" />
-                <marker date="1575057866686" expanded="true" signature="28124:28373" placeholder="..." />
-                <marker date="1575057866686" expanded="true" signature="28131:28366" placeholder="..." />
-                <marker date="1575057866686" expanded="true" signature="28135:28358" placeholder="..." />
-                <marker date="1575057866686" expanded="true" signature="28757:28817" placeholder="SELECT purch... req_positions" />
-                <marker date="1575057866686" expanded="true" signature="28875:28994" placeholder="SELECT selle... transports" />
-                <marker date="1575057866686" expanded="true" signature="29045:29154" placeholder="SELECT name sellers" />
-                <marker date="1575057866686" expanded="true" signature="30086:30298" placeholder="..." />
-                <marker date="1575057866686" expanded="true" signature="30093:30291" placeholder="..." />
-                <marker date="1575057866686" expanded="true" signature="30097:30283" placeholder="..." />
+                <marker date="1575060033229" expanded="true" signature="338:602" placeholder="SELECT `name... sellerid" />
+                <marker date="1575060033229" expanded="true" signature="379:453" placeholder="SELECT selle... pricings" />
+                <marker date="1575060033229" expanded="true" signature="471:567" placeholder="SELECT selle... sellers" />
+                <marker date="1575060033229" expanded="true" signature="646:714" placeholder="UPDATE `req_... " />
+                <marker date="1575060033229" expanded="true" signature="755:827" placeholder="UPDATE `pric... " />
+                <marker date="1575060033229" expanded="true" signature="869:923" placeholder="UPDATE `pric... " />
+                <marker date="1575060033229" expanded="true" signature="1827:1895" placeholder="UPDATE `req_... " />
+                <marker date="1575060033229" expanded="true" signature="1936:1991" placeholder="UPDATE `pric... " />
+                <marker date="1575060033229" expanded="true" signature="2659:2923" placeholder="SELECT `name... sellerid" />
+                <marker date="1575060033229" expanded="true" signature="2700:2774" placeholder="SELECT selle... pricings" />
+                <marker date="1575060033229" expanded="true" signature="2792:2888" placeholder="SELECT selle... sellers" />
+                <marker date="1575060033229" expanded="true" signature="3662:3753" placeholder="SELECT `req_... req_positions" />
+                <marker date="1575060033229" expanded="true" signature="3875:4295" placeholder="SELECT * FRO... winnerid" />
+                <marker date="1575060033229" expanded="true" signature="3890:3970" placeholder="SELECT `winn... req_positions" />
+                <marker date="1575060033229" expanded="true" signature="3989:4257" placeholder="SELECT `kol`... pricings" />
+                <marker date="1575060033229" expanded="true" signature="4114:4222" placeholder="SELECT `trad... trades" />
+                <marker date="1575060033229" expanded="true" signature="4336:4392" placeholder="UPDATE `requ... " />
+                <marker date="1575060033229" expanded="true" signature="4432:4487" placeholder="UPDATE `requ... " />
+                <marker date="1575060033229" expanded="true" signature="5198:5463" placeholder="..." />
+                <marker date="1575060033229" expanded="true" signature="5222:5463" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -205,6 +104,8 @@
         <option value="$PROJECT_DIR$/pdo_connect.php" />
         <option value="$PROJECT_DIR$/mysql_read.php" />
         <option value="$PROJECT_DIR$/mysql_history.php" />
+        <option value="$PROJECT_DIR$/mysql_giveaways.php" />
+        <option value="$PROJECT_DIR$/mysql_rent.php" />
       </list>
     </option>
   </component>
@@ -265,8 +166,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -309,15 +210,16 @@
       <updated>1575053407573</updated>
       <workItem from="1575053414913" duration="498000" />
       <workItem from="1575053943199" duration="2419000" />
-      <workItem from="1575057131018" duration="693000" />
+      <workItem from="1575057131018" duration="826000" />
+      <workItem from="1575058957584" duration="1100000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3610000" />
+    <option name="totallyTimeSpent" value="4843000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1672" y="-8" width="1456" height="916" extended-state="7" />
+    <frame x="1672" y="-8" width="1456" height="916" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14166667" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -347,6 +249,164 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/mysql_read.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="12835">
+          <caret line="755" column="15" selection-start-line="755" selection-start-column="15" selection-end-line="755" selection-end-column="15" />
+          <folding>
+            <marker date="1575057646779" expanded="true" signature="1253:1296" placeholder="SELECT ip_ui... byers" />
+            <marker date="1575057646779" expanded="true" signature="1588:2627" placeholder="SELECT a.cre... " />
+            <marker date="1575057646779" expanded="true" signature="3200:4303" placeholder="SELECT a.cre... " />
+            <marker date="1575057646779" expanded="true" signature="5177:6219" placeholder="SELECT a.cre... " />
+            <marker date="1575057646779" expanded="true" signature="6272:7314" placeholder="SELECT a.cre... " />
+            <marker date="1575057646779" expanded="true" signature="8795:9061" placeholder="SELECT b.`re... sellerid" />
+            <marker date="1575057646779" expanded="true" signature="8845:8891" placeholder="SELECT `sell... pricings" />
+            <marker date="1575057646779" expanded="true" signature="8910:8967" placeholder="SELECT `req_... req_positions" />
+            <marker date="1575057646779" expanded="true" signature="9110:9514" placeholder="SELECT b.`re... sellerid" />
+            <marker date="1575057646779" expanded="true" signature="9181:9329" placeholder="SELECT `sell... pricings" />
+            <marker date="1575057646779" expanded="true" signature="9348:9405" placeholder="SELECT `req_... req_positions" />
+            <marker date="1575057646779" expanded="true" signature="9570:9617" placeholder="SELECT ip_ui... sellers" />
+            <marker date="1575057646779" expanded="true" signature="10533:11537" placeholder="SELECT a.cre... " />
+            <marker date="1575057646779" expanded="true" signature="12555:13559" placeholder="SELECT a.cre... " />
+            <marker date="1575057646779" expanded="true" signature="14107:14365" placeholder="SELECT b.`re... tradeid" />
+            <marker date="1575057646779" expanded="true" signature="14157:14202" placeholder="SELECT `trad... pricings" />
+            <marker date="1575057646779" expanded="true" signature="14215:14272" placeholder="SELECT `req_... req_positions" />
+            <marker date="1575057646779" expanded="true" signature="14413:14671" placeholder="SELECT b.`re... tradeid" />
+            <marker date="1575057646779" expanded="true" signature="14463:14508" placeholder="SELECT `trad... pricings" />
+            <marker date="1575057646779" expanded="true" signature="14521:14578" placeholder="SELECT `req_... req_positions" />
+            <marker date="1575057646779" expanded="true" signature="15186:16186" placeholder="SELECT a.cre... " />
+            <marker date="1575057646779" expanded="true" signature="16819:16951" placeholder="SELECT b.tra... trades" />
+            <marker date="1575057646779" expanded="true" signature="17647:18626" placeholder="SELECT a.cre... " />
+            <marker date="1575057646779" expanded="true" signature="19449:20603" placeholder="SELECT a.cre... " />
+            <marker date="1575057646779" expanded="true" signature="21678:21721" placeholder="SELECT ip_ui... byers" />
+            <marker date="1575057646779" expanded="true" signature="22034:23578" placeholder="SELECT a.cre... " />
+            <marker date="1575057646779" expanded="true" signature="24375:25920" placeholder="SELECT a.cre... " />
+            <marker date="1575057646779" expanded="true" signature="26676:27788" placeholder="SELECT a.cre... " />
+            <marker date="1575057646779" expanded="true" signature="29155:29200" placeholder="SELECT * FRO... executes" />
+            <marker date="1575057646779" expanded="true" signature="29424:29466" placeholder="SELECT * FRO... payments" />
+            <marker date="1575057646779" expanded="true" signature="31409:31421" placeholder="..." />
+            <marker date="1575057646779" expanded="true" signature="32406:32417" placeholder="..." />
+            <marker date="1575057646779" expanded="true" signature="36088:36304" placeholder="SELECT byers... byers" />
+            <marker date="1575057646779" expanded="true" signature="36350:36438" placeholder="SELECT reque... requests" />
+            <marker date="1575057646779" expanded="true" signature="36489:36577" placeholder="SELECT reque... requests" />
+            <marker date="1575057646779" expanded="true" signature="36679:36851" placeholder="SELECT price... byers" />
+            <marker date="1575057646779" expanded="true" signature="38785:38952" placeholder="SELECT name,... ${$table}" />
+            <marker date="1575057646779" expanded="true" signature="38997:39168" placeholder="SELECT name,... ${$table}" />
+            <marker date="1575057646779" expanded="true" signature="40353:40364" placeholder="..." />
+            <marker date="1575057646779" expanded="true" signature="40439:40450" placeholder="..." />
+            <marker date="1575057646779" expanded="true" signature="40641:40849" placeholder="..." />
+            <marker date="1575057646779" expanded="true" signature="42065:42252" placeholder="..." />
+            <marker date="1575057646779" expanded="true" signature="42662:42801" placeholder="SELECT `trad... trades" />
+            <marker date="1575057646779" expanded="true" signature="42846:42976" placeholder="SELECT `trad... trades" />
+            <marker date="1575057646779" expanded="true" signature="43819:43830" placeholder="..." />
+            <marker date="1575057646779" expanded="true" signature="43911:43922" placeholder="..." />
+            <marker date="1575057646779" expanded="true" signature="44120:44356" placeholder="..." />
+            <marker date="1575057646779" expanded="true" signature="45214:45225" placeholder="..." />
+            <marker date="1575057646779" expanded="true" signature="45306:45317" placeholder="..." />
+            <marker date="1575057646779" expanded="true" signature="45515:45751" placeholder="..." />
+            <marker date="1575057646779" expanded="true" signature="46157:46257" placeholder="SELECT * FRO... sellers" />
+            <marker date="1575057646779" expanded="true" signature="46306:46406" placeholder="SELECT * FRO... sellers" />
+            <marker date="1575057646779" expanded="true" signature="48456:48580" placeholder="SELECT `pos_... req_positions" />
+            <marker date="1575057646779" expanded="true" signature="48623:49019" placeholder="SELECT `requ... *" />
+            <marker date="1575057646779" expanded="true" signature="48722:48922" placeholder="SELECT * FRO... *" />
+            <marker date="1575057646779" expanded="true" signature="48738:48762" placeholder="SELECT * FRO... pricings" />
+            <marker date="1575057646779" expanded="true" signature="48780:48882" placeholder="SELECT `sell... sellers" />
+            <marker date="1575057646779" expanded="true" signature="52716:54628" placeholder="SELECT c.pri... *" />
+            <marker date="1575057646779" expanded="true" signature="54057:54445" placeholder="SELECT * FRO... pricingid" />
+            <marker date="1575057646779" expanded="true" signature="54072:54263" placeholder="SELECT `pric... pricings" />
+            <marker date="1575057646779" expanded="true" signature="54281:54412" placeholder="SELECT `name... allnames" />
+            <marker date="1575057646779" expanded="true" signature="54463:54597" placeholder="SELECT `name... allnames" />
+            <marker date="1575057646779" expanded="true" signature="54986:55533" placeholder="..." />
+            <marker date="1575057646779" expanded="true" signature="54993:55533" placeholder="..." />
+            <marker date="1575057646779" expanded="true" signature="54997:55525" placeholder="..." />
+            <marker date="1575057646779" expanded="true" signature="57184:57435" placeholder="..." />
+            <marker date="1575057646779" expanded="true" signature="57230:57435" placeholder="..." />
+            <marker date="1575057646779" expanded="true" signature="58517:58751" placeholder="SELECT * FRO... pricings" />
+            <marker date="1575057646779" expanded="true" signature="58559:58692" placeholder="SELECT creat... req_positions" />
+            <marker date="1575057646779" expanded="true" signature="59486:59536" placeholder="SELECT creat... requests" />
+            <marker date="1575057646779" expanded="true" signature="60186:60235" placeholder="SELECT 1c_nu... requests" />
+            <marker date="1575057646779" expanded="true" signature="61231:61283" placeholder="SELECT ${$co... requests" />
+            <marker date="1575057646779" expanded="true" signature="62255:62315" placeholder="SELECT ${$co... req_positions" />
+            <marker date="1575057646779" expanded="true" signature="62969:63029" placeholder="SELECT * FRO... payments" />
+            <marker date="1575057646779" expanded="true" signature="63695:63755" placeholder="SELECT * FRO... giveaways" />
+            <marker date="1575057646779" expanded="true" signature="64330:64457" placeholder="SELECT ov_fi... byers" />
+            <marker date="1575057646779" expanded="true" signature="64568:64979" placeholder="..." />
+            <marker date="1575057646779" expanded="true" signature="65142:65350" placeholder="SELECT name,... req_positions" />
+            <marker date="1575057646779" expanded="true" signature="65979:66115" placeholder="SELECT execu... executes" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysql_history.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1575057866686" expanded="true" signature="378:588" placeholder="SELECT price... trades" />
+            <marker date="1575057866686" expanded="true" signature="669:882" placeholder="SELECT price... trades" />
+            <marker date="1575057866686" expanded="true" signature="1126:1223" placeholder="SELECT name trades" />
+            <marker date="1575057866686" expanded="true" signature="1498:1829" placeholder="..." />
+            <marker date="1575057866686" expanded="true" signature="1505:1822" placeholder="..." />
+            <marker date="1575057866686" expanded="true" signature="1509:1814" placeholder="..." />
+            <marker date="1575057866686" expanded="true" signature="1910:2212" placeholder="SELECT creat... pricings" />
+            <marker date="1575057866686" expanded="true" signature="2263:2364" placeholder="SELECT name sellers" />
+            <marker date="1575057866686" expanded="true" signature="2413:2506" placeholder="SELECT name byers" />
+            <marker date="1575057866686" expanded="true" signature="4559:4720" placeholder="SELECT a.sel... sellers" />
+            <marker date="1575057866686" expanded="true" signature="5105:5266" placeholder="SELECT a.sel... sellers" />
+            <marker date="1575057866686" expanded="true" signature="5877:5969" placeholder="SELECT name sellers" />
+            <marker date="1575057866686" expanded="true" signature="6035:6778" placeholder="SELECT selle... sellers_uid" />
+            <marker date="1575057866686" expanded="true" signature="6105:6537" placeholder="SELECT selle... sellers_uid" />
+            <marker date="1575057866686" expanded="true" signature="6207:6344" placeholder="SELECT selle... pricings" />
+            <marker date="1575057866686" expanded="true" signature="6380:6493" placeholder="SELECT trade... trades" />
+            <marker date="1575057866686" expanded="true" signature="6567:6675" placeholder="SELECT creat... requests" />
+            <marker date="1575057866686" expanded="true" signature="8343:8603" placeholder="..." />
+            <marker date="1575057866686" expanded="true" signature="8350:8596" placeholder="..." />
+            <marker date="1575057866686" expanded="true" signature="8354:8588" placeholder="..." />
+            <marker date="1575057866686" expanded="true" signature="9256:9405" placeholder="SELECT a.bye... byers" />
+            <marker date="1575057866686" expanded="true" signature="9788:9937" placeholder="SELECT a.bye... byers" />
+            <marker date="1575057866686" expanded="true" signature="10539:10625" placeholder="SELECT name byers" />
+            <marker date="1575057866686" expanded="true" signature="10687:11354" placeholder="SELECT byers... sellerid" />
+            <marker date="1575057866686" expanded="true" signature="10755:11048" placeholder="SELECT selle... pricings" />
+            <marker date="1575057866686" expanded="true" signature="10884:10997" placeholder="SELECT trade... trades" />
+            <marker date="1575057866686" expanded="true" signature="11078:11249" placeholder="SELECT creat... requests" />
+            <marker date="1575057866686" expanded="true" signature="12874:13134" placeholder="..." />
+            <marker date="1575057866686" expanded="true" signature="12881:13127" placeholder="..." />
+            <marker date="1575057866686" expanded="true" signature="12885:13119" placeholder="..." />
+            <marker date="1575057866686" expanded="true" signature="13770:13925" placeholder="SELECT a.tra... trades" />
+            <marker date="1575057866686" expanded="true" signature="14338:14493" placeholder="SELECT a.tra... trades" />
+            <marker date="1575057866686" expanded="true" signature="15126:15231" placeholder="SELECT name trades" />
+            <marker date="1575057866686" expanded="true" signature="15299:15368" placeholder="SELECT * FRO... purchases" />
+            <marker date="1575057866686" expanded="true" signature="15464:15584" placeholder="SELECT name,... sellers" />
+            <marker date="1575057866686" expanded="true" signature="15696:15769" placeholder="SELECT purch... req_positions" />
+            <marker date="1575057866686" expanded="true" signature="18067:18393" placeholder="..." />
+            <marker date="1575057866686" expanded="true" signature="18074:18386" placeholder="..." />
+            <marker date="1575057866686" expanded="true" signature="18078:18378" placeholder="..." />
+            <marker date="1575057866686" expanded="true" signature="19105:19260" placeholder="SELECT a.tra... trades" />
+            <marker date="1575057866686" expanded="true" signature="19641:19796" placeholder="SELECT a.tra... trades" />
+            <marker date="1575057866686" expanded="true" signature="20393:20498" placeholder="SELECT name trades" />
+            <marker date="1575057866686" expanded="true" signature="20565:20634" placeholder="SELECT * FRO... exec_trades" />
+            <marker date="1575057866686" expanded="true" signature="20724:20834" placeholder="SELECT name,... byers" />
+            <marker date="1575057866686" expanded="true" signature="23047:23337" placeholder="..." />
+            <marker date="1575057866686" expanded="true" signature="23054:23330" placeholder="..." />
+            <marker date="1575057866686" expanded="true" signature="23058:23322" placeholder="..." />
+            <marker date="1575057866686" expanded="true" signature="23988:24149" placeholder="SELECT a.sel... sellers" />
+            <marker date="1575057866686" expanded="true" signature="24533:24694" placeholder="SELECT a.sel... sellers" />
+            <marker date="1575057866686" expanded="true" signature="25487:25596" placeholder="SELECT name sellers" />
+            <marker date="1575057866686" expanded="true" signature="25704:25774" placeholder="SELECT * FRO... purchases" />
+            <marker date="1575057866686" expanded="true" signature="25879:25984" placeholder="SELECT name trades" />
+            <marker date="1575057866686" expanded="true" signature="28124:28373" placeholder="..." />
+            <marker date="1575057866686" expanded="true" signature="28131:28366" placeholder="..." />
+            <marker date="1575057866686" expanded="true" signature="28135:28358" placeholder="..." />
+            <marker date="1575057866686" expanded="true" signature="28757:28817" placeholder="SELECT purch... req_positions" />
+            <marker date="1575057866686" expanded="true" signature="28875:28994" placeholder="SELECT selle... transports" />
+            <marker date="1575057866686" expanded="true" signature="29045:29154" placeholder="SELECT name sellers" />
+            <marker date="1575057866686" expanded="true" signature="30086:30298" placeholder="..." />
+            <marker date="1575057866686" expanded="true" signature="30093:30291" placeholder="..." />
+            <marker date="1575057866686" expanded="true" signature="30097:30283" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mysql_read.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="12869">
@@ -460,7 +520,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mysql_read.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
+        <state relative-caret-position="12835">
           <caret line="755" column="15" selection-start-line="755" selection-start-column="15" selection-end-line="755" selection-end-column="15" />
           <folding>
             <marker date="1575057646779" expanded="true" signature="1253:1296" placeholder="SELECT ip_ui... byers" />
@@ -548,8 +608,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mysql_history.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="431" column="24" selection-start-line="431" selection-start-column="24" selection-end-line="431" selection-end-column="24" />
+        <state relative-caret-position="425">
+          <caret line="550" column="4" selection-start-line="550" selection-start-column="4" selection-end-line="550" selection-end-column="4" />
           <folding>
             <marker date="1575057866686" expanded="true" signature="378:588" placeholder="SELECT price... trades" />
             <marker date="1575057866686" expanded="true" signature="669:882" placeholder="SELECT price... trades" />
@@ -612,6 +672,76 @@
             <marker date="1575057866686" expanded="true" signature="30086:30298" placeholder="..." />
             <marker date="1575057866686" expanded="true" signature="30093:30291" placeholder="..." />
             <marker date="1575057866686" expanded="true" signature="30097:30283" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysql_giveaways.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="305">
+          <caret line="92" column="23" selection-start-line="92" selection-start-column="23" selection-end-line="92" selection-end-column="23" />
+          <folding>
+            <marker date="1575059710926" expanded="true" signature="808:980" placeholder="SELECT price... byers" />
+            <marker date="1575059710926" expanded="true" signature="2874:3330" placeholder="SELECT DISTI... requests" />
+            <marker date="1575059710926" expanded="true" signature="4290:4335" placeholder="SELECT * FRO... executes" />
+            <marker date="1575059710926" expanded="true" signature="4434:4602" placeholder="SELECT reque... requests" />
+            <marker date="1575059710926" expanded="true" signature="4698:4840" placeholder="SELECT reque... req_positions" />
+            <marker date="1575059710926" expanded="true" signature="7168:7180" placeholder="..." />
+            <marker date="1575059710926" expanded="true" signature="9448:9834" placeholder="..." />
+            <marker date="1575059710926" expanded="true" signature="9499:9801" placeholder="..." />
+            <marker date="1575059710926" expanded="true" signature="9997:10403" placeholder="..." />
+            <marker date="1575059710926" expanded="true" signature="10053:10370" placeholder="..." />
+            <marker date="1575059710926" expanded="true" signature="10491:10864" placeholder="..." />
+            <marker date="1575059710926" expanded="true" signature="10540:10831" placeholder="..." />
+            <marker date="1575059710926" expanded="true" signature="10977:11315" placeholder="..." />
+            <marker date="1575059710926" expanded="true" signature="11032:11282" placeholder="..." />
+            <marker date="1575059710926" expanded="true" signature="11425:11825" placeholder="..." />
+            <marker date="1575059710926" expanded="true" signature="11477:11792" placeholder="..." />
+            <marker date="1575059710926" expanded="true" signature="11935:12369" placeholder="..." />
+            <marker date="1575059710926" expanded="true" signature="11985:12336" placeholder="..." />
+            <marker date="1575059710926" expanded="true" signature="13256:13394" placeholder="SELECT given... giveaways" />
+            <marker date="1575059710926" expanded="true" signature="14774:15047" placeholder="..." />
+            <marker date="1575059710926" expanded="true" signature="16232:16297" placeholder="SELECT creat... requests" />
+            <marker date="1575059710926" expanded="true" signature="16345:16424" placeholder="SELECT payed... payments" />
+            <marker date="1575059710926" expanded="true" signature="16473:16808" placeholder="SELECT pos_n... " />
+            <marker date="1575059710926" expanded="true" signature="16890:17049" placeholder="SELECT name,... allnames" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/mysql_scripts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="314">
+          <caret line="512" column="34" selection-start-line="512" selection-start-column="29" selection-end-line="512" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mysql_rent.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="145" column="31" selection-start-line="145" selection-start-column="31" selection-end-line="145" selection-end-column="31" />
+          <folding>
+            <marker date="1575060033229" expanded="true" signature="338:602" placeholder="SELECT `name... sellerid" />
+            <marker date="1575060033229" expanded="true" signature="379:453" placeholder="SELECT selle... pricings" />
+            <marker date="1575060033229" expanded="true" signature="471:567" placeholder="SELECT selle... sellers" />
+            <marker date="1575060033229" expanded="true" signature="646:714" placeholder="UPDATE `req_... " />
+            <marker date="1575060033229" expanded="true" signature="755:827" placeholder="UPDATE `pric... " />
+            <marker date="1575060033229" expanded="true" signature="869:923" placeholder="UPDATE `pric... " />
+            <marker date="1575060033229" expanded="true" signature="1827:1895" placeholder="UPDATE `req_... " />
+            <marker date="1575060033229" expanded="true" signature="1936:1991" placeholder="UPDATE `pric... " />
+            <marker date="1575060033229" expanded="true" signature="2659:2923" placeholder="SELECT `name... sellerid" />
+            <marker date="1575060033229" expanded="true" signature="2700:2774" placeholder="SELECT selle... pricings" />
+            <marker date="1575060033229" expanded="true" signature="2792:2888" placeholder="SELECT selle... sellers" />
+            <marker date="1575060033229" expanded="true" signature="3662:3753" placeholder="SELECT `req_... req_positions" />
+            <marker date="1575060033229" expanded="true" signature="3875:4295" placeholder="SELECT * FRO... winnerid" />
+            <marker date="1575060033229" expanded="true" signature="3890:3970" placeholder="SELECT `winn... req_positions" />
+            <marker date="1575060033229" expanded="true" signature="3989:4257" placeholder="SELECT `kol`... pricings" />
+            <marker date="1575060033229" expanded="true" signature="4114:4222" placeholder="SELECT `trad... trades" />
+            <marker date="1575060033229" expanded="true" signature="4336:4392" placeholder="UPDATE `requ... " />
+            <marker date="1575060033229" expanded="true" signature="4432:4487" placeholder="UPDATE `requ... " />
+            <marker date="1575060033229" expanded="true" signature="5198:5463" placeholder="..." />
+            <marker date="1575060033229" expanded="true" signature="5222:5463" placeholder="..." />
           </folding>
         </state>
       </provider>

@@ -13,6 +13,7 @@ if (isset($_POST['the_byer']) && isset($_POST['year'])){
         $the_year = $_POST['year'];
         $from = $the_year."-01-01";
         $to = $the_year."-12-31";
+
         //Приводим к читаемому виду
         $to_norm = substr($to,8,2).'-'.substr($to,5,2).'-'.substr($to,0,4);
         $from_norm = substr($from,8,2).'-'.substr($from,5,2).'-'.substr($from,0,4);
@@ -88,6 +89,8 @@ GROUP BY 1c_num");*/
             $reqlist->execute(array($database[4],$from,$to));
             $requests_fetched = $reqlist->fetchAll(PDO::FETCH_ASSOC);
             $database[0]->commit();
+
+            $result="";
 
 
 
