@@ -84,6 +84,7 @@ if (isset($_POST['post_seller']) && isset($_POST['post_tare'])){
     $post_seller = $_POST['post_seller'];
     $post_tare = $_POST['post_tare'];
     $resulting_purs = array();
+    $result="";
 
     //1. Дополняем массив dbs_array() четвертым значение для каждой базы  - это юайдишник итема
     switch($_POST['db']){
@@ -157,6 +158,7 @@ if (isset($_POST['post_seller']) && isset($_POST['post_tare'])){
     }
     krsort($resulting_purs);
     // 3. Рисуем красоту
+    $result="";
     $result .= "<br><input class='button_enlarge' type='button' value='↕'><br><span>Расценивали от поставщика \"".$seller_name."\", тара типа :\"".$post_tare."\"</span><br><br><table class='hystory-knam'><thead><tr> 
                     <th>дата заказа</th>                   
                     <th>что</th>
@@ -251,6 +253,7 @@ if (isset($_POST['post_byer']) && isset($_POST['post_tare'])){
     }
     krsort($resulting_purs);
     // 3. Рисуем красоту
+    $result="";
     $result .= "<br><input class='button_enlarge' type='button' value='↕'><br><span>Расценивали к покупателю \"".$byer_name."\", тара типа :\"".$post_tare."\"</span><br><br><table class='hystory-knam'><thead><tr> 
                     <th>дата заказа</th>                   
                     <th>что</th>
@@ -426,6 +429,7 @@ if (isset($_POST['post_exec_tradeid']) && isset($_POST['prid'])){
             }else{
                 $respur ="<tr>";
             }*/
+            $respur ="";
             $respur .="<td>".$mysqldate."</td>";
             $respur .="<td>".$pur['exec_1c_num']."</td>";
             $respur .="<td class='exec_byer_name'>".$byer_name."</td>";

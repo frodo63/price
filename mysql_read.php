@@ -12,6 +12,7 @@ if(isset($_POST['table'])){
     $table = $_POST['table'];
     $tablenid = $table . '_nameid';
     $dbs_array=array(array($pdo,'ltk',array(),'ЛТК'),array($pdoip,'ip',array(),'ИП УСВ'));
+    $result = "";
 
     if ($table == 'requests') {
         //Блок рисовки результатов поиска из ВПСПВ
@@ -497,6 +498,11 @@ if(isset($_POST['table'])){
                         $result .="</div>";
                     }
 
+                    /*Заголовок заказа////////////////////////////////////////////////////////////////////////////////////////////////*/
+                    $phpdate = strtotime( $row['req_date'] );
+                    $mysqldate = date( 'd.m.y', $phpdate );
+                    /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
                     $result .="<div class='contents' id=".$row['req_nameid'].">
                 <h3 class='req_header_".$row['req_id']."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму <span class='reqsumma'>".number_format($row['sum'],2,'.',' ')."&nbsp</span><br> Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h3/><br>
                 <input type='button' class='edit_options' value='Опции' requestid='".$row['req_id']."'>";
@@ -747,6 +753,7 @@ if(isset($_POST['table'])){
 /*СОДЕРЖИМОЕ ЗАЯВКИ - СПИСОК ПОЗИЦИЙ///////////////////////////////////////////////////////////////////////////////////////////////////*/
 if (isset($_POST['requestid'])){
     $req_id=$_POST['requestid'];
+    $result="";
     try{
         $nowinners = $database->prepare("SELECT `pos_name`, `req_positionid`, `line_num`, `winnerid` FROM `req_positions` WHERE `requestid`=? ORDER BY `line_num` ASC");
         $winners = $database->prepare("SELECT `requestid`, `req_positionid`, `line_num`, `pos_name`, `name`, `rent`, `price`, `kol` FROM (SELECT * FROM ((SELECT * FROM `pricings`) AS a LEFT JOIN (SELECT `sellers_id`, `name` FROM(sellers LEFT JOIN allnames ON sellers.sellers_nameid=allnames.nameid)) AS b ON a.`sellerid` = b.`sellers_id`)) AS a LEFT JOIN req_positions ON a.`pricingid` = req_positions.winnerid WHERE `req_positionid`=?");
