@@ -2,29 +2,45 @@
 include_once 'pdo_auto_kp_connect.php';
 
 echo"
-<div class='mail_body_parts' style='background-color: #F0F0F0; width: 20%'>
-<b><span>Тело КП</span></b><br><br>
-<label for='hydraulic_bechem'>Гидравлика - BECHEM</label><input name='hydraulic_bechem' type='checkbox'><br>
-<label for='hydraulic_total'>Гидравлика - TOTAL</label><input name='hydraulic_total' type='checkbox'><br>
-<label for='red_bechem'>Редуктор - BECHEM</label><input name='red_bechem' type='checkbox'><br>
-<label for='sog_bechem'>СОЖ - BECHEM</label><input name='sog_bechem' type='checkbox'><br>
-<label for='food_bechem'>Пищевка - BECHEM</label><input name='food_bechem' type='checkbox'><br>
-<label for='food_total'>Пищевка - TOTAL</label><input name='food_total' type='checkbox'><br>
-<label for='food_rocol'>Пищевка - ROCOL</label><input name='food_rocol' type='checkbox'><br>
-<label for='food_matrix'>Пищевка - MATRIX</label><input name='food_matrix' type='checkbox'><br>
+<h1>Конструктор КП</h1>
+<div class='custom_greeting'>
+<h2>Приветственное слово:</h2>
+    <textarea rows='10' cols='45' name='text'></textarea>
 </div>
 
-<br><br>
+<div class='mail_body_parts' style='background-color: #F0F0F0; width: 15%;'>
+    <b><h2>Тело КП:</h2></b>
+    <div>
+        <b><h3>Гидравлика</h3></b>
+        <label for='hydraulics_bechem'>BECHEM</label><input id='hydraulics_bechem' type='checkbox'><br>
+        <label for='hydraulics_total'>TOTAL</label><input id='hydraulics_total' type='checkbox'><br>
+    </div>
+    
+    <div>
+        <b><h3>СОЖи</h3></b>
+        <label for='soges_bechem'>BECHEM</label><input id='soges_bechem' type='checkbox'><br>
+    </div>
+    
+    <div>
+        <b><h3>Пищевка</h3></b>
+        <label for='food_bechem'>BECHEM</label><input id='food_bechem' type='checkbox'><br>
+        <label for='food_total'>TOTAL</label><input id='food_total' type='checkbox'><br>
+        <label for='food_rocol'>ROCOL</label><input id='food_rocol' type='checkbox'><br>
+        <label for='food_matrix'>MATRIX</label><input id='food_matrix' type='checkbox'><br>
+    </div>
+</div>
+
+<br>
 
 <div class='mail_tail_parts' style='background-color: #F0F0F0; width: 20%'>
-<b><span>Подписи</span></b><br><br>
-<label for='tail_dima'>Дима</label><input name='tail_dima' type='checkbox'><br>
-<label for='tail_timur'>Марина</label><input name='tail_timur' type='checkbox'><br>
-<label for='tail_sergey'>Сергей</label><input name='tail_sergey' type='checkbox'><br>
-<label for='tail_marina'>Тимур</label><input name='tail_marina' type='checkbox'><br>
-
+    <b><h2>Подписи:</h2></b>
+    <label for='tail_dima'>Дима</label><input id='tail_dima' type='radio' name='tail'><br>
+    <label for='tail_marina'>Марина</label><input id='tail_marina' type='radio' name='tail'><br>
+    <label for='tail_sergey'>Сергей</label><input id='tail_sergey' type='radio' name='tail'><br>
+    <label for='tail_timur'>Тимур</label><input id='tail_timur' type='radio' name='tail'><br>
+    
 </div>
-<br><br>
+<br>
 <input type='button' value='СФОРМИРОВАТЬ' class='mail_compose'>
 <script src='jquery.js'></script>
 <script src='jquery-ui.js'></script>
