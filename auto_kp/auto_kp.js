@@ -2,13 +2,10 @@ $(document).ready(function() {
 
     /*ФОРМИРОВАНИЕ КП*///////////////////////////////////////////////////////////////////////////////////////
     $(document).off('click.mail_compose').on('click.mail_compose', '.mail_compose', function (event) {
-        console.log('imalive!');
 
         var body_options = $('.mail_body_parts input[type="checkbox"]:checked, .mail_tail_parts input[type="radio"]:checked');
         var mail_array = [];
         var options_length = body_options.length;
-
-
 
         for(var i = 0; i < options_length; i++){
             //Сформировать массив запрашиваемых данных
@@ -16,19 +13,18 @@ $(document).ready(function() {
         }
 
         //Отправить этот массив аяксом
-        /*$.ajax({
-            url: 'mysql_auto_kp.php',
+        $.ajax({
+            url: 'auto_kp_give_html.php',
             method: 'POST',
+            dataType:'json',
             data: {mail_array:mail_array},
             success: function(data){
-                //Что-то
+                $('#html_result').text(JSON.stringify(data));
             },complete:function () {
                 //Что-то
             }
-        });*/
-
-        console.log(mail_array);
-
+        });
+        data = null;
     });
 });
 /*
