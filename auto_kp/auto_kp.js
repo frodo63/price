@@ -6,6 +6,8 @@ $(document).ready(function() {
         var body_options = $('.mail_body_parts input[type="checkbox"]:checked, .mail_tail_parts input[type="radio"]:checked');
         var mail_array = [];
         var options_length = body_options.length;
+        var preferred_group = $('#preferred_trade_group_input').val();
+        var firm_type = $('#firm_type').val();
 
         for(var i = 0; i < options_length; i++){
             //Сформировать массив запрашиваемых данных
@@ -16,16 +18,22 @@ $(document).ready(function() {
         $.ajax({
             url: 'auto_kp_give_html.php',
             method: 'POST',
-            dataType:'json',
             data: {mail_array:mail_array},
             success: function(data){
-                $('#html_result').text(JSON.stringify(data));
-            },complete:function () {
-                //Что-то
+                $('#html_result').html(data);
+                $('#html_copy').text(data);
+            },
+            complete: function () {
+                $('#preferred_trade_group').text("Снабжение "+preferred_group+" "+firm_type+" - одно из ключевых направлений нашей деятельности.");
             }
         });
-        data = null;
     });
+});
+
+$(document).off('click.mail_copy').on('click.mail_copy', '#mail_copy', function (event) {
+    $('#html_copy').select();
+    document.execCommand('copy');
+    $('#info_span').text('Скопировано');
 });
 /*
 CREATE TABLE `auto_kp`.`hydraulics` (
