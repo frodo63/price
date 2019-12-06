@@ -2,7 +2,7 @@
 
 $dsn = 'mysql:host=localhost;dbname=auto_kp';
 $username = 'root';
-$password = 'tr776bBe';
+$password = '';
 $options = array(
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,

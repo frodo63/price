@@ -55,7 +55,7 @@ if(isset($_POST['mail_array'])){
         }
 
         //Убрать потом
-        //$result.=print_r($mail_array);
+        $result.=print_r($mail_array);
 
         foreach($mail_array as $key=>$val) {
 

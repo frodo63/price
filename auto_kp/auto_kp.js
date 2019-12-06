@@ -36,30 +36,45 @@ $(document).off('click.mail_copy').on('click.mail_copy', '#mail_copy', function 
     $('#info_span').text('Скопировано');
 });
 /*
-CREATE TABLE `auto_kp`.`hydraulics` (
-    `id` TINYINT(3) UNSIGNED NOT NULL AUTO_INCREMENT ,
-    `name` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
-    `brand` ENUM('Bechem','Shell','Mobil','Castrol','Agip','Fuchs','Лукойл','Роснефть','Газпромнефть') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
-    `application` TEXT NOT NULL ,
-    `description` TEXT NOT NULL ,
-    `viscosity` TINYINT(3) NOT NULL ,
-    `package_price` VARCHAR(50) NOT NULL , PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+ CREATE TABLE `food_greases` (
+ `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+ `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+ `brand` enum('Bechem','Total','Rocol','Matrix') COLLATE utf8_unicode_ci NOT NULL,
+ `application` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+ `description` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+ `working_temp` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+ `packing_price` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+ PRIMARY KEY (`id`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 
-CREATE TABLE `auto_kp`.`soges` (
-`id` TINYINT(3) UNSIGNED NOT NULL AUTO_INCREMENT ,
-`name` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
-`brand` ENUM('Bechem','Fuchs','Mol','Mobil') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
-`operations` VARCHAR(100) NOT NULL , `description` VARCHAR(500) NOT NULL ,
-`metal_types` VARCHAR(50) NOT NULL ,
-`concentration` VARCHAR(100) NOT NULL ,
-`package_price` VARCHAR(50) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+ CREATE TABLE `hydraulics` (
+ `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+ `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+ `brand` enum('Bechem','Total','Shell','Mobil','Castrol','Agip','Fuchs') COLLATE utf8_unicode_ci NOT NULL,
+ `application` text COLLATE utf8_unicode_ci NOT NULL,
+ `description` text COLLATE utf8_unicode_ci NOT NULL,
+ `viscosity` tinyint(3) NOT NULL,
+ `package_price` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+ PRIMARY KEY (`id`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 
-CREATE TABLE `auto_kp`.`tails` (
-`id` TINYINT(1) UNSIGNED NOT NULL ,
-`name` ENUM('Марина','Сергей','Тимур','Дима') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL ,
-`html` VARCHAR(500) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+ CREATE TABLE `soges` (
+ `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+ `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+ `brand` enum('Bechem','Mol') COLLATE utf8_unicode_ci NOT NULL,
+ `application` text COLLATE utf8_unicode_ci NOT NULL,
+ `operations` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+ `metal_types` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+ `concentration` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+ `packing_price` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+ PRIMARY KEY (`id`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 
-INSERT INTO tails (name,html) VALUES("","");
+ CREATE TABLE `tails` (
+ `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+ `name` enum('Dima','Marina','Sergey','Timur') COLLATE utf8_unicode_ci NOT NULL,
+ `html` text COLLATE utf8_unicode_ci NOT NULL,
+ PRIMARY KEY (`id`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 
 */
