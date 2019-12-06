@@ -2,87 +2,140 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebacd80-a44c-46e9-91ce-96f94f6c86c5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/auto_kp/auto_kp.js" afterPath="$PROJECT_DIR$/auto_kp/auto_kp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/auto_kp/auto_kp_give_html.php" afterPath="$PROJECT_DIR$/auto_kp/auto_kp_give_html.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/auto_kp/mysql_auto_kp.php" afterPath="$PROJECT_DIR$/auto_kp/mysql_auto_kp.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/auto_kp/pdo_auto_kp_connect.php" afterPath="$PROJECT_DIR$/auto_kp/pdo_auto_kp_connect.php" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a8a2810f-6ddd-4613-a954-7113e1ab97d5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a8a2810f-6ddd-4613-a954-7113e1ab97d5.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auto_kp/auto_kp.js" beforeDir="false" afterPath="$PROJECT_DIR$/auto_kp/auto_kp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auto_kp/auto_kp_give_html.php" beforeDir="false" afterPath="$PROJECT_DIR$/auto_kp/auto_kp_give_html.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auto_kp/auto_kp_new.sql" beforeDir="false" afterPath="$PROJECT_DIR$/auto_kp/auto_kp_new.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auto_kp/mysql_auto_kp.php" beforeDir="false" afterPath="$PROJECT_DIR$/auto_kp/mysql_auto_kp.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auto_kp/pdo_auto_kp_connect.php" beforeDir="false" afterPath="$PROJECT_DIR$/auto_kp/pdo_auto_kp_connect.php" afterDir="false" />
     </list>
     <ignored path="prices.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
   <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
     <option name="GROUP_SCHEMA" value="true" />
     <option name="GROUP_CONTENTS" value="false" />
     <option name="SORT_POSITIONED" value="false" />
-    <option name="SHOW_TABLE_DETAILS" value="true" />
     <option name="SHOW_EMPTY_GROUPS" value="false" />
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" />
-        <option name="myItemType" value="com.intellij.database.view.DatabaseStructure$Root" />
-      </PATH_ELEMENT>
-    </PATH>
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="auto_kp@localhost" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="auto_kp@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="auto_kp@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="auto_kp: schema" type="c314c289:MysqlImplModel$Schema" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="auto_kp@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="auto_kp: schema" type="c314c289:MysqlImplModel$Schema" />
+        <item name="food_greases: table" type="98d5ac3d:MysqlImplModel$Table" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="auto_kp@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="auto_kp: schema" type="c314c289:MysqlImplModel$Schema" />
+        <item name="food_oils: table" type="98d5ac3d:MysqlImplModel$Table" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="auto_kp@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="auto_kp: schema" type="c314c289:MysqlImplModel$Schema" />
+        <item name="food_specliqs: table" type="98d5ac3d:MysqlImplModel$Table" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="auto_kp@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="auto_kp: schema" type="c314c289:MysqlImplModel$Schema" />
+        <item name="metalworking_soges: table" type="98d5ac3d:MysqlImplModel$Table" />
+      </path>
+    </expand>
+    <select />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FUSProjectUsageTrigger">
     <session id="-581314125">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
           <entry key="project.closed" value="1" />
+          <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.22" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cell" value="69" />
+          <entry key="cell" value="248" />
           <entry key="html" value="2" />
-          <entry key="js" value="713" />
-          <entry key="php" value="4232" />
+          <entry key="js" value="1127" />
+          <entry key="php" value="6054" />
+          <entry key="sql" value="271" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="105" />
-          <entry key="JavaScript" value="713" />
-          <entry key="PHP" value="4129" />
-          <entry key="Scratch" value="69" />
+          <entry key="HTML" value="141" />
+          <entry key="JavaScript" value="1127" />
+          <entry key="PHP" value="5915" />
+          <entry key="SQL" value="14" />
+          <entry key="Scratch" value="505" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="html" value="5" />
+          <entry key="food_greases" value="2" />
+          <entry key="food_oils" value="2" />
+          <entry key="general_greases_chain" value="1" />
+          <entry key="general_oils_hydraulic" value="1" />
+          <entry key="general_specliqs_cleaners" value="1" />
+          <entry key="html" value="6" />
           <entry key="hydraulics" value="4" />
-          <entry key="js" value="7" />
-          <entry key="php" value="10" />
+          <entry key="js" value="12" />
+          <entry key="metalworking_soges" value="2" />
+          <entry key="php" value="13" />
           <entry key="soges" value="3" />
-          <entry key="sql" value="1" />
-          <entry key="tails" value="4" />
+          <entry key="sql" value="10" />
+          <entry key="tails" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Database Element" value="11" />
-          <entry key="HTML" value="5" />
-          <entry key="JavaScript" value="7" />
-          <entry key="PHP" value="10" />
-          <entry key="Scratch" value="1" />
+          <entry key="Database Element" value="21" />
+          <entry key="HTML" value="6" />
+          <entry key="JavaScript" value="12" />
+          <entry key="PHP" value="13" />
+          <entry key="SQL" value="3" />
+          <entry key="Scratch" value="7" />
         </counts>
       </usages-collector>
     </session>
@@ -91,157 +144,40 @@
     <favorites_list name="prices" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="pdo_auto_kp_connect.php" pinned="false" current-in-tab="false">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/auto_kp/pdo_auto_kp_connect.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-              <folding />
+            <state relative-caret-position="60">
+              <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mysql_auto_kp.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/auto_kp/mysql_auto_kp.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="577">
-              <caret line="117" column="50" selection-start-line="117" selection-start-column="50" selection-end-line="117" selection-end-column="50" />
-              <folding>
-                <marker date="1575634225872" expanded="false" signature="221:231" placeholder="..." />
-                <marker date="1575634225872" expanded="true" signature="232:491" placeholder="..." />
-                <marker date="1575634225872" expanded="false" signature="370:382" placeholder="..." />
-                <marker date="1575634225872" expanded="false" signature="468:483" placeholder="..." />
-                <marker date="1575634225872" expanded="false" signature="530:584" placeholder="..." />
-                <marker date="1575634225872" expanded="true" signature="585:6098" placeholder="..." />
-                <marker date="1575634225872" expanded="true" signature="585:6110" placeholder="..." />
-                <marker date="1575634225872" expanded="true" signature="629:1019" placeholder="..." />
-                <marker date="1575634225872" expanded="false" signature="731:765" placeholder="..." />
-                <marker date="1575634225872" expanded="false" signature="815:830" placeholder="..." />
-                <marker date="1575634225872" expanded="true" signature="831:927" placeholder="..." />
-                <marker date="1575634225872" expanded="true" signature="1034:3315" placeholder="..." />
-                <marker date="1575634225872" expanded="true" signature="1046:1141" placeholder="..." />
-                <marker date="1575634225872" expanded="true" signature="3330:3717" placeholder="..." />
-                <marker date="1575634225872" expanded="true" signature="3350:3445" placeholder="..." />
-                <marker date="1575634225872" expanded="true" signature="3732:5017" placeholder="..." />
-                <marker date="1575634225872" expanded="true" signature="3752:3847" placeholder="..." />
-                <marker date="1575634225872" expanded="true" signature="5038:5133" placeholder="..." />
-                <marker date="1575634225872" expanded="false" signature="6155:6209" placeholder="..." />
-                <marker date="1575634225872" expanded="true" signature="6210:6602" placeholder="..." />
-                <marker date="1575634225872" expanded="false" signature="6679:6694" placeholder="..." />
-                <marker date="1575634225872" expanded="true" signature="6727:6776" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="auto_kp_new.sql" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/auto_kp/auto_kp_new.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1127">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="auto_kp_give_html.php" pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/auto_kp/auto_kp_give_html.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="64" column="161" selection-start-line="64" selection-start-column="30" selection-end-line="64" selection-end-column="161" />
+            <state relative-caret-position="368">
+              <caret line="180" column="50" selection-start-line="180" selection-start-column="50" selection-end-line="180" selection-end-column="50" />
               <folding>
-                <marker date="1575631629955" expanded="true" signature="147:242" placeholder="..." />
-                <marker date="1575631629955" expanded="false" signature="292:304" placeholder="..." />
-                <marker date="1575631629955" expanded="true" signature="305:803" placeholder="..." />
-                <marker date="1575631629955" expanded="true" signature="309:795" placeholder="..." />
-                <marker date="1575631629955" expanded="false" signature="326:336" placeholder="..." />
-                <marker date="1575631629955" expanded="false" signature="348:363" placeholder="..." />
-                <marker date="1575631629955" expanded="false" signature="407:417" placeholder="..." />
-                <marker date="1575631629955" expanded="true" signature="418:789" placeholder="..." />
-                <marker date="1575631629955" expanded="false" signature="484:556" placeholder="..." />
-                <marker date="1575631629955" expanded="true" signature="843:858" placeholder="..." />
-                <marker date="1575631629955" expanded="true" signature="948:1486" placeholder="..." />
-                <marker date="1575631629955" expanded="true" signature="1490:1837" placeholder="..." />
-                <marker date="1575631629955" expanded="false" signature="1862:1872" placeholder="..." />
-                <marker date="1575631629955" expanded="true" signature="1873:2296" placeholder="..." />
-                <marker date="1575631629955" expanded="true" signature="1877:2288" placeholder="..." />
-                <marker date="1575631629955" expanded="false" signature="1889:1906" placeholder="..." />
-                <marker date="1575631629955" expanded="true" signature="1907:2282" placeholder="..." />
-                <marker date="1575631629955" expanded="true" signature="2999:3094" placeholder="..." />
-                <marker date="1575631629955" expanded="true" signature="3318:3413" placeholder="..." />
-                <marker date="1575631629955" expanded="true" signature="3788:3813" placeholder="..." />
-                <marker date="1575631629955" expanded="true" signature="3917:3940" placeholder="..." />
-                <marker date="1575631629955" expanded="true" signature="4548:4591" placeholder="SELECT * FRO... ${$table}" />
-                <marker date="1575631629955" expanded="true" signature="4864:4911" placeholder="..." />
-                <marker date="1575631629955" expanded="true" signature="5106:5495" placeholder="..." />
-                <marker date="1575631629955" expanded="false" signature="5143:5172" placeholder="..." />
-                <marker date="1575631629955" expanded="false" signature="5420:5429" placeholder="..." />
-                <marker date="1575631629955" expanded="true" signature="5626:6080" placeholder="..." />
-                <marker date="1575631629955" expanded="false" signature="5663:5692" placeholder="..." />
-                <marker date="1575631629955" expanded="false" signature="6005:6014" placeholder="..." />
-                <marker date="1575631629955" expanded="true" signature="6193:6208" placeholder="..." />
+                <element signature="n#style#0;n#p#0;n#!!top" expanded="true" />
+                <element signature="e#2937#7756#0#PHP" />
+                <element signature="n#style#0;n#p#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#th#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="auto_kp.tails" pinned="false" current-in-tab="false">
-        <entry file="dbDummy://dbtable:/a5e6ee37/a8a2810f-6ddd-4613-a954-7113e1ab97d5/auto_kp.tails">
-          <provider editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-            <state>
-              <filtering enabled="true" />
-            </state>
-          </provider>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/a8a2810f-6ddd-4613-a954-7113e1ab97d5/console.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="47" selection-start-line="3" selection-start-column="47" selection-end-line="3" selection-end-column="47" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="auto_kp.soges" pinned="false" current-in-tab="false">
-        <entry file="dbDummy://dbtable:/a5e6ee37/a8a2810f-6ddd-4613-a954-7113e1ab97d5/auto_kp.soges">
-          <provider editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
             <state>
-              <filtering enabled="true" />
-            </state>
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="64" selection-start-line="3" selection-start-column="64" selection-end-line="3" selection-end-column="64" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="auto_kp.food_greases" pinned="false" current-in-tab="false">
-        <entry file="dbDummy://dbtable:/a5e6ee37/a8a2810f-6ddd-4613-a954-7113e1ab97d5/auto_kp.food_greases">
-          <provider editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-            <state>
-              <filtering enabled="true" />
-            </state>
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="9" selection-end-column="60" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="auto_kp.hydraulics" pinned="false" current-in-tab="false">
-        <entry file="dbDummy://dbtable:/a5e6ee37/a8a2810f-6ddd-4613-a954-7113e1ab97d5/auto_kp.hydraulics">
-          <provider editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-            <state>
-              <filtering enabled="true" />
-            </state>
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="9" selection-end-column="60" />
-              <folding />
+              <caret column="34" selection-start-column="34" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -265,11 +201,26 @@
       <find>focus</find>
       <find>complete</find>
       <find>Shell</find>
+      <find>20%</find>
+      <find>h3</find>
+      <find>&lt;h3 style='margin-bottom: 0'&gt;</find>
+      <find>&lt;h3&gt;</find>
+      <find>&lt;/span&gt;&lt;/b&gt;</find>
+      <find>target</find>
+      <find>type</find>
+      <find>,'Фасовка/Цена'</find>
+      <find>span</find>
+      <find>with_prices</find>
+      <find>brand</find>
     </findStrings>
     <replaceStrings>
       <replace>3</replace>
       <replace>9</replace>
       <replace>Shell</replace>
+      <replace>span</replace>
+      <replace>checkbox'&gt;&lt;br&gt;&lt;br&gt;</replace>
+      <replace>&lt;h3 style='margin-bottom: 0'&gt;</replace>
+      <replace>&lt;/span&gt;&lt;input type='checkbox'&gt;&lt;/b&gt;</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -292,14 +243,15 @@
         <option value="$PROJECT_DIR$/pdo_auto_kp_connect.php" />
         <option value="$PROJECT_DIR$/auto_kp.js" />
         <option value="$PROJECT_DIR$/mysql_auto_kp.php" />
-        <option value="$PROJECT_DIR$/auto_kp/pdo_auto_kp_connect.php" />
         <option value="dbtable:/a5e6ee37/a8a2810f-6ddd-4613-a954-7113e1ab97d5/auto_kp.food_greases" />
         <option value="dbtable:/a5e6ee37/a8a2810f-6ddd-4613-a954-7113e1ab97d5/auto_kp.hydraulics" />
         <option value="dbtable:/a5e6ee37/a8a2810f-6ddd-4613-a954-7113e1ab97d5/auto_kp.soges" />
         <option value="dbtable:/a5e6ee37/a8a2810f-6ddd-4613-a954-7113e1ab97d5/auto_kp.tails" />
+        <option value="$PROJECT_DIR$/auto_kp/pdo_auto_kp_connect.php" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/a8a2810f-6ddd-4613-a954-7113e1ab97d5/console.sql" />
+        <option value="$PROJECT_DIR$/auto_kp/mysql_auto_kp.php" />
         <option value="$PROJECT_DIR$/auto_kp/auto_kp.js" />
         <option value="$PROJECT_DIR$/auto_kp/auto_kp_give_html.php" />
-        <option value="$PROJECT_DIR$/auto_kp/mysql_auto_kp.php" />
       </list>
     </option>
   </component>
@@ -317,12 +269,12 @@
   <component name="PhpServers">
     <servers />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" interpreter_name="PHP" />
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1696" />
-    <option name="height" value="1026" />
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="977" />
+    <option name="y" value="25" />
+    <option name="width" value="943" />
+    <option name="height" value="1055" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -340,67 +292,33 @@
       </profile-state>
     </entry>
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
-    <OptionsSetting value="true" id="Add" />
-    <OptionsSetting value="true" id="Remove" />
-    <OptionsSetting value="true" id="Checkout" />
-    <OptionsSetting value="true" id="Update" />
-    <OptionsSetting value="true" id="Status" />
-    <OptionsSetting value="true" id="Edit" />
-    <ConfirmationsSetting value="0" id="Add" />
-    <ConfirmationsSetting value="0" id="Remove" />
-  </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
-      <flattenPackages />
-      <showMembers />
-      <showModules />
-      <showLibraryContents />
-      <hideEmptyPackages />
-      <abbreviatePackageNames />
-      <autoscrollToSource />
-      <autoscrollFromSource />
-      <sortByType />
-      <manualOrder />
+    <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="prices" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="prices" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="prices" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="prices" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="prices" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="auto_kp" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
+          <expand>
+            <path>
+              <item name="public_html" type="b2602c69:ProjectViewProjectNode" />
+              <item name="public_html" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="public_html" type="b2602c69:ProjectViewProjectNode" />
+              <item name="public_html" type="462c0819:PsiDirectoryNode" />
+              <item name="auto_kp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="public_html" type="b2602c69:ProjectViewProjectNode" />
+              <item name="public_html" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -439,11 +357,8 @@
       <tasks />
       <arguments />
       <envs />
-      <method />
+      <method v="2" />
     </configuration>
-  </component>
-  <component name="ShelveChangesManager" show_recycled="false">
-    <option name="remove_strategy" value="false" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -466,38 +381,42 @@
       <workItem from="1575471951973" duration="15344000" />
       <workItem from="1575554880987" duration="20702000" />
       <workItem from="1575629100208" duration="4958000" />
+      <workItem from="1575643473647" duration="16667000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69357000" />
+    <option name="totallyTimeSpent" value="86024000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
+    <frame x="-3" y="25" width="1926" height="1058" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16011904" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31011903" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32961586" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32961586" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" order="0" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="1" weight="0.37114537" />
+      <window_info id="Structure" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Database Console" weight="0.32938644" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" weight="0.32938644" />
+      <window_info anchor="bottom" id="Terminal" order="0" weight="0.32938644" />
+      <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="2" />
+      <window_info anchor="bottom" id="TODO" order="3" />
+      <window_info anchor="bottom" id="Debug" order="4" />
+      <window_info anchor="bottom" id="Find" order="5" weight="0.32938644" />
+      <window_info anchor="bottom" id="Run" order="6" />
+      <window_info active="true" anchor="right" id="Database" order="0" visible="true" weight="0.16595517" />
     </layout>
     <layout-to-restore>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14166667" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32961586" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32961586" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14166667" />
+      <window_info id="Structure" order="1" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="TODO" order="0" />
+      <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="2" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="3" visible="true" weight="0.32961586" />
+      <window_info anchor="bottom" id="Find" order="4" weight="0.32961586" />
+      <window_info anchor="right" id="Database" order="0" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -514,130 +433,15 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager />
-    <watches-manager />
-  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/mysql_history.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="550" column="4" selection-start-line="550" selection-start-column="4" selection-end-line="550" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/phpstorm.jar!/resources/html5-schema/html5/web-forms.rnc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="18" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/0b819afd-90f2-4934-ba9e-711b9c279d4d/console.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/mysql_edc.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="1061" column="2" selection-start-line="1061" selection-start-column="2" selection-end-line="1061" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pdo_face_page.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="467">
-          <caret line="348" column="0" selection-start-line="348" selection-start-column="0" selection-end-line="350" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/kp_food_with_total.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="34" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/kp_general.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="28" column="40" selection-start-line="28" selection-start-column="40" selection-end-line="28" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pdo_connect.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="9" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mysql_delete.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/kp_bechem_avantin.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/auto_kp/jquery-ui.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/auto_kp/jquery.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/mysql_history.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="36" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/mysql_scripts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="66" column="59" selection-start-line="66" selection-start-column="36" selection-end-line="66" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/auto_kp/auto_kp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/auto_kp/mysql_auto_kp.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="57" selection-start-line="6" selection-start-column="57" selection-end-line="6" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/auto_kp/pdo_auto_kp_connect.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/mysql_rent.php">
       <provider selected="true" editor-type-id="text-editor">
@@ -683,49 +487,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/kp_food_with_total.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="34" selection-end-column="21" />
+        <state>
+          <caret line="1" selection-start-line="1" selection-end-line="34" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pdo_connect.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
-          <caret line="5" column="9" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="9" />
+          <caret line="5" column="9" selection-start-line="5" selection-end-line="5" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mysql_delete.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/kp_bechem_avantin.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mysql_insert.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-585">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
+        <state relative-caret-position="-585" />
       </provider>
     </entry>
     <entry file="das://a8a2810f-6ddd-4613-a954-7113e1ab97d5/schema/auto_kp/table/soges" />
     <entry file="das://a8a2810f-6ddd-4613-a954-7113e1ab97d5/schema/auto_kp/table/hydraulics" />
-    <entry file="das://a8a2810f-6ddd-4613-a954-7113e1ab97d5/schema/auto_kp/table/tails" />
-    <entry file="file://$PROJECT_DIR$/js/mysql_edc.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5208">
-          <caret line="296" column="8" selection-start-line="296" selection-start-column="2" selection-end-line="296" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mysql_read.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="600">
@@ -750,14 +537,7 @@
     <entry file="file://$PROJECT_DIR$/kp_yandex_food_with_total+prices.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="142">
-          <caret line="152" column="0" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/price_mysql.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="107" column="26" selection-start-line="107" selection-start-column="21" selection-end-line="107" selection-end-column="26" />
+          <caret line="152" selection-start-line="152" selection-end-line="152" />
         </state>
       </provider>
     </entry>
@@ -771,15 +551,13 @@
     <entry file="file://$PROJECT_DIR$/pdo_face_page.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5220">
-          <caret line="348" column="0" selection-start-line="348" selection-start-column="0" selection-end-line="350" selection-end-column="43" />
+          <caret line="348" selection-start-line="348" selection-end-line="350" selection-end-column="43" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/jquery_ui/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1035">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
+        <state relative-caret-position="-1035" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/mysql_scripts.js">
@@ -789,155 +567,140 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/a8a2810f-6ddd-4613-a954-7113e1ab97d5/console.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/auto_kp/pdo_auto_kp_connect.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="dbDummy://dbtable:/a5e6ee37/a8a2810f-6ddd-4613-a954-7113e1ab97d5/auto_kp.hydraulics">
-      <provider editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+    <entry file="dbDummy://dbtable:/a5e6ee37/a8a2810f-6ddd-4613-a954-7113e1ab97d5/auto_kp.hydraulics" />
+    <entry file="dbDummy://dbtable:/a5e6ee37/a8a2810f-6ddd-4613-a954-7113e1ab97d5/auto_kp.food_greases" />
+    <entry file="dbDummy://dbtable:/a5e6ee37/a8a2810f-6ddd-4613-a954-7113e1ab97d5/auto_kp.soges" />
+    <entry file="dbDummy://dbtable:/a5e6ee37/a8a2810f-6ddd-4613-a954-7113e1ab97d5/auto_kp.tails" />
+    <entry file="das://a8a2810f-6ddd-4613-a954-7113e1ab97d5/schema/auto_kp/table/general_oils_hydraulic">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
         </state>
       </provider>
+    </entry>
+    <entry file="das://a8a2810f-6ddd-4613-a954-7113e1ab97d5/schema/auto_kp/table/general_oils_hydraulic.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="9" selection-end-column="60" />
-          <folding />
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="11" selection-end-column="2" />
         </state>
       </provider>
     </entry>
-    <entry file="dbDummy://dbtable:/a5e6ee37/a8a2810f-6ddd-4613-a954-7113e1ab97d5/auto_kp.food_greases">
-      <provider editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+    <entry file="das://a8a2810f-6ddd-4613-a954-7113e1ab97d5/schema/auto_kp/table/general_specliqs_cleaners.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="10" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://a8a2810f-6ddd-4613-a954-7113e1ab97d5/schema/auto_kp/table/general_specliqs_cleaners">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="9" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
     </entry>
-    <entry file="dbDummy://dbtable:/a5e6ee37/a8a2810f-6ddd-4613-a954-7113e1ab97d5/auto_kp.soges">
-      <provider editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+    <entry file="das://a8a2810f-6ddd-4613-a954-7113e1ab97d5/schema/auto_kp/table/general_greases_chain">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/price_mysql.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="10" selection-end-column="60" />
-          <folding />
+        <state relative-caret-position="283">
+          <caret line="38" column="45" selection-start-line="38" selection-start-column="45" selection-end-line="38" selection-end-column="45" />
         </state>
       </provider>
     </entry>
-    <entry file="dbDummy://dbtable:/a5e6ee37/a8a2810f-6ddd-4613-a954-7113e1ab97d5/auto_kp.tails">
-      <provider editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+    <entry file="file://$PROJECT_DIR$/js/mysql_edc.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="551" column="36" selection-start-line="551" selection-start-column="32" selection-end-line="551" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://a8a2810f-6ddd-4613-a954-7113e1ab97d5/schema/auto_kp/table/tails">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/kp_bechem_avantin.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="47" selection-start-line="3" selection-start-column="47" selection-end-line="3" selection-end-column="47" />
-          <folding />
+        <state relative-caret-position="165">
+          <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://a8a2810f-6ddd-4613-a954-7113e1ab97d5/schema/auto_kp/table/metalworking_soges">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://a8a2810f-6ddd-4613-a954-7113e1ab97d5/schema/auto_kp/table/food_oils">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/auto_kp/auto_kp.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="73">
-          <caret line="38" column="30" selection-start-line="38" selection-start-column="30" selection-end-line="38" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/auto_kp/auto_kp_new.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1127">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/auto_kp/auto_kp_give_html.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="64" column="161" selection-start-line="64" selection-start-column="30" selection-end-line="64" selection-end-column="161" />
-          <folding>
-            <marker date="1575631629955" expanded="true" signature="147:242" placeholder="..." />
-            <marker date="1575631629955" expanded="false" signature="292:304" placeholder="..." />
-            <marker date="1575631629955" expanded="true" signature="305:803" placeholder="..." />
-            <marker date="1575631629955" expanded="true" signature="309:795" placeholder="..." />
-            <marker date="1575631629955" expanded="false" signature="326:336" placeholder="..." />
-            <marker date="1575631629955" expanded="false" signature="348:363" placeholder="..." />
-            <marker date="1575631629955" expanded="false" signature="407:417" placeholder="..." />
-            <marker date="1575631629955" expanded="true" signature="418:789" placeholder="..." />
-            <marker date="1575631629955" expanded="false" signature="484:556" placeholder="..." />
-            <marker date="1575631629955" expanded="true" signature="843:858" placeholder="..." />
-            <marker date="1575631629955" expanded="true" signature="948:1486" placeholder="..." />
-            <marker date="1575631629955" expanded="true" signature="1490:1837" placeholder="..." />
-            <marker date="1575631629955" expanded="false" signature="1862:1872" placeholder="..." />
-            <marker date="1575631629955" expanded="true" signature="1873:2296" placeholder="..." />
-            <marker date="1575631629955" expanded="true" signature="1877:2288" placeholder="..." />
-            <marker date="1575631629955" expanded="false" signature="1889:1906" placeholder="..." />
-            <marker date="1575631629955" expanded="true" signature="1907:2282" placeholder="..." />
-            <marker date="1575631629955" expanded="true" signature="2999:3094" placeholder="..." />
-            <marker date="1575631629955" expanded="true" signature="3318:3413" placeholder="..." />
-            <marker date="1575631629955" expanded="true" signature="3788:3813" placeholder="..." />
-            <marker date="1575631629955" expanded="true" signature="3917:3940" placeholder="..." />
-            <marker date="1575631629955" expanded="true" signature="4548:4591" placeholder="SELECT * FRO... ${$table}" />
-            <marker date="1575631629955" expanded="true" signature="4864:4911" placeholder="..." />
-            <marker date="1575631629955" expanded="true" signature="5106:5495" placeholder="..." />
-            <marker date="1575631629955" expanded="false" signature="5143:5172" placeholder="..." />
-            <marker date="1575631629955" expanded="false" signature="5420:5429" placeholder="..." />
-            <marker date="1575631629955" expanded="true" signature="5626:6080" placeholder="..." />
-            <marker date="1575631629955" expanded="false" signature="5663:5692" placeholder="..." />
-            <marker date="1575631629955" expanded="false" signature="6005:6014" placeholder="..." />
-            <marker date="1575631629955" expanded="true" signature="6193:6208" placeholder="..." />
-          </folding>
+        <state relative-caret-position="345">
+          <caret line="23" column="66" selection-start-line="23" selection-start-column="66" selection-end-line="23" selection-end-column="66" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/auto_kp/mysql_auto_kp.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="577">
-          <caret line="117" column="50" selection-start-line="117" selection-start-column="50" selection-end-line="117" selection-end-column="50" />
+        <state relative-caret-position="-750">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/auto_kp/auto_kp_new.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-855" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/auto_kp/pdo_auto_kp_connect.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://a8a2810f-6ddd-4613-a954-7113e1ab97d5/schema/auto_kp/table/food_greases">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/a8a2810f-6ddd-4613-a954-7113e1ab97d5/console.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="34" selection-start-column="34" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/auto_kp/auto_kp_give_html.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="180" column="50" selection-start-line="180" selection-start-column="50" selection-end-line="180" selection-end-column="50" />
           <folding>
-            <marker date="1575634225872" expanded="false" signature="221:231" placeholder="..." />
-            <marker date="1575634225872" expanded="true" signature="232:491" placeholder="..." />
-            <marker date="1575634225872" expanded="false" signature="370:382" placeholder="..." />
-            <marker date="1575634225872" expanded="false" signature="468:483" placeholder="..." />
-            <marker date="1575634225872" expanded="false" signature="530:584" placeholder="..." />
-            <marker date="1575634225872" expanded="true" signature="585:6098" placeholder="..." />
-            <marker date="1575634225872" expanded="true" signature="585:6110" placeholder="..." />
-            <marker date="1575634225872" expanded="true" signature="629:1019" placeholder="..." />
-            <marker date="1575634225872" expanded="false" signature="731:765" placeholder="..." />
-            <marker date="1575634225872" expanded="false" signature="815:830" placeholder="..." />
-            <marker date="1575634225872" expanded="true" signature="831:927" placeholder="..." />
-            <marker date="1575634225872" expanded="true" signature="1034:3315" placeholder="..." />
-            <marker date="1575634225872" expanded="true" signature="1046:1141" placeholder="..." />
-            <marker date="1575634225872" expanded="true" signature="3330:3717" placeholder="..." />
-            <marker date="1575634225872" expanded="true" signature="3350:3445" placeholder="..." />
-            <marker date="1575634225872" expanded="true" signature="3732:5017" placeholder="..." />
-            <marker date="1575634225872" expanded="true" signature="3752:3847" placeholder="..." />
-            <marker date="1575634225872" expanded="true" signature="5038:5133" placeholder="..." />
-            <marker date="1575634225872" expanded="false" signature="6155:6209" placeholder="..." />
-            <marker date="1575634225872" expanded="true" signature="6210:6602" placeholder="..." />
-            <marker date="1575634225872" expanded="false" signature="6679:6694" placeholder="..." />
-            <marker date="1575634225872" expanded="true" signature="6727:6776" placeholder="..." />
+            <element signature="n#style#0;n#p#0;n#!!top" expanded="true" />
+            <element signature="e#2937#7756#0#PHP" />
+            <element signature="n#style#0;n#p#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
