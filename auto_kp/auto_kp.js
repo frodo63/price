@@ -1,5 +1,21 @@
 $(document).ready(function() {
 
+    //Аккордион подключение и настройки
+    $( function() {
+        $( "#accordion" ).accordion({
+            heightStyle: "content",
+            collapsible: true,
+            active: false
+        });
+    } );
+
+    //ОТменить все галочки
+    $(document).off('click.deselect_all').on('click.deselect_all', '#deselect_all', function (event) {
+        $('input[type="checkbox"], input[type="radio"]').prop('checked', false);
+    });
+
+
+
     /*ФОРМИРОВАНИЕ КП*///////////////////////////////////////////////////////////////////////////////////////
     $(document).off('click.mail_compose').on('click.mail_compose', '.mail_compose', function (event) {
 
@@ -46,6 +62,8 @@ $(document).ready(function() {
     })
 
 });
+
+
 
 $(document).off('click.mail_copy').on('click.mail_copy', '#mail_copy', function (event) {
     $('#html_copy').select();
