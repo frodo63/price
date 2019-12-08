@@ -1609,7 +1609,7 @@
     </column>
     <column id="369" parent="248" name="brand">
       <Position>3</Position>
-      <DataType>enum(&apos;Bechem&apos;, &apos;Shell&apos;, &apos;Mobil&apos;, &apos;Castrol&apos;, &apos;Agip&apos;, &apos;Fuchs&apos;, &apos;Лукойл&apos;, &apos;Роснефть&apos;, &apos;Газпромнефть&apos;, &apos;Total&apos;)|0e</DataType>
+      <DataType>enum(&apos;Bechem&apos;, &apos;Shell&apos;, &apos;Mobil&apos;, &apos;Castrol&apos;, &apos;Agip&apos;, &apos;Fuchs&apos;, &apos;Лукойл&apos;, &apos;Роснефть&apos;, &apos;Газпромнефть&apos;, &apos;Total&apos;, &apos;Troy&apos;)|0e</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
@@ -2022,26 +2022,23 @@
     </column>
     <column id="438" parent="257" name="brand">
       <Position>3</Position>
-      <DataType>enum(&apos;Bechem&apos;, &apos;Shell&apos;, &apos;Mobil&apos;, &apos;Castrol&apos;, &apos;Agip&apos;, &apos;Fuchs&apos;, &apos;Лукойл&apos;, &apos;Роснефть&apos;, &apos;Газпромнефть&apos;, &apos;Total&apos;)|0e</DataType>
+      <DataType>enum(&apos;Bechem&apos;, &apos;Shell&apos;, &apos;Mobil&apos;, &apos;Castrol&apos;, &apos;Agip&apos;, &apos;Fuchs&apos;, &apos;Лукойл&apos;, &apos;Роснефть&apos;, &apos;Газпромнефть&apos;, &apos;Total&apos;, &apos;Troy&apos;)|0e</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="439" parent="257" name="application">
       <Position>4</Position>
       <DataType>text|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="440" parent="257" name="description">
       <Position>5</Position>
       <DataType>text|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="441" parent="257" name="package_price">
       <Position>6</Position>
       <DataType>varchar(50)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <key id="442" parent="257" name="PRIMARY">

@@ -177,6 +177,7 @@ echo"
         <div>
             <br><input id='16_' class='select_group' type='checkbox'><b><label for='16_' style='margin-bottom: 0'>Жидкости для СОЖ</label></b><br>
             <input id='16_Bechem' type='checkbox'><label for='16_Bechem'>Bechem</label><br>
+            <input id='16_Troy' type='checkbox'><label for='16_Troy'>Troy</label><br>
         </div>
       </div>
   
