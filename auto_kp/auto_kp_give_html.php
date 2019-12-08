@@ -173,12 +173,14 @@ if(isset($_POST['mail_array']) && isset($_POST['with_prices'])){
             ),
 
         );
+        if($_POST['with_prices'] == 1){
+            $result .="<p>Цены указаны с НДС (20%)</p>";
+        }
+
 
         foreach($mail_array as $key=>$val) {
 
-            if($_POST['with_prices'] == 1){
-                $result .="<p>Цены указаны с НДС (20%)</p>";
-            }
+
 
             foreach ($big_kp_array as $bkp_key => $bkp_value){
                 if ($key == $bkp_key){

@@ -14,14 +14,13 @@ $(document).ready(function() {
         $('#custom_trades').append('' +
             '<div class=\'add_custom_trade\'>' +
             '<br><hr><br><span>Предлагаем к поставке: </span><br>' +
-            '<input class=\'insert_name\' type=\'checkbox\'>' +
             '<input type=\'text\' name=\'insert_name\' size=\'20\' value=\'\' style=\'font-size: 15px;text-align: center\'><br>' +
             '<span>Описание: </span><br>' +
-            '<input class=\'insert_description\' type=\'checkbox\'><input type=\'text\' name=\'insert_description\' size=\'20\' value=\'\' style=\'font-size: 15px;text-align: center\'><br>' +
+            '<input type=\'text\' name=\'insert_description\' size=\'20\' value=\'\' style=\'font-size: 15px;text-align: center\'><br>' +
             '<span>Фасовка: </span><br>' +
-            '<input class=\'insert_packing\' type=\'checkbox\'><input type=\'text\' name=\'insert_packing\' size=\'20\' value=\'\' style=\'font-size: 15px;text-align: center\'><br>' +
+            '<input type=\'text\' name=\'insert_packing\' size=\'20\' value=\'\' style=\'font-size: 15px;text-align: center\'><br>' +
             '<span>Цена: </span><br>' +
-            '<input class=\'insert_price\' type=\'checkbox\'><input type=\'text\' name=\'insert_price\' size=\'20\' value=\'\' style=\'font-size: 15px;text-align: center\'><br>' +
+            '<input type=\'text\' name=\'insert_price\' size=\'20\' value=\'\' style=\'font-size: 15px;text-align: center\'><br>' +
             '<input type=\'button\' id=\'delete_current_trade\' value=\'-\'>' +
             '</div>');
     });
@@ -74,20 +73,28 @@ $(document).ready(function() {
         console.log(custom_trades_line);
 
         if(add_custom_trade_length > 0){
-            custom_trades_line = '<br><br><hr><h2>Коммерческое предложение</h2><table style="border-collapse: collapse">';
+            custom_trades_line = '<br><br><hr><h2>Коммерческое предложение</h2><table style="border-collapse: collapse; width: 95%">';
             console.log(custom_trades_line);
             for(var i = 0; i < add_custom_trade_length; i++){
 
-                custom_name = $('.add_custom_trade input[type="checkbox"]:checked').next('input[name="insert_name"]').val();
-                custom_description = $('.add_custom_trade input[type="checkbox"]:checked').next('input[name="insert_description"]').val();
-                custom_packing = $('.add_custom_trade input[type="checkbox"]:checked').next('input[name="insert_packing"]').val();
-                custom_price = $('.add_custom_trade input[type="checkbox"]:checked').next('input[name="insert_price"]').val();
+
+                var thetrade = $('.add_custom_trade').eq(i);
+                var linenum = i+1;
+
+
+                custom_name = thetrade.children('input[name="insert_name"]').val();
+                custom_description = thetrade.children('input[name="insert_description"]').val();
+                custom_packing = thetrade.children('input[name="insert_packing"]').val();
+                custom_price = thetrade.children('input[name="insert_price"]').val();
+
+                console.log(typeof(custom_description));
+
 
                 custom_trades_line += '<tr>' +
-                    '<td style="border: 1px solid black; font-size: 20px; width: 30%">'+custom_name+'</td>' +
-                    '<td style="border: 1px solid black; font-size: 20px; width: 20%">'+custom_description+'</td>' +
-                    '<td style="border: 1px solid black; font-size: 20px; width: 20%">'+custom_packing+'</td>' +
-                    '<td style="border: 1px solid black; font-size: 20px; width: 20%">'+custom_price+'</td>' +
+                    '<td style="width: 2%; border: 1px solid black; font-size: 20px; text-align: center">'+linenum+'</td><td style="border: 1px solid black; font-size: 20px; width: 45%; text-align: center">'+custom_name+'</td>';
+                custom_trades_line += '<td style="border: 1px solid black; font-size: 20px; width: 30%; text-align: center">'+custom_description+'</td>';
+                custom_trades_line +='<td style="border: 1px solid black; font-size: 20px; width: 10%; text-align: center">'+custom_packing+'</td>' +
+                    '<td style="border: 1px solid black; font-size: 20px; width: 10%; text-align: center">'+custom_price+'</td>' +
                     '</tr>';
                 console.log(custom_trades_line);
             }

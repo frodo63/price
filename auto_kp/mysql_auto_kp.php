@@ -207,16 +207,6 @@ echo"
       <h3 style='background-color: #FBBA00; font-weight: bold; text-align: center; color:#17460F; font-size:100%'>Ввести отдельный продукт</h3>
       <div style='position: relative' id='custom_trades'>
       
-      <div class='add_custom_trade'>
-        <span>Предлагаем к поставке: </span><br>
-        <input class='insert_name' type='checkbox'><input type='text' name='insert_name' size='20' value='' style='font-size: 15px;text-align: center'><br>
-        <span>Описание: </span><br>
-        <input class='insert_description' type='checkbox'><input type='text' name='insert_description' size='20' value='' style='font-size: 15px;text-align: center'><br>
-        <span>Фасовка: </span><br>
-        <input class='insert_packing' type='checkbox'><input type='text' name='insert_packing' size='20' value='' style='font-size: 15px;text-align: center'><br>
-        <span>Цена: </span><br>
-        <input class='insert_price' type='checkbox'><input type='text' name='insert_price' size='20' value='' style='font-size: 15px;text-align: center'><br>
-      </div>
       <input type='button' style='position: absolute; top: 5px; right: 5px' id='add_custom_trade' value='+'>
       
           
