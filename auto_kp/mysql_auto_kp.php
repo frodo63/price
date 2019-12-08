@@ -21,8 +21,7 @@ echo"
     <input type='button' value='СКОПИРОВАТЬ' id='mail_copy' style='font-size: 30px'>
     <br><br>
     <input type='button' value='УБРАТЬ ВСЕ ГАЛОЧКИ' id='deselect_all' style='font-size: 15px'>
-    <br><br>
-    <input type='button' value='СФОРМИРОВАТЬ' class='mail_compose' style='font-size: 30px'>
+    
 </div>
 
 <div class='mail_body_parts' style='background-color: #F0F0F0; font-size: 18px; width: 40%'>
@@ -37,7 +36,7 @@ echo"
           <option>производств</option>
         </select>
         
-        <span>- одно из ключевых направлений нашей деятельности.</span>
+        <span>- одно из ключевых направлений нашей деятельности.</span><br>
     </div>
     
     <div>
@@ -206,18 +205,20 @@ echo"
           </div>
       </div>
       <h3 style='background-color: #FBBA00; font-weight: bold; text-align: center; color:#17460F; font-size:100%'>Ввести отдельный продукт</h3>
-      <div>
+      <div style='position: relative' id='custom_trades'>
       
-      <div>
-        <span>Предлагаем к поставке: </span><input type='text' id='preferred_trade_group_input' size='30' value='промышленных' style='font-size: 20px;text-align: center'>
-        
-        <select id='firm_type' style='font-size: 20px'>
-          <option>предприятий</option>
-          <option>производств</option>
-        </select>
-        
-        <span>- одно из ключевых направлений нашей деятельности.</span>
-    </div>
+      <div class='add_custom_trade'>
+        <span>Предлагаем к поставке: </span><br>
+        <input class='insert_name' type='checkbox'><input type='text' name='insert_name' size='20' value='' style='font-size: 15px;text-align: center'><br>
+        <span>Описание: </span><br>
+        <input class='insert_description' type='checkbox'><input type='text' name='insert_description' size='20' value='' style='font-size: 15px;text-align: center'><br>
+        <span>Фасовка: </span><br>
+        <input class='insert_packing' type='checkbox'><input type='text' name='insert_packing' size='20' value='' style='font-size: 15px;text-align: center'><br>
+        <span>Цена: </span><br>
+        <input class='insert_price' type='checkbox'><input type='text' name='insert_price' size='20' value='' style='font-size: 15px;text-align: center'><br>
+      </div>
+      <input type='button' style='position: absolute; top: 5px; right: 5px' id='add_custom_trade' value='+'>
+      
           
       </div>
   </div>";
@@ -233,6 +234,8 @@ echo"
     <label for='20_marina'>Марина</label><input id='20_marina' type='radio' name='9'><br>
     <label for='20_sergey'>Сергей</label><input id='20_sergey' type='radio' name='9'><br>
     <label for='20_timur'>Тимур</label><input id='20_timur' type='radio' name='9'><br>
+    <br><br>
+    <input type='button' value='СФОРМИРОВАТЬ' class='mail_compose' style='font-size: 30px'>
     
 </div>
 <br>

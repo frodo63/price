@@ -9,6 +9,36 @@ $(document).ready(function() {
         });
     } );
 
+    //Добавление нового товара в кастомной КП
+    $(document).off('click.add_custom_trade').on('click.add_custom_trade', '#add_custom_trade', function (event) {
+        $('#custom_trades').append('' +
+            '<div class=\'add_custom_trade\'>' +
+            '<br><hr><br><span>Предлагаем к поставке: </span><br>' +
+            '<input class=\'insert_name\' type=\'checkbox\'>' +
+            '<input type=\'text\' name=\'insert_name\' size=\'20\' value=\'\' style=\'font-size: 15px;text-align: center\'><br>' +
+            '<span>Описание: </span><br>' +
+            '<input class=\'insert_description\' type=\'checkbox\'><input type=\'text\' name=\'insert_description\' size=\'20\' value=\'\' style=\'font-size: 15px;text-align: center\'><br>' +
+            '<span>Фасовка: </span><br>' +
+            '<input class=\'insert_packing\' type=\'checkbox\'><input type=\'text\' name=\'insert_packing\' size=\'20\' value=\'\' style=\'font-size: 15px;text-align: center\'><br>' +
+            '<span>Цена: </span><br>' +
+            '<input class=\'insert_price\' type=\'checkbox\'><input type=\'text\' name=\'insert_price\' size=\'20\' value=\'\' style=\'font-size: 15px;text-align: center\'><br>' +
+            '<input type=\'button\' id=\'delete_current_trade\' value=\'-\'>' +
+            '</div>');
+    });
+
+    //Удаление  нынешнего товара в кастомной КП
+    $(document).off('click.delete_custom_trade').on('click.delete_custom_trade', '#delete_current_trade', function (event) {
+        $(event.target).parent('.add_custom_trade').remove();
+    });
+
+    $(document).off('mouseover.mouseover_custom_trade').on('mouseover.mouseover_custom_trade', '#delete_current_trade', function (event) {
+        $(event.target).parent('.add_custom_trade').css({'background-color': 'pink'});
+    });
+    $(document).off('mouseout.mouseover_custom_trade').on('mouseout.mouseover_custom_trade', '#delete_current_trade', function (event) {
+        $(event.target).parent('.add_custom_trade').css({'background-color': 'white'});
+    });
+
+
     //ОТменить все галочки
     $(document).off('click.deselect_all').on('click.deselect_all', '#deselect_all', function (event) {
         $('input[type="checkbox"], input[type="radio"]').prop('checked', false);
@@ -19,11 +49,12 @@ $(document).ready(function() {
     /*ФОРМИРОВАНИЕ КП*///////////////////////////////////////////////////////////////////////////////////////
     $(document).off('click.mail_compose').on('click.mail_compose', '.mail_compose', function (event) {
 
-        var body_options = $('.mail_body_parts input[type="checkbox"]:checked:not(.select_group):not(#with_prices), .mail_tail_parts input[type="radio"]:checked');
+        var body_options = $('.mail_body_parts input:not(.select_group):not(#with_prices):not(.add_custom_trade input)[type="checkbox"]:checked, .mail_tail_parts input[type="radio"]:checked');
         var mail_array = [];
         var options_length = body_options.length;
         var preferred_group = $('#preferred_trade_group_input').val();
         var firm_type = $('#firm_type').val();
+        var add_custom_trade_length = $('.add_custom_trade').length;
 
         var with_prices = 0;
         if($('#with_prices').is(":checked")){var with_prices = 1}
@@ -33,6 +64,37 @@ $(document).ready(function() {
             mail_array.push($(body_options[i]).attr("id"));
         }
 
+        console.log(add_custom_trade_length);
+
+        var custom_name = "";
+        var custom_description = "";
+        var custom_packing = "";
+        var custom_price = "";
+        var custom_trades_line = "";
+        console.log(custom_trades_line);
+
+        if(add_custom_trade_length > 0){
+            custom_trades_line = '<br><br><hr><h2>Коммерческое предложение</h2><table style="border-collapse: collapse">';
+            console.log(custom_trades_line);
+            for(var i = 0; i < add_custom_trade_length; i++){
+
+                custom_name = $('.add_custom_trade input[type="checkbox"]:checked').next('input[name="insert_name"]').val();
+                custom_description = $('.add_custom_trade input[type="checkbox"]:checked').next('input[name="insert_description"]').val();
+                custom_packing = $('.add_custom_trade input[type="checkbox"]:checked').next('input[name="insert_packing"]').val();
+                custom_price = $('.add_custom_trade input[type="checkbox"]:checked').next('input[name="insert_price"]').val();
+
+                custom_trades_line += '<tr>' +
+                    '<td style="border: 1px solid black; font-size: 20px; width: 30%">'+custom_name+'</td>' +
+                    '<td style="border: 1px solid black; font-size: 20px; width: 20%">'+custom_description+'</td>' +
+                    '<td style="border: 1px solid black; font-size: 20px; width: 20%">'+custom_packing+'</td>' +
+                    '<td style="border: 1px solid black; font-size: 20px; width: 20%">'+custom_price+'</td>' +
+                    '</tr>';
+                console.log(custom_trades_line);
+            }
+            custom_trades_line += '</table><br><hr><br>';
+            console.log(custom_trades_line);
+        }
+
         //Отправить этот массив аяксом
         $.ajax({
             url: 'auto_kp_give_html.php',
@@ -40,10 +102,12 @@ $(document).ready(function() {
             data: {mail_array:mail_array, with_prices:with_prices},
             success: function(data){
                 $('#html_result').html(data);
-                $('#html_copy').text(data);
             },
             complete: function () {
                 $('#preferred_trade_group').text("Снабжение "+preferred_group+" "+firm_type+" - одно из ключевых направлений нашей деятельности.");
+                $('#custom_trades_table').append(custom_trades_line);
+                $('#html_copy').text($('#html_result').html());
+
             }
         });
     });

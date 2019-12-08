@@ -19,6 +19,8 @@ if(isset($_POST['mail_array']) && isset($_POST['with_prices'])){
 
 <p id='preferred_trade_group' style='font-size: 16px'></p>
 
+<div id='custom_trades_table'></div><br><br>
+
 <p>Вообще, наш ассортимент весьма обширен, вот некоторые из групп товаров:</p>
 <ul style='list-style: disc; font-size: 20px;'>
  <li>Индустриальные масла и смазки и СОЖи для станков и механизмов</li>
@@ -165,7 +167,7 @@ if(isset($_POST['mail_array']) && isset($_POST['with_prices'])){
                 "table" => "tails"
             ),
             "21" => array(
-                "header" => "Группа материалов",
+                "header" => "Материалы",
                 "table" => "express_kp",
                 "columns" => array('Производитель','Наименование'),
             ),
