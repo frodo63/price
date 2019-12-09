@@ -171,7 +171,7 @@ if(isset($_POST['mail_array']) && isset($_POST['with_prices'])){
             foreach ($big_kp_array as $bkp_key => $bkp_value){
                 if ($key == $bkp_key){
 
-                    $result.="<p style='background-color: #FBBA00; font-weight: bold; text-align: center; color:#17460F; font-size:140%'>".(!empty($bkp_value['header'])) ? $bkp_value['header'] : ""."</p>";
+                    $result.="<p style='background-color: #FBBA00; font-weight: bold; text-align: center; color:#17460F; font-size:140%'>".(isset($bkp_value['header'])) ? $bkp_value['header'] : ""."</p>";
                     $columns = (!empty($bkp_value['columns'])) ? $bkp_value['columns'] : "";
                     //Если есть заявленная переменная - добавляем в массив колонок ячейку с фасовкой/ценой
                     if($_POST['with_prices'] == 1){
