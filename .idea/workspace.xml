@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebacd80-a44c-46e9-91ce-96f94f6c86c5" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auto_kp/auto_kp.js" beforeDir="false" afterPath="$PROJECT_DIR$/auto_kp/auto_kp.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auto_kp/auto_kp_give_html.php" beforeDir="false" afterPath="$PROJECT_DIR$/auto_kp/auto_kp_give_html.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auto_kp/pdo_auto_kp_connect.php" beforeDir="false" afterPath="$PROJECT_DIR$/auto_kp/pdo_auto_kp_connect.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auto_kp/mysql_auto_kp.php" beforeDir="false" afterPath="$PROJECT_DIR$/auto_kp/mysql_auto_kp.php" afterDir="false" />
     </list>
     <ignored path="prices.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,31 +37,31 @@
     <session id="-581314125">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="4" />
+          <entry key="project.closed" value="5" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.16" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.22" value="1" />
-          <entry key="project.open.time.25" value="1" />
+          <entry key="project.open.time.25" value="2" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="7" />
+          <entry key="project.opened" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="cell" value="898" />
           <entry key="html" value="7" />
-          <entry key="js" value="2616" />
-          <entry key="php" value="7775" />
+          <entry key="js" value="2636" />
+          <entry key="php" value="7885" />
           <entry key="sql" value="321" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="246" />
-          <entry key="JavaScript" value="2597" />
-          <entry key="PHP" value="7555" />
+          <entry key="HTML" value="248" />
+          <entry key="JavaScript" value="2617" />
+          <entry key="PHP" value="7663" />
           <entry key="SQL" value="64" />
           <entry key="Scratch" value="1155" />
         </counts>
@@ -75,9 +76,9 @@
           <entry key="general_greases_chain" value="1" />
           <entry key="general_oils_hydraulic" value="2" />
           <entry key="general_specliqs_cleaners" value="1" />
-          <entry key="html" value="8" />
+          <entry key="html" value="9" />
           <entry key="hydraulics" value="4" />
-          <entry key="js" value="15" />
+          <entry key="js" value="16" />
           <entry key="metalworking_soges" value="2" />
           <entry key="metalworking_specliqs" value="1" />
           <entry key="php" value="15" />
@@ -90,8 +91,8 @@
         <counts>
           <entry key="CSS" value="1" />
           <entry key="Database Element" value="29" />
-          <entry key="HTML" value="8" />
-          <entry key="JavaScript" value="15" />
+          <entry key="HTML" value="9" />
+          <entry key="JavaScript" value="16" />
           <entry key="PHP" value="15" />
           <entry key="SQL" value="3" />
           <entry key="Scratch" value="7" />
@@ -104,7 +105,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/auto_kp/pdo_auto_kp_connect.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="60">
@@ -116,19 +117,49 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/auto_kp/mysql_auto_kp.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3210">
-              <caret line="214" column="10" selection-start-line="214" selection-start-column="10" selection-end-line="214" selection-end-column="10" />
+            <state relative-caret-position="435">
+              <caret line="29" column="26" lean-forward="true" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
+              <folding>
+                <element signature="n#style#0;n#input#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#1;n#div#1;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/auto_kp/auto_kp.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="301">
+              <caret line="111" column="36" lean-forward="true" selection-start-line="111" selection-start-column="36" selection-end-line="111" selection-end-column="36" />
+              <folding>
+                <element signature="n#style#0;n#input#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#2;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#3;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#1;n#tr#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#1;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/auto_kp/auto_kp_give_html.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="379">
-              <caret line="173" column="191" selection-start-line="173" selection-start-column="191" selection-end-line="173" selection-end-column="191" />
+            <state relative-caret-position="664">
+              <caret line="578" column="5" lean-forward="true" selection-start-line="578" selection-start-column="5" selection-end-line="578" selection-end-column="5" />
               <folding>
                 <element signature="n#style#0;n#p#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#b#0;n#td#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#p#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#th#0;n#!!top" expanded="true" />
@@ -140,11 +171,19 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/kp_yandex_general.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" selection-start-line="4" selection-end-line="302" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>h3</find>
       <find>&lt;h3 style='margin-bottom: 0'&gt;</find>
       <find>&lt;h3&gt;</find>
       <find>&lt;/span&gt;&lt;/b&gt;</find>
@@ -152,7 +191,6 @@
       <find>type</find>
       <find>,'Фасовка/Цена'</find>
       <find>span</find>
-      <find>with_prices</find>
       <find>brand</find>
       <find>$table</find>
       <find>\&quot;</find>
@@ -174,6 +212,8 @@
       <find>деятельности</find>
       <find>Материалы</find>
       <find>custom_trades_table</find>
+      <find>with</find>
+      <find>with_prices</find>
     </findStrings>
     <replaceStrings>
       <replace>3</replace>
@@ -213,11 +253,11 @@
         <option value="dbtable:/a5e6ee37/a8a2810f-6ddd-4613-a954-7113e1ab97d5/auto_kp.tails" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/a8a2810f-6ddd-4613-a954-7113e1ab97d5/console.sql" />
         <option value="$PROJECT_DIR$/kp_general.html" />
-        <option value="$PROJECT_DIR$/auto_kp/auto_kp.js" />
-        <option value="$PROJECT_DIR$/auto_kp/mysql_auto_kp.php" />
         <option value="$PROJECT_DIR$/auto_kp/auto_kp_refresh.sql" />
-        <option value="$PROJECT_DIR$/auto_kp/auto_kp_give_html.php" />
         <option value="$PROJECT_DIR$/auto_kp/pdo_auto_kp_connect.php" />
+        <option value="$PROJECT_DIR$/auto_kp/mysql_auto_kp.php" />
+        <option value="$PROJECT_DIR$/auto_kp/auto_kp.js" />
+        <option value="$PROJECT_DIR$/auto_kp/auto_kp_give_html.php" />
       </list>
     </option>
   </component>
@@ -237,7 +277,7 @@
     <servers />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
-  <component name="ProjectFrameBounds" extendedState="4">
+  <component name="ProjectFrameBounds">
     <option name="y" value="25" />
     <option name="width" value="960" />
     <option name="height" value="1055" />
@@ -348,41 +388,46 @@
       <workItem from="1575738072389" duration="14040000" />
       <workItem from="1575754780915" duration="9177000" />
       <workItem from="1575811683507" duration="6758000" />
-      <workItem from="1575905505174" duration="303000" />
+      <workItem from="1575905505174" duration="469000" />
+      <workItem from="1575954427517" duration="1237000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="123865000" />
+    <option name="totallyTimeSpent" value="125268000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="960" height="1055" extended-state="4" />
+    <frame x="0" y="25" width="960" height="1055" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.29295155" />
+      <window_info content_ui="combo" id="Project" order="1" weight="0.21145375" />
       <window_info id="Structure" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="0" weight="0.3293348" />
+      <window_info anchor="bottom" id="Terminal" order="0" weight="0.32829374" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="2" />
       <window_info anchor="bottom" id="TODO" order="3" />
       <window_info anchor="bottom" id="Debug" order="4" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.32961586" />
       <window_info anchor="bottom" id="Run" order="6" />
+      <window_info anchor="bottom" id="Database Changes" order="7" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="0" weight="0.15178572" />
     </layout>
     <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14166667" />
-      <window_info id="Structure" order="1" side_tool="true" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="TODO" order="0" />
+      <window_info id="Favorites" order="0" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.21145375" />
+      <window_info id="Structure" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="0" visible="true" weight="0.32829374" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="2" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="3" visible="true" weight="0.32961586" />
-      <window_info anchor="bottom" id="Find" order="4" weight="0.32961586" />
-      <window_info anchor="right" id="Database" order="0" />
+      <window_info anchor="bottom" id="TODO" order="3" />
+      <window_info anchor="bottom" id="Debug" order="4" />
+      <window_info anchor="bottom" id="Find" order="5" weight="0.32961586" />
+      <window_info anchor="bottom" id="Run" order="6" />
+      <window_info anchor="bottom" id="Database Changes" order="7" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="right" id="Database" order="0" weight="0.15178572" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -575,13 +620,6 @@
     <entry file="das://a8a2810f-6ddd-4613-a954-7113e1ab97d5/schema/auto_kp/table/food_greases" />
     <entry file="das://a8a2810f-6ddd-4613-a954-7113e1ab97d5/schema/auto_kp/table/general_oils_hydraulic" />
     <entry file="das://a8a2810f-6ddd-4613-a954-7113e1ab97d5/schema/auto_kp/table/metalworking_specliqs" />
-    <entry file="file://$PROJECT_DIR$/auto_kp/auto_kp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="109" column="36" selection-start-line="109" selection-start-column="36" selection-end-line="109" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="dbDummy://dbtable:/a5e6ee37/a8a2810f-6ddd-4613-a954-7113e1ab97d5/auto_kp.tails" />
     <entry file="file://$PROJECT_DIR$/auto_kp/auto_kp_refresh.sql">
       <provider selected="true" editor-type-id="text-editor">
@@ -590,19 +628,61 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/auto_kp/pdo_auto_kp_connect.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/auto_kp/auto_kp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="301">
+          <caret line="111" column="36" lean-forward="true" selection-start-line="111" selection-start-column="36" selection-end-line="111" selection-end-column="36" />
+          <folding>
+            <element signature="n#style#0;n#input#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#2;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#3;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#1;n#tr#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/auto_kp/mysql_auto_kp.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3210">
-          <caret line="214" column="10" selection-start-line="214" selection-start-column="10" selection-end-line="214" selection-end-column="10" />
+        <state relative-caret-position="435">
+          <caret line="29" column="26" lean-forward="true" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
+          <folding>
+            <element signature="n#style#0;n#input#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#1;n#div#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/kp_yandex_general.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" selection-start-line="4" selection-end-line="302" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/auto_kp/auto_kp_give_html.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="379">
-          <caret line="173" column="191" selection-start-line="173" selection-start-column="191" selection-end-line="173" selection-end-column="191" />
+        <state relative-caret-position="664">
+          <caret line="578" column="5" lean-forward="true" selection-start-line="578" selection-start-column="5" selection-end-line="578" selection-end-column="5" />
           <folding>
             <element signature="n#style#0;n#p#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#b#0;n#td#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#p#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#table#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#th#0;n#!!top" expanded="true" />
@@ -610,13 +690,6 @@
             <element signature="n#style#0;n#td#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#p#0;n#!!top" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/auto_kp/pdo_auto_kp_connect.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
         </state>
       </provider>
     </entry>

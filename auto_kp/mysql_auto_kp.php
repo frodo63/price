@@ -26,7 +26,8 @@ echo"
 
 <div class='mail_body_parts' style='background-color: #F0F0F0; font-size: 18px; width: 40%'>
     <b><h1>Тело КП:</h1></b>
-    <label for='with_prices' style='font-size: 25px'>С ЦЕНАМИ</label><input type='checkbox' id='with_prices'><br><br>
+    <label for='with_prices' style='font-size: 25px'>С ЦЕНАМИ</label><input type='checkbox' id='with_prices'><br>
+    <label for='with_pics' style='font-size: 25px'>С КАРТИНКАМИ</label><input type='checkbox' id='with_pics'><br><br>
     
     <div>
         <span>Снабжение </span><input type='text' id='preferred_trade_group_input' size='30' value='промышленных' style='font-size: 20px;text-align: center'>

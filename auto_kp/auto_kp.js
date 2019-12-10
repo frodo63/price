@@ -56,7 +56,9 @@ $(document).ready(function() {
         var add_custom_trade_length = $('.add_custom_trade').length;
 
         var with_prices = 0;
-        if($('#with_prices').is(":checked")){var with_prices = 1}
+        if($('#with_prices').is(":checked")){with_prices = 1}
+        var with_pics = 0;
+        if($('#with_pics').is(":checked")){with_pics = 1}
 
         for(var i = 0; i < options_length; i++){
             //Сформировать массив запрашиваемых данных
@@ -106,7 +108,7 @@ $(document).ready(function() {
         $.ajax({
             url: 'auto_kp_give_html.php',
             method: 'POST',
-            data: {mail_array:mail_array, with_prices:with_prices},
+            data: {mail_array:mail_array, with_prices:with_prices, with_pics:with_pics},
             success: function(data){
                 $('#html_result').html(data);
             },
