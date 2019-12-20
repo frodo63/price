@@ -50,7 +50,7 @@ function in_multi_array($needle, $haystack, $strict = false) {
 
 if(isset($_POST['sync_file'])){
     $sync = $_POST['sync_file'];
-    $path = '/samba/allaccess/1111/sync_'.$sync.'.txt';
+    $path = 'E:/onecout/sync_'.$sync.'.txt';
 
     if (file_exists($path)) {
         echo "<br><span>В последний раз файл $sync был изменен: " . date('d.m.y H:i:s', filemtime($path))."</span>";
@@ -149,10 +149,12 @@ if(isset($_POST['sync_file'])){
                 foreach ($file_array as $row){
                     $temp_array = explode(';',$row);
                     foreach($temp_array as $row_tr){
+                        if(isset($row_tr[4])){
+                            $string = htmlentities($row_tr[4], null, 'utf-8');
+                            $content = str_replace("&nbsp;", "", $string);
+                            $row_tr[4] = html_entity_decode($content);
+                        }
 
-                        $string = htmlentities($row_tr[4], null, 'utf-8');
-                        $content = str_replace("&nbsp;", "", $string);
-                        $row_tr[4] = html_entity_decode($content);
                     }
 
                     //Проверяем, есть ли платежка уже
@@ -1159,10 +1161,10 @@ if(isset($_POST['synched_request'])){
             //Фaйл в массив
             switch($_POST['db']){
                 case 'ip':
-                    $path = '/samba/allaccess/1111/sync_ip_positions.txt';
+                    $path = 'E:/onecout/sync_ip_positions.txt';
                     break;
                 case 'ltk':
-                    $path = '/samba/allaccess/1111/sync_positions.txt';
+                    $path = 'E:/onecout/sync_positions.txt';
                     break;
             }
             $file = fopen($path,'r');
