@@ -695,8 +695,10 @@ if(isset($_POST['table'])){
                 if($row['onec_id']){$result .= "<td class='trade_onec_id'><span>" . $row['onec_id'] . "<span/></td>";
                 }elseif ($row['ip_uid']){$result .= "<td class='trade_onec_id'><span style='color: grey'>Болванка<span/></td>";}else{$result .= "<td class='trade_onec_id'><span style='color: blue'>Нет ни в одной базе, есть старые расценки.<span/></td>";}
 
-                $result .= "<td class='trade_synched'><span>" . $row['ip_uid'] . "<span/></td>
-                <td class = 'item_buttons'>
+                if(isset($row['ip_uid'])){
+                    $result .= "<td class='trade_synched'><span>" . $row['ip_uid'] . "<span/></td>";
+                }
+                $result .= "<td class = 'item_buttons'>
                 <input type='button' name =" . $row['nameid'] . " tradeid =" . $row['trades_id'] . " value='E' class='edit_options_trade'>
                 <input type='button' name =" . $row['nameid'] . " value='X' class='delete'></td></tr>";
             }

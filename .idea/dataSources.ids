@@ -332,12 +332,10 @@
         <mandatory>1</mandatory>
         <data-type>text</data-type>
       </column>
-      <column id="100" parent="11" name="viscosity">
-        <mandatory>1</mandatory>
-        <data-type>varchar(20)</data-type>
+      <column id="100" parent="11" name="working_temp">
+        <data-type>varchar(50)</data-type>
       </column>
       <column id="101" parent="11" name="package_price">
-        <mandatory>1</mandatory>
         <data-type>varchar(50)</data-type>
       </column>
       <key id="102" parent="11" name="PRIMARY">

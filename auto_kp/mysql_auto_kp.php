@@ -146,6 +146,7 @@ echo"
         <div>
             <br><input id='9_' class='select_group' type='checkbox'><b><label for='9_' style='margin-bottom: 0'>Для высоких температур</label></b><br>
             <input id='9_Lukoil' type='checkbox'><label for='9_Lukoil'>Лукойл</label><br>
+            <input id='9_Bechem' type='checkbox'><label for='9_Bechem'>Bechem</label><br>
         </div>
         <div>
             <br><input id='10_' class='select_group' type='checkbox'><b><label for='10_' style='margin-bottom: 0'>Для низких температур и высоких скоростей</label></b><br>
@@ -158,10 +159,12 @@ echo"
         <div>
             <br><input id='12_' class='select_group' type='checkbox'><b><label for='12_' style='margin-bottom: 0'>Силиконовые</label></b><br>
             <input id='12_Mobil' type='checkbox'><label for='12_Mobil'>Mobil</label><br>
+            <input id='12_Bechem' type='checkbox'><label for='12_Bechem'>Bechem</label><br>
         </div>
         <div>
             <br><input id='13_' class='select_group' type='checkbox'><b><label for='13_' style='margin-bottom: 0'>Для цепей</label></b><br>
             <input id='13_Mobil' type='checkbox'><label for='13_Mobil'>Mobil</label><br>
+            <input id='13_Bechem' type='checkbox'><label for='13_Bechem'>Bechem</label><br>
         </div>
         <div>
             <br><input id='14_' class='select_group' type='checkbox'><b><label for='14_' style='margin-bottom: 0'>Сборочные и монтажные смазки/пасты</label></b><br>

@@ -93,8 +93,8 @@ $(document).ready(function() {
 
 
                 custom_trades_line += '<tr>' +
-                    '<td style="width: 2%; border: 1px solid black; font-size: 20px; text-align: center">'+linenum+'</td><td style="border: 1px solid black; font-size: 20px; width: 45%; text-align: center">'+custom_name+'</td>';
-                custom_trades_line += '<td style="border: 1px solid black; font-size: 20px; width: 30%; text-align: center">'+custom_description+'</td>';
+                    '<td style="width: 2%; border: 1px solid black; font-size: 20px; text-align: center">'+linenum+'</td><td style="border: 1px solid black; font-size: 20px; width: 25%; text-align: center"><b>'+custom_name+'</b></td>';
+                custom_trades_line += '<td style="border: 1px solid black; font-size: 20px; width: 50%; text-align: center">'+custom_description+'</td>';
                 custom_trades_line +='<td style="border: 1px solid black; font-size: 20px; width: 10%; text-align: center">'+custom_packing+'</td>' +
                     '<td style="border: 1px solid black; font-size: 20px; width: 10%; text-align: center">'+custom_price+'</td>' +
                     '</tr>';

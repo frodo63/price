@@ -415,7 +415,7 @@ TkSuQmCC\" alt=\"img\" />";
             ),
             "12" => array(
                 "header" => "Смазки силиконовые",
-                "columns" => array('Наименование','Применение','Описание','Спецификации'),
+                "columns" => array('Наименование','Применение','Описание','Рабочий диапазон температур'),
                 "table" => "general_greases_silicone"
             ),
             "13" => array(
@@ -511,6 +511,7 @@ TkSuQmCC\" alt=\"img\" />";
                     || $table == 'food_greases'
                     || $table == 'food_oils'
                     || $table == 'food_specliqs'
+                    || $table == 'general_greases_silicone'
                 ){
                     $result.="<tr><td style='font-size: 20px; border: 1px solid black; text-align: center' colspan='6'>".$brand."</td></tr>";
                 }
@@ -550,6 +551,13 @@ TkSuQmCC\" alt=\"img\" />";
                         <td style='font-weight: bold; width: 15%; border: 1px solid black'>".$kp_entry['name']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['application']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['description']."</td>";
+                    }
+                    if($table == "general_greases_silicone"){
+                        $result.="<tr>
+                        <td style='font-weight: bold; width: 15%; border: 1px solid black'>".$kp_entry['name']."</td>
+                        <td style='border: 1px solid black'>".$kp_entry['application']."</td>
+                        <td style='border: 1px solid black'>".$kp_entry['description']."</td>
+                        <td style='border: 1px solid black'>".$kp_entry['working_temp']."</td>";
                     }
 
 
