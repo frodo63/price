@@ -25,9 +25,15 @@ echo"
 </div>
 
 <div class='mail_body_parts' style='background-color: #F0F0F0; font-size: 18px; width: 40%'>
+    <b><h1>ШАПКА КП:</h1></b>
+    <input type='checkbox' id='with_dealership'><label for='with_dealership' style='font-size: 25px'>Дилерство</label><br>
+    <input type='checkbox' id='with_thoughts'><label for='with_thoughts' style='font-size: 25px'>Умные мысли</label><br>
+    <input type='checkbox' id='with_custom_text'><label for='with_custom_text' style='font-size: 25px'>Свой текст (будет обернут в параграф)</label><br><textarea id='the_custom_text' style='margin: 0px; width: 100%; height: 150px;'></textarea><br><br>
+    <label for='with_whole_product_list' style='font-size: 25px'>Общий список продукции</label><input type='checkbox' id='with_whole_product_list'><br>
+    <label for='with_closing' style='font-size: 25px'>Заключение</label><input type='checkbox' id='with_closing'><br>
     <b><h1>Тело КП:</h1></b>
-    <label for='with_prices' style='font-size: 25px'>С ЦЕНАМИ</label><input type='checkbox' id='with_prices'><br>
-    <label for='with_pics' style='font-size: 25px'>С КАРТИНКАМИ</label><input type='checkbox' id='with_pics'><br><br>
+    <input type='checkbox' id='with_prices'><label for='with_prices' style='font-size: 25px'>С ЦЕНАМИ</label><br>
+    <input type='checkbox' id='with_pics'><label for='with_pics' style='font-size: 25px'>С КАРТИНКАМИ</label><br><br>
     
     <div>
         <span>Снабжение </span><input type='text' id='preferred_trade_group_input' size='30' value='промышленных' style='font-size: 20px;text-align: center'>
