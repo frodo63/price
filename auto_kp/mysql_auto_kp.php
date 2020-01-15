@@ -20,8 +20,7 @@ echo"
     <br>
     <input type='button' value='СКОПИРОВАТЬ' id='mail_copy' style='font-size: 30px'>
     <br><br>
-    <input type='button' value='УБРАТЬ ВСЕ ГАЛОЧКИ' id='deselect_all' style='font-size: 15px'>
-    
+    <input type='button' value='УБРАТЬ ВСЕ ГАЛОЧКИ' id='deselect_all' style='font-size: 15px'>    
 </div>
 
 <div class='mail_body_parts' style='background-color: #F0F0F0; font-size: 18px; width: 40%'>
@@ -218,8 +217,7 @@ echo"
       <h3 style='background-color: #FBBA00; font-weight: bold; text-align: center; color:#17460F; font-size:100%'>Ввести отдельный продукт</h3>
       <div style='position: relative' id='custom_trades'>
       
-      <input type='button' style='position: absolute; top: 5px; right: 5px' id='add_custom_trade' value='+'>
-      
+      <input type='button' style='position: absolute; top: 5px; right: 5px' id='add_custom_trade' value='+'>      
           
       </div>
   </div>";

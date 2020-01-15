@@ -48,7 +48,15 @@ $(document).ready(function() {
     /*ФОРМИРОВАНИЕ КП*///////////////////////////////////////////////////////////////////////////////////////
     $(document).off('click.mail_compose').on('click.mail_compose', '.mail_compose', function (event) {
 
-        var body_options = $('.mail_body_parts input:not(.select_group):not(#with_prices):not(.add_custom_trade input)[type="checkbox"]:checked, .mail_tail_parts input[type="radio"]:checked');
+        var body_options = $('' +
+            '.mail_body_parts input:not(.select_group):not(#with_prices):not(.add_custom_trade input)[type="checkbox"]:checked,' +
+            '.mail_body_parts input:not(.select_group):not(#with_pics),' +
+            '.mail_body_parts input:not(.select_group):not(#with_dealership),' +
+            '.mail_body_parts input:not(.select_group):not(#with_custom_text),' +
+            '.mail_body_parts input:not(.select_group):not(#with_whole_product_list),' +
+            '.mail_body_parts input:not(.select_group):not(#with_closing),' +
+            '.mail_body_parts input:not(.select_group):not(#with_thoughts),' +
+            ' .mail_tail_parts input[type="radio"]:checked');
         var mail_array = [];
         var options_length = body_options.length;
         var preferred_group = $('#preferred_trade_group_input').val();
@@ -59,6 +67,16 @@ $(document).ready(function() {
         if($('#with_prices').is(":checked")){with_prices = 1}
         var with_pics = 0;
         if($('#with_pics').is(":checked")){with_pics = 1}
+        var with_dealership = 0;
+        if($('#with_dealership').is(":checked")){with_dealership = 1}
+        var with_thoughts = 0;
+        if($('#with_thoughts').is(":checked")){with_thoughts = 1}
+        var with_custom_text = 0;
+        if($('#with_custom_text').is(":checked")){with_custom_text = 1}
+        var with_whole_product_list = 0;
+        if($('#with_whole_product_list').is(":checked")){with_whole_product_list = 1}
+        var with_closing = 0;
+        if($('#with_closing').is(":checked")){with_closing = 1}
 
         for(var i = 0; i < options_length; i++){
             //Сформировать массив запрашиваемых данных
@@ -91,7 +109,6 @@ $(document).ready(function() {
 
                 console.log(typeof(custom_description));
 
-
                 custom_trades_line += '<tr>' +
                     '<td style="width: 2%; border: 1px solid black; font-size: 20px; text-align: center">'+linenum+'</td><td style="border: 1px solid black; font-size: 20px; width: 25%; text-align: center"><b>'+custom_name+'</b></td>';
                 custom_trades_line += '<td style="border: 1px solid black; font-size: 20px; width: 50%; text-align: center">'+custom_description+'</td>';
@@ -108,7 +125,16 @@ $(document).ready(function() {
         $.ajax({
             url: 'auto_kp_give_html.php',
             method: 'POST',
-            data: {mail_array:mail_array, with_prices:with_prices, with_pics:with_pics},
+            data: {
+                mail_array:mail_array,
+                with_prices:with_prices,
+                with_pics:with_pics,
+                with_dealership:with_dealership,
+                with_thoughts:with_thoughts,
+                with_custom_text:with_custom_text,
+                with_whole_product_list:with_whole_product_list,
+                with_closing:with_closing
+            },
             success: function(data){
                 $('#html_result').html(data);
             },
@@ -127,8 +153,6 @@ $(document).ready(function() {
         if($(this).is(":checked")){
             $('input[id^='+id+']').prop('checked', true);
         }
-
-
         if($(this).is(":not(:checked)")){
             $('input[id^='+id+']').prop('checked', false);
         }
@@ -143,46 +167,3 @@ $(document).off('click.mail_copy').on('click.mail_copy', '#mail_copy', function 
     document.execCommand('copy');
     $('#info_span').text('Скопировано');
 });
-/*
- CREATE TABLE `food_greases` (
- `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
- `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
- `brand` enum('Bechem','Total','Rocol','Matrix') COLLATE utf8_unicode_ci NOT NULL,
- `application` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
- `description` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
- `working_temp` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
- `packing_price` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
- PRIMARY KEY (`id`)
- ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
-
- CREATE TABLE `hydraulics` (
- `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
- `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
- `brand` enum('Bechem','Total','Shell','Mobil','Castrol','Agip','Fuchs') COLLATE utf8_unicode_ci NOT NULL,
- `application` text COLLATE utf8_unicode_ci NOT NULL,
- `description` text COLLATE utf8_unicode_ci NOT NULL,
- `viscosity` tinyint(3) NOT NULL,
- `package_price` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
- PRIMARY KEY (`id`)
- ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
-
- CREATE TABLE `soges` (
- `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
- `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
- `brand` enum('Bechem','Mol') COLLATE utf8_unicode_ci NOT NULL,
- `application` text COLLATE utf8_unicode_ci NOT NULL,
- `operations` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
- `metal_types` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
- `concentration` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
- `packing_price` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
- PRIMARY KEY (`id`)
- ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
-
- CREATE TABLE `tails` (
- `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
- `name` enum('Dima','Marina','Sergey','Timur') COLLATE utf8_unicode_ci NOT NULL,
- `html` text COLLATE utf8_unicode_ci NOT NULL,
- PRIMARY KEY (`id`)
- ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
-
-*/

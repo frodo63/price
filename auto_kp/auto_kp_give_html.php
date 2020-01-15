@@ -1,7 +1,15 @@
 <?php
 include_once 'pdo_auto_kp_connect.php';
 
-if(isset($_POST['mail_array']) && isset($_POST['with_prices']) && isset($_POST['with_pics'])){
+if(isset($_POST['mail_array']) 
+    && isset($_POST['with_prices'])
+    && isset($_POST['with_pics'])
+    && isset($_POST['with_dealership'])
+    && isset($_POST['with_thoughts'])
+    && isset($_POST['with_custom_text'])
+    && isset($_POST['with_whole_product_list'])
+    && isset($_POST['with_closing'])
+){
 
     //Убрать потом
     //$result.=print_r($_POST['mail_array']);
@@ -13,6 +21,11 @@ if(isset($_POST['mail_array']) && isset($_POST['with_prices']) && isset($_POST['
     $result.="<table style='width: 100%;'><tr>";
 
     $with_pics = $_POST['with_pics'];
+    $with_dealership = $_POST['with_dealership'];
+    $with_thoughts = $_POST['with_thoughts'];
+    $with_custom_text = $_POST['with_custom_text'];
+    $with_whole_product_list = $_POST['with_whole_product_list'];
+    $with_closing = $_POST['with_closing'];
 
     $pic_first = "<img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAS4AAACCCAYAAAD46SViAAAACXBIWXMAAAsTAAALEwEAmpwYAAAg
 AElEQVR4Ae2dCbwcRbX/52YhCfuahEBCLqIgq7IpGAV5Loigz+df8a+AIK74V1yf4ooK4kMUlCfi
@@ -315,28 +328,30 @@ vpjtnimf3XNBSM1Trcw4t0yEVUjvG+d2CnfyC37Byc9pSaUESgkMhQT+P/1WZ4y3oKdxAAAAAElF
 TkSuQmCC\" alt=\"img\" />";
 
     $result.=($with_pics == 1)? "<td>".$pic_first."</td>" : "<td style='width: 30%'><b style='font-size: 20px'>ООО \"Лубритэк\" </b></td>";
+    $result.=($with_dealership == 1)? "<td style='width: 70%'>- официальный дилер смазочных материалов
+        <b><span style='font-size: 22px; font-family: Arial;font-style: italic; font-weight: 900'> BECHEM </span></b>
+        в Самарской области.<br></span><span>Мы поставляем продукцию широкого спектра на промышленные предприятия, в частности: промышленные масла, смазки, технические жидкости.</span>
+    </td>
+</tr></table><br><br>" : "<td style='width: 30%'></td>";
+
 
     $result.="<td style='width: 70%'>- официальный дилер смазочных материалов
         <b><span style='font-size: 22px; font-family: Arial;font-style: italic; font-weight: 900'> BECHEM </span></b>
         в Самарской области.<br></span><span>Мы поставляем продукцию широкого спектра на промышленные предприятия, в частности: промышленные масла, смазки, технические жидкости.</span>
     </td>
-</tr></table>
+</tr></table><br><br>";
 
-<br><br>
+    $result.=($with_thoughts == 1)? "
 <table style='width:100%'><tr><td style='text-align: right'>
-
     <span><i>\"Умеренная ценовая политика,</i></span><br>
     <span><i>беспрекословное выполнение договорных обязательств,</i></span><br>
     <span><i>наличие пополняемого тёплого склада,</i></span><br>
     <span><i>стабильные сроки поставки</i></span><br>
     <span><i>делают работу с нами комфортной.\"</i></span><br>
     <br>
-    <span><i>- С.В. Улитов.</i></span>
-</td>
-</tr></table>
+    <span><i>- С.В. Улитов.</i></span></td></tr></table>" : "";
 
-<p id='preferred_trade_group' style='font-size: 16px'></p>
-
+    $result.="<p id='preferred_trade_group' style='font-size: 16px'></p>
 <div id='custom_trades_table'></div>";
 
     try{
