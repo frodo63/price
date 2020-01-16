@@ -25,6 +25,14 @@ $(document).ready(function() {
             '</div>');
     });
 
+    //Показ пустой текстарии для своего текста в КП
+    $(document).off('change.custom_text').on('change.custom_text', '#with_custom_text', function (event) {
+        $('#the_custom_text').slideUp();
+        if($('#with_custom_text').is(":checked")) {
+            $('#the_custom_text').slideDown();
+        }
+    });
+
     //Удаление  нынешнего товара в кастомной КП
     $(document).off('click.delete_custom_trade').on('click.delete_custom_trade', '#delete_current_trade', function (event) {
         $(event.target).parent('.add_custom_trade').remove();
@@ -48,15 +56,9 @@ $(document).ready(function() {
     /*ФОРМИРОВАНИЕ КП*///////////////////////////////////////////////////////////////////////////////////////
     $(document).off('click.mail_compose').on('click.mail_compose', '.mail_compose', function (event) {
 
-        var body_options = $('' +
-            '.mail_body_parts input:not(.select_group):not(#with_prices):not(.add_custom_trade input)[type="checkbox"]:checked,' +
-            '.mail_body_parts input:not(.select_group):not(#with_pics),' +
-            '.mail_body_parts input:not(.select_group):not(#with_dealership),' +
-            '.mail_body_parts input:not(.select_group):not(#with_custom_text),' +
-            '.mail_body_parts input:not(.select_group):not(#with_whole_product_list),' +
-            '.mail_body_parts input:not(.select_group):not(#with_closing),' +
-            '.mail_body_parts input:not(.select_group):not(#with_thoughts),' +
-            ' .mail_tail_parts input[type="radio"]:checked');
+        //В массиве body_options - все чекбоксы, относящиеся к содержанию кп, исключая чекбоксы, включающие определенные асти кп (Дилерство, Умные мысли, Свой текст, общий список, заключение)
+        var body_options = $('.mail_body_parts input:not(".select_group"):checked, .mail_tail_parts input[type="radio"]:checked');
+        console.log(body_options);
         var mail_array = [];
         var options_length = body_options.length;
         var preferred_group = $('#preferred_trade_group_input').val();
@@ -72,7 +74,11 @@ $(document).ready(function() {
         var with_thoughts = 0;
         if($('#with_thoughts').is(":checked")){with_thoughts = 1}
         var with_custom_text = 0;
-        if($('#with_custom_text').is(":checked")){with_custom_text = 1}
+        var custom_text = 0;
+        if($('#with_custom_text').is(":checked")){
+            with_custom_text = 1;
+            custom_text = $('#the_custom_text').val();
+        }
         var with_whole_product_list = 0;
         if($('#with_whole_product_list').is(":checked")){with_whole_product_list = 1}
         var with_closing = 0;
@@ -132,6 +138,7 @@ $(document).ready(function() {
                 with_dealership:with_dealership,
                 with_thoughts:with_thoughts,
                 with_custom_text:with_custom_text,
+                custom_text:custom_text,
                 with_whole_product_list:with_whole_product_list,
                 with_closing:with_closing
             },

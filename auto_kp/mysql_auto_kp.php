@@ -23,20 +23,20 @@ echo"
     <input type='button' value='УБРАТЬ ВСЕ ГАЛОЧКИ' id='deselect_all' style='font-size: 15px'>    
 </div>
 
-<div class='mail_body_parts' style='background-color: #F0F0F0; font-size: 18px; width: 40%'>
-    <b><h1>ШАПКА КП:</h1></b>
+<b><h1>ШАПКА КП:</h1></b>
     <input type='checkbox' id='with_dealership'><label for='with_dealership' style='font-size: 25px'>Дилерство</label><br>
     <input type='checkbox' id='with_thoughts'><label for='with_thoughts' style='font-size: 25px'>Умные мысли</label><br>
-    <input type='checkbox' id='with_custom_text'><label for='with_custom_text' style='font-size: 25px'>Свой текст (будет обернут в параграф)</label><br><textarea id='the_custom_text' style='margin: 0px; width: 100%; height: 150px;'></textarea><br><br>
+    <input type='checkbox' id='with_custom_text'><label for='with_custom_text' style='font-size: 25px'>Свой текст (будет обернут в параграф)</label><textarea id='the_custom_text' style='margin: 0px; width: 40%; height: 150px; display: none'></textarea><br>
     <input type='checkbox' id='with_whole_product_list'><label for='with_whole_product_list' style='font-size: 25px'>Общий список продукции</label><br>
     <input type='checkbox' id='with_closing'><label for='with_closing' style='font-size: 25px'>Заключение</label><br>
     <b><h1>Тело КП:</h1></b>
     <input type='checkbox' id='with_prices'><label for='with_prices' style='font-size: 25px'>С ЦЕНАМИ</label><br>
     <input type='checkbox' id='with_pics'><label for='with_pics' style='font-size: 25px'>С КАРТИНКАМИ</label><br><br>
+
+<div class='mail_body_parts' style='background-color: #F0F0F0; font-size: 18px; width: 40%'>    
     
     <div>
-        <span>Снабжение </span><input type='text' id='preferred_trade_group_input' size='30' value='промышленных' style='font-size: 20px;text-align: center'>
-        
+        <span>Снабжение </span><input type='text' id='preferred_trade_group_input' size='30' value='промышленных' style='font-size: 20px;text-align: center'>        
         <select id='firm_type' style='font-size: 20px'>
           <option>предприятий</option>
           <option>производств</option>
