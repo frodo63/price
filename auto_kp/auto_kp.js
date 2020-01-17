@@ -9,6 +9,8 @@ $(document).ready(function() {
         });
     } );
 
+
+
     //Добавление нового товара в кастомной КП
     $(document).off('click.add_custom_trade').on('click.add_custom_trade', '#add_custom_trade', function (event) {
         $('#custom_trades').append('' +
@@ -33,6 +35,13 @@ $(document).ready(function() {
         }
     });
 
+    $(document).off('change.preferred').on('change.preferred', '#with_preferred_firm', function (event) {
+        $('#preferred').slideUp();
+        if($('#with_preferred_firm').is(":checked")) {
+            $('#preferred').slideDown();
+        }
+    });
+
     //Удаление  нынешнего товара в кастомной КП
     $(document).off('click.delete_custom_trade').on('click.delete_custom_trade', '#delete_current_trade', function (event) {
         $(event.target).parent('.add_custom_trade').remove();
@@ -45,20 +54,27 @@ $(document).ready(function() {
         $(event.target).parent('.add_custom_trade').css({'background-color': 'white'});
     });
 
-
     //ОТменить все галочки
     $(document).off('click.deselect_all').on('click.deselect_all', '#deselect_all', function (event) {
         $('input[type="checkbox"], input[type="radio"]').prop('checked', false);
     });
 
+    $(document).off('change.select_group').on('change.select_group', '.select_group', function (event) {
+        var id = $(this).attr('id');
+        console.log('changed '+id);
+        if($(this).is(":checked")){
+            $('input[id^='+id+']').prop('checked', true);
+        }
+        if($(this).is(":not(:checked)")){
+            $('input[id^='+id+']').prop('checked', false);
+        }
+    })
 
 
-    /*ФОРМИРОВАНИЕ КП*///////////////////////////////////////////////////////////////////////////////////////
-    $(document).off('click.mail_compose').on('click.mail_compose', '.mail_compose', function (event) {
 
+    function GiveKP() {
         //В массиве body_options - все чекбоксы, относящиеся к содержанию кп, исключая чекбоксы, включающие определенные асти кп (Дилерство, Умные мысли, Свой текст, общий список, заключение)
         var body_options = $('.mail_body_parts input:not(".select_group"):checked, .mail_tail_parts input[type="radio"]:checked');
-        console.log(body_options);
         var mail_array = [];
         var options_length = body_options.length;
         var preferred_group = $('#preferred_trade_group_input').val();
@@ -73,6 +89,8 @@ $(document).ready(function() {
         if($('#with_dealership').is(":checked")){with_dealership = 1}
         var with_thoughts = 0;
         if($('#with_thoughts').is(":checked")){with_thoughts = 1}
+        var with_preferred_firm = 0;
+        if($('#with_preferred_firm').is(":checked")){with_preferred_firm = 1}
         var with_custom_text = 0;
         var custom_text = 0;
         if($('#with_custom_text').is(":checked")){
@@ -90,16 +108,16 @@ $(document).ready(function() {
         }
 
         console.log(add_custom_trade_length);
+        console.log(mail_array);
 
         var custom_name = "";
         var custom_description = "";
         var custom_packing = "";
         var custom_price = "";
         var custom_trades_line = "";
-        console.log(custom_trades_line);
-
         if(add_custom_trade_length > 0){
-            custom_trades_line = '<br><br><hr><h2>Коммерческое предложение</h2><table style="border-collapse: collapse; width: 95%">';
+            //custom_trades_line = '<br><br><hr><h2>Коммерческое предложение</h2><table style="border-collapse: collapse; width: 95%">';
+            custom_trades_line = '<br><table style="border-collapse: collapse; width: 95%">';
             console.log(custom_trades_line);
             for(var i = 0; i < add_custom_trade_length; i++){
 
@@ -137,6 +155,9 @@ $(document).ready(function() {
                 with_pics:with_pics,
                 with_dealership:with_dealership,
                 with_thoughts:with_thoughts,
+                with_preferred_firm:with_preferred_firm,
+                preferred_group:preferred_group,
+                firm_type:firm_type,
                 with_custom_text:with_custom_text,
                 custom_text:custom_text,
                 with_whole_product_list:with_whole_product_list,
@@ -146,25 +167,21 @@ $(document).ready(function() {
                 $('#html_result').html(data);
             },
             complete: function () {
-                $('#preferred_trade_group').text("Снабжение "+preferred_group+" "+firm_type+" - одно из ключевых направлений нашей деятельности.");
+                console.log("Все выполнилось");
                 $('#custom_trades_table').append(custom_trades_line);
                 $('#html_copy').text($('#html_result').html());
-
             }
         });
+    }
+
+    /*ФОРМИРОВАНИЕ КП*///////////////////////////////////////////////////////////////////////////////////////
+    $(document).off('click.mail_compose').on('click.mail_compose', '.mail_compose', function (event) {
+        GiveKP();
     });
 
-    $(document).off('change.select_group').on('change.select_group', '.select_group', function (event) {
-        var id = $(this).attr('id');
-        console.log('changed '+id);
-        if($(this).is(":checked")){
-            $('input[id^='+id+']').prop('checked', true);
-        }
-        if($(this).is(":not(:checked)")){
-            $('input[id^='+id+']').prop('checked', false);
-        }
-    })
-
+    $(document).off('change.checkbox_givekp').on('change.checkbox_givekp', '.mail_body_parts input[type=checkbox], #with_pics, #with_prices, #with_dealership, #with_thoughts, #with_preferred_firm, #preferred_trade_group_input, #firm_type, #with_custom_text, #the_custom_text, #with_whole_product_list, #with_closing, #20_dima, #20_marina, #20_sergey, #20_timur, #deselect_all', function (event) {
+        GiveKP();
+    });
 });
 
 

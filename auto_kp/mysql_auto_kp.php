@@ -12,39 +12,28 @@ echo"
 
 echo"
 <h1>Конструктор КП</h1>
-<div class='custom_greeting' style='width: 40%'>
-<h2>HTML Письма:</h2>
-    <textarea id='html_copy' rows='10' cols='45' name='text'></textarea>
-    <br>
-    <span id='info_span' style='color: green'></span>
-    <br>
-    <input type='button' value='СКОПИРОВАТЬ' id='mail_copy' style='font-size: 30px'>
-    <br><br>
-    <input type='button' value='УБРАТЬ ВСЕ ГАЛОЧКИ' id='deselect_all' style='font-size: 15px'>    
-</div>
 
 <b><h1>ШАПКА КП:</h1></b>
+    <input type='checkbox' id='with_pics'><label for='with_pics' style='font-size: 25px'>С картинками</label><br>
     <input type='checkbox' id='with_dealership'><label for='with_dealership' style='font-size: 25px'>Дилерство</label><br>
     <input type='checkbox' id='with_thoughts'><label for='with_thoughts' style='font-size: 25px'>Умные мысли</label><br>
-    <input type='checkbox' id='with_custom_text'><label for='with_custom_text' style='font-size: 25px'>Свой текст (будет обернут в параграф)</label><textarea id='the_custom_text' style='margin: 0px; width: 40%; height: 150px; display: none'></textarea><br>
-    <input type='checkbox' id='with_whole_product_list'><label for='with_whole_product_list' style='font-size: 25px'>Общий список продукции</label><br>
-    <input type='checkbox' id='with_closing'><label for='with_closing' style='font-size: 25px'>Заключение</label><br>
-    <b><h1>Тело КП:</h1></b>
-    <input type='checkbox' id='with_prices'><label for='with_prices' style='font-size: 25px'>С ЦЕНАМИ</label><br>
-    <input type='checkbox' id='with_pics'><label for='with_pics' style='font-size: 25px'>С КАРТИНКАМИ</label><br><br>
-
-<div class='mail_body_parts' style='background-color: #F0F0F0; font-size: 18px; width: 40%'>    
-    
-    <div>
-        <span>Снабжение </span><input type='text' id='preferred_trade_group_input' size='30' value='промышленных' style='font-size: 20px;text-align: center'>        
+    <input type='checkbox' id='with_preferred_firm'><label for='with_preferred_firm' style='font-size: 25px'>Тип предприятия клиента</label><br>
+    <div id='preferred' style='display:none; width: 40%'>
+        <span style='font-size:20px;'>Снабжение </span><input type='text' id='preferred_trade_group_input' size='30' value='промышленных' style='font-size: 20px;text-align: center'>        
         <select id='firm_type' style='font-size: 20px'>
           <option>предприятий</option>
           <option>производств</option>
         </select>
         
-        <span>- одно из ключевых направлений нашей деятельности.</span><br>
+        <span style='font-size:20px;'>- одно из ключевых направлений нашей деятельности.</span><br>
     </div>
-    
+    <input type='checkbox' id='with_custom_text'><label for='with_custom_text' style='font-size: 25px'>Свой текст (будет обернут в параграф)</label><br><textarea id='the_custom_text' style='margin: 0px; width: 40%; height: 150px; display: none'></textarea><br>
+    <input type='checkbox' id='with_whole_product_list'><label for='with_whole_product_list' style='font-size: 25px'>Общий список продукции</label><br>
+    <input type='checkbox' id='with_closing'><label for='with_closing' style='font-size: 25px'>Заключение</label><br>
+    <b><h1>Тело КП:</h1></b>
+    <input type='checkbox' id='with_prices'><label for='with_prices' style='font-size: 25px'>С ЦЕНАМИ</label><br>
+
+<div class='mail_body_parts' style='background-color: #F0F0F0; font-size: 18px; width: 40%'>    
     <div>
     
   <div id='accordion'>
@@ -234,13 +223,20 @@ echo"
     <label for='20_sergey'>Сергей</label><input id='20_sergey' type='radio' name='9'><br>
     <label for='20_timur'>Тимур</label><input id='20_timur' type='radio' name='9'><br>
     <br><br>
-    <input type='button' value='СФОРМИРОВАТЬ' class='mail_compose' style='font-size: 30px'>
-    
+    <input type='button' value='СФОРМИРОВАТЬ' class='mail_compose' style='font-size: 30px'>    
 </div>
 <br>
 
-
-
+<div class='custom_greeting' style='width: 40%'>
+<h2>HTML Письма:</h2>
+    <textarea id='html_copy' rows='12' cols='90' name='text'></textarea>
+    <br>
+    <span id='info_span' style='color: green'></span>
+    <br>
+    <input type='button' value='СКОПИРОВАТЬ' id='mail_copy' style='font-size: 30px'>
+    <br><br>
+    <input type='button' value='УБРАТЬ ВСЕ ГАЛОЧКИ' id='deselect_all' style='font-size: 15px'>    
+</div>
 
 <div id='html_result' style='width: 55%; position: absolute; top: 0; right: 0;'></div>
 ";

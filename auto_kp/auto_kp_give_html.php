@@ -7,33 +7,50 @@ if(isset($_POST['mail_array'])
     && isset($_POST['with_pics'])
     && isset($_POST['with_dealership'])
     && isset($_POST['with_thoughts'])
+    && isset($_POST['with_preferred_firm'])
     && isset($_POST['with_custom_text'])
     && isset($_POST['with_whole_product_list'])
     && isset($_POST['with_closing'])
 ){
-
-    //Убрать потом
-    //$result.=print_r($_POST['mail_array']);
-
+    try{
     $result="";
     $signature="";
     $mail_array = array();
-    $result.="<p style='background-color: #FBBA00; font-weight: bold; text-align: center; color:#17460F; font-size:140%'>Здравствуйте!</p>";
-    $result.="<table style='width: 100%;'><tr>";
+
+    //Сортируем массив
+    if(count($_POST['mail_array']) > 0){
+        foreach($_POST['mail_array'] as $res) {
+            $pos = strpos($res, '_');
+            $table = substr($res, 0, $pos);
+            $brand_name = substr($res, $pos+1);
+            if(is_array($mail_array)){
+                $mail_array[$table][]=$brand_name;
+            }else{
+                $mail_array[$table] = array();
+                $mail_array[$table][]=$brand_name;
+            }
+        }
+    }
+
 
     $with_pics = $_POST['with_pics'];
     $with_dealership = $_POST['with_dealership'];
     $with_thoughts = $_POST['with_thoughts'];
+    $with_preferred_firm = $_POST['with_preferred_firm'];
+    $preferred_group = $_POST['preferred_group'];
+    $firm_type = $_POST['firm_type'];
     $with_custom_text = $_POST['with_custom_text'];
     $custom_text = $_POST['custom_text'];
     $with_whole_product_list = $_POST['with_whole_product_list'];
     $with_closing = $_POST['with_closing'];
-    
-    $result.=($with_pics == 1)? "<td>".$pic_first."</td>" : "<td style='width: 30%'><b style='font-size: 20px'>ООО \"Лубритэк\" </b></td>";
-    $result.=($with_dealership == 1)? "<td style='width: 70%'>- официальный дилер смазочных материалов
+
+    $result.="<p style='background-color: #FBBA00; font-weight: bold; text-align: center; color:#17460F; font-size:140%'>Здравствуйте!</p>";
+    $result.="<table style='width: 100%;'>";
+
+    $result.=($with_dealership == 1)? "<tr>".(($with_pics == 1)? "<td>".$pic_first."</td>" : "<td style='width: 30%'><b style='font-size: 20px'>ООО \"Лубритэк\" </b></td>")."<td style='width: 70%'>- официальный дилер смазочных материалов
         <b><span style='font-size: 22px; font-family: Arial;font-style: italic; font-weight: 900'> BECHEM </span></b>
         в Самарской области.<br></span><span>Мы поставляем продукцию широкого спектра на промышленные предприятия, в частности: промышленные масла, смазки, технические жидкости.</span>
-    </td></tr></table><br><br>" : "<td style='width: 30%'></td>";
+    </td></tr></table><br><br>" : "<tr><td style='width: 100%'></td></tr></table>";
 
     $result.=($with_thoughts == 1)? "
 <table style='width:100%'><tr><td style='text-align: right'>
@@ -45,28 +62,12 @@ if(isset($_POST['mail_array'])
     <br>
     <span><i>- С.В. Улитов.</i></span></td></tr></table>" : "";
 
-    $result.=($with_custom_text == 1)? "<p>".$custom_text."</p>" : "";
+    $result.=($with_preferred_firm == 1)? "Снабжение " .$preferred_group." ".$firm_type. " - одно из ключевых направлений нашей деятельности." : "";
 
-    $result.="<p id='preferred_trade_group' style='font-size: 16px'></p>
+    $result.=($with_custom_text == 1)? "<p id='custom_text' style='font-size: 25px; background-color: #F0F0F0'>".$custom_text."</p>" : "";
+
+    $result.="<p id='preferred_trade_group' style='font-size: 20px'></p>
 <div id='custom_trades_table'></div>";
-
-    try{
-        //Сортируем массив
-        foreach($_POST['mail_array'] as $res) {
-            $pos = strpos($res, '_');
-            $table = substr($res, 0, $pos);
-            $brand_name = substr($res, $pos+1);
-
-            if(is_array($mail_array)){
-                $mail_array[$table][]=$brand_name;
-            }else{
-                $mail_array[$table] = array();
-                $mail_array[$table][]=$brand_name;
-            }
-        }
-
-        //Убрать потом
-        //$result.=print_r($mail_array);
 
         $big_kp_array=array(
             "1" => array(
@@ -178,135 +179,128 @@ if(isset($_POST['mail_array'])
             $result .="<p>Цены указаны с НДС (20%)</p>";
         }
 
+        //Если массив с товарами из базы пустой - рисуем просто пустое место - под вопросом, не работает
+        if(count($mail_array)==0){
+            $result .="";
+        }else{
 
-        foreach($mail_array as $key=>$val) {
+            foreach($mail_array as $key=>$val) {
+                foreach ($big_kp_array as $bkp_key => $bkp_value){
+                    if ($key == $bkp_key){
 
-            foreach ($big_kp_array as $bkp_key => $bkp_value){
-                if ($key == $bkp_key){
+                        if(isset($bkp_value['header'])){
+                            $result.="<p style='background-color: #FBBA00; font-weight: bold; text-align: center; color:#17460F; font-size:140%'>".$bkp_value['header']."</p>";
+                        }
 
-                    if(isset($bkp_value['header'])){
-                        $result.="<p style='background-color: #FBBA00; font-weight: bold; text-align: center; color:#17460F; font-size:140%'>".$bkp_value['header']."</p>";
+                        //$columns = array();
+                        $columns = (!empty($bkp_value['columns'])) ? $bkp_value['columns'] : "";
+                        //Если есть заявленная переменная - добавляем в массив колонок ячейку с фасовкой/ценой
+                        if($_POST['with_prices'] == 1){
+                            $columns[]='Фасовка/Цена';
+                        }
+                        $table=$bkp_value['table'];
+                    }
+                }
+
+                //РИСУЕМ ШАПКУ ТАБЛИЦЫ
+                if(isset($columns) && $table != 'tails' && $table != 'express_kp'){
+                    $result.="<table style='border-collapse: collapse'><thead><tr>";
+                    foreach ($columns as $column){
+                        $result.="<th style='border: 1px solid black'>".$column."</th>";
+                    }
+                    $result.="</tr></thead><tbody>";
+                    unset($columns);
+                }
+
+                $brand_table = ($table == "tails" || $table == "express_kp") ? "name" : "brand";
+                $query=$pdo->prepare("SELECT * FROM $table WHERE $brand_table = ?");
+
+                foreach ($val as $brand){
+
+                    $query->execute(array($brand));
+                    $query_fetched = $query->fetchAll(PDO::FETCH_ASSOC);
+
+                    if ($table == 'hydraulics'
+                        || $table == 'metalworking_soges'
+                        || $table == 'metalworking_specliqs'
+                        || $table == 'food_greases'
+                        || $table == 'food_oils'
+                        || $table == 'food_specliqs'
+                        || $table == 'general_greases_silicone'
+                    ){
+                        $result.="<tr><td style='font-size: 20px; border: 1px solid black; text-align: center' colspan='6'>".$brand."</td></tr>";
                     }
 
-
-                    $columns = (!empty($bkp_value['columns'])) ? $bkp_value['columns'] : "";
-                    //Если есть заявленная переменная - добавляем в массив колонок ячейку с фасовкой/ценой
-                    if($_POST['with_prices'] == 1){
-                        $columns[]='Фасовка/Цена';
-                    }
-                    $table=$bkp_value['table'];
-                }
-            }
-
-            //РИСУЕМ ШАПКУ
-            if(isset($columns) && $table != 'tails' && $table != 'express_kp'){
-                $result.="<table style='border-collapse: collapse'><thead><tr>";
-                foreach ($columns as $column){
-                    $result.="<th style='border: 1px solid black'>".$column."</th>";
-                }
-                $result.="</tr></thead><tbody>";
-                unset($columns);
-            }
-
-            $brand_table = ($table == "tails" || $table == "express_kp") ? "name" : "brand";
-            $query=$pdo->prepare("SELECT * FROM $table WHERE $brand_table = ?");
-
-            foreach ($val as $brand){
-
-                $query->execute(array($brand));
-                $query_fetched = $query->fetchAll(PDO::FETCH_ASSOC);
-
-                if ($table == 'hydraulics'
-                    || $table == 'metalworking_soges'
-                    || $table == 'metalworking_specliqs'
-                    || $table == 'food_greases'
-                    || $table == 'food_oils'
-                    || $table == 'food_specliqs'
-                    || $table == 'general_greases_silicone'
-                ){
-                    $result.="<tr><td style='font-size: 20px; border: 1px solid black; text-align: center' colspan='6'>".$brand."</td></tr>";
-                }
-
-                foreach($query_fetched as $kp_entry){
-                    if($table == "general_oils_hydraulic"){
-                        $result.="<tr>
+                    foreach($query_fetched as $kp_entry){
+                        if($table == "general_oils_hydraulic"){
+                            $result.="<tr>
                         <td style='font-weight: bold; width: 15%; border: 1px solid black'>".$kp_entry['name']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['application']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['description']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['viscosity']."</td>";
-                    }if($table == "metalworking_specliqs"){
-                        $result.="<tr>
+                        }if($table == "metalworking_specliqs"){
+                            $result.="<tr>
                         <td style='font-weight: bold; width: 15%; border: 1px solid black'>".$kp_entry['name']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['application']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['description']."</td>
                         <td style='width: 8%; border: 1px solid black'>".$kp_entry['package_price']."</td>";
-                    }
-                    if($table == "metalworking_soges"){
-                        $result.="
-                        <tr>
+                        }
+                        if($table == "metalworking_soges"){
+                            $result.="<tr>
                         <td style='font-weight: bold; width: 15%; border: 1px solid black'>".$kp_entry['name']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['description']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['operations']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['metal_types']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['concentration']."</td>";
-                    }
-                    if($table == "food_greases" || $table == "food_oils"){
-                        $result.="<tr>
+                        }
+                        if($table == "food_greases" || $table == "food_oils"){
+                            $result.="<tr>
                         <td style='font-weight: bold; width: 15%; border: 1px solid black'>".$kp_entry['name']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['application']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['description']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['working_temp']."</td>";
-                    }
-                    if($table == "food_specliqs"){
-                        $result.="<tr>
+                        }
+                        if($table == "food_specliqs"){
+                            $result.="<tr>
                         <td style='font-weight: bold; width: 15%; border: 1px solid black'>".$kp_entry['name']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['application']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['description']."</td>";
-                    }
-                    if($table == "general_greases_silicone"){
-                        $result.="<tr>
+                        }
+                        if($table == "general_greases_silicone"){
+                            $result.="<tr>
                         <td style='font-weight: bold; width: 15%; border: 1px solid black'>".$kp_entry['name']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['application']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['description']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['working_temp']."</td>";
-                    }
-
-
-                    if($_POST['with_prices'] == 1){
-                        if(isset($kp_entry['packing_price'])){
-                            $result.="<td style='width: 8%; border: 1px solid black'>".$kp_entry['packing_price']."</td></tr>";
                         }
-                    }else{
-                        $result.="</tr>";
-                    };
 
-                    if($table == "express_kp"){
-                        $result.="
+                        if($_POST['with_prices'] == 1){
+                            if(isset($kp_entry['packing_price'])){
+                                $result.="<td style='width: 8%; border: 1px solid black'>".$kp_entry['packing_price']."</td></tr>";
+                            }
+                        }else{
+                            $result.="</tr>";
+                        };
+
+                        if($table == "express_kp"){
+                            $result.="
                         <tr>
                         <p style='font-weight: bold'>".$kp_entry['header']."</p>".$kp_entry['html'];
-                    }
-                    if($table == "tails"){
-                        $signature.="<p style='font-size: 20px'>Компания \"Лубритэк\" предлагает взаимовыгодное сотрудничество на договорной основе для достижения наилучших результатов вашей работы.</p>";
-
-                        $signature.="<br><br>".$kp_entry['html'];
+                        }
+                        if($table == "tails"){
+                            $signature.="<br><br>".$kp_entry['html'];
+                        }
                     }
                 }
-            }
-            if ($table != 'tails'){
-                $result.="</tbody></table>";
+
+                if ($table != 'tails'){
+                    $result.="</tbody></table>";
+                }
             }
         }
 
 
-    }catch( PDOException $Exception ) {
-        $pdo->rollback();
-        // Note The Typecast To An Integer!
-        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
-    }
-
-
-
-    $result.=($with_closing == 1)? "<p>Вообще, наш ассортимент весьма обширен, вот некоторые из групп товаров:</p>
+        $result.=($with_whole_product_list == 1)? "<p>Наш ассортимент весьма обширен, вот некоторые из групп товаров:</p>
 <ul style='list-style: disc; font-size: 20px;'>
  <li>Индустриальные масла, смазки и СОЖ для станков и механизмов</li>
  <li>Универсальные и специальные масла и смазки для обрабатывающих отраслей</li>
@@ -322,7 +316,17 @@ if(isset($_POST['mail_array'])
 </ul>
 <p>Деятельность нашей компании в первую очередь направлена на обеспечение бесперебойной работы потребителей, на техническую поддержку, консультации  по смазочным материалам, герметикам и промышленным клеям, что гарантируется грамотным персоналом, имеющим опыт работы в производстве и прошедшим обучение в дистрибьюторских центрах производителей.
 </p>" : "";
+        $result.=($with_closing == 1)? "<p style='font-size: 20px'>Компания \"Лубритэк\" предлагает взаимовыгодное сотрудничество на договорной основе для достижения наилучших результатов вашей работы.</p>": "";
 
-    $result.=$signature;
-    print $result;
+        if($signature!=""){
+            $result.=$signature;
+        }
+
+        print $result;
+
+    }catch( PDOException $Exception ) {
+        $pdo->rollback();
+        // Note The Typecast To An Integer!
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+    }
 };

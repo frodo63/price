@@ -420,7 +420,7 @@ if(isset($_POST['table'])){
                                         b.byers_nameid AS b_nameid,
                                         b.name AS b_name
                                         FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
-                                        WHERE a.created BETWEEN '2019-01-01' AND '2019-12-31'
+                                        WHERE a.created BETWEEN '2019-01-01' AND '2020-12-31'
                                         ORDER BY req_date DESC");
                     $database[0]->beginTransaction();
                     $statement->execute();
