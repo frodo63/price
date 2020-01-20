@@ -181,7 +181,7 @@ if(isset($_POST['mail_array'])
 
         //Если массив с товарами из базы пустой - рисуем просто пустое место - под вопросом, не работает
         if(count($mail_array)==0){
-            $result .="";
+            $result .="<p>НЕ ВЫБРАНО НИЧЕГО</p>";
         }else{
 
             foreach($mail_array as $key=>$val) {

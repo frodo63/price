@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Янв 14 2020 г., 07:34
--- Версия сервера: 5.7.14
--- Версия PHP: 5.6.25
+-- Время создания: Янв 20 2020 г., 10:52
+-- Версия сервера: 10.1.38-MariaDB
+-- Версия PHP: 7.3.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -1115,66 +1117,79 @@ ALTER TABLE `transports`
 --
 ALTER TABLE `allnames`
   MODIFY `nameid` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+
 --
 -- AUTO_INCREMENT для таблицы `byers`
 --
 ALTER TABLE `byers`
   MODIFY `byers_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
 --
 -- AUTO_INCREMENT для таблицы `executes`
 --
 ALTER TABLE `executes`
   MODIFY `executes_id` mediumint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+
 --
 -- AUTO_INCREMENT для таблицы `exec_trades`
 --
 ALTER TABLE `exec_trades`
   MODIFY `exec_trades_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+
 --
 -- AUTO_INCREMENT для таблицы `giveaways`
 --
 ALTER TABLE `giveaways`
   MODIFY `giveaways_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT для таблицы `payments`
 --
 ALTER TABLE `payments`
   MODIFY `payments_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+
 --
 -- AUTO_INCREMENT для таблицы `pricings`
 --
 ALTER TABLE `pricings`
   MODIFY `pricingid` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+
 --
 -- AUTO_INCREMENT для таблицы `purchases`
 --
 ALTER TABLE `purchases`
   MODIFY `purchases_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+
 --
 -- AUTO_INCREMENT для таблицы `requests`
 --
 ALTER TABLE `requests`
   MODIFY `requests_id` mediumint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+
 --
 -- AUTO_INCREMENT для таблицы `req_positions`
 --
 ALTER TABLE `req_positions`
   MODIFY `req_positionid` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+
 --
 -- AUTO_INCREMENT для таблицы `sellers`
 --
 ALTER TABLE `sellers`
   MODIFY `sellers_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
 --
 -- AUTO_INCREMENT для таблицы `trades`
 --
 ALTER TABLE `trades`
   MODIFY `trades_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+
 --
 -- AUTO_INCREMENT для таблицы `transports`
 --
 ALTER TABLE `transports`
   MODIFY `purchases_id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
@@ -1208,6 +1223,7 @@ ALTER TABLE `sellers`
 --
 ALTER TABLE `trades`
   ADD CONSTRAINT `trades_ibfk_1` FOREIGN KEY (`trades_nameid`) REFERENCES `allnames` (`nameid`) ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
