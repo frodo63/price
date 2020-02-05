@@ -13,7 +13,25 @@ echo"
 echo"
 <h1>Конструктор КП</h1>
 
+<div class='mail_tail_parts' style='background-color: #F0F0F0; width: 40%; font-size: 25px'>
+    <b><h2>Подписи:</h2></b>
+    <label for='20_dima'>Дима</label><input id='20_dima' type='radio' name='9'><br>
+    <label for='20_marina'>Марина</label><input id='20_marina' type='radio' name='9'><br>
+    <label for='20_sergey'>Сергей</label><input id='20_sergey' type='radio' name='9'><br>
+    <label for='20_timur'>Тимур</label><input id='20_timur' type='radio' name='9'><br>        
+</div>
+
 <b><h1>ШАПКА КП:</h1></b>
+    <input type='checkbox' id='with_custom_text'><label for='with_custom_text' style='font-size: 25px'>Свой текст (будет обернут в таблицу)</label><br>
+    <textarea id='the_custom_text' style='margin: 0px; width: 40%; height: 150px; display: none'></textarea><br>    
+    
+    <input type='checkbox' id='with_custom_products'><label for='with_custom_products' style='font-size: 25px'>Свой продукт</label><br>    
+    <div id='custom_trades' style='margin: 0px; min-height: 200px; width: 40%; display: none'>      
+      <input type='button' id='add_custom_trade' value='+'>
+    </div>
+    
+    
+    
     <input type='checkbox' id='with_pics'><label for='with_pics' style='font-size: 25px'>С картинками</label><br>
     <input type='checkbox' id='with_dealership'><label for='with_dealership' style='font-size: 25px'>Дилерство</label><br>
     <input type='checkbox' id='with_thoughts'><label for='with_thoughts' style='font-size: 25px'>Умные мысли</label><br>
@@ -27,7 +45,6 @@ echo"
         
         <span style='font-size:20px;'>- одно из ключевых направлений нашей деятельности.</span><br>
     </div>
-    <input type='checkbox' id='with_custom_text'><label for='with_custom_text' style='font-size: 25px'>Свой текст (будет обернут в параграф)</label><br><textarea id='the_custom_text' style='margin: 0px; width: 40%; height: 150px; display: none'></textarea><br>
     <input type='checkbox' id='with_whole_product_list'><label for='with_whole_product_list' style='font-size: 25px'>Общий список продукции</label><br>
     <input type='checkbox' id='with_closing'><label for='with_closing' style='font-size: 25px'>Заключение</label><br>
     <b><h1>Тело КП:</h1></b>
@@ -203,33 +220,20 @@ echo"
               <input id='19_Matrix' type='checkbox'><label for='19_Matrix'>MATRIX</label><br>
           </div>
       </div>
-      <h3 style='background-color: #FBBA00; font-weight: bold; text-align: center; color:#17460F; font-size:100%'>Ввести отдельный продукт</h3>
-      <div style='position: relative' id='custom_trades'>
-      
-      <input type='button' style='position: absolute; top: 5px; right: 5px' id='add_custom_trade' value='+'>      
-          
-      </div>
-  </div>";
+</div>";
 
 
 echo"
 
 <br>
+<br>
+<input type='button' value='СФОРМИРОВАТЬ' class='mail_compose' style='font-size: 30px'>
 
-<div class='mail_tail_parts' style='background-color: #F0F0F0; width: 40%; font-size: 18px'>
-    <b><h2>Подписи:</h2></b>
-    <label for='20_dima'>Дима</label><input id='20_dima' type='radio' name='9'><br>
-    <label for='20_marina'>Марина</label><input id='20_marina' type='radio' name='9'><br>
-    <label for='20_sergey'>Сергей</label><input id='20_sergey' type='radio' name='9'><br>
-    <label for='20_timur'>Тимур</label><input id='20_timur' type='radio' name='9'><br>
-    <br><br>
-    <input type='button' value='СФОРМИРОВАТЬ' class='mail_compose' style='font-size: 30px'>    
-</div>
 <br>
 
 <div class='custom_greeting' style='width: 40%'>
 <h2>HTML Письма:</h2>
-    <textarea id='html_copy' rows='12' cols='90' name='text'></textarea>
+    <textarea id='html_copy' style='width: 100%' rows='12' name='text'></textarea>
     <br>
     <span id='info_span' style='color: green'></span>
     <br>

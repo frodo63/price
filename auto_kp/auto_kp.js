@@ -15,7 +15,7 @@ $(document).ready(function() {
     $(document).off('click.add_custom_trade').on('click.add_custom_trade', '#add_custom_trade', function (event) {
         $('#custom_trades').append('' +
             '<div class=\'add_custom_trade\'>' +
-            '<br><hr><br><span>Предлагаем к поставке: </span><br>' +
+            '<br><span>Предлагаем к поставке: </span><br>' +
             '<input type=\'text\' name=\'insert_name\' size=\'20\' value=\'\' style=\'font-size: 15px;text-align: center\'><br>' +
             '<span>Описание: </span><br>' +
             '<input type=\'text\' name=\'insert_description\' size=\'20\' value=\'\' style=\'font-size: 15px;text-align: center\'><br>' +
@@ -32,6 +32,14 @@ $(document).ready(function() {
         $('#the_custom_text').slideUp();
         if($('#with_custom_text').is(":checked")) {
             $('#the_custom_text').slideDown();
+        }
+    });
+
+    //Показ формы добавления кастомного товара
+    $(document).off('change.custom_trades').on('change.custom_trades', '#with_custom_products', function (event) {
+        $('#custom_trades').slideUp();
+        if($('#with_custom_products').is(":checked")) {
+            $('#custom_trades').slideDown();
         }
     });
 
@@ -97,6 +105,9 @@ $(document).ready(function() {
             with_custom_text = 1;
             custom_text = $('#the_custom_text').val();
         }
+        var with_custom_products = 0;
+        if($('#with_custom_products').is(":checked")){with_custom_products = 1}
+
         var with_whole_product_list = 0;
         if($('#with_whole_product_list').is(":checked")){with_whole_product_list = 1}
         var with_closing = 0;
@@ -116,15 +127,11 @@ $(document).ready(function() {
         var custom_price = "";
         var custom_trades_line = "";
         if(add_custom_trade_length > 0){
-            //custom_trades_line = '<br><br><hr><h2>Коммерческое предложение</h2><table style="border-collapse: collapse; width: 95%">';
             custom_trades_line = '<br><table style="border-collapse: collapse; width: 95%">';
             console.log(custom_trades_line);
             for(var i = 0; i < add_custom_trade_length; i++){
-
-
                 var thetrade = $('.add_custom_trade').eq(i);
                 var linenum = i+1;
-
 
                 custom_name = thetrade.children('input[name="insert_name"]').val();
                 custom_description = thetrade.children('input[name="insert_description"]').val();
@@ -141,7 +148,7 @@ $(document).ready(function() {
                     '</tr>';
                 console.log(custom_trades_line);
             }
-            custom_trades_line += '</table><br><hr><br>';
+            custom_trades_line += '</table><br>';
             console.log(custom_trades_line);
         }
 
@@ -168,7 +175,11 @@ $(document).ready(function() {
             },
             complete: function () {
                 console.log("Все выполнилось");
-                $('#custom_trades_table').append(custom_trades_line);
+                if(with_custom_products == 1){
+                    $('#custom_trades_table').append(custom_trades_line);
+                }else{
+                    $('#custom_trades_table').html('')
+                }
                 $('#html_copy').text($('#html_result').html());
             }
         });
@@ -179,7 +190,7 @@ $(document).ready(function() {
         GiveKP();
     });
 
-    $(document).off('change.checkbox_givekp').on('change.checkbox_givekp', '.mail_body_parts input[type=checkbox], #with_pics, #with_prices, #with_dealership, #with_thoughts, #with_preferred_firm, #preferred_trade_group_input, #firm_type, #with_custom_text, #the_custom_text, #with_whole_product_list, #with_closing, #20_dima, #20_marina, #20_sergey, #20_timur, #deselect_all', function (event) {
+    $(document).off('change.checkbox_givekp').on('change.checkbox_givekp', '.add_custom_trade input[type=text], .delete_current_trade, .mail_body_parts input[type=checkbox], #with_pics, #with_custom_products, #with_prices, #with_dealership, #with_thoughts, #with_preferred_firm, #preferred_trade_group_input, #firm_type, #with_custom_text, #the_custom_text, #with_whole_product_list, #with_closing, #20_dima, #20_marina, #20_sergey, #20_timur, #deselect_all', function (event) {
         GiveKP();
     });
 });

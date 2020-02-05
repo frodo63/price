@@ -64,7 +64,7 @@ if(isset($_POST['mail_array'])
 
     $result.=($with_preferred_firm == 1)? "Снабжение " .$preferred_group." ".$firm_type. " - одно из ключевых направлений нашей деятельности." : "";
 
-    $result.=($with_custom_text == 1)? "<p id='custom_text' style='font-size: 25px; background-color: #F0F0F0'>".$custom_text."</p>" : "";
+    $result.=($with_custom_text == 1)? "<table id='custom_text' style='font-size: 22px; background-color: #F0F0F0'><tr><td>".$custom_text."</td></tr></table>" : "";
 
     $result.="<p id='preferred_trade_group' style='font-size: 20px'></p>
 <div id='custom_trades_table'></div>";
