@@ -289,12 +289,12 @@ if(isset($_POST['mail_array'])
                             if ($ekp_pre_result_index % 2 == 0) {
                                 //2,4,6,8,10
                                 $ekp_pre_result.="<tr><td style='vertical-align: baseline'>";
-                                $ekp_pre_result.="<span style='font-weight: bold'>".$kp_entry['header']."</span><br>".$kp_entry['html'];
+                                $ekp_pre_result.="<br><span style='font-weight: bold'>".$kp_entry['header']."</span><br>".$kp_entry['html'];
                                 $ekp_pre_result.="</td>";
                             }else{
                                 //3,5,7,9,11
                                 $ekp_pre_result.="<td style='vertical-align: baseline'>";
-                                $ekp_pre_result.="<span style='font-weight: bold'>".$kp_entry['header']."</span><br>".$kp_entry['html'];
+                                $ekp_pre_result.="<br><span style='font-weight: bold'>".$kp_entry['header']."</span><br>".$kp_entry['html'];
                                 $ekp_pre_result.="</td></tr>";
                             }
 
