@@ -40,8 +40,8 @@ if(isset($_POST['mail_array'])
     $with_dealership = $_POST['with_dealership'];
     $with_thoughts = $_POST['with_thoughts'];
     $with_preferred_firm = $_POST['with_preferred_firm'];
-    $preferred_group = $_POST['preferred_group'];
-    $firm_type = $_POST['firm_type'];
+    $preferred_group = "<span style='font-size: 22px; background-color: #F0F0F0'>".$_POST['preferred_group']."</span>";
+    $firm_type = "<span style='font-size: 22px; background-color: #F0F0F0'>".$_POST['firm_type']."</span>";
     $with_custom_text = $_POST['with_custom_text'];
     $custom_text = $_POST['custom_text'];
     $with_whole_product_list = $_POST['with_whole_product_list'];
@@ -63,12 +63,11 @@ if(isset($_POST['mail_array'])
     <br>
     <span><i>- С.В. Улитов.</i></span></td></tr></table>" : "";
 
-    $result.=($with_preferred_firm == 1)? "Снабжение " .$preferred_group." ".$firm_type. " - одно из ключевых направлений нашей деятельности." : "";
+    $result.=($with_custom_text == 1)? "<table id='custom_text' style='font-size: 22px; background-color: #F0F0F0'><tr><td>".$custom_text."</td></tr></table><br>" : "";
 
-    $result.=($with_custom_text == 1)? "<table id='custom_text' style='font-size: 22px; background-color: #F0F0F0'><tr><td>".$custom_text."</td></tr></table>" : "";
+    $result.=($with_preferred_firm == 1)? "<span style='font-size: 22px; background-color: #F0F0F0'>Снабжение </span>" .$preferred_group." ".$firm_type. "<span style='font-size: 22px; background-color: #F0F0F0'> - одно из ключевых направлений нашей деятельности.</span>" : "";
 
-    $result.="<p id='preferred_trade_group' style='font-size: 20px'></p>
-<div id='custom_trades_table'></div>";
+    $result.="<div id='custom_trades_table'></div>";
 
         $big_kp_array=array(
             "1" => array(
