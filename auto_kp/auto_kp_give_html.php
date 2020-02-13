@@ -16,6 +16,9 @@ if(isset($_POST['mail_array'])
     $result="";
     $signature="";
     $mail_array = array();
+    $ekp_pre_result="<table>";
+    $ekp_pre_result_index = 2;
+
 
     //Сортируем массив
     if(count($_POST['mail_array']) > 0){
@@ -45,9 +48,7 @@ if(isset($_POST['mail_array'])
     $with_closing = $_POST['with_closing'];
 
     $result.="<p style='background-color: #FBBA00; font-weight: bold; text-align: center; color:#17460F; font-size:140%'>Здравствуйте!</p>";
-    $result.="<table style='width: 100%;'>";
-
-    $result.=($with_dealership == 1)? "<tr>".(($with_pics == 1)? "<td>".$pic_first."</td>" : "<td style='width: 30%'><b style='font-size: 20px'>ООО \"Лубритэк\" </b></td>")."<td style='width: 70%'>- официальный дилер смазочных материалов
+    $result.=($with_dealership == 1)? "<table style='width: 100%;'><tr>".(($with_pics == 1)? "<td>".$pic_first."</td>" : "<td style='width: 30%'><b style='font-size: 20px'>ООО \"Лубритэк\" </b></td>")."<td style='width: 70%'>- официальный дилер смазочных материалов
         <b><span style='font-size: 22px; font-family: Arial;font-style: italic; font-weight: 900'> BECHEM </span></b>
         в Самарской области.<br></span><span>Мы поставляем продукцию широкого спектра на промышленные предприятия, в частности: промышленные масла, смазки, технические жидкости.</span>
     </td></tr></table><br><br>" : "<tr><td style='width: 100%'></td></tr></table>";
@@ -169,7 +170,7 @@ if(isset($_POST['mail_array'])
                 "table" => "tails"
             ),
             "21" => array(
-                "header" => "Смазочные материалы",
+                "header" => "Предлагаем к поставке смазочные материалы:",
                 "table" => "express_kp",
                 "columns" => array('Производитель','Наименование'),
             ),
@@ -179,7 +180,7 @@ if(isset($_POST['mail_array'])
             $result .="<p>Цены указаны с НДС (20%)</p>";
         }
 
-        //Если массив с товарами из базы пустой - рисуем просто пустое место - под вопросом, не работает
+        //Если массив с товарами из базы пустой - рисуем просто пустое место
         if(count($mail_array)==0){
             $result .="<p>НЕ ВЫБРАНО НИЧЕГО</p>";
         }else{
@@ -201,12 +202,11 @@ if(isset($_POST['mail_array'])
                         $table=$bkp_value['table'];
                     }
                 }
-
                 //РИСУЕМ ШАПКУ ТАБЛИЦЫ
                 if(isset($columns) && $table != 'tails' && $table != 'express_kp'){
                     $result.="<table style='border-collapse: collapse'><thead><tr>";
                     foreach ($columns as $column){
-                        $result.="<th style='border: 1px solid black'>".$column."</th>";
+                        $result.="<th class='table_header' style='border: 1px solid black'>".$column."</th>";
                     }
                     $result.="</tr></thead><tbody>";
                     unset($columns);
@@ -231,14 +231,15 @@ if(isset($_POST['mail_array'])
                         $result.="<tr><td style='font-size: 20px; border: 1px solid black; text-align: center' colspan='6'>".$brand."</td></tr>";
                     }
 
-                    foreach($query_fetched as $kp_entry){
+                    foreach($query_fetched as $index=>$kp_entry){
                         if($table == "general_oils_hydraulic"){
                             $result.="<tr>
                         <td style='font-weight: bold; width: 15%; border: 1px solid black'>".$kp_entry['name']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['application']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['description']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['viscosity']."</td>";
-                        }if($table == "metalworking_specliqs"){
+                        }
+                        if($table == "metalworking_specliqs"){
                             $result.="<tr>
                         <td style='font-weight: bold; width: 15%; border: 1px solid black'>".$kp_entry['name']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['application']."</td>
@@ -273,7 +274,6 @@ if(isset($_POST['mail_array'])
                         <td style='border: 1px solid black'>".$kp_entry['description']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['working_temp']."</td>";
                         }
-
                         if($_POST['with_prices'] == 1){
                             if(isset($kp_entry['packing_price'])){
                                 $result.="<td style='width: 8%; border: 1px solid black'>".$kp_entry['packing_price']."</td></tr>";
@@ -281,22 +281,53 @@ if(isset($_POST['mail_array'])
                         }else{
                             $result.="</tr>";
                         };
-
                         if($table == "express_kp"){
-                            $result.="
-                        <tr>
-                        <p style='font-weight: bold'>".$kp_entry['header']."</p>".$kp_entry['html'];
+                            //Собрать табличку сначла тут, засунуть в $result в самом конце
+                            //открываемся таК:
+                            //$ekp_pre_result.="<table>";
+
+                            if ($ekp_pre_result_index % 2 == 0) {
+                                //2,4,6,8,10
+                                $ekp_pre_result.="<tr><td style='vertical-align: baseline'>";
+                                $ekp_pre_result.="<span style='font-weight: bold'>".$kp_entry['header']."</span><br>".$kp_entry['html'];
+                                $ekp_pre_result.="</td>";
+                            }else{
+                                //3,5,7,9,11
+                                $ekp_pre_result.="<td style='vertical-align: baseline'>";
+                                $ekp_pre_result.="<span style='font-weight: bold'>".$kp_entry['header']."</span><br>".$kp_entry['html'];
+                                $ekp_pre_result.="</td></tr>";
+                            }
+
+
+                            //Тут логика такая: Если это первый или нечетный итем - мы рисуем <tr> и ставим какой-то знак, что это был первый или нечетный элемент
+                            //Если это второй или четный элемент - ставим тоже об этом знак
+
+
+                            $ekp_pre_result_index++;
+                            //закрываемся таК:
+                            //$ekp_pre_result.="</table>";
+
                         }
+
                         if($table == "tails"){
                             $signature.="<br><br>".$kp_entry['html'];
                         }
                     }
                 }
-
                 if ($table != 'tails'){
                     $result.="</tbody></table>";
                 }
             }
+        }
+
+        //Если были Индексы с 21_ekp, рисуем закрытие таблицы или если надо, закрытие ряда
+        if($ekp_pre_result_index>2){
+            if ($ekp_pre_result_index % 2 == 0) {
+                $ekp_pre_result.="</table>";//Если индекс четный
+            }else{
+                $ekp_pre_result.="</tr></table>";//Если индекс нечетный
+            }
+            $result.=$ekp_pre_result;
         }
 
 
