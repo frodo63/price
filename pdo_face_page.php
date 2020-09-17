@@ -74,6 +74,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         <li id='tab_trades'><a href='#trades'>Товары</a></li>        
         <li id='tab_search'><a href='#search'>Результаты поиска</a></li>
         <li id='tab_sync'><a href='#sync'>Синхронизация</a></li>
+        <li id='tab_zp'><a href='#zp'>Зарплата</a></li>
       </ul>
   
       <div id='requests'>
@@ -156,7 +157,10 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
           
       </div>";
 
-echo"<div id='givaways'><input type='button' class='show_list' value='РАСЧЕТЫ⏎'><br><br>";
+echo"
+
+<div id='givaways'>
+<input type='button' class='show_list' value='РАСЧЕТЫ⏎'><br><br>";
          
 echo"       <!--Добавить Платежку -->  
               <div id='add_payment'>
@@ -199,7 +203,7 @@ echo"       <!--Добавить Платежку -->
       </div>";
       
 echo "    <div id='sync'>
-          <div class='sync_list'>
+            <div class='sync_list'>
               <p>Синхронизировать: </p>              
               <input type='button' id='sync_byers' value='Покупателей ЛТК' database='ltk'>
               <input type='button' id='sync_sellers' value='Поставщиков ЛТК' database='ltk'>
@@ -226,8 +230,12 @@ echo "    <div id='sync'>
               </div>
               
               <div id='sync_info'></div>          
+            </div>
           </div>
-      </div>
+          <div id='zp'>
+          <input type='button' class='show_list' value='РАСЧЕТ ЗАРПЛАТЫ⏎'><br><br>
+          <div class='zp_list'></div>
+          </div>
       
 </div>
               <div id='edit_1c_num'>

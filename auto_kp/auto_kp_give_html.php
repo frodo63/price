@@ -13,12 +13,22 @@ if(isset($_POST['mail_array'])
     && isset($_POST['with_closing'])
 ){
     try{
-    $result="";
+    $result="
+        <style>
+            .big_daddy{border: 1px solid black; padding: 60px; box-shadow: -2px -2px 10px 8px rgba(0, 0, 0, .19);}
+            .daddy{width: 100%; min-width: 100%; border-collapse: collapse; text-align: center;}
+            .daddy td{border: 1px solid black}
+            td:nth-child(1){width:5%}
+            td:nth-child(2){width:15%}
+            td:nth-child(3){width:40%}
+            td:nth-child(4){width:20%}
+            td:nth-child(5){width:20%}
+        </style>
+        <div class='big_daddy'>";
     $signature="";
     $mail_array = array();
     $ekp_pre_result="<table>";
     $ekp_pre_result_index = 2;
-
 
     //Сортируем массив
     if(count($_POST['mail_array']) > 0){
@@ -40,32 +50,49 @@ if(isset($_POST['mail_array'])
     $with_dealership = $_POST['with_dealership'];
     $with_thoughts = $_POST['with_thoughts'];
     $with_preferred_firm = $_POST['with_preferred_firm'];
-    $preferred_group = "<span style='font-size: 22px; background-color: #F0F0F0'>".$_POST['preferred_group']."</span>";
-    $firm_type = "<span style='font-size: 22px; background-color: #F0F0F0'>".$_POST['firm_type']."</span>";
+    $preferred_group = "<span style='font-size: 18px;'>".$_POST['preferred_group']."</span>";
+    $firm_type = "<span style='font-size: 18px;'>".$_POST['firm_type']."</span>";
     $with_custom_text = $_POST['with_custom_text'];
     $custom_text = $_POST['custom_text'];
     $with_whole_product_list = $_POST['with_whole_product_list'];
     $with_closing = $_POST['with_closing'];
 
     $result.="<p style='background-color: #FBBA00; font-weight: bold; text-align: center; color:#17460F; font-size:140%'>Здравствуйте!</p>";
-    $result.=($with_dealership == 1)? "<table style='width: 100%;'><tr>".(($with_pics == 1)? "<td>".$pic_first."</td>" : "<td style='width: 30%'><b style='font-size: 20px'>ООО \"Лубритэк\" </b></td>")."<td style='width: 70%'>- официальный дилер смазочных материалов
-        <b><span style='font-size: 22px; font-family: Arial;font-style: italic; font-weight: 900'> BECHEM </span></b>
-        в Самарской области.<br></span><span>Мы поставляем продукцию широкого спектра на промышленные предприятия, в частности: промышленные масла, смазки, технические жидкости.</span>
-    </td></tr></table><br><br>" : "<tr><td style='width: 100%'></td></tr></table>";
+    /*$result.=($with_dealership == 1)? "<table style='width: 100%;'><tr>".(($with_pics == 1)? "<td>".$pic_first."</td>" : "<td style='width: 30%'><b style='font-size: 32px'>ООО \"Лубритэк\" </b></td>")."<td style='width: 70%'>- официальный дилер смазочных материалов
+        <b><span style='font-size: 18px; font-family: Arial;font-style: italic; font-weight: 900'> BECHEM </span></b> 
+        в Самарской области. <br>СОЖи <b><span style='font-size: 18px; font-family: Arial;font-style: italic; font-weight: 900'> BECHEM </span></b> прошли испытания на крупнейших предприятиях РФ и рекомендованы к применению в промышленности. такими как: КАМАЗ, САЛЮТ, ПРОГРЕСС. <br></span><span>Мы поставляем продукцию широкого спектра на промышленные предприятия, в частности: промышленные масла, смазки, технические жидкости.</span>
+    </td></tr></table><br><br>" : "<tr><td style='width: 100%'></td></tr></table>";*/
+    $result.=($with_dealership == 1)? "<table style='width: 100%;'><tr><td><img src='http://xn--90aogb0and8f.xn--p1ai/ltk_logo.png' alt='Лучшие СОЖ' /></td><td style='width: 70%'>- официальный дилер смазочных материалов
+        <b><span style='font-size: 18px; font-family: Arial;font-style: italic; font-weight: 900'> BECHEM </span></b> 
+        в Самарской области.</td></tr>
+        <tr><td colspan='2'><!--<br><p style='text-indent: 30px;'>СОЖи <b><span style='font-size: 18px; font-family: Arial;font-style: italic; font-weight: 900'> BECHEM </span></b> прошли испытания на крупнейших предприятиях РФ и рекомендованы к применению в промышленности. такими как: КАМАЗ, САЛЮТ, ПРОГРЕСС. <br></span><span></p>--><p style='text-indent: 30px;'>Мы поставляем продукцию широкого спектра на промышленные предприятия, в частности: промышленные масла, смазки, технические жидкости.</span></p></td></tr>
+        
+        </table><br><br>" : "<tr><td style='width: 100%'></td></tr></table>";
 
-    $result.=($with_thoughts == 1)? "
-<table style='width:100%'><tr><td style='text-align: right'>
-    <span><i>\"Умеренная ценовая политика,</i></span><br>
-    <span><i>беспрекословное выполнение договорных обязательств,</i></span><br>
-    <span><i>наличие пополняемого тёплого склада,</i></span><br>
-    <span><i>стабильные сроки поставки</i></span><br>
-    <span><i>делают работу с нами комфортной.\"</i></span><br>
+    $thethought = rand(1,2);
+    $thoughts = array();
+    $thoughts[1]="<table style='width:100%'><tr><td style='text-align: right'>
+    <span><i>\"Умеренная ценовая политика,</i ></span ><br >
+    <span ><i > беспрекословное выполнение договорных обязательств,</i ></span ><br >
+    <span ><i > наличие пополняемого тёплого склада,</i ></span ><br >
+    <span ><i > стабильные сроки поставки </i ></span ><br >
+    <span ><i > делают работу с нами комфортной . \"</i></span><br>
     <br>
-    <span><i>- С.В. Улитов.</i></span></td></tr></table>" : "";
+    <span><i>- С.В. Улитов.</i></span></td></tr></table>";
+    $thoughts[2]="
+<table style='width:100%'><tr><td style='text-align: right'>
+    <span><i>\"Лучше лучшее из дешевого,</i ></span ><br >
+    <span ><i > чем дешевое из лучшего.\"</i ></span ><br >
+    <br>
+    <span><i>- С.В. Улитов.</i></span></td></tr></table>";
 
-    $result.=($with_custom_text == 1)? "<table id='custom_text' style='font-size: 22px; background-color: #F0F0F0'><tr><td>".$custom_text."</td></tr></table><br>" : "";
 
-    $result.=($with_preferred_firm == 1)? "<span style='font-size: 22px; background-color: #F0F0F0'>Снабжение </span>" .$preferred_group." ".$firm_type. "<span style='font-size: 22px; background-color: #F0F0F0'> - одно из ключевых направлений нашей деятельности.</span>" : "";
+
+    $result.=($with_thoughts == 1)? $thoughts[$thethought] : "";
+
+    $result.=($with_custom_text == 1)? "<table id='custom_text' style='font-size: 18px; width: 100%; min-width: 100%;'><tr><td>".$custom_text."</td></tr></table><br>" : "";
+
+    $result.=($with_preferred_firm == 1)? "<span style='font-size: 18px;'>Снабжение </span>" .$preferred_group." ".$firm_type. "<span style='font-size: 18px;'> - одно из ключевых направлений нашей деятельности.</span>" : "";
 
     $result.="<div id='custom_trades_table'></div>";
 
@@ -172,6 +199,11 @@ if(isset($_POST['mail_array'])
                 "header" => "Предлагаем к поставке смазочные материалы:",
                 "table" => "express_kp",
                 "columns" => array('Производитель','Наименование'),
+            ),
+            "22" => array(
+                "header" => "Предлагаем к поставке смазочные материалы:",
+                "table" => "simple_ind",
+                "columns" => array('Группа','Наименование'),
             ),
 
         );
@@ -287,13 +319,15 @@ if(isset($_POST['mail_array'])
 
                             if ($ekp_pre_result_index % 2 == 0) {
                                 //2,4,6,8,10
+
                                 $ekp_pre_result.="<tr><td style='vertical-align: baseline'>";
-                                $ekp_pre_result.="<br><span style='font-weight: bold'>".$kp_entry['header']."</span><br>".$kp_entry['html'];
+                                $ekp_pre_result.="<p style='font-weight: bold; width: 330px; text-align: center'>".$kp_entry['header']."</p>".$kp_entry['html'];
                                 $ekp_pre_result.="</td>";
                             }else{
                                 //3,5,7,9,11
+                                $ekp_pre_result.="<td style='width:150px'></td>";
                                 $ekp_pre_result.="<td style='vertical-align: baseline'>";
-                                $ekp_pre_result.="<br><span style='font-weight: bold'>".$kp_entry['header']."</span><br>".$kp_entry['html'];
+                                $ekp_pre_result.="<p style='font-weight: bold; width: 330px; text-align: center'>".$kp_entry['header']."</p>".$kp_entry['html'];
                                 $ekp_pre_result.="</td></tr>";
                             }
 
@@ -331,13 +365,13 @@ if(isset($_POST['mail_array'])
 
 
         $result.=($with_whole_product_list == 1)? "<p>Наш ассортимент весьма обширен, вот некоторые из групп товаров:</p>
-<ul style='list-style: disc; font-size: 20px;'>
+<ul style='list-style: disc; font-size: 18px;'>
  <li>Индустриальные масла, смазки и СОЖ для станков и механизмов</li>
  <li>Универсальные и специальные масла и смазки для обрабатывающих отраслей</li>
  <li>Масла гидравлические, редукторные и циркуляционные</li>
  <li>Масла для грузового транспорта, сельхозтехники, строительной, дорожной, карьерной и обогатительной спецтехники</li>
  <li>Масла для трансмиссий и ГУР, антифризы, тормозные жидкости</li>
- <li>Смазочные материалы для перерабатывающих отраслей сельского хозяйства и пищевой промыщленности.</li>
+ <li>Смазочные материалы для перерабатывающих отраслей сельского хозяйства и пищевой промышленности.</li>
  <li>Компрессорные, турбинные, трансформаторные и др. энергетические масла</li>
  <li>Смазки для агрессивных сред, экстремальных погодных условий и шоковых нагрузок</li>
  <li>Высоко и низко - температурные масла и смазки</li>
@@ -346,12 +380,12 @@ if(isset($_POST['mail_array'])
 </ul>
 <p>Деятельность нашей компании в первую очередь направлена на обеспечение бесперебойной работы потребителей, на техническую поддержку, консультации  по смазочным материалам, герметикам и промышленным клеям, что гарантируется грамотным персоналом, имеющим опыт работы в производстве и прошедшим обучение в дистрибьюторских центрах производителей.
 </p>" : "";
-        $result.=($with_closing == 1)? "<p style='font-size: 20px'>Компания \"Лубритэк\" предлагает взаимовыгодное сотрудничество на договорной основе для достижения наилучших результатов вашей работы.</p>": "";
+        $result.=($with_closing == 1)? "<p style='font-size: 18px'>Компания \"Лубритэк\" предлагает взаимовыгодное сотрудничество на договорной основе для достижения наилучших результатов вашей работы.</p>": "";
 
         if($signature!=""){
             $result.=$signature;
         }
-
+        $result .="</div>";
         print $result;
 
     }catch( PDOException $Exception ) {

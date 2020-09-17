@@ -12,6 +12,43 @@ $(document).ready(function(){
     });
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /*Отлов GET-параметра из адресной строки при открытии заказа из 1С*/
+    function GetURLParameter(sParam)
+    {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++)
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam)
+            {
+                return sParameterName[1];
+            }
+        }
+    }
+
+    /*Мы готовы для аякса*/
+    var table = 'requests';
+    var category = 'request';
+    var theid = GetURLParameter('uid');
+    var db = 'ltk';
+
+    if (typeof category != "undefined" && typeof theid != "undefined" ){
+        $.ajax({
+            url: 'mysql_read.php',
+            method: 'POST',
+            data: {table:table, category:category, theid:theid, db:db, is_onec:true},
+            success: function(data){
+                $('html, body').animate({scrollTop: $("#thesearch").offset().top}, 1000);
+                $('#tab_search a').trigger('click');
+                $('#search .search_list').html(data);
+            },complete: function(){
+                console.log('заказ открылся');
+            }
+        });
+    }
+
+
     /*Проверка тестовых значений функцией*/
     /*ПРОВЕРКА ИМЕНИ ФУНКЦИЕЙ*/
     /*Проверка текстовых наименования товара*///////////////////////////////////////////////////////////////////////////
@@ -335,6 +372,7 @@ $(document).ready(function(){
 
         var table = $(event.target).parent().attr('id');
         console.log(table);
+
         if (table=='search'){
             return false;
         }else{
@@ -349,10 +387,37 @@ $(document).ready(function(){
                     $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Данные из таблицы " + table + " обеих баз получены.");
                     $('.creates input[type=\'text\']').val('');
                     $('.from,.to').val('');
+
+
+                    var its_zp_counting = 0;
+                    var its_zp_giving = 0;
+
+                    if(table == 'zp'){
+                        console.log('it"s ZP');
+                        console.log(typeof($('.zp_give_amount').val())+$('.zp_count_amount').val());
+                        console.log(typeof($('.zp_give_amount').val())+$('.zp_give_amount').val());
+                        if($('.zp_count_amount').val() != ''){
+                            its_zp_counting = 1;
+                        }else if($('.zp_give_amount').val() != ''){
+                            its_zp_giving = 1;
+                        }
+                    }
+
+                    //Для удобства добавления выдач и начислений автоматически фокусимся на нужном селекте
+                    if(table == 'zp'){
+                        if(its_zp_counting == 1){
+                            console.log('we are counting');
+                            $('.add_zp_count').css('display', 'block');
+                            $('.zp_count_worker').focus();
+                        }else if(its_zp_giving == 1){
+                            console.log('we are giving');
+                            $('.add_zp_give').css('display', 'block');
+                            $('.zp_give_worker').focus();
+                        }
+                    }
                 }
             });
         }
-
     });
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1761,13 +1826,85 @@ $(document).ready(function(){
         $('#firstobp').val(firstobp);
     });
 
-    //Показать накладные и платежки по заявке
-    $(document).off('click.show_executals').on('click.show_executals', '.show_executals', function(event){
-        $(event.target).next('.req_executals').toggle();
+
+    //Добавление Начисления ЗП
+    $(document).off('click.add_count_zp').on('click.add_count_zp', '#add_zp_count', function(event){
+        var year = $('.zp_count_year').val();
+        var month = $('.zp_count_month').val();
+        var worker = $('.zp_count_worker').val();
+        var amount = $('.zp_count_amount').val();
+        var db = 'ltk';
+
+        if(amount == ''){
+            alert("Количество не может быть пустым");
+        }else{
+            //Мы готовы к аяксу
+            console.log(typeof(worker)+" "+worker+" "+typeof(year)+" "+year+" "+typeof(month)+" "+month+" "+typeof(amount)+" "+amount);
+
+            $.ajax({
+                url: 'mysql_insert.php',
+                method: 'POST',
+                data: {db:db, count_year:year, count_month:month, count_worker:worker, count_amount:amount},
+                success: function (data) {//Изменяем
+                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                    $('#zp .show_list').trigger('click');
+                },
+                complete:function () {
+                    $('.zp_count_worker').focus();
+                }
+            });
+        }
     });
-    $(document).off('click.show_paymentals').on('click.show_paymentals', '.show_paymentals', function(event){
-        $(event.target).next('.req_paymentals').toggle();
+
+    //Добавленеи выдачи ЗП
+    $(document).off('click.add_give_zp').on('click.add_give_zp', '#add_zp_give', function(event){
+        var date = $('.zp_give_date').val();
+        var worker = $('.zp_give_worker').val();
+        var amount = $('.zp_give_amount').val();
+        var source = $('.zp_give_source').val();
+        var comment = $('.zp_give_comment').val();
+        var db = 'ltk';
+
+        if(date == '' || amount == ''){
+            alert("Дата и Количество не может быть пустым");
+        }else{
+            //Мы готовы к аяксу
+            console.log(typeof(worker)+" "+worker+" "+typeof(date)+" "+date+" "+typeof(amount)+" "+amount+" "+typeof(source)+" "+source+" "+typeof(comment)+" "+comment);
+
+            var give_string = "Выдать "+worker+" "+date+" сумму "+amount+" из "+source+" ?";
+            if(confirm(give_string)){
+                $.ajax({
+                    url: 'mysql_insert.php',
+                    method: 'POST',
+                    data: {db:db, give_date:date, give_worker:worker, give_amount:amount, give_source:source, give_comment:comment},
+                    success: function (data) {//Изменяем
+                        $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                        $('#zp .show_list').trigger('click');
+                    },
+                    complete:function () {
+                        $('.zp_give_worker').focus();
+                    }
+                });
+            }else{
+                return false;
+            }
+        }
     });
+
+    //авто переключение на дату при установке значния в селекте
+    $(document).off('change.go_next').on('change.go_next', '.zp_count_worker, .zp_count_month, .zp_give_worker, .zp_give_source', function (event) {
+        /*Данные для заполнения выдачи*/
+        $(event.target).next().focus();
+    });
+
+    //Отображение/сокрытие менюшек добавления Начислений и Выдач
+    $(document).off('click.s_h').on('click.s_h', '.header_give, .header_count', function (event) {
+        console.log('clicked');
+        $(event.target).next('div').slideToggle();
+    });
+
+
+
 
 
 

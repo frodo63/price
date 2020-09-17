@@ -1,198 +1,191 @@
-ВЫБРАТЬ *
-	               |ИЗ
-	               |	Документ.ЗаказПокупателя КАК Заказ ЛЕВОЕ СОЕДИНЕНИЕ Документ.ПоступлениеТоваровУслуг КАК Поступление ПО
-	               |Заказ.Ссылка = Поступление.Сделка
-	               |ГДЕ
-	               |	Заказ.Проведен
-	               |	 УПОРЯДОЧИТЬ ПО Заказ.Дата УБЫВ
-
-
-ВЫБРАТЬ * ИЗ Документ.ЗаказПокупателя КАК Заказ ЛЕВОЕ СОЕДИНЕНИЕ Документ.ПоступлениеТоваровУслуг КАК Поступление ПО Заказ.Ссылка = Поступление.Сделка.Ссылка
-
-//Блок кода для добавления расценки::: по кнопке addpricing
-
-    <form id='price'>
-
-        <label for='byer'>Покупатель:</label> <input type="text" name="byer" id="byer" placeholder="Введите покупателя" /><br />
-        <label for='trade'>Товар</label> <input type="text" name="trade" id="trade" placeholder="Введите товар"/><br />
-        <label for='seller'>Поставщик:</label> <input type="text" name="seller" id="seller" placeholder="Введите поставщика"/><br />
-        <label for='zakup'>ЗАКУП ЗА 1 ШТ:</label> <input type="number" name="zak" id="zak" min="1" step="1"/> руб.<br />
-        <label for='kol'>Кол-во:</label> <input type="number" name="kol" id="kol"  min="1"/><br />
-        <label for='tzr'>ТЗР на ШТУКЕ:</label> <input type="number" name="tzr" id="tzr"  min="0" step="1"/> руб.<br /><br />
-            <div id="fcount">
-                <label for='op'>НАШ ПРОЦЕНТ:</label> <input type="number" size="2" name="op" id="op"  min="1" step="0.01"/>% / <p id="opr"></p> руб.<br />
-                <label for='tp'>ЕНОТ:</label> <input type="number" size="2" name="tp" id="tp"  min="0" step="0.01"/>% / <p id="tpr"></p> руб. НА РУКИ : <p id="firstoh"></p> руб. (<p id="clearp"></p>)<br/><br />
-                <label for='firstobp'>ОБНАЛ:</label> <input type="number" size="2" name="firstobp" id="firstobp"  min="0" step="0.1"/>% / <p id="firstobpr"></p> руб.<br />
-                <label for='wtime'>ОТСРОЧКА:</label> <input type="number" size="2" name="wtime" id="wtime"  min="0" step="0.03"/> мес. <p id="wtimeday"></p> дней.
-            </div>
-            <div id="margediv">
-                <br />
-                <label for='marge'>МАРЖА<br />ВСЕГО:</label> <p id="marge"></p> руб. / НА ШТУКЕ: <p id="margek"></p> руб.<br /><br />
-                СООТНОШЕНИЕ<br/>
-                НАШИМ:<br/><input id="rop" type="number" min="0" step="1"/><p id="realop"></p><br/>
-                НЕНАШИМ:<br/><input id="rtp" type="number" min="0" step="1"/><p id="realtp"></p><br/><br/>
-                <div id="obnal">
-                    <label for='obp'>Обнал:</label> <input type="number" size="2" name="obp" id="obp"  min="0" step="0.1"/>%,<br/><p id='onhands'>ИТОГО НА РУКИ:</p><p id="oh"></p>
-                </div><br />
-            </div>
-        <input type="submit" name="submit" value="Посчитать" id="go" />
-            <div id='result'>
-                <h2>Итоговая цена:</h2>
-                <input type="number" name="price" id="pr" value="0" min="0" step="0.01"/>
-                <input name='fixate' id='fixate' type='button' value='Закрепить'/>
-            </div>
-            <div id='rent'><h2>Рентабельность:</h2><h1>0</h1></div>
-            <div id="cases"></div>
-            <script src='js/price_mysql.js'></script>
-
-    </form>
-    <input type='button' value='X' class='closepricing'>
-
-
-////////////////////////////////////////////////////////////////////
-
-byer=%D0%A1%D0%9F%D0%97-4
-&trade=%D0%9B%D0%B8%D1%82%D0%BE%D0%BB-24+180%D0%BA%D0%B3
-&seller=%D0%9E%D0%B9%D0%BB-%D0%A1%D0%BD%D0%B0%D0%B1+%D0%A2%D0%BB%D1%82
-&zak=13
-&kol=1312
-&tzr=3131
-&op=2312
-&tp=312
-&firstobp=31
-&wtime=23123
-&obp=31
-&price=312433.11
-
-&rent=-10736.120369028642
-&tpr=236599.8336
-&opr=72689.28
-&fixed=0
-&firstobpr=73345.95
-&rop=undefined
-&rtp=undefined
-&realop=undefined
-&realtp=undefined
-&oh=undefined
-&marge=undefined
-&margek=undefined
-&clearp=52.25242552523087
-
-
-
-Array ( [name] => Валдай ) 111 Array ( [name] => Mobilgrease XHP 222 0,4 кг )
-
-Array ( [name] => Валдай ) 111 Array ( [name] => Mobilgrease XHP 222 0,4 кг )
-
-Array ( [name] => ОТК ) 111 Array ( [name] => Литол-24 50кг )
-
-
-
-                <script>
-                if (!($('#theinput')){
-                $('#theinput').blur(function () {
-                $(this).parent().html($(this).attr('placeholder'));
-                $('.savename').val('Переименовать');
-                $('.savename').removeClass('savename').addClass('edit')
-                })};
-
-                </script>");
-
-
-
-
-$('.edit').unbind().click(function () {
-
-        if($('#theinput').length == 0){
-
-            if($(this).hasClass('edit')){
-            var editid = $(this).attr("name");
-            console.log(editid);
-            var edittable = $(this).parents("div").attr("id").slice(0, -5);
-            var edittablenameid = edittable +'_nameid';
-            var edittableid = edittable +'_id';
-
-            var rtext = $(this).parent().prev().text();//берем нынешнее название
-            console.log(rtext);//показываем его в консоли
-            $(this).parent().prev().html("<input id='theinput' value='"+rtext+"' type='text' placeholder='"+rtext+"'><script>" +
-                "$('#theinput').blur(function () {" +
-                /*"$(this).parent().html($(this).attr('placeholder'));" +
-                "$('.savename').val('Переименовать');" +
-                "$('.savename').removeClass('savename').addClass('edit')" +*/
-                "})</script>");
-            $('#theinput').select();//выделяем содержимое
-            $(this).removeClass('edit');//убираем класс edit чтобы лишнего не происходило
-            $(this).val('Сохранить');
-            $(this).addClass('savename');
-        }} else {
-            $('#theinput').focus().select();
-            alert('Finish the renaming!')};
-
-    });
-
-
-    $('.savename').mouseover(function () {
-        console.log('into');
-        $('#theinput').stopImmediatePropagation();
-        $('#theinput').preventDefault();
-        $('#theinput').off('blur');
-
-        $(this).click(function () {
-
-        var newname = $('#theinput').val();
-
-            $.ajax({
-                url: 'mysql_rename.php',
-                method: 'POST',
-                data: {newname:newname, editid:editid, edittable:edittable, edittablenameid:edittablenameid, edittableid:edittableid},
-                success: function(){
-                    $('#editmsg').css("display", "block"). delay(100).slideUp(100).html("Запись "+ editid +" из таблицы " + edittable + "переименована.");
-                },
-                complete: function() {
-                    $("a[href = \"#" + edittable + "\"]").trigger("click");
-                }
-            });
-
-            return true;
-
-
-        });
-    });//Этот класс прибавляется после того как будет инпут и рентекст, чтобы уже отправить аякс
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+1. Поубирать Соотнесение, сделать простую синхронизацию двух баз. Пусть добавляется все, что в базе есть уже.
+2. Поиск в ВСПВ передалать, смешение баз убрать, выдавать результат поиска из обеих баз одновременно, по наиболее подходящей выдаче. По галочке - искать в какой-то конкретной базе.
+
+
+ <table style="border-collapse: collapse; font-size: 20px; border:1px solid black">
+  <tr style="border-bottom: none">
+   <td style="width: 330px; border: 1px solid black; border-top:none; border-right: none">Литол-24, Солидол, Графитовая</td>
+  </tr>
+
+  <tr style="border-bottom: none">
+
+   <td style="width: 80px; border: 1px solid black; border-top:none; border-left: none">Nano</td>
+   <td style="width: 250px; border: 1px solid black; border-top:none; border-right: none">Grey Multipurpose</td>
+  </tr>
+
+  <tr style="border-bottom: none">
+
+   <td style="width: 80px; border: 1px solid black; border-top:none; border-left: none">Газпромнефть</td>
+   <td style="width: 250px; border: 1px solid black; border-top:none; border-right: none">Gazpromneft L EP 2, 00</td>
+  </tr>
+
+  <tr style="border-bottom: none">
+
+   <td style="width: 80px; border: 1px solid black; border-top:none; border-left: none">Лукойл</td>
+   <td style="width: 250px; border: 1px solid black; border-top:none; border-right: none">Термофлекс, Полифлекс</td>
+  </tr>
+
+  <tr style="border-bottom: none">
+
+   <td style="width: 80px; border: 1px solid black; border-top:none; border-left: none">Castrol</td>
+   <td style="width: 250px; border: 1px solid black; border-top:none; border-right: none">Tribol RG 2 EP</td>
+  </tr>
+  <tr style="border-bottom: none">
+
+   <td style="width: 80px; border: 1px solid black; border-top:none; border-left: none">Kluber</td>
+   <td style="width: 250px; border: 1px solid black; border-top:none; border-right: none">CENTOPLEX 2 EP</td>
+  </tr>
+  <tr style="border-bottom: none">
+
+   <td style="width: 80px; border: 1px solid black; border-top:none; border-left: none">Mannol</td>
+   <td style="width: 250px; border: 1px solid black; border-top:none; border-right: none">MP 2</td>
+  </tr>
+  <tr style="border-bottom: none">
+
+   <td style="width: 80px; border: 1px solid black; border-top:none; border-left: none">Mobil</td>
+   <td style="width: 250px; border: 1px solid black; border-top:none; border-right: none">Mobilux, Mobilgrease</td>
+  </tr>
+  <tr style="border-bottom: none">
+
+   <td style="width: 80px; border: 1px solid black; border-top:none; border-left: none">Shell</td>
+   <td style="width: 250px; border: 1px solid black; border-top:none; border-right: none">Gadus</td>
+  </tr>
+  <tr style="border-bottom: none">
+
+   <td style="width: 80px; border: 1px solid black; border-top:none; border-left: none">SKF</td>
+   <td style="width: 250px; border: 1px solid black; border-top:none; border-right: none">LGEV 2</td>
+  </tr>
+  <tr style="border-bottom: none">
+
+   <td style="width: 80px; border: 1px solid black; border-top:none; border-left: none">WURTH</td>
+   <td style="width: 250px; border: 1px solid black; border-top:none; border-right: none">Multi</td>
+  </tr>
+  <tr style="border-bottom: none">
+
+   <td style="width: 80px; border: 1px solid black; border-top:none; border-left: none">AGIP</td>
+   <td style="width: 250px; border: 1px solid black; border-top:none; border-right: none">GR MU EP 00</td>
+  </tr>
+  <tr style="border-bottom: none">
+
+   <td style="width: 80px; border: 1px solid black; border-top:none; border-left: none">TUTELA</td>
+   <td style="width: 250px; border: 1px solid black; border-top:none; border-right: none">ZETA 2</td>
+  </tr>
+  <tr style="border-bottom: none">
+
+   <td style="width: 80px; border: 1px solid black; border-top:none; border-left: none">Motorex</td>
+   <td style="width: 250px; border: 1px solid black; border-top:none; border-right: none">Universal 190 EP</td>
+  </tr>
+
+ </table>
+
+Ссылка	ВерсияДанных	Код	Наименование	УИД	Индекс
+НЕФТЕПРОМ	AAAAAQAAAAE=	000000002	НЕФТЕПРОМ	1f17ef59-1b31-11e5-aa26-6c626df87d4c
+Балашейские пески	AAAAAQAAAAI=	000000003	Балашейские пески	1f17ef67-1b31-11e5-aa26-6c626df87d4c	1
+Сиб Трейд Сервис АО	AAAAAQAAAAM=	000000004	Сиб Трейд Сервис АО	1f17ef6f-1b31-11e5-aa26-6c626df87d4c	2
+ИНРоЛ-СТС	AAAAAQAAAAQ=	000000005	ИНРоЛ-СТС	1f17ef7e-1b31-11e5-aa26-6c626df87d4c	3
+Смазочные материалы 222-41-49	AAAAAQAAAAY=	000000007	Смазочные материалы 222-41-49	1f17ef95-1b31-11e5-aa26-6c626df87d4c	4
+Комплетэк	AAAAAQAAABQ=	000000021	Комплетэк	7c14843c-1caf-11e5-a6e0-6c626df87d4c	5
+Уральскстройинвест      КАЗАХСТАН	AAAAAQAAABs=	000000028	Уральскстройинвест      КАЗАХСТАН	0b0743e2-1cc5-11e5-a6e0-6c626df87d4c	6
+Саминтех (Би Питрон)	AAAAAQAAABw=	000000029	Саминтех (Би Питрон)	0b0743e6-1cc5-11e5-a6e0-6c626df87d4c	7
+Стройиндустрия	AAAAAQAAAB0=	000000030	Стройиндустрия	ba9a1329-1cc9-11e5-a6e0-6c626df87d4c	8
+СЕРВИПРЕСС	AAAAAQAAAB8=	000000032	СЕРВИПРЕСС	ba9a1334-1cc9-11e5-a6e0-6c626df87d4c	9
+ПРОМТЕХО НПО 231-45-47 Артем	AAAAAQAAACA=	000000033	ПРОМТЕХО НПО 231-45-47 Артем	ba9a133f-1cc9-11e5-a6e0-6c626df87d4c	10
+Дикомп-Классик филиал	AAAAAQAAACE=	000000034	Дикомп-Классик филиал	ba9a134e-1cc9-11e5-a6e0-6c626df87d4c	11
+СТМ	AAAAAQAAACM=	000000197	СТМ	e2af108d-9133-11e6-b081-6c626df87d4c	12
+Нетч Пампс Рус	AAAAAQAAACQ=	000000037	Нетч Пампс Рус	f5abb1d9-1ccc-11e5-a6e0-6c626df87d4c	13
+Форш	AAAAAQAAACc=	000000040	Форш	88251330-1cd6-11e5-a6e0-6c626df87d4c	14
+КОМПАНЬОН	AAAAAQAAACg=	000000041	КОМПАНЬОН	9087d498-1cdc-11e5-a6e0-6c626df87d4c	15
+Прогресс 228-55-54	AAAAAQAAACw=	000000045	Прогресс 228-55-54	be19a982-2ac5-11e5-8b44-50465d50a210	16
+Стройсервис	AAAAAQAAAC0=	000000046	Стройсервис	be19a985-2ac5-11e5-8b44-50465d50a210	17
+УРАЛЭНЕРГОСЕРВИС	AAAAAQAAAC8=	000000048	УРАЛЭНЕРГОСЕРВИС	6fd3510c-2edc-11e5-8d32-50465d50a210	18
+ПРИВОЛГА	AAAAAQAAADE=	000000157	ПРИВОЛГА	989a7dcb-20e9-11e6-b0f7-6c626df87d4c	19
+Гидроком  АТП  давно ЗАКРЫТ	AAAAAQAAADU=	000000054	Гидроком  АТП  давно ЗАКРЫТ	60bc9d5c-35d1-11e5-8b39-6c626df87d4c	20
+Гидроком  К	AAAAAQAAADY=	000000055	Гидроком  К	60bc9d66-35d1-11e5-8b39-6c626df87d4c	21
+Лима-Сервис	AAAAAQAAADc=	000000056	Лима-Сервис	2aebad31-368c-11e5-851b-6c626df87d4c	22
+ЛАКТО	AAAAAQAAADg=	000000057	ЛАКТО	b6b88e90-36ae-11e5-bfa1-001e8c89ab40	23
+СПЗ-4	AAAAAQAAADk=	000000058	СПЗ-4	92d9e99a-3782-11e5-a9c7-6c626df87d4c	24
+Самара-Ойл ТД  200-11-41,45	AAAAAQAAADs=	000000060	Самара-Ойл ТД  200-11-41,45	a7c04dad-3a6b-11e5-a93b-50465d50a210	25
+Хлебозавод	AAAAAQAAADw=	000000061	Хлебозавод	57b1833e-3b42-11e5-8003-50465d50a210	26
+Самарастрой-Холдинг	AAAAAQAAAD0=	000000062	Самарастрой-Холдинг	afa8513e-3ce6-11e5-a92f-6c626df87d4c	27
+Услада	AAAAAQAAAD4=	000000063	Услада	3279e1af-3ffc-11e5-8af3-50465d50a210	28
+Самарская КК Филиал "Самарский Кабельный Завод"  228-24-90 - Надежда,	AAAAAQAAAD8=	000000064	Самарская КК Филиал "Самарский Кабельный Завод"  228-24-90 - Надежда,	063981a0-40c3-11e5-957f-50465d50a210	29
+СККМ_НОВЫЙ кпп грузополуч 631801001	AAAAAQAAAEA=	000000065	СККМ_НОВЫЙ кпп грузополуч 631801001	146da9c1-40d6-11e5-957f-50465d50a210	30
+Сызранская Керамика	AAAAAQAAAEE=	000000066	Сызранская Керамика	146da9c4-40d6-11e5-957f-50465d50a210	31
+АВИАСТАР-СП	AAAAAQAAAEM=	000000068	АВИАСТАР-СП	5676e1d2-40e0-11e5-957f-50465d50a210	32
+САМ-ПО	AAAAAQAAAEQ=	000000069	САМ-ПО	1cc310a3-41bd-11e5-a939-6c626df87d4c	33
+Сервис	AAAAAQAAAEk=	000000074	Сервис	dd461da8-4ca9-11e5-93a2-50465d50a210	34
+Средневолжская трубно-механическая компания	AAAAAQAAAEo=	000000075	Средневолжская трубно-механическая компания	dd461dac-4ca9-11e5-93a2-50465d50a210	35
+ЭкоСистема	AAAAAQAAAEw=	000000077	ЭкоСистема	eb8c88f2-586a-11e5-854c-6c626df87d4c	36
+Золушка-С Татьяна Викторовна 955-02-11	AAAAAQAAAE0=	000000078	Золушка-С Татьяна Викторовна 955-02-11	615d4ce3-5ab4-11e5-9ce6-50465d50a210	37
+Тяжмаш АО НОВЫЙ!	AAAAAQAAAFA=	000000081	Тяжмаш АО НОВЫЙ!	2f0ee522-5d18-11e5-9b06-50465d50a210	38
+РосПлит	AAAAAQAAAFU=	000000086	РосПлит	990b7768-6cbb-11e5-961c-001e8c89ab40	39
+Акрон	AAAAAQAAAFo=	000000091	Акрон	dbe5c4bb-73c6-11e5-a244-50465d50a210	40
+Ника Самара	AAAAAQAAAFs=	000000092	Ника Самара	dbe5c4c4-73c6-11e5-a244-50465d50a210	41
+Теплостар (до 10.03.2016 Электрус)	AAAAAQAAAGA=	000000097	Теплостар (до 10.03.2016 Электрус)	fc1fa83b-838e-11e5-b552-50465d50a210	42
+АО СКК "Самарский Кабельный Завод" НЕ БРАТЬ С 1окт16	AAAAAQAAAGI=	000000099	АО СКК "Самарский Кабельный Завод" НЕ БРАТЬ С 1окт16	f925e3b3-8cf3-11e5-94a8-50465d50a210	43
+ЕПК Самара	AAAAAQAAAGQ=	000000101	ЕПК Самара	af926eb6-98c7-11e5-b7c9-6c626df87d4c	44
+СНН-Транспорт	AAAAAQAAAGY=	000000103	СНН-Транспорт	1871933f-9caa-11e5-9792-50465d50a210	45
+ЭнерДжет Системс	AAAAAQAAAGk=	000000106	ЭнерДжет Системс	a1d8d3b4-a3cc-11e5-9638-50465d50a210	46
+Бикор БМП	AAAAAQAAAG4=	000000111	Бикор БМП	a58467a5-bf40-11e5-9e12-50465d50a210	47
+Самарский завод слоистых пластиков	AAAAAQAAAG8=	000000112	Самарский завод слоистых пластиков	7a00dc81-c005-11e5-8246-50465d50a210	48
+Фриз-продукт Татьяна Викторовна, секретарь Ольга 955-02-11	AAAAAQAAAHc=	000000120	Фриз-продукт Татьяна Викторовна, секретарь Ольга 955-02-11	bd0493a2-c8a6-11e5-aec3-50465d50a210	49
+Адверс	AAAAAQAAAHk=	000000122	Адверс	ce8ed248-cb04-11e5-9fdc-50465d50a210	50
+Тольяттимолоко	AAAAAQAAAH0=	000000126	Тольяттимолоко	74f223a3-d3b7-11e5-8975-50465d50a210	51
+СТС-Люкс ООО	AAAAAQAAAH8=	000000128	СТС-Люкс ООО	6cf8e248-dbb5-11e5-b802-6c626df87d4c	52
+Гелиос	AAAAAQAAAIA=	000000129	Гелиос	b6a7a0b2-df86-11e5-aa87-6c626df87d4c	53
+Ковротекс	AAAAAQAAAIQ=	000000133	Ковротекс	02d357ac-ec35-11e5-9425-50465d50a210	54
+Посейдон Архипов Алексей Николаевич 8-927-700-55-94	AAAAAQAAAIY=	000000135	Посейдон Архипов Алексей Николаевич 8-927-700-55-94	797ee3b5-ef25-11e5-8900-50465d50a210	55
+ННК АО	AAAAAQAAAIc=	000000136	ННК АО	3dd0c45b-f192-11e5-bd56-6c626df87d4c	56
+Приволжскнефтепровод	AAAAAQAAAIk=	000000138	Приволжскнефтепровод	b02bd0d1-f5a2-11e5-83fc-6c626df87d4c	57
+Пальмира СДК ООО	AAAAAQAAAIs=	000000140	Пальмира СДК ООО	8160d6cb-f713-11e5-9d9d-50465d50a210	58
+Юнитерм	AAAAAQAAAJI=	000000147	Юнитерм	dd3c8584-06b4-11e6-95f9-50465d50a210	59
+ИнженерМаркет	AAAAAQAAAJU=	000000150	ИнженерМаркет	3ef3b0e3-0d09-11e6-b26a-50465d50a210	60
+НаДО 8(84661) 5-15-51	AAAAAQAAAJ0=	000000160	НаДО 8(84661) 5-15-51	18416a3a-2635-11e6-b85f-6c626df87d4c	61
+АЙС-ВОЛГА   ООО	AAAAAQAAAKA=	000000163	АЙС-ВОЛГА   ООО	2038c8cd-2d44-11e6-bb25-6c626df87d4c	62
+ИП Незнамов И.И.	AAAAAQAAAKY=	000000169	ИП Незнамов И.И.	eedee4b5-3f6d-11e6-a09d-001e8c89ab40	63
+Метком	AAAAAQAAAKw=	000000175	Метком	3014a524-4729-11e6-8d68-50465d50a210	64
+Альянс-Полимер	AAAAAQAAAK8=	000000178	Альянс-Полимер	584da7ca-4e37-11e6-bbab-50465d50a210	65
+Стройторг	AAAAAQAAALI=	000000181	Стройторг	0e26b705-5553-11e6-bc11-50465d50a210	66
+ТексИнвест	AAAAAQAAALQ=	000000183	ТексИнвест	0750719e-5df2-11e6-8298-50465d50a210	67
+Магелан	AAAAAQAAALU=	000000184	Магелан	344134bc-6446-11e6-9772-50465d50a210	68
+ООО Мясоптицекомбинат "Поволжский"	AAAAAQAAALc=	000000187	ООО Мясоптицекомбинат "Поволжский"	6e2c6381-74e9-11e6-b8d9-6c626df87d4c	69
+Тройка	AAAAAQAAALw=	000000193	Тройка	a6e8393e-8559-11e6-8c09-001e8c89ab40	70
+ДВК ТД	AAAAAQAAAL4=	000000195	ДВК ТД	cf430dbf-86fb-11e6-bc00-50465d50a210	71
+АО "СКК" НОВЫЙ с 01.10.16	AAAAAQAAAL8=	000000196	АО "СКК" НОВЫЙ с 01.10.16	c09d4aab-8926-11e6-b89b-6c626df87d4c	72
+Энергощит	AAAAAQAAAMA=	000000198	Энергощит	5087d34f-9215-11e6-832c-6c626df87d4c	73
+Техэнергопром	AAAAAQAAAME=	000000199	Техэнергопром	9769f170-9526-11e6-82ae-6c626df87d4c	74
+Центр Строй	AAAAAQAAANI=	000000216	Центр Строй	829297fc-b606-11e6-be56-6c626df87d4c	75
+ЧЛ-Покупатель	AAAAAQAAANo=	000000224	ЧЛ-Покупатель	81df5bac-e214-11e6-871d-001e8c89ab40	76
+НОВОТЕКС главный офис	AAAAAQAAANs=	000000225	НОВОТЕКС главный офис	4fb8ffd1-e2ca-11e6-8d83-001e8c89ab40	77
+НОВОТЕКС димитровградский филиал	AAAAAQAAANw=	000000226	НОВОТЕКС димитровградский филиал	4fb8ffd4-e2ca-11e6-8d83-001e8c89ab40	78
+Самарский  филиал АО Сиб Трейд Сервис	AAAAAQAAAN4=	000000228	Самарский  филиал АО Сиб Трейд Сервис	d3e9c834-ff1e-11e6-97a5-6c626df87d4c	79
+КИНЕЛЬСКАЯ ЦБГИР	AAAAAQAAAOc=	000000237	КИНЕЛЬСКАЯ ЦБГИР	56c84c6d-3715-11e7-b8c9-6c626df87d4c	80
+Салют	AAAAAQAAAPA=	000000246	Салют	b12ee6e2-4cec-11e7-b170-001e8c89ab40	81
+Наш Партнер	AAAAAQAAAPo=	000000256	Наш Партнер	13ee3bfa-8184-11e7-9655-6c626df87d4c	82
+Бенчмарк	AAAAAQAAAQA=	000000262	Бенчмарк	74d1e599-9c4c-11e7-90d6-50465d50a210	83
+УСС	AAAAAQAAAQI=	000000264	УСС	00c664c4-9f68-11e7-8c72-6c626df87d4c	84
+СИТ (Би Питрон)	AAAAAQAAAQQ=	000000266	СИТ (Би Питрон)	e0a54ed9-a804-11e7-b961-6c626df87d4c	85
+Сервис Д	AAAAAQAAAQU=	000000267	Сервис Д	5177a864-acbd-11e7-aad2-6c626df87d4c	86
+АгроГард	AAAAAQAAAQc=	000000269	АгроГард	6b444ff3-b7c2-11e7-af09-50465d50a210	87
+РТС	AAAAAQAAAQ4=	000000276	РТС	80e05c18-cea5-11e7-b377-50465d50a210	88
+Европринт	AAAAAQAAARI=	000000280	Европринт	93b61764-f6ad-11e7-81f0-50465d50a210	89
+КВОиТ	AAAAAQAAARc=	000000285	КВОиТ	81653383-0d5f-11e8-82ca-6c626df87d4c	90
+Стройавтокран	AAAAAQAAARk=	000000287	Стройавтокран	3bb59ea2-1236-11e8-a8f9-6c626df87d4c	91
+ИП Улитов Сергей Викторович	AAAAAQAAASI=	000000296	ИП Улитов Сергей Викторович	ca81885d-3efd-11e8-a53c-6c626df87d4c	92
+АО "НК НПЗ"	AAAAAQAAATQ=	000000314	АО "НК НПЗ"	535adc66-9ba8-11e8-8bbf-6c626df87d4c	93
+ГК ТСК	AAAAAQAAAT4=	000000324	ГК ТСК	9f1e97a0-cb89-11e8-a892-50465d50a210	94
+Закрытое акционерное общество «Энергомашкомплект»	AAAAAQAAAUk=	000000336	Закрытое акционерное общество «Энергомашкомплект»	53d3b63d-fcd9-11e8-a590-50465d50a210	95
+СПК КОЛХОЗ-ПЛЕМЗАВОД ИМЕНИ ЛЕНИНА	AAAAAQAAAUs=	000000338	СПК КОЛХОЗ-ПЛЕМЗАВОД ИМЕНИ ЛЕНИНА	7e8a8356-25f2-11e9-b5dd-6c626df87d4c	96
+ЭЛКОН РИТЕЙЛ	AAAAAQAAAU8=	000000342	ЭЛКОН РИТЕЙЛ	78136a56-311d-11e9-b498-6c626df87d4c	97
+БТ-Пром	AAAAAQAAAVA=	000000343	БТ-Пром	3a5ee6c6-34e1-11e9-99f0-50465d50a210	98
+УРАЛЭНЕРГОСЕРВИС, ООО - НОВЫЙ !	AAAAAQAAAVQ=	000000347	УРАЛЭНЕРГОСЕРВИС, ООО - НОВЫЙ !	aab3c76a-4a1e-11e9-be3e-50465d50a210	99
+АВТОАЛЬЯНС (Liqui Moly) +7 (987) 438-48-87 Сергей пос.Смышляевка	AAAAAQAAAWE=	000000361	АВТОАЛЬЯНС (Liqui Moly) +7 (987) 438-48-87 Сергей пос.Смышляевка	9e16a452-60e5-11e9-b592-6c626df87d4c	100
+Вольтэко	AAAAAQAAAWM=	000000363	Вольтэко	dd71db8a-6a76-11e9-8252-6c626df87d4c	101
+ТехПромАрма	AAAAAQAAAXo=	000000387	ТехПромАрма	8a2a3659-b368-11e9-bab4-6c626df87d4c	102
+ФИЛЬТР	AAAAAQAAAXw=	000000389	ФИЛЬТР	69b90b5b-b822-11e9-b52b-6c626df87d4c	103
+ПРИВОЛГА - Бугурусланский филиал	AAAAAQAAAYA=	000000393	ПРИВОЛГА - Бугурусланский филиал	04a32a4d-c7e7-11e9-9cf1-50465d50a210	104
+СМАК-СЕРВИС	AAAAAQAAAYI=	000000395	СМАК-СЕРВИС	06044471-d45d-11e9-940c-50465d50a210	105
+Самаратехсервис	AAAAAQAAAYU=	000000398	Самаратехсервис	6a6299eb-e8dd-11e9-bb74-50465d50a210	106
+ТЕХМЕТ-СНАБ	AAAAAQAAAZI=	000000411	ТЕХМЕТ-СНАБ	1a412f0e-3dae-11ea-bd75-50465d50a210	107
+Сфера-Ойл	AAAAAQAAAZQ=	000000413	Сфера-Ойл	f006f982-440a-11ea-910b-6c626df87d4c	108
 

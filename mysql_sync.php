@@ -348,7 +348,6 @@ if(isset($_POST['sync_file'])){
 
                 $gotuid = $database->prepare("SELECT `sellers_uid` FROM `sellers` WHERE `sellers_uid` = ?");
 
-
                 foreach ($file_array as $row){
                     $temp_array = explode(';',$row);
                     $uid_trimmed = substr($temp_array[3],0,-2);
@@ -358,9 +357,12 @@ if(isset($_POST['sync_file'])){
                     $gotsome = $gotuid->fetch(PDO::FETCH_ASSOC);
 
                     //Если такой uid есть - ничего не делаем
-                    if(is_string($gotsome['sellers_uid']) && $uid_trimmed == $gotsome['sellers_uid']){
+
+                    $string_1 = isset($gotsome['sellers_uid'])? $gotsome['sellers_uid'] : null;
+
+                    if(is_string($string_1) && $uid_trimmed == $string_1){
                         //echo"<li> Уже в базе --- ".$temp_array[1]."</li>";
-                        $synched[]="<li> Уже в базе --- ".$temp_array[1]."</li>";
+                            $synched[]="<li> Уже в базе --- ".$temp_array[1]."</li>";
                         /*ничего не выводим*/
 
                     }else{
@@ -774,7 +776,7 @@ if(isset($_POST['sync_file'])){
                          * */
                         $database->beginTransaction();
                         $check_purchase->execute(array($temp_array[0], $temp_array[4]));
-                        $check_purchase_fetched = $check_purchase->fetch(PDO::FETCH_ASSOC);
+                        $check_purchase_fetched = $check_purchase->fetchAll(PDO::FETCH_ASSOC);
 
                         //echo "<pre>";
                         //print_r($check_purchase_fetched);
@@ -782,7 +784,7 @@ if(isset($_POST['sync_file'])){
 
                         $good_date = substr($temp_array[2],6,4 )."-".substr($temp_array[2],3,2)."-".substr($temp_array[2],0,2);
 
-                        if(count($check_purchase_fetched['purchases_uid']) > 0){
+                        if(count($check_purchase_fetched) > 0){
                             $update_purchase->execute(array($temp_array[1],$good_date,$temp_array[3],$temp_array[5],$temp_array[6],$temp_array[7],$temp_array[8],$temp_array[0],$temp_array[4]));
                         }else{
                             $insert_purchase->execute(array($temp_array[0],$temp_array[1],$good_date,$temp_array[3],$temp_array[4],$temp_array[5],$temp_array[6],$temp_array[7],$temp_array[8]));

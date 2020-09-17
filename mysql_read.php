@@ -86,7 +86,24 @@ if(isset($_POST['table'])){
             };
             /*Список заявок по названию заявки*/
             if($category == 'request'){
-                $statement = $pdo->prepare("SELECT 
+
+                if(isset($_POST['is_onec'])){
+                    $statement = $pdo->prepare("SELECT 
+                                        a.created AS req_date,
+                                        a.requests_id AS req_id,
+                                        a.requests_nameid AS req_nameid,
+                                        a.requests_uid AS req_uid,
+                                        a.name AS req_name,
+                                        a.1c_num AS 1c_num,
+                                        b.byers_id AS b_id,
+                                        b.byers_nameid AS b_nameid,
+                                        b.name AS b_name,
+                                        a.req_rent AS rent,
+                                        a.req_sum AS sum
+                                        FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
+                                        WHERE a.requests_uid = ? ORDER BY req_date DESC");
+                }else{
+                    $statement = $pdo->prepare("SELECT 
                                         a.created AS req_date,
                                         a.requests_id AS req_id,
                                         a.requests_nameid AS req_nameid,
@@ -100,6 +117,7 @@ if(isset($_POST['table'])){
                                         a.req_sum AS sum
                                         FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
                                         WHERE a.requests_id = ? ORDER BY req_date DESC");
+                }
                 $statement_ip = $pdoip->prepare("SELECT 
                                         a.created AS req_date,
                                         a.requests_id AS req_id,
@@ -748,13 +766,215 @@ if(isset($_POST['table'])){
             print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
         }
         /**//////////////////////////////////////////////////////////////
+    }
+    else if ($table == 'zp'){
+        try{
+
+
+
+
+            $result ="<!--<select class='zp_show_year'>
+              <option>2020</option>
+              <option>2021</option>
+            </select>-->";
+
+            $result .= "<h1>Зарплатная ведомость за 2020 год</h1>";
+
+            $result .="<h3 class='header_count' style='cursor: pointer'>Начислить</h3>
+            <div class='add_zp_count'>                
+            
+            <select class='zp_count_year'>
+              <option>2020</option>
+              <option>2021</option>
+            </select>
+            
+            <select class='zp_count_worker' size='10'>
+              <option>Марина</option>
+              <option>Сергей</option>
+              <option>Дмитрий</option>
+              <option>Ирина</option>
+              <option>Тимур</option>
+              <option>Милана</option>
+              <option>Литовкин</option>
+              <option>Проценты Сергей</option>
+              <option>Гагарина</option>
+              <option>Павлова</option>
+            </select>  
+            
+            <select class='zp_count_month' size='12'>
+              <option>Январь</option>
+              <option>Февраль</option>
+              <option>Март</option>
+              <option>Апрель</option>
+              <option>Май</option>
+              <option>Июнь</option>
+              <option>Июль</option>
+              <option>Август</option>
+              <option>Сентябрь</option>
+              <option>Октябрь</option>
+              <option>Ноябрь</option>
+              <option>Декабрь</option>
+            </select>
+            
+            <input type='number' class='zp_count_amount' style='text-align: center' placeholder='Сумма'>
+            <input type='button' value='Начислить' id='add_zp_count'>
+            
+            
+            
+            </div>";
+            $result .="<h3 class='header_give' style='cursor: pointer'>Выдать</h3>
+            <div class='add_zp_give'>              
+            
+            <select class='zp_give_worker' size='10'>
+              <option>Марина</option>
+              <option>Сергей</option>
+              <option>Дмитрий</option>
+              <option>Ирина</option>
+              <option>Тимур</option>
+              <option>Милана</option>
+              <option>Литовкин</option>
+              <option>Проценты Сергей</option>              
+              <option>Гагарина</option>
+              <option>Павлова</option>
+            </select>
+            
+            <select class='zp_give_source' size='6'>
+              <option>Юни ЗП</option>
+              <option>ИП Услуги</option>
+              <option>ТКС</option>
+              <option>Учредитель</option>
+              <option>Касса</option>              
+            </select>
+            
+            <input class='zp_give_date' type='date'size='1' value='2020-01-01'>
+            
+            <!--<select class='zp_count_year'>
+              <option>2020</option>
+              <option>2021</option>
+            </select>
+            
+            <select class='zp_count_month'>
+              <option>Январь</option>
+              <option>Февраль</option>
+              <option>Март</option>
+              <option>Апрель</option>
+              <option>Май</option>
+              <option>Июнь</option>
+              <option>Июль</option>
+              <option>Август</option>
+              <option>Сентябрь</option>
+              <option>Октябрь</option>
+              <option>Ноябрь</option>
+              <option>Декабрь</option>
+            </select>-->
+            
+            <input type='number' class='zp_give_amount' style='text-align: center' placeholder='Сумма'>
+            <input type='text' class='zp_give_comment' style='text-align: center' placeholder='Комментарий'>
+            <input type='button' value='Выдать' id='add_zp_give'>
+            
+            
+            
+            </div><div class='where_details'></div>";
+
+            
+            
+            $result .="<br><br><table>";
+            $result .="
+                <thead>
+                      <th></th>
+                      <th>Январь</th>
+                      <th>Февраль</th>
+                      <th>Март</th>
+                      <th>Апрель</th>
+                      <th>Май</th>
+                      <th>Июнь</th>
+                      <th>Июль</th>
+                      <th>Август</th>
+                      <th>Сентябрь</th>
+                      <th>Октябрь</th>
+                      <th>Ноябрь</th>
+                      <th>Декабрь</th>
+                      <th>Сумма</th>
+                      <th>Выдано</th>
+                      <th>Долг</th>
+                </thead>";
+
+            $workers = ['Марина', 'Сергей', 'Дмитрий', 'Тимур', 'Ирина', 'Милана', 'Литовкин', 'Проценты Сергей', 'Гагарина', 'Павлова'];
+            $months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+
+            $zp_counts = $pdo->prepare("SELECT * FROM zp_count WHERE worker = ?");
+            $zp_gives = $pdo->prepare("SELECT * FROM zp_give WHERE worker = ? ORDER BY given ASC");
+
+            foreach ($workers as $worker)
+            {
+                $zp_counts->execute(array($worker));
+                $zp_gives->execute(array($worker));
+
+                $counts_fetched = $zp_counts->fetchAll(PDO::FETCH_ASSOC);
+                $gives_fetched = $zp_gives->fetchAll(PDO::FETCH_ASSOC);
+
+                $result .= "<tr>";
+                $result .= "<td>".$worker."</td>";
+
+
+
+                $counted_sum = 0;
+                foreach ($months as $month){
+                    $result .= "<td style='text-align: center'>";
+                    $month_sum = 0;
+                    foreach($counts_fetched as $zp_count){
+
+                        if($zp_count['month'] == $month){
+
+                            $counted_sum = $counted_sum + $zp_count['amount'];
+                            $month_sum = $month_sum + $zp_count['amount'];
+                        }
+                    }
+                    $result .= "<span>".number_format($month_sum,'0','.',' ')."</span>";
+                    $result .= "</td>";
+                }
+
+                $result .= "<td style='text-align: center' class='counted_sum'>".number_format($counted_sum,'0','.',' ')."</td>";
+
+                $given_sum = 0;
+                $gives_count = 0;
+                $gives_list = "";
+                foreach($gives_fetched as $zp_give){
+                    $gives_count = $gives_count+1;
+                    $given_sum = $given_sum + $zp_give['amount'];
+
+                    $phpdate = strtotime( $zp_give['given'] );
+                    $zp_give['given'] = date( 'd.m', $phpdate );
+
+                    $gives_list .="<span source='".$zp_give['source']."'>".$zp_give['given']." ~ ".number_format($zp_give['amount'],'2',',',' ')." ".$zp_give['comment']."</span>";
+                }
+
+                $result .= "<td style='text-align: center' class='given_sum'>".number_format($given_sum,'2','.',' ')."<div class='give_details'><span>Выдачи ".$worker.": </span><br><div class='show_them_flex'>".$gives_list."</div></div></td>";
+
+                $debt = $counted_sum - $given_sum;
+
+                $result .= "<td style='text-align: center' class='debt'>".number_format($debt,'0','.',' ')."</td>";
+
+                $result .= "</tr>";
+            };
+
+            $result .="</table>";
+
+            print $result;
+
+        } catch( PDOException $Exception ) {
+            // Note The Typecast To An Integer!
+            print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+        }
     };
 };
 /*///////////////////////////////////////////////////*/
 
 /*СОДЕРЖИМОЕ ЗАЯВКИ - СПИСОК ПОЗИЦИЙ///////////////////////////////////////////////////////////////////////////////////////////////////*/
 if (isset($_POST['requestid'])){
+
     $req_id=$_POST['requestid'];
+
     $result="";
     try{
         $nowinners = $database->prepare("SELECT `pos_name`, `req_positionid`, `line_num`, `winnerid` FROM `req_positions` WHERE `requestid`=? ORDER BY `line_num` ASC");
@@ -1141,7 +1361,6 @@ if(isset($_POST['winner_trade'])){
 
 }
 
-
 //ИНФА список накладных в расценке
 if(isset($_POST['executes_list'])){
     $reqid= $_POST['executes_list'];
@@ -1168,8 +1387,118 @@ if(isset($_POST['executes_list'])){
     // Note The Typecast To An Integer!
     print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
 }
-
-
-
 }
 
+//Возврат byers_id по 1c_num из 1С при добавлении заказа из модуля 1C
+if(isset($_POST['1c_module_num'])){
+    $onecnum= $_POST['1c_module_num'];
+    $get_byers_id = $database->prepare("SELECT byers_id FROM byers WHERE onec_id = ?");
+
+    try{
+        $database->beginTransaction();
+        $get_byers_id->execute(array($onecnum));
+        $get_byers_id_fetched = $get_byers_id->fetch(PDO::FETCH_ASSOC);
+
+        if(isset($get_byers_id_fetched["byers_id"])){
+            echo $get_byers_id_fetched["byers_id"];
+        }else{
+            echo "NONE";
+        }
+
+    }catch( PDOException $Exception ) {
+        $database->rollback();
+        // Note The Typecast To An Integer!
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+    }
+}
+
+//Возврат trades_id по 1c_num из 1С при добавлении заказа из модуля 1C
+if(isset($_POST['1c_trades_module_num'])){
+    $onecnum= $_POST['1c_trades_module_num'];
+    $get_trades_id = $database->prepare("SELECT trades_id FROM trades WHERE onec_id = ?");
+
+    try{
+        $database->beginTransaction();
+        $get_trades_id->execute(array($onecnum));
+        $get_trades_id_fetched = $get_trades_id->fetch(PDO::FETCH_ASSOC);
+
+        echo $get_trades_id_fetched["trades_id"];
+
+    }catch( PDOException $Exception ) {
+        $database->rollback();
+        // Note The Typecast To An Integer!
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+    }
+}
+
+//Возврат trade_id по 1c_num из 1С при добавлении расценки заказа из модуля 1C
+if(isset($_POST['1c_module_num_trades'])){
+    $onecnum= $_POST['1c_module_num_trades'];
+    $get_trades_id = $database->prepare("SELECT trades_id FROM trades WHERE onec_id = ?");
+
+    try{
+        $database->beginTransaction();
+        $get_trades_id->execute(array($onecnum));
+        $get_trades_id_fetched = $get_trades_id->fetch(PDO::FETCH_ASSOC);
+
+        echo $get_trades_id_fetched["trades_id"];
+
+    }catch( PDOException $Exception ) {
+        $database->rollback();
+        // Note The Typecast To An Integer!
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+    }
+}
+
+//Возврат requestid по requests_uid из 1С при добавлении заказа из модуля 1c
+if(isset($_POST['1c_module_request_uid'])){
+    $uid= $_POST['1c_module_request_uid'];
+    $get_requestid = $database->prepare("SELECT requests_id FROM prices.requests WHERE requests_uid = ?");
+
+    try{
+        $database->beginTransaction();
+        $get_requestid->execute(array($uid));
+        $get_requestid_fetched = $get_requestid->fetch(PDO::FETCH_ASSOC);
+
+        if(isset($get_requestid_fetched["requests_id"])){
+            echo $get_requestid_fetched["requests_id"];
+        }else{
+            echo "NONE";
+        }
+        //echo gettype();
+
+    }catch( PDOException $Exception ) {
+        $database->rollback();
+        // Note The Typecast To An Integer!
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+    }
+}
+
+//Возврат requests_uid и dataver по requests_uid из 1С при добавлении заказа из модуля 1c
+if(isset($_POST['requests_list_uid']) && isset($_POST['requests_list_dataver'])){
+    $uid= $_POST['requests_list_uid'];
+    $dataver= $_POST['requests_list_dataver'];
+    $check_request = $database->prepare("SELECT requests_uid, dataver FROM prices.requests WHERE requests_uid = ?");
+    try{
+        $database->beginTransaction();
+        $check_request->execute(array($uid));
+        $check_request_fetched = $check_request->fetchAll(PDO::FETCH_ASSOC);
+        if(isset($check_request_fetched[0]["requests_uid"]))
+        {
+            if($dataver == $check_request_fetched[0]["dataver"])
+            {
+                print 2;   //Просто открываем
+            }else
+                {
+                    print 3;   //Обновляем
+                }
+        }else
+            {
+                print 1;       //Добавляем
+            }
+    }catch( PDOException $Exception ) {
+        $database->rollback();
+        // Note The Typecast To An Integer!
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+    }
+}

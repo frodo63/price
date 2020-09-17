@@ -1123,3 +1123,66 @@ tr[pricingid] td {border: 1px solid black}
 .up{
   display: block;
 }
+
+.zp_list table{
+  line-height: 30px;
+  font-size: 18px;
+  vertical-align: middle;
+  position: relative;
+}
+
+.zp_list tbody tr:hover .give_details{
+  display: block;
+}
+
+.zp_list tbody tr:hover{
+  background: green;
+  color: white;
+}
+
+.give_details{
+  display: none;
+  position: absolute;
+  width: 98%;
+  top: -244px;
+  left: 0px;
+  text-align: left;
+  font-size: 16px;
+  background: white;
+  color: black;
+  padding: 15px;
+  border-radius: 5px;
+  overflow: auto;
+  padding: 0;
+  &>span{
+    color: green;
+    font-weight: bold;
+  }
+}
+
+.show_them_flex{
+  display: inline-flex;
+  flex-wrap: wrap;
+  flex-flow: wrap;
+  flex-direction: column;
+  max-height: 220px;
+  span{
+    width: 240px;
+    max-width: 240px;
+  }
+}
+
+.where_details {
+  display: block;
+  min-height: 210px;
+}
+
+.zp_count_worker option:checked, .zp_give_worker option:checked, .zp_count_month option:checked{
+  background-color: green !important;
+  color: white !important;
+}
+
+.add_zp_count, .add_zp_give {
+  display: none;
+}
+

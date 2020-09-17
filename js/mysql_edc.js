@@ -1,5 +1,28 @@
 $(document).ready(function() {
 
+    $(".social button").click(function(event){
+        var screenWidth = $(window).width();
+        if (screenWidth > 980){
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val($(this).text()).select();
+            document.execCommand("copy");
+            $temp.remove();
+            $('.social').append('<div class="alert_number">НОМЕР СКОПИРОВАН</div>');
+            $('.alert_number').delay( 2000 ).fadeOut( 400 );
+        }else{
+            switch($(event.target).attr('app')) {
+                case 'viber':
+                    $('.social').append('<div class="alert_number"><a href="viber://chat?number=+79090768993">Viber</a></div>');
+                    break;
+
+                case 'whatsapp':
+                    $('.social').append('<div class="alert_number"><a href="whatsapp://send?phone=+79090768993">WhatsApp</a></div>');
+                    break;
+            }
+        }
+    });
+
     /*СКРЫВАНИЕ ДИВА creates по нажатию на плюсик*/
     $(document).off('click.addnew').on('click.addnew', '.addnew', function (event) {
         $(event.target).next('.creates').toggle().toggleClass('add_ramk');
@@ -213,7 +236,7 @@ $(document).ready(function() {
             $(event.target).parents('#sync_add_to_base').length > 0
         ){
             var reqid = $(event.target).attr('requestid');
-            var posname = $(event.target).attr('posname');
+            var posname = $(event.target).attr('posname');general_oils_motor
             var linenum = $(event.target).attr('linenum');
             var db = $(event.target).attr('database');
 

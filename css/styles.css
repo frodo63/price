@@ -63,8 +63,8 @@ input {
   left: 0vw;
 }
 
-/*Выпадающий список*/
-/*Блок выпадающих элементов*/
+/*╨Т╤Л╨┐╨░╨┤╨░╤О╤Й╨╕╨╣ ╤Б╨┐╨╕╤Б╨╛╨║*/
+/*╨С╨╗╨╛╨║ ╨▓╤Л╨┐╨░╨┤╨░╤О╤Й╨╕╤Е ╤Н╨╗╨╡╨╝╨╡╨╜╤В╨╛╨▓*/
 /* line 54, ../sass/_mysql_styles.scss */
 #thesearch {
   text-align: -webkit-center;
@@ -100,7 +100,7 @@ input {
   font-size: 3vh;
 }
 
-/*при наведении цвет под тогглящийся класс*/
+/*╨┐╤А╨╕ ╨╜╨░╨▓╨╡╨┤╨╡╨╜╨╕╨╕ ╤Ж╨▓╨╡╤В ╨┐╨╛╨┤ ╤В╨╛╨│╨│╨╗╤П╤Й╨╕╨╣╤Б╤П ╨║╨╗╨░╤Б╤Б*/
 /* line 84, ../sass/_mysql_styles.scss */
 #sres ul li:hover, #byer + div ul li:hover, #byer_interval + div ul li:hover, #trade + div ul li:hover, #seller + div ul li:hover, #sres ul li .sres li:hover,
 .sync_byer + div ul li:hover, .sync_trade + div ul li:hover, .sync_seller + div ul li:hover, #sres ul li .sres li:hover, .sync_request + div ul li:hover, .sync_payment + div ul li:hover {
@@ -109,13 +109,13 @@ input {
   border-color: grey;
 }
 
-/*точечки списковые убраны*/
+/*╤В╨╛╤З╨╡╤З╨║╨╕ ╤Б╨┐╨╕╤Б╨║╨╛╨▓╤Л╨╡ ╤Г╨▒╤А╨░╨╜╤Л*/
 /* line 93, ../sass/_mysql_styles.scss */
 #sres ul, #byer + div ul, #byer_interval + div ul, #trade + div ul, #seller + div ul, .sync_byer + div ul, .sync_trade + div ul, .sync_seller + div ul, .sync_request + div ul, .sync_payment + div ul {
   list-style: none;
 }
 
-/*границы элементов*/
+/*╨│╤А╨░╨╜╨╕╤Ж╤Л ╤Н╨╗╨╡╨╝╨╡╨╜╤В╨╛╨▓*/
 /* line 95, ../sass/_mysql_styles.scss */
 #sres ul li, #byer + div ul li, #byer_interval + div ul li, #trade + div ul li, #seller + div ul li, .sync_byer + div ul li, .sync_trade + div ul li, .sync_seller + div ul li, .sync_request + div ul li, .sync_payment + div ul li {
   border: 1px solid grey;
@@ -136,7 +136,7 @@ input {
   border: 1px solid grey;
 }
 
-/*Цветовая дифференциация выдачи*/
+/*╨ж╨▓╨╡╤В╨╛╨▓╨░╤П ╨┤╨╕╤Д╤Д╨╡╤А╨╡╨╜╤Ж╨╕╨░╤Ж╨╕╤П ╨▓╤Л╨┤╨░╤З╨╕*/
 /* line 112, ../sass/_mysql_styles.scss */
 li[category="byer"] {
   background-color: lightyellow;
@@ -162,7 +162,7 @@ li[category="payment"] {
   background-color: ghostwhite;
 }
 
-/*Маленькая пометочка в углу выдачи о категории*/
+/*╨Ь╨░╨╗╨╡╨╜╤М╨║╨░╤П ╨┐╨╛╨╝╨╡╤В╨╛╤З╨║╨░ ╨▓ ╤Г╨│╨╗╤Г ╨▓╤Л╨┤╨░╤З╨╕ ╨╛ ╨║╨░╤В╨╡╨│╨╛╤А╨╕╨╕*/
 /* line 129, ../sass/_mysql_styles.scss */
 .note {
   position: absolute;
@@ -173,13 +173,13 @@ li[category="payment"] {
   font-size: 1.5vh;
 }
 
-/*Позиционирование лист итема*/
+/*╨Я╨╛╨╖╨╕╤Ж╨╕╨╛╨╜╨╕╤А╨╛╨▓╨░╨╜╨╕╨╡ ╨╗╨╕╤Б╤В ╨╕╤В╨╡╨╝╨░*/
 /* line 138, ../sass/_mysql_styles.scss */
 #sres ul li, #byer + div ul li, #byer_interval + div ul li, #trade + div ul li, #seller + div ul li, .sync_seller + div ul li, .sync_byer + div ul li, .sync_trade + div ul li, .sync_request + div ul li, .sync_payment + div ul li {
   position: relative;
 }
 
-/*Абзац из выпадающего списка */
+/*╨Р╨▒╨╖╨░╤Ж ╨╕╨╖ ╨▓╤Л╨┐╨░╨┤╨░╤О╤Й╨╡╨│╨╛ ╤Б╨┐╨╕╤Б╨║╨░ */
 /* line 141, ../sass/_mysql_styles.scss */
 #sres ul li span {
   margin: 0;
@@ -195,8 +195,8 @@ li[category="payment"] {
 }
 
 /*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-/*Инпуты поиска в прайсформе*/
-/*Позиционирование лист итема*/
+/*╨Ш╨╜╨┐╤Г╤В╤Л ╨┐╨╛╨╕╤Б╨║╨░ ╨▓ ╨┐╤А╨░╨╣╤Б╤Д╨╛╤А╨╝╨╡*/
+/*╨Я╨╛╨╖╨╕╤Ж╨╕╨╛╨╜╨╕╤А╨╛╨▓╨░╨╜╨╕╨╡ ╨╗╨╕╤Б╤В ╨╕╤В╨╡╨╝╨░*/
 /* line 160, ../sass/_mysql_styles.scss */
 #byer div ul li, #byer_interval div ul li, #trade div ul li, #seller div ul li, .sync_byer div ul li,
 .sync_trade div ul li, .sync_seller div ul li, .sync_payment div ul li {
@@ -215,7 +215,7 @@ li[category="payment"] {
   left: 18.15vw;
 }
 
-/*Таблица расценок*/
+/*╨в╨░╨▒╨╗╨╕╤Ж╨░ ╤А╨░╤Б╤Ж╨╡╨╜╨╛╨║*/
 /* line 174, ../sass/_mysql_styles.scss */
 .pricings td {
   border: 1px solid grey;
@@ -224,7 +224,7 @@ li[category="payment"] {
 }
 
 /**/
-/*ОКНО РАСЦЕНОК ЕДИНОЕ ДЛЯ ВСЕХ ВВЕРХУ ЭКРАНА*/
+/*╨Ю╨Ъ╨Э╨Ю ╨а╨Р╨б╨ж╨Х╨Э╨Ю╨Ъ ╨Х╨Ф╨Ш╨Э╨Ю╨Х ╨Ф╨Ы╨п ╨Т╨б╨Х╨е ╨Т╨Т╨Х╨а╨е╨г ╨н╨Ъ╨а╨Р╨Э╨Р*/
 /* line 182, ../sass/_mysql_styles.scss */
 #pricingwindow {
   display: none;
@@ -263,7 +263,7 @@ li[category="payment"] {
   display: none;
 }
 
-/*Таблица заявок*/
+/*╨в╨░╨▒╨╗╨╕╤Ж╨░ ╨╖╨░╤П╨▓╨╛╨║*/
 /* line 219, ../sass/_mysql_styles.scss */
 table, td, tr, thead, th {
   border-collapse: collapse;
@@ -276,20 +276,20 @@ table {
   width: 100%;
 }
 
-/*Класс - таблица из результатов поиска. айдишник - таблица из табов*/
-/*Таблица первого уровня (заявки)*/
+/*╨Ъ╨╗╨░╤Б╤Б - ╤В╨░╨▒╨╗╨╕╤Ж╨░ ╨╕╨╖ ╤А╨╡╨╖╤Г╨╗╤М╤В╨░╤В╨╛╨▓ ╨┐╨╛╨╕╤Б╨║╨░. ╨░╨╣╨┤╨╕╤И╨╜╨╕╨║ - ╤В╨░╨▒╨╗╨╕╤Ж╨░ ╨╕╨╖ ╤В╨░╨▒╨╛╨▓*/
+/*╨в╨░╨▒╨╗╨╕╤Ж╨░ ╨┐╨╡╤А╨▓╨╛╨│╨╛ ╤Г╤А╨╛╨▓╨╜╤П (╨╖╨░╤П╨▓╨║╨╕)*/
 /* line 231, ../sass/_mysql_styles.scss */
 .requests_list, .search_list {
-  /*Таблица второго уровня (позиции)*/
-  /*Таблица  третьего уровня (расценки) */
-  /*Горизонтальное позиционирование содержимого td:*/
-  /*1й уровень (заявки)*/
-  /*2й уровень (позиции*/
-  /*3й уровень (расцеки)*/
-  /*Таблица отображения циферок рентабельности*/
+  /*╨в╨░╨▒╨╗╨╕╤Ж╨░ ╨▓╤В╨╛╤А╨╛╨│╨╛ ╤Г╤А╨╛╨▓╨╜╤П (╨┐╨╛╨╖╨╕╤Ж╨╕╨╕)*/
+  /*╨в╨░╨▒╨╗╨╕╤Ж╨░  ╤В╤А╨╡╤В╤М╨╡╨│╨╛ ╤Г╤А╨╛╨▓╨╜╤П (╤А╨░╤Б╤Ж╨╡╨╜╨║╨╕) */
+  /*╨У╨╛╤А╨╕╨╖╨╛╨╜╤В╨░╨╗╤М╨╜╨╛╨╡ ╨┐╨╛╨╖╨╕╤Ж╨╕╨╛╨╜╨╕╤А╨╛╨▓╨░╨╜╨╕╨╡ ╤Б╨╛╨┤╨╡╤А╨╢╨╕╨╝╨╛╨│╨╛ td:*/
+  /*1╨╣ ╤Г╤А╨╛╨▓╨╡╨╜╤М (╨╖╨░╤П╨▓╨║╨╕)*/
+  /*2╨╣ ╤Г╤А╨╛╨▓╨╡╨╜╤М (╨┐╨╛╨╖╨╕╤Ж╨╕╨╕*/
+  /*3╨╣ ╤Г╤А╨╛╨▓╨╡╨╜╤М (╤А╨░╤Б╤Ж╨╡╨║╨╕)*/
+  /*╨в╨░╨▒╨╗╨╕╤Ж╨░ ╨╛╤В╨╛╨▒╤А╨░╨╢╨╡╨╜╨╕╤П ╤Ж╨╕╤Д╨╡╤А╨╛╨║ ╤А╨╡╨╜╤В╨░╨▒╨╡╨╗╤М╨╜╨╛╤Б╤В╨╕*/
   /**/
-  /*граница низ-прав для Ряда заявки*/
-  /*Таблица второго уровня*/
+  /*╨│╤А╨░╨╜╨╕╤Ж╨░ ╨╜╨╕╨╖-╨┐╤А╨░╨▓ ╨┤╨╗╤П ╨а╤П╨┤╨░ ╨╖╨░╤П╨▓╨║╨╕*/
+  /*╨в╨░╨▒╨╗╨╕╤Ж╨░ ╨▓╤В╨╛╤А╨╛╨│╨╛ ╤Г╤А╨╛╨▓╨╜╤П*/
 }
 /* line 232, ../sass/_mysql_styles.scss */
 .requests_list > table > thead > tr > th:nth-child(1), .search_list > table > thead > tr > th:nth-child(1) {
@@ -495,14 +495,14 @@ table {
   border: none;
 }
 
-/*Таблица отображения циферок рентабельности*/
+/*╨в╨░╨▒╨╗╨╕╤Ж╨░ ╨╛╤В╨╛╨▒╤А╨░╨╢╨╡╨╜╨╕╤П ╤Ж╨╕╤Д╨╡╤А╨╛╨║ ╤А╨╡╨╜╤В╨░╨▒╨╡╨╗╤М╨╜╨╛╤Б╤В╨╕*/
 /* line 328, ../sass/_mysql_styles.scss */
 .rentcount .rent-table td {
   text-align: center;
 }
 
 /**/
-/*граница низ-прав для Ряда заявки*/
+/*╨│╤А╨░╨╜╨╕╤Ж╨░ ╨╜╨╕╨╖-╨┐╤А╨░╨▓ ╨┤╨╗╤П ╨а╤П╨┤╨░ ╨╖╨░╤П╨▓╨║╨╕*/
 /* line 335, ../sass/_mysql_styles.scss */
 .requests_list tr {
   border-bottom: 1px black solid;
@@ -525,7 +525,7 @@ table {
   border-right: none;
 }
 
-/*Таблица второго уровня*/
+/*╨в╨░╨▒╨╗╨╕╤Ж╨░ ╨▓╤В╨╛╤А╨╛╨│╨╛ ╤Г╤А╨╛╨▓╨╜╤П*/
 /* line 357, ../sass/_mysql_styles.scss */
 .requests_list tr td .contents .positions td {
   border: none;
@@ -541,7 +541,7 @@ table {
   border: none;
 }
 
-/*шрифты таблицы*/
+/*╤И╤А╨╕╤Д╤В╤Л ╤В╨░╨▒╨╗╨╕╤Ж╤Л*/
 /* line 362, ../sass/_mysql_styles.scss */
 td[category="requests"], td[byerid], td[category="positions"], .pricings {
   font-size: 16px;
@@ -565,7 +565,7 @@ tbody tr[position]:hover {
   font-weight: bold;
 }
 
-/*ПОБЕДИТЕЛИ*/
+/*╨Я╨Ю╨С╨Х╨Ф╨Ш╨в╨Х╨Ы╨Ш*/
 /* line 374, ../sass/_mysql_styles.scss */
 tr.win[pricingid], tr.win[pricingid]:hover {
   background-color: green;
@@ -579,7 +579,7 @@ td.rent_whole, td.sum_whole {
   font-size: 21px;
 }
 
-/*Резальтаты поиска при создании позиции(выпрыгивает список позиций*/
+/*╨а╨╡╨╖╨░╨╗╤М╤В╨░╤В╤Л ╨┐╨╛╨╕╤Б╨║╨░ ╨┐╤А╨╕ ╤Б╨╛╨╖╨┤╨░╨╜╨╕╨╕ ╨┐╨╛╨╖╨╕╤Ж╨╕╨╕(╨▓╤Л╨┐╤А╤Л╨│╨╕╨▓╨░╨╡╤В ╤Б╨┐╨╕╤Б╨╛╨║ ╨┐╨╛╨╖╨╕╤Ж╨╕╨╣*/
 /* line 386, ../sass/_mysql_styles.scss */
 .add-pos-inputs .sres ul {
   list-style: none;
@@ -630,7 +630,7 @@ tr[pricingid] td {
 }
 
 /**/
-/*Таблица расшифровки расчет рентабельности*/
+/*╨в╨░╨▒╨╗╨╕╤Ж╨░ ╤А╨░╤Б╤И╨╕╤Д╤А╨╛╨▓╨║╨╕ ╤А╨░╤Б╤З╨╡╤В ╤А╨╡╨╜╤В╨░╨▒╨╡╨╗╤М╨╜╨╛╤Б╤В╨╕*/
 /* line 423, ../sass/_mysql_styles.scss */
 .requests_list .demo, .requests_list .demo tr, .requests_list .demo td, .requests_list .demo tr td:nth-child(1) {
   border-bottom: none;
@@ -654,8 +654,8 @@ tr[pricingid] td {
   display: none;
 }
 
-/*Закончилась Таблица расшифровки расчет рентабельности*/
-/*Класс для редактирования материала*/
+/*╨Ч╨░╨║╨╛╨╜╤З╨╕╨╗╨░╤Б╤М ╨в╨░╨▒╨╗╨╕╤Ж╨░ ╤А╨░╤Б╤И╨╕╤Д╤А╨╛╨▓╨║╨╕ ╤А╨░╤Б╤З╨╡╤В ╤А╨╡╨╜╤В╨░╨▒╨╡╨╗╤М╨╜╨╛╤Б╤В╨╕*/
+/*╨Ъ╨╗╨░╤Б╤Б ╨┤╨╗╤П ╤А╨╡╨┤╨░╨║╤В╨╕╤А╨╛╨▓╨░╨╜╨╕╤П ╨╝╨░╤В╨╡╤А╨╕╨░╨╗╨░*/
 /* line 437, ../sass/_mysql_styles.scss */
 .widen {
   height: 95vh;
@@ -1147,7 +1147,7 @@ tr[pricingid] td {
   padding-bottom: 3vh;
 }
 
-/*Список покупателей*/
+/*╨б╨┐╨╕╤Б╨╛╨║ ╨┐╨╛╨║╤Г╨┐╨░╤В╨╡╨╗╨╡╨╣*/
 /* line 778, ../sass/_mysql_styles.scss */
 .byers_list table {
   text-align: center;
@@ -1380,7 +1380,7 @@ tr[pricingid] td {
   color: white;
 }
 
-/*Статус заказа в Р-1*/
+/*╨б╤В╨░╤В╤Г╤Б ╨╖╨░╨║╨░╨╖╨░ ╨▓ ╨а-1*/
 /* line 955, ../sass/_mysql_styles.scss */
 #requests, #requests table, #byers, #byers table, #sellers, #sellers table, #trades, #trades table, #givaways, #givaways table, #vidachi, #vidachi table, #totals, #totals table, #search, #search table {
   font-size: 16px;
@@ -1626,6 +1626,78 @@ tr[pricingid] td {
 /* line 1123, ../sass/_mysql_styles.scss */
 .up {
   display: block;
+}
+
+/* line 1127, ../sass/_mysql_styles.scss */
+.zp_list table {
+  line-height: 30px;
+  font-size: 18px;
+  vertical-align: middle;
+  position: relative;
+}
+
+/* line 1134, ../sass/_mysql_styles.scss */
+.zp_list tbody tr:hover .give_details {
+  display: block;
+}
+
+/* line 1138, ../sass/_mysql_styles.scss */
+.zp_list tbody tr:hover {
+  background: green;
+  color: white;
+}
+
+/* line 1143, ../sass/_mysql_styles.scss */
+.give_details {
+  display: none;
+  position: absolute;
+  width: 98%;
+  top: -244px;
+  left: 0px;
+  text-align: left;
+  font-size: 16px;
+  background: white;
+  color: black;
+  padding: 15px;
+  border-radius: 5px;
+  overflow: auto;
+  padding: 0;
+}
+/* line 1157, ../sass/_mysql_styles.scss */
+.give_details > span {
+  color: green;
+  font-weight: bold;
+}
+
+/* line 1163, ../sass/_mysql_styles.scss */
+.show_them_flex {
+  display: inline-flex;
+  flex-wrap: wrap;
+  flex-flow: wrap;
+  flex-direction: column;
+  max-height: 220px;
+}
+/* line 1169, ../sass/_mysql_styles.scss */
+.show_them_flex span {
+  width: 240px;
+  max-width: 240px;
+}
+
+/* line 1175, ../sass/_mysql_styles.scss */
+.where_details {
+  display: block;
+  min-height: 210px;
+}
+
+/* line 1180, ../sass/_mysql_styles.scss */
+.zp_count_worker option:checked, .zp_give_worker option:checked, .zp_count_month option:checked {
+  background-color: green !important;
+  color: white !important;
+}
+
+/* line 1185, ../sass/_mysql_styles.scss */
+.add_zp_count, .add_zp_give {
+  display: none;
 }
 
 /* line 1, ../sass/_price.scss */
@@ -1923,7 +1995,7 @@ p {
   font-size: 3vh;
 }
 
-/*!*ОФОРМЛЕНИ ТАБЛИЦЫ*!
+/*!*╨Ю╨д╨Ю╨а╨Ь╨Ы╨Х╨Э╨Ш ╨в╨Р╨С╨Ы╨Ш╨ж╨л*!
 #prlist{
     min-height: 100vh;
 }
@@ -1938,7 +2010,7 @@ td, th {
     text-align: center;
     padding: 2px;
 }
-!*Выделение при наведении*!
+!*╨Т╤Л╨┤╨╡╨╗╨╡╨╜╨╕╨╡ ╨┐╤А╨╕ ╨╜╨░╨▓╨╡╨┤╨╡╨╜╨╕╨╕*!
 tbody tr:hover td, .hovered {
     background-color: white;
     color : black;
@@ -1970,7 +2042,7 @@ th {
     background-color: green;
     color: white;
 }*/
-/*РАЗМЕР САМОГО ОКНА*/
+/*╨а╨Р╨Ч╨Ь╨Х╨а ╨б╨Р╨Ь╨Ю╨У╨Ю ╨Ю╨Ъ╨Э╨Р*/
 /* line 298, ../sass/_price.scss */
 #editp, #copyp {
   position: relative;
@@ -1978,7 +2050,7 @@ th {
   margin-top: 2vh;
 }
 
-/*Онформационное окошко*/
+/*╨Ю╨╜╤Д╨╛╤А╨╝╨░╤Ж╨╕╨╛╨╜╨╜╨╛╨╡ ╨╛╨║╨╛╤И╨║╨╛*/
 /* line 305, ../sass/_price.scss */
 #msg {
   position: fixed;
@@ -2023,7 +2095,7 @@ th {
   cursor: pointer;
 }
 
-/*Вещи, специфические для add_request*/
+/*╨Т╨╡╤Й╨╕, ╤Б╨┐╨╡╤Ж╨╕╤Д╨╕╤З╨╡╤Б╨║╨╕╨╡ ╨┤╨╗╤П add_request*/
 /* line 353, ../sass/_price.scss */
 #go_request {
   font-size: 10vh;

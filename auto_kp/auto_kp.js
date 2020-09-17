@@ -30,8 +30,10 @@ $(document).ready(function() {
     //Показ пустой текстарии для своего текста в КП
     $(document).off('change.custom_text').on('change.custom_text', '#with_custom_text', function (event) {
         $('#the_custom_text').slideUp();
+        $('#add_table_to_custom_text').slideUp();
         if($('#with_custom_text').is(":checked")) {
             $('#the_custom_text').slideDown();
+            $('#add_table_to_custom_text').slideDown();
         }
     });
 
@@ -41,6 +43,22 @@ $(document).ready(function() {
         if($('#with_custom_products').is(":checked")) {
             $('#custom_trades').slideDown();
         }
+    });
+
+    //Добавление таблицы в текст Своего текста
+    $(document).off('click.add_table_to_custom_text').on('click.add_table_to_custom_text', '#add_table_to_custom_text', function (event) {
+        var the_table_html = '\n\n<!-- Начало таблицы -->\n' +
+            '<br><br><table class="daddy">' +
+            '\n<tr>'+
+            '\n<td>'+'\n<!-- Номер по порядку-->'+'\n</td>'+
+            '\n<td>'+'\n<!-- Наименование продукта-->'+'\n</td>'+
+            '\n<td>'+'\n<!-- Краткое описание -->'+'\n</td>'+
+            '\n<td>'+'\n<!-- Тара / Характеристики -->'+'\n</td>'+
+            '\n<td>'+'\n<!-- Цена -->'+'\n</td>\n' +
+            '</tr>'+
+            '\n</table><!-- Конец таблицы --><br>';
+        var the_custom_text_val = $('#the_custom_text').val();
+        $('#the_custom_text').val(the_custom_text_val + the_table_html).trigger('change');
     });
 
     $(document).off('change.preferred').on('change.preferred', '#with_preferred_firm', function (event) {
@@ -201,4 +219,12 @@ $(document).off('click.mail_copy').on('click.mail_copy', '#mail_copy', function 
     $('#html_copy').select();
     document.execCommand('copy');
     $('#info_span').text('Скопировано');
+});
+
+
+$(document).off('change.mail_new').on('change.mail_new', '#html_copy', function (event) {
+    var the_html =  $(event.target).text();
+    console.log(the_html);
+    $('#html_result').html(the_html);
+
 });

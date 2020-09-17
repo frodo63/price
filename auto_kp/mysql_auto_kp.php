@@ -13,6 +13,8 @@ echo"
 echo"
 <h1>Конструктор КП</h1>
 
+    <input type='button' value='УБРАТЬ ВСЕ ГАЛОЧКИ' id='deselect_all' style='font-size: 15px'> 
+
 <div class='mail_tail_parts' style='background-color: #F0F0F0; width: 40%; font-size: 25px'>
     <b><h2>Подписи:</h2></b>
     <label for='20_dima'>Дима</label><input id='20_dima' type='radio' name='9'><br>
@@ -22,8 +24,8 @@ echo"
 </div>
 
 <b><h1>ШАПКА КП:</h1></b>
-    <input type='checkbox' id='with_custom_text'><label for='with_custom_text' style='font-size: 25px'>Свой текст (будет обернут в таблицу)</label><br>
-    <textarea id='the_custom_text' style='margin: 0px; width: 40%; height: 150px; display: none'></textarea><br>    
+    <input type='checkbox' id='with_custom_text'><label for='with_custom_text' style='font-size: 25px'>Свой текст</label><br><button style='display: none' id='add_table_to_custom_text'>+Таблица</button><br>
+    <textarea id='the_custom_text' style='margin: 0px; width: 40%; height: 550px; display: none'></textarea><br>    
     
     <input type='checkbox' id='with_custom_products'><label for='with_custom_products' style='font-size: 25px'>Свой продукт</label><br>    
     <div id='custom_trades' style='margin: 0px; min-height: 200px; width: 40%; display: none'>      
@@ -32,7 +34,7 @@ echo"
     
     
     
-    <input type='checkbox' id='with_pics'><label for='with_pics' style='font-size: 25px'>С картинками</label><br>
+    <!--<input type='checkbox' id='with_pics'><label for='with_pics' style='font-size: 25px'>С картинками</label><br>-->
     <input type='checkbox' id='with_dealership'><label for='with_dealership' style='font-size: 25px'>Дилерство</label><br>
     <input type='checkbox' id='with_thoughts'><label for='with_thoughts' style='font-size: 25px'>Умные мысли</label><br>
     <input type='checkbox' id='with_preferred_firm'><label for='with_preferred_firm' style='font-size: 25px'>Тип предприятия клиента</label><br>
@@ -218,6 +220,17 @@ echo"
               <input id='19_Total' type='checkbox'><label for='19_Total'>Total</label><br>
               <input id='19_Rocol' type='checkbox'><label for='19_Rocol'>Rocol</label><br>
               <input id='19_Matrix' type='checkbox'><label for='19_Matrix'>MATRIX</label><br>
+          </div>
+      </div>
+      
+      <h3 style='background-color: #FBBA00; font-weight: bold; text-align: center; color:#17460F; font-size:100%'>КП для обычных производств металлообработки</h3>
+      <div>
+          <div>
+              <input id='22_' class='select_group' type='checkbox'><b><label for='22_' style='margin-bottom: 0'>Все вместе</label></b><br>
+              <input id='22_Ind_oils' type='checkbox'><label for='22_Ind_oils'>Индустриальные масла</label><br>
+              <input id='22_Liquifiers' type='checkbox'><label for='22_Liquifiers'>Растворители</label><br>
+              <input id='22_Spec_oils' type='checkbox'><label for='22_Spec_oils'>Спец. масла</label><br>
+              <input id='22_SOGes' type='checkbox'><label for='22_SOGes'>Сожи отеч.</label><br>
           </div>
       </div>
 </div>";
