@@ -826,16 +826,16 @@ if(isset($_POST['table'])){
             <div class='add_zp_give'>              
             
             <select class='zp_give_worker' size='10'>
-              <option>Марина</option>
-              <option>Сергей</option>
-              <option>Дмитрий</option>
-              <option>Ирина</option>
-              <option>Тимур</option>
-              <option>Милана</option>
-              <option>Литовкин</option>
-              <option>Проценты Сергей</option>              
-              <option>Гагарина</option>
-              <option>Павлова</option>
+              <option worker='Марина'>Марина</option>
+              <option worker='Сергей'>Сергей</option>
+              <option worker='Дмитрий'>Дмитрий</option>
+              <option worker='Ирина'>Ирина</option>
+              <option worker='Тимур'>Тимур</option>
+              <option worker='Милана'>Милана</option>
+              <option worker='Литовкин'>Литовкин</option>
+              <option worker='Проценты Сергей'>Проценты Сергей</option>              
+              <option worker='Гагарина'>Гагарина</option>
+              <option worker='Павлова'>Павлова</option>
             </select>
             
             <select class='zp_give_source' size='6'>
@@ -913,7 +913,7 @@ if(isset($_POST['table'])){
                 $counts_fetched = $zp_counts->fetchAll(PDO::FETCH_ASSOC);
                 $gives_fetched = $zp_gives->fetchAll(PDO::FETCH_ASSOC);
 
-                $result .= "<tr>";
+                $result .= "<tr worker='".$worker."'>";
                 $result .= "<td>".$worker."</td>";
 
 
@@ -946,7 +946,7 @@ if(isset($_POST['table'])){
                     $phpdate = strtotime( $zp_give['given'] );
                     $zp_give['given'] = date( 'd.m', $phpdate );
 
-                    $gives_list .="<span source='".$zp_give['source']."'>".$zp_give['given']." ~ ".number_format($zp_give['amount'],'2',',',' ')." ".$zp_give['comment']."</span>";
+                    $gives_list .="<span source='".$zp_give['source']."'>".$zp_give['given']." (".$zp_give['source'].") ~ ".number_format($zp_give['amount'],'2',',',' ')." ".$zp_give['comment']."</span>";
                 }
 
                 $result .= "<td style='text-align: center' class='given_sum'>".number_format($given_sum,'2','.',' ')."<div class='give_details'><span>Выдачи ".$worker.": </span><br><div class='show_them_flex'>".$gives_list."</div></div></td>";

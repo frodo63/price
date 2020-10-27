@@ -2,25 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aebacd80-a44c-46e9-91ce-96f94f6c86c5" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/0b819afd-90f2-4934-ba9e-711b9c279d4d.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0b819afd-90f2-4934-ba9e-711b9c279d4d.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0b819afd-90f2-4934-ba9e-711b9c279d4d/storage_v2/_src_/schema/old_drupal_base.ZLVkTg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/0b819afd-90f2-4934-ba9e-711b9c279d4d/storage_v2/_src_/schema/old_drupal_base.ZLVkTg.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a8a2810f-6ddd-4613-a954-7113e1ab97d5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a8a2810f-6ddd-4613-a954-7113e1ab97d5.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auto_kp/auto_kp.js" beforeDir="false" afterPath="$PROJECT_DIR$/auto_kp/auto_kp.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auto_kp/auto_kp_give_html.php" beforeDir="false" afterPath="$PROJECT_DIR$/auto_kp/auto_kp_give_html.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auto_kp/mysql_auto_kp.php" beforeDir="false" afterPath="$PROJECT_DIR$/auto_kp/mysql_auto_kp.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cketches" beforeDir="false" afterPath="$PROJECT_DIR$/cketches" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.sass-cache/655069f97b10dfd4f9e7087ba948a0b7dcd44278/_mysql_styles.scssc" beforeDir="false" afterPath="$PROJECT_DIR$/.sass-cache/655069f97b10dfd4f9e7087ba948a0b7dcd44278/_mysql_styles.scssc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.sass-cache/655069f97b10dfd4f9e7087ba948a0b7dcd44278/_price.scssc" beforeDir="false" afterPath="$PROJECT_DIR$/.sass-cache/655069f97b10dfd4f9e7087ba948a0b7dcd44278/_price.scssc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/mysql_edc.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/mysql_edc.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/mysql_scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/mysql_scripts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kp_general_new_year.html" beforeDir="false" afterPath="$PROJECT_DIR$/kp_general_new_year.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/price_mysql.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/price_mysql.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_giveaways.php" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_giveaways.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysql_insert.php" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_insert.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysql_read.php" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_read.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_sync.php" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_sync.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_rent.php" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_rent.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_save.php" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_save.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysql_update.php" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_update.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pdo_face_page.php" beforeDir="false" afterPath="$PROJECT_DIR$/pdo_face_page.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sass/_mysql_styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/sass/_mysql_styles.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sass/_price.scss" beforeDir="false" afterPath="$PROJECT_DIR$/sass/_price.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +68,13 @@
         <item name="prices@localhost" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="prices: schema" type="ebfa3cd1:MariaImplModel$Schema" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="prices@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="prices: schema" type="ebfa3cd1:MariaImplModel$Schema" />
+        <item name="pricings: table" type="dbc44a63:MariaImplModel$Table" />
       </path>
     </expand>
     <select />
@@ -189,26 +194,6 @@
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="root:prices@localhost" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="root:prices@localhost" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@17aa2caa" type="9fbbdea:ServiceModel$ServiceNode" />
-              </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="root:prices@localhost" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@544b7183" type="9fbbdea:ServiceModel$ServiceNode" />
-              </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="root:prices@localhost" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@5a2e6ca7" type="9fbbdea:ServiceModel$ServiceNode" />
-              </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="root:prices@localhost" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@20a75979" type="9fbbdea:ServiceModel$ServiceNode" />
               </path>
             </expand>
             <select />
@@ -360,7 +345,20 @@
       <workItem from="1599726913512" duration="2405000" />
       <workItem from="1599808214010" duration="12472000" />
       <workItem from="1600063089560" duration="42316000" />
-      <workItem from="1600167614278" duration="33885000" />
+      <workItem from="1600167614278" duration="34173000" />
+      <workItem from="1600365946839" duration="1784000" />
+      <workItem from="1600377474827" duration="144000" />
+      <workItem from="1600415257749" duration="4191000" />
+      <workItem from="1600927576552" duration="6480000" />
+      <workItem from="1601408071037" duration="2596000" />
+      <workItem from="1601446903512" duration="6225000" />
+      <workItem from="1601548265343" duration="4116000" />
+      <workItem from="1601625180246" duration="7613000" />
+      <workItem from="1601886852461" duration="1014000" />
+      <workItem from="1601904925991" duration="36000" />
+      <workItem from="1601966052153" duration="598000" />
+      <workItem from="1602251379212" duration="9641000" />
+      <workItem from="1603803108832" duration="6678000" />
     </task>
     <servers />
   </component>
@@ -408,75 +406,75 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="432" y="167" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600183335007" />
-    <state x="620" y="264" key="FileChooserDialogImpl" timestamp="1593768118052">
+    <state width="1418" height="151" key="GridCell.Tab.0.bottom" timestamp="1603804467637">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="620" y="264" key="FileChooserDialogImpl/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1593768118052" />
-    <state width="1418" height="309" key="GridCell.Tab.0.bottom" timestamp="1600185735402">
+    <state width="1418" height="151" key="GridCell.Tab.0.bottom/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1603804467637" />
+    <state width="1191" height="530" key="GridCell.Tab.0.bottom/0.0.1680.1010/1680.0.1440.900@1680.0.1440.900" timestamp="1601446922842" />
+    <state width="1418" height="151" key="GridCell.Tab.0.center" timestamp="1603804467637">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1418" height="309" key="GridCell.Tab.0.bottom/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600185735402" />
-    <state width="1206" height="2" key="GridCell.Tab.0.bottom/0.0.1680.1010/1680.0.1440.900@1680.0.1440.900" timestamp="1598944361335" />
-    <state width="1418" height="309" key="GridCell.Tab.0.center" timestamp="1600185735401">
+    <state width="1418" height="151" key="GridCell.Tab.0.center/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1603804467637" />
+    <state width="1191" height="530" key="GridCell.Tab.0.center/0.0.1680.1010/1680.0.1440.900@1680.0.1440.900" timestamp="1601446922842" />
+    <state width="1418" height="151" key="GridCell.Tab.0.left" timestamp="1603804467636">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1418" height="309" key="GridCell.Tab.0.center/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600185735401" />
-    <state width="1206" height="2" key="GridCell.Tab.0.center/0.0.1680.1010/1680.0.1440.900@1680.0.1440.900" timestamp="1598944361335" />
-    <state width="1418" height="309" key="GridCell.Tab.0.left" timestamp="1600185735401">
+    <state width="1418" height="151" key="GridCell.Tab.0.left/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1603804467636" />
+    <state width="1191" height="530" key="GridCell.Tab.0.left/0.0.1680.1010/1680.0.1440.900@1680.0.1440.900" timestamp="1601446922841" />
+    <state width="1418" height="151" key="GridCell.Tab.0.right" timestamp="1603804467637">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1418" height="309" key="GridCell.Tab.0.left/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600185735401" />
-    <state width="1206" height="2" key="GridCell.Tab.0.left/0.0.1680.1010/1680.0.1440.900@1680.0.1440.900" timestamp="1598944361334" />
-    <state width="1418" height="309" key="GridCell.Tab.0.right" timestamp="1600185735401">
+    <state width="1418" height="151" key="GridCell.Tab.0.right/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1603804467637" />
+    <state width="1191" height="530" key="GridCell.Tab.0.right/0.0.1680.1010/1680.0.1440.900@1680.0.1440.900" timestamp="1601446922842" />
+    <state width="1637" height="336" key="GridCell.Tab.1.bottom" timestamp="1600357342480">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1418" height="309" key="GridCell.Tab.0.right/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600185735401" />
-    <state width="1206" height="2" key="GridCell.Tab.0.right/0.0.1680.1010/1680.0.1440.900@1680.0.1440.900" timestamp="1598944361335" />
-    <state width="1637" height="336" key="GridCell.Tab.1.bottom" timestamp="1600180256346">
+    <state width="1637" height="336" key="GridCell.Tab.1.bottom/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600357342480" />
+    <state width="1637" height="336" key="GridCell.Tab.1.center" timestamp="1600357342479">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="336" key="GridCell.Tab.1.bottom/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600180256346" />
-    <state width="1637" height="336" key="GridCell.Tab.1.center" timestamp="1600180256346">
+    <state width="1637" height="336" key="GridCell.Tab.1.center/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600357342479" />
+    <state width="1637" height="336" key="GridCell.Tab.1.left" timestamp="1600357342479">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="336" key="GridCell.Tab.1.center/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600180256346" />
-    <state width="1637" height="336" key="GridCell.Tab.1.left" timestamp="1600180256346">
+    <state width="1637" height="336" key="GridCell.Tab.1.left/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600357342479" />
+    <state width="1637" height="336" key="GridCell.Tab.1.right" timestamp="1600357342480">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="336" key="GridCell.Tab.1.left/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600180256345" />
-    <state width="1637" height="336" key="GridCell.Tab.1.right" timestamp="1600180256346">
+    <state width="1637" height="336" key="GridCell.Tab.1.right/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600357342480" />
+    <state width="1637" height="336" key="GridCell.Tab.2.bottom" timestamp="1600357342480">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="336" key="GridCell.Tab.1.right/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600180256346" />
-    <state width="1637" height="336" key="GridCell.Tab.2.bottom" timestamp="1600180256346">
+    <state width="1637" height="336" key="GridCell.Tab.2.bottom/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600357342480" />
+    <state width="1637" height="336" key="GridCell.Tab.2.center" timestamp="1600357342480">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="336" key="GridCell.Tab.2.bottom/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600180256346" />
-    <state width="1637" height="336" key="GridCell.Tab.2.center" timestamp="1600180256346">
+    <state width="1637" height="336" key="GridCell.Tab.2.center/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600357342480" />
+    <state width="1637" height="336" key="GridCell.Tab.2.left" timestamp="1600357342480">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="336" key="GridCell.Tab.2.center/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600180256346" />
-    <state width="1637" height="336" key="GridCell.Tab.2.left" timestamp="1600180256346">
+    <state width="1637" height="336" key="GridCell.Tab.2.left/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600357342480" />
+    <state width="1637" height="336" key="GridCell.Tab.2.right" timestamp="1600357342480">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="336" key="GridCell.Tab.2.left/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600180256346" />
-    <state width="1637" height="336" key="GridCell.Tab.2.right" timestamp="1600180256346">
-      <screen x="0" y="0" width="1680" height="1010" />
-    </state>
-    <state width="1637" height="336" key="GridCell.Tab.2.right/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600180256346" />
+    <state width="1637" height="336" key="GridCell.Tab.2.right/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600357342480" />
     <state x="343" y="151" key="SettingsEditor" timestamp="1600185131615">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="343" y="151" key="SettingsEditor/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600185131615" />
-    <state x="509" y="113" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1600083638995">
-      <screen x="0" y="0" width="1680" height="1010" />
+    <state x="2116" y="101" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1603807870396">
+      <screen x="1680" y="0" width="1440" height="900" />
     </state>
-    <state x="509" y="113" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600083638995" />
-    <state x="2116" y="101" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/0.0.1680.1010/1680.0.1440.900@1680.0.1440.900" timestamp="1597991998164" />
+    <state x="509" y="113" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1602256994785" />
+    <state x="2116" y="101" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/0.0.1680.1010/1680.0.1440.900@1680.0.1440.900" timestamp="1603807870396" />
     <state x="92" y="92" width="1496" height="826" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1600183506118">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="92" y="92" width="1496" height="826" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1600183506118" />
+    <state x="59" y="109" width="1452" height="785" key="find.popup" timestamp="1601630825108">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="59" y="109" width="1452" height="785" key="find.popup/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1601630825108" />
     <state x="2056" y="205" key="run.anything.popup" timestamp="1598013974741">
       <screen x="1680" y="0" width="1440" height="900" />
     </state>

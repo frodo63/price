@@ -381,20 +381,13 @@ $(document).ready(function(){
                 method: 'POST',
                 data: {table:table},
                 success: function (data) {
-                    $(event.target).siblings('.' + table + '_list').html(data);
-                },
-                complete: function(){
-                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Данные из таблицы " + table + " обеих баз получены.");
-                    $('.creates input[type=\'text\']').val('');
-                    $('.from,.to').val('');
-
 
                     var its_zp_counting = 0;
                     var its_zp_giving = 0;
 
                     if(table == 'zp'){
                         console.log('it"s ZP');
-                        console.log(typeof($('.zp_give_amount').val())+$('.zp_count_amount').val());
+                        console.log(typeof($('.zp_count_amount').val())+$('.zp_count_amount').val());
                         console.log(typeof($('.zp_give_amount').val())+$('.zp_give_amount').val());
                         if($('.zp_count_amount').val() != ''){
                             its_zp_counting = 1;
@@ -402,9 +395,23 @@ $(document).ready(function(){
                             its_zp_giving = 1;
                         }
                     }
+                    $(event.target).siblings('.' + table + '_list').html(data);
 
                     //Для удобства добавления выдач и начислений автоматически фокусимся на нужном селекте
                     if(table == 'zp'){
+
+                        var curr_worker = $('.zp_list').attr("worker");
+                        console.log(curr_worker);
+                        console.log(typeof(curr_worker));
+                        if(curr_worker != ''){
+                            console.log('its defined! '+curr_worker);
+                            $('tr[worker="'+curr_worker+'"] .given_sum .give_details').css('display', 'block');
+                        }else{
+                            console.log('its undefined');
+                        }
+
+                        $('.zp_give_worker option').removeClass("active");
+
                         if(its_zp_counting == 1){
                             console.log('we are counting');
                             $('.add_zp_count').css('display', 'block');
@@ -415,6 +422,12 @@ $(document).ready(function(){
                             $('.zp_give_worker').focus();
                         }
                     }
+
+                },
+                complete: function(){
+                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Данные из таблицы " + table + " обеих баз получены.");
+                    $('.creates input[type=\'text\']').val('');
+                    $('.from,.to').val('');
                 }
             });
         }
@@ -713,7 +726,7 @@ $(document).ready(function(){
 
 
 
-        //Этот аякс копируется в button_add_payment, там он используется для обносления после добавления/изменения платежки
+        //Этот аякс копируется в button_add_payment, там он используется для обновления после добавления/изменения платежки
         $.ajax({
             url: 'mysql_giveaways.php',
             method: 'POST',
@@ -1879,10 +1892,11 @@ $(document).ready(function(){
                     data: {db:db, give_date:date, give_worker:worker, give_amount:amount, give_source:source, give_comment:comment},
                     success: function (data) {//Изменяем
                         $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html(data);
+                        $('.zp_list').attr("worker", worker);
+                        console.log(worker);
                         $('#zp .show_list').trigger('click');
                     },
                     complete:function () {
-                        $('.zp_give_worker').focus();
                     }
                 });
             }else{
@@ -1902,6 +1916,7 @@ $(document).ready(function(){
         console.log('clicked');
         $(event.target).next('div').slideToggle();
     });
+
 
 
 

@@ -33,6 +33,7 @@ if (isset($_POST['the_byer']) && isset($_POST['year'])){
 <input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2018'>
 <input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2019'>
 <input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2020'>
+<input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2021'>
 <br><br>";
         echo "<br><span class='ga_requests_period'><b>Заявки за ".$the_year." год:</b></span><br><br>";
         echo "<table><thead><tr><th>Дата</th><th>Номер заказа в 1С</th><th></th><th>База</th><th>Накладная</th><th>Сумма заявки</th><th>Начислено</th><th>Статус заявки</th></tr></thead><tbody>";
@@ -341,7 +342,14 @@ if (isset($_POST['the_request'])){
                 $get_seller_name->execute(array($row['pricingid']));
                 $get_seller_name_fetched = $get_seller_name->fetch(PDO::FETCH_ASSOC);
 
-                $result2 .= "<tr pricingid = ".$row['pricingid']." sellerid = '".$get_seller_name_fetched['sellers_id']."'><td><span>".$row['pos_name']."</span><br><br><span class='ga_trade' tare='".$row['tare']."'>" . $row['name'] . "</span> от <span class='ga_seller'>".$get_seller_name_fetched['name']."</span><input value='↑ E ↑' type='button' class='editpricing' position='".$row['position']."' pricing = '".$row['pricingid']."'></td><td>" . $row['kol'] . "</td><td>" . $onhands . "</td><td>" . round($row['kol'],2) * round($onhands,2) . "</td></tr>";
+                if ($get_seller_name_fetched){
+                    $result2 .= "<tr pricingid = ".$row['pricingid']." sellerid = '".$get_seller_name_fetched['sellers_id']."'><td><span>".$row['pos_name']."</span><br><br><span class='ga_trade' tare='".$row['tare']."'>" . $row['name'] . "</span> от <span class='ga_seller'>".$get_seller_name_fetched['name']."</span><input value='↑ E ↑' type='button' class='editpricing' position='".$row['position']."' pricing = '".$row['pricingid']."'></td><td>" . $row['kol'] . "</td><td>" . $onhands . "</td><td>" . round($row['kol'],2) * round($onhands,2) . "</td></tr>";
+                }else{
+                    //$result2 .= "<tr pricingid = ".$row['pricingid']." sellerid = '".$get_seller_name_fetched['sellers_id']."'><td><span>".$row['pos_name']."</span><br><br><span class='ga_trade' tare='".$row['tare']."'>" . $row['name'] . "</span> от <span class='ga_seller'>".$get_seller_name_fetched['name']."</span><input value='↑ E ↑' type='button' class='editpricing' position='".$row['position']."' pricing = '".$row['pricingid']."'></td><td>" . $row['kol'] . "</td><td>" . $onhands . "</td><td>" . round($row['kol'],2) * round($onhands,2) . "</td></tr>";
+                    $result2 .= "<tr pricingid = ".$row['pricingid']." sellerid = 'NONE'><td><span>".$row['pos_name']."</span><br><br><span class='ga_trade' tare='".$row['tare']."'>" . $row['name'] . "</span> от <span class='ga_seller'>ПОСТАВЩИК НЕ ОПРЕДЕЛЕН</span><input value='↑ E ↑' type='button' class='editpricing' position='".$row['position']."' pricing = '".$row['pricingid']."'></td><td>" . $row['kol'] . "</td><td>" . $onhands . "</td><td>" . round($row['kol'],2) * round($onhands,2) . "</td></tr>";
+                }
+
+
             };
             $result2 .= "</tbody></table>";
         };

@@ -91,7 +91,7 @@ if (isset($_POST['request'])){
     $totalnam = 0;
     $getvars = $database->prepare("SELECT `req_positionid`,`winnerid` FROM req_positions WHERE `req_positions`.`requestid` = ?");
     $nam = 0;//Переменная, в зависимости от того, зафиксирована расценка или нет
-    $countrent = $database->prepare("SELECT * FROM (SELECT `winnerid` FROM `req_positions` WHERE `requestid` = ? AND `winnerid` != 0 ) AS a LEFT JOIN (SELECT `kol`,`price`,`rop`,`opr`,`fixed`,`wtime`,`pricingid`,`name`,`tradeid`,`firstoh`,`oh` FROM `pricings` AS c LEFT JOIN (SELECT `trades_id`,`name` FROM `trades` LEFT JOIN `allnames` ON `trades`.`trades_nameid`=`allnames`.`nameid`) AS d ON c.`tradeid`=d.`trades_id`) AS b ON a.`winnerid` = b.`pricingid`");
+    $countrent = $database->prepare("SELECT * FROM (SELECT `winnerid` FROM `req_positions` WHERE `requestid` = ? AND `winnerid` != 0 ) AS a LEFT JOIN (SELECT `zak`,`kol`,`price`,`rop`,`opr`,`fixed`,`wtime`,`pricingid`,`name`,`tradeid`,`firstoh`,`oh` FROM `pricings` AS c LEFT JOIN (SELECT `trades_id`,`name` FROM `trades` LEFT JOIN `allnames` ON `trades`.`trades_nameid`=`allnames`.`nameid`) AS d ON c.`tradeid`=d.`trades_id`) AS b ON a.`winnerid` = b.`pricingid`");
     $save_rent = $database->prepare("UPDATE `requests` SET `req_rent`=? WHERE `requests_id`=?");
     $save_sum = $database->prepare("UPDATE `requests` SET `req_sum`=? WHERE `requests_id`=?");
     try{
@@ -141,6 +141,8 @@ if (isset($_POST['request'])){
 
         foreach ($c as $row){
 
+            $nds = 20;
+
             /*Временные переменные для приведения к числу*/
             $pricingid=$row['pricingid'];
             $price = round($row['price'], 3);
@@ -150,6 +152,7 @@ if (isset($_POST['request'])){
             $opr = round($row['opr'], 2);
             $rop = round($row['rop'], 2);
             $kol = round($row['kol'], 2);
+            $zak = round($row['zak'], 2);
             $wtime = round($row['wtime'], 2);
 
 
@@ -166,24 +169,25 @@ if (isset($_POST['request'])){
                     break;
             };
             $result.= "<tr><td class ='pricingid'>" . $row['name'] . "</td>";
-            $result .="<td class ='nam'>" . round($nam, 2) . "</td>";
+            $result .="<td class ='nam'>" . round(($nam - (($price/(100+$nds)*$nds) - ($zak/(100+$nds)*$nds))), 2) . "</td>";
             $result.= "<td class ='kol'>" . $kol . "</td>";
-            $result.= "<td class ='sum'>" . round($nam, 2)*$kol . "</td>";
+            $result.= "<td class ='sum'>" . round(($nam - (($price/(100+$nds)*$nds) - ($zak/(100+$nds)*$nds))), 2)*$kol . "</td>";
             $result .="<td class ='wtime'>" . $wtime . "</td>";
             $result.= "<td class ='price'>" . $price . "</td></tr>";
 
             /*формула расчета:*/
-            $form_top[] = $nam * $kol;
+
+            $form_top[] = ($nam - (($price/(100+$nds)*$nds) - ($zak/(100+$nds)*$nds))) * $kol;
             $form_bot[] = $price * $kol;
             /*закончилась формула*/
 
             /*Показательная дробь*/
-            $dem_top .=$nam . " * " . $kol . " + ";
+            $dem_top .=($nam - (($price/(100+$nds)*$nds) - ($zak/(100+$nds)*$nds))) . " * " . $kol . " + ";
             $dem_bot .="(" . round($row['price'],2) . " * " . $row['kol'].") + ";
             /*Закончилась показательная дробь*/
             $req_total_count += ($firstoh*$kol);
 
-            $totalnam=$totalnam+($nam*$kol);
+            $totalnam=$totalnam+(($nam - (($price/(100+$nds)*$nds) - ($zak/(100+$nds)*$nds)))*$kol);
 
         };
         $result .="</table><br>";
@@ -220,8 +224,8 @@ if (isset($_POST['request'])){
             $bot = round(array_sum($form_bot), 3);
             $rent = round($top/$bot*100, 2);
 
-            $dem_top = substr($dem_top, 0, -3);//Срезаем лишние плюсы с демонстрационных строк
-            $dem_bot = substr($dem_bot, 0, -3);
+            /*$dem_top = substr($dem_top, 0, -3);//Срезаем лишние плюсы с демонстрационных строк
+            $dem_bot = substr($dem_bot, 0, -3);*/
 
             //Сохраняем в базу рентабельность заказа
             $database->beginTransaction();

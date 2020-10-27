@@ -27,7 +27,7 @@ p {
   font-family: sans-serif;
 }
 
-#clearp, #obtzrknam, #obtzrkpok, #firstobp, #margek, #rop, #rtp {
+#clearp, #obtzrknam, #obtzrkpok, #firstobp, #margek, #rop, #rtp, #nds_to_pay {
     color: red;
 }
 
@@ -187,9 +187,18 @@ $pricecolor : #F0F0F0;
 
 
 
-#obtzr, #obtzrknam, #obtzrkpok, #op+p, #tp+p, #obp+p, #marge, #margek, #obpr, #firstobp+p, #id, p#byer, p#seller, p#trade, #onhands, #cases p, #realop, #realtp, #firstoh, #realop, #realtp, #wtimeday, #clearp, #oh, #wtr, #clearpnar
+#obtzr, #obtzrknam, #obtzrkpok, #op+p, #tp+p, #obp+p, #marge, #margek, #obpr, #firstobp+p, #id, p#byer, p#seller, p#trade, #onhands, #cases p, #realop, #realtp, #firstoh, #realop, #realtp, #wtimeday, #clearp, #oh, #wtr, #clearpnar, #nds_zak, #nds_result, #nds_to_pay
 {
     display: inline;    
+}
+#nds_block{
+  position: absolute;
+  top: 29.7vh;
+  left: 52vw;
+  width: 33vw;
+  border-radius: 3px;
+  padding: 5px;
+
 }
 
 #obnal, #margediv

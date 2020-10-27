@@ -311,6 +311,7 @@ if(
 //ОБНОВЛЕНИЕ ПЛАТЕЖКИ из модуля 1С/////////////////////////////////////////////////
 if(isset($_POST['requestid']) &&
     isset($_POST['payments_uid']) &&
+    isset($_POST['payments_requests_uid']) &&
     isset($_POST['byersid']) &&
     isset($_POST['onec_id']) &&
     isset($_POST['dataver']) &&
@@ -320,6 +321,7 @@ if(isset($_POST['requestid']) &&
 ){
     $requestid = $_POST['requestid'];
     $payments_uid = $_POST['payments_uid'];
+    $payments_req_uid = $_POST['payments_requests_uid'];
     $byersid = $_POST['byersid'];
     $onec_id = $_POST['onec_id'];
     $dataver = $_POST['dataver'];
@@ -327,29 +329,29 @@ if(isset($_POST['requestid']) &&
     $number = $_POST['number'];
     $sum = $_POST['sum'];
 
-    $get_payment = $database->prepare("SELECT * FROM `payments` WHERE `payments_uid` = ?");
-    $update_requestid = $database->prepare("UPDATE `payments` SET `requestid` = ? WHERE `payments_uid` = ?");
-    $update_byersid = $database->prepare("UPDATE `payments` SET `byersid` = ? WHERE `payments_uid` = ?");
-    $update_onec_id = $database->prepare("UPDATE `payments` SET `onec_id` = ? WHERE `payments_uid` = ?");
-    $update_dataver = $database->prepare("UPDATE `payments` SET `dataver` = ? WHERE `payments_uid` = ?");
-    $update_payed = $database->prepare("UPDATE `payments` SET `payed` = ? WHERE `payments_uid` = ?");
-    $update_number = $database->prepare("UPDATE `payments` SET `number` = ? WHERE `payments_uid` = ?");
-    $update_sum = $database->prepare("UPDATE `payments` SET `sum` = ? WHERE `payments_uid` = ?");
+    $get_payment = $database->prepare("SELECT * FROM `payments` WHERE `payments_uid` = ? AND `payments_requests_uid` = ?");
+    $update_requestid = $database->prepare("UPDATE `payments` SET `requestid` = ? WHERE `payments_uid` = ? AND `payments_requests_uid` = ?");
+    $update_byersid = $database->prepare("UPDATE `payments` SET `byersid` = ? WHERE `payments_uid` = ? AND `payments_requests_uid` = ?");
+    $update_onec_id = $database->prepare("UPDATE `payments` SET `onec_id` = ? WHERE `payments_uid` = ? AND `payments_requests_uid` = ?");
+    $update_dataver = $database->prepare("UPDATE `payments` SET `dataver` = ? WHERE `payments_uid` = ? AND `payments_requests_uid` = ?");
+    $update_payed = $database->prepare("UPDATE `payments` SET `payed` = ? WHERE `payments_uid` = ? AND `payments_requests_uid` = ?");
+    $update_number = $database->prepare("UPDATE `payments` SET `number` = ? WHERE `payments_uid` = ? AND `payments_requests_uid` = ?");
+    $update_sum = $database->prepare("UPDATE `payments` SET `sum` = ? WHERE `payments_uid` = ? AND `payments_requests_uid` = ?");
 
     try {
         $database->beginTransaction();
-        $get_payment->execute(array($payments_uid));
+        $get_payment->execute(array($payments_uid, $payments_req_uid));
         $get_payment_fetched = $get_payment->fetch(PDO::FETCH_ASSOC);
 
         //2. Сравниваем и сразу обновляем
-        if($get_payment_fetched['requestid'] != $requestid){$update_requestid->execute(array($requestid,$payments_uid));}
-        if($get_payment_fetched['byersid'] != $byersid){$update_byersid->execute(array($byersid,$payments_uid));}
-        if($get_payment_fetched['onec_id'] != $onec_id){$update_onec_id->execute(array($onec_id,$payments_uid));}
-        if($get_payment_fetched['payed'] != $payed){$update_payed->execute(array($payed,$payments_uid));}
-        if($get_payment_fetched['number'] != $number){$update_number->execute(array($number,$payments_uid));}
-        if($get_payment_fetched['sum'] != $sum){$update_sum->execute(array($sum,$payments_uid));}
+        if($get_payment_fetched['requestid'] != $requestid){$update_requestid->execute(array($requestid,$payments_uid, $payments_req_uid));}
+        if($get_payment_fetched['byersid'] != $byersid){$update_byersid->execute(array($byersid,$payments_uid, $payments_req_uid));}
+        if($get_payment_fetched['onec_id'] != $onec_id){$update_onec_id->execute(array($onec_id,$payments_uid, $payments_req_uid));}
+        if($get_payment_fetched['payed'] != $payed){$update_payed->execute(array($payed,$payments_uid, $payments_req_uid));}
+        if($get_payment_fetched['number'] != $number){$update_number->execute(array($number,$payments_uid, $payments_req_uid));}
+        if($get_payment_fetched['sum'] != $sum){$update_sum->execute(array($sum,$payments_uid, $payments_req_uid));}
         //По-любому обновляем версию данных
-        $update_dataver->execute(array($dataver,$payments_uid));
+        $update_dataver->execute(array($dataver,$payments_uid, $payments_req_uid));
 
         $database->commit();
     } catch( PDOException $Exception ) {

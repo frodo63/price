@@ -38,7 +38,9 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         </div>
         <div id='result'>
         <h2>Итоговая цена:</h2><br><br><input type='number' name='price' id='pr' value='0' min='0' step='0.001'/><input type='number' id='pr_in' value='0' min='0' step='0.01' placeholder='Задать'/>
+        <br>        
         </div>
+        <div id='nds_block'>НДС к ОПЛАТЕ: <p id='nds_result'></p> - <p id='nds_zak'></p> = <p id='nds_to_pay'></p></div>
         <input id='button_history' hist_byer='' hist_trade='' type='button' value='Почем расценивали раньше(данные из программы)'>
         <input id='button_exec_trade_history' hist_trade='' type='button' value='Почем продавали раньше(данные из 1С)'>
         <div id='rent'>
@@ -185,7 +187,7 @@ echo"       <!--Добавить Платежку -->
                   <select id='add_giveaway_year' name='4' size='1'>
                       <option value='2018'>2018</option>
                       <option value='2019'>2019</option>
-                      <option value='2020'>2020</option>
+                      <option value='2020'>2020</option>                                            
                   </select>
                   <br>
                   <span class='ready_comment'></span><br>
@@ -234,7 +236,7 @@ echo "    <div id='sync'>
           </div>
           <div id='zp'>
           <input type='button' class='show_list' value='РАСЧЕТ ЗАРПЛАТЫ⏎'><br><br>
-          <div class='zp_list'></div>
+          <div class='zp_list' worker></div>
           </div>
       
 </div>

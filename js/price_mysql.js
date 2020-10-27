@@ -176,6 +176,10 @@ $(document).ready(function(){
         //Изменение НА РУКИ
         $('#firstoh').val(Number((tpr - tpr*firstobp/100).toFixed(2)));
 
+        //Изменение НДС к закупу
+        $('#nds_zak').text(Number((zak/120*20).toFixed(2)));
+
+
         //Стираем переменнные
         zak=tzr=a=tp=op=firstobp=wt=wtr=opr=tpr=firstobpr=null;
         //Идет расчет цены
@@ -499,8 +503,19 @@ $(document).ready(function(){
         //Даем цену
         $('#pr').val((lprice).toFixed(3));
 
+        //Обновляем НДС к закупу
+        $('#nds_zak').text(Number((lzak/120*20).toFixed(2)));
+        var nds_zak = Number($('#nds_zak').text());
+        $('#nds_result').text(Number((lprice/120*20).toFixed(2)));
+        var nds_result = Number($('#nds_result').text());
+        $('#nds_to_pay').text(Number((nds_result - nds_zak).toFixed(2)));
+        var nds_to_pay = Number($('#nds_to_pay').text());
+
+
+
         //Высчитываем грязный процент (отношение начисленного к цене)
         var clearp = ltpr/lprice*100;
+
         $('#clearp').text((clearp).toFixed(2) + ' %');
 
         //Высчитываем чистый процент (отношение выдаваемого к цене)
@@ -509,7 +524,7 @@ $(document).ready(function(){
 
         //Расчет рентабельности
         //var opr = Number((Number($('#opr').text())).toFixed(2));
-        var lrentS = lnam/lprice*100;
+        var lrentS = (lnam - nds_to_pay)/lprice*100;
         $('#rent h1').text((lrentS).toFixed(3));
         //console.log('Проверка расчета рентабельности. Наше: '+lnam+'. Цена: '+lprice+'. Рентабельность: '+lrentS+'.');
         //console.log('Отношение наших к цене: '+lnam/lprice);
@@ -560,6 +575,9 @@ $(document).ready(function(){
                     '&zak=' + Number($('#zak').val()) +
                     '&kol=' + Number($('#kol').val()) +
                     '&tzr=' + Number($('#tzr').text()) +
+                    '&nds_zak=' + Number($('#nds_zak').text()) +
+                    '&nds_result=' + Number($('#nds_result').text()) +
+                    '&nds_to_pay=' + Number($('#nds_to_pay').text()) +
                     '&tzrknam=' + Number($('#tzrknam').val()) +
                     '&tzrkpok=' + Number($('#tzrkpok').val()) +
                     '&op=' + Number(Number($('#op').val()).toFixed(2)) +

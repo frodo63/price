@@ -24,6 +24,9 @@ if(
     isset($_POST["clearp"]) &&
     isset($_POST["wtr"]) &&
     isset($_POST["wtimeday"]) &&
+    isset($_POST["nds_zak"]) &&
+    isset($_POST["nds_result"]) &&
+    isset($_POST["nds_to_pay"]) &&
     isset($_POST["positionid"])
 )
 {
@@ -50,11 +53,14 @@ if(
     $obp = round(($_POST["obp"]), 2);
     $price = round($_POST["price"],3);
     $rent = round(($_POST["rent"]), 2);
+    $nds_zak = round(($_POST["nds_zak"]), 2);
+    $nds_result = round(($_POST["nds_result"]), 2);
+    $nds_to_pay = round(($_POST["nds_to_pay"]), 2);
 
     try{
         $sql = "INSERT INTO pricings(
-        positionid,tradeid,sellerid,zak,kol,tzr,tzrknam,tzrkpok,wtime,fixed,op,tp,opr,tpr,firstobp,firstobpr,firstoh,clearp,obp,price,rent,wtr,wtimeday)
-        VALUES(:positionid,:trade,:seller,:zak,:kol,:tzr,:tzrknam,:tzrkpok,:wtime,:fixed,:op,:tp,:opr,:tpr,:firstobp,:firstobpr,:firstoh,:clearp,:obp,:price,:rent,:wtr,:wtimeday)";
+        positionid,tradeid,sellerid,zak,kol,tzr,tzrknam,tzrkpok,wtime,fixed,op,tp,opr,tpr,firstobp,firstobpr,firstoh,clearp,obp,price,rent,wtr,wtimeday,nds_zak,nds_result,nds_to_pay)
+        VALUES(:positionid,:trade,:seller,:zak,:kol,:tzr,:tzrknam,:tzrkpok,:wtime,:fixed,:op,:tp,:opr,:tpr,:firstobp,:firstobpr,:firstoh,:clearp,:obp,:price,:rent,:wtr,:wtimeday,:nds_zak,:nds_result,:nds_to_pay)";
         $statement = $database->prepare($sql);
         $statement->bindValue(':positionid', $positionid);
         $statement->bindValue(':trade', $trade);
@@ -79,6 +85,9 @@ if(
         $statement->bindValue(':rent', $rent);
         $statement->bindValue(':wtr', $wtr);
         $statement->bindValue(':wtimeday', $wtimeday);
+        $statement->bindValue(':nds_zak', $nds_zak);
+        $statement->bindValue(':nds_result', $nds_result);
+        $statement->bindValue(':nds_to_pay', $nds_to_pay);
         $database->beginTransaction();
         $statement->execute();
         $database->commit();
@@ -117,6 +126,9 @@ if(
     isset($_POST["clearp"]) &&
     isset($_POST["wtr"]) &&
     isset($_POST["wtimeday"]) &&
+    isset($_POST["nds_zak"]) &&
+    isset($_POST["nds_result"]) &&
+    isset($_POST["nds_to_pay"]) &&
     isset($_POST["pricingid"])
 )
 {
@@ -144,6 +156,9 @@ if(
     $rent = round($_POST["rent"], 2);
     $wtr = round($_POST["wtr"], 2);
     $wtimeday = round($_POST["wtimeday"], 0);
+    $nds_zak = round(($_POST["nds_zak"]), 2);
+    $nds_result = round(($_POST["nds_result"]), 2);
+    $nds_to_pay = round(($_POST["nds_to_pay"]), 2);
 
     try{
 
@@ -169,6 +184,9 @@ if(
         price = :price,
         rent = :rent,
         wtr = :wtr,
+        nds_zak = :nds_zak,
+        nds_result = :nds_result,
+        nds_to_pay = :nds_to_pay,
         wtimeday = :wtimeday WHERE pricingid = :pricingid";
         $statement = $database->prepare($sql);
 
@@ -194,6 +212,9 @@ if(
         $statement->bindValue(':price', $price);
         $statement->bindValue(':rent', $rent);
         $statement->bindValue(':wtr', $wtr);
+        $statement->bindValue(':nds_zak', $nds_zak);
+        $statement->bindValue(':nds_result', $nds_result);
+        $statement->bindValue(':nds_to_pay', $nds_to_pay);
         $statement->bindValue(':wtimeday', $wtimeday);
         $database->beginTransaction();
         $statement->execute();

@@ -471,6 +471,9 @@ $(document).ready(function() {
         $('#button_history').attr('hist_byer', byerid);//Добавляем идентификатор ПОкупателя в инпут по истории
         console.log(byername);
         $('#byer_name').text(byername);
+        $('#nds_result, #nds_zak, #nds_to_pay').text('');
+        $('#byer_name').text(byername);
+        $('#byer_name').text(byername);
         $('#request_info').text('Заказ № '+num+' от '+created);
 
         //Запрос в базу за опциями покупателя
@@ -583,6 +586,7 @@ $(document).ready(function() {
         $('#byer_info').html('');
         $('#executes_list').html('');
         $('#request_info').text('');
+        $('#nds_result, #nds_zak, #nds_to_pay').text('');
         $('#button_history_tzrkpok, #button_history_tzrknam, #button_history, #button_history_trade, #button_history_seller, #button_history_transports').removeClass('pushed');
         $('.history_kpok, .history_knam, .history, .history_trade, .history_seller, .history_transports').hide();
 
@@ -656,6 +660,7 @@ $(document).ready(function() {
         $('#cases p,#obtzr,#tzr,#obtzrknam,#obtzrkpok,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
         $('#pricingwindow').attr({positionid: '-', pricingid: '-', preditposid:'-', byerid:'-', requestid:'-', database:'-'});
         $('#byer_name').text('');
+        $('#nds_result, #nds_zak, #nds_to_pay').text('');
         $('.history').html('');
         $('.history_knam').html('');
         $('.history_kpok').html('');
@@ -692,6 +697,11 @@ $(document).ready(function() {
             $('#wtime').val(json.wtime);
             $('#wtimeday').text(json.wtimeday);
             $('#wtr').text(json.wtr);
+
+            $('#nds_result').text(json.nds_result);
+            $('#nds_zak').text(json.nds_zak);
+            $('#nds_to_pay').text(json.nds_to_pay);
+
 
             /*ЦЕНА и РЕНТАБЕЛЬНОСТЬ*/
             $('#pr').val(Number(Number(json.price).toFixed(3)));

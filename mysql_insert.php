@@ -370,6 +370,7 @@ if(isset($_POST['number']) && isset($_POST['payed']) && isset($_POST['uid']) && 
 //ДОБАВЛЕНИЕ ПЛАТЕЖКИ ИЗ модуля 1С/////////////////////////////////////////////////
 if(isset($_POST['requestid']) &&
     isset($_POST['payments_uid']) &&
+    isset($_POST['payments_requests_uid']) &&
     isset($_POST['byersid']) &&
     isset($_POST['onec_id']) &&
     isset($_POST['dataver']) &&
@@ -384,6 +385,7 @@ if(isset($_POST['requestid']) &&
         $requestid = $_POST['requestid'];
     }
     $payments_uid = $_POST['payments_uid'];
+    $payments_req_uid = $_POST['payments_requests_uid'];
     $byersid = $_POST['byersid'];
     $onec_id = $_POST['onec_id'];
     $dataver = $_POST['dataver'];
@@ -394,24 +396,32 @@ if(isset($_POST['requestid']) &&
     /**//////////////////////////////////////////////////////////////
 
     try {
-        $statement = $database->prepare("INSERT INTO `payments`(`requestid`,`payments_uid`,`byersid`,`onec_id`,`dataver`,`payed`,`number`,`sum`) VALUES(?,?,?,?,?,?,?,?)");
+        $statement = $database->prepare("INSERT INTO `payments`(`requestid`,`payments_requests_uid`,`payments_uid`,`byersid`,`onec_id`,`dataver`,`payed`,`number`,`sum`) VALUES(?,?,?,?,?,?,?,?,?)");
 
-        $check_duplicates = $database->prepare("SELECT * FROM `payments` WHERE `payments_uid` = ?");
+        $check_duplicates = $database->prepare("SELECT * FROM `payments` WHERE `payments_uid` = ? AND `payments_requests_uid`=?");
         $delete_duplicates = $database->prepare("DELETE FROM `payments` WHERE payments_id = ?");
 
         $statement->bindParam(1, $requestid);
-        $statement->bindParam(2, $payments_uid);
-        $statement->bindParam(3, $byersid);
-        $statement->bindParam(4, $onec_id);
-        $statement->bindParam(5, $dataver);
-        $statement->bindParam(6, $payed);
-        $statement->bindParam(7, $number);
-        $statement->bindParam(8, $sum);
+        $statement->bindParam(2, $payments_req_uid);
+        $statement->bindParam(3, $payments_uid);
+        $statement->bindParam(4, $byersid);
+        $statement->bindParam(5, $onec_id);
+        $statement->bindParam(6, $dataver);
+        $statement->bindParam(7, $payed);
+        $statement->bindParam(8, $number);
+        $statement->bindParam(9, $sum);
 
 
         $database->beginTransaction();
-        $statement->execute();
-        $database->commit();
+        $check_duplicates->execute(array($payments_uid, $payments_req_uid));
+        $is_there_duplicates_fetched = $check_duplicates->fetchAll(PDO::FETCH_ASSOC);
+        if(count($is_there_duplicates_fetched) > 0){
+            return "NOT UNIQUE PAYMENT";
+        }else{
+            $statement->execute();
+            $database->commit();
+        }
+
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
@@ -545,8 +555,8 @@ if(
         $firstobp = $getoptions_fetched['ov_firstobp'];
         $wtime = $getoptions_fetched['ov_wt'];
 
-        $addpricing = $database->prepare("INSERT INTO `pricings`(`positionid`,`tradeid`,`sellerid`,`zak`,`kol`,`price`,`fixed`,`op`,`tp`,`firstobp`,`wtime`,`opr`,`rent`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
-        $addpricing->execute(array($positionid,$tradeid,$sellerid,$zak,$kol,$price,$fixed,$op,$tp,$firstobp,$wtime,$opr,$rent));
+        $addpricing = $database->prepare("INSERT INTO `pricings`(`positionid`,`tradeid`,`sellerid`,`zak`,`kol`,`price`,`fixed`,`op`,`tp`,`firstobp`,`wtime`,`opr`,`rent`,`winner`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        $addpricing->execute(array($positionid,$tradeid,$sellerid,$zak,$kol,$price,$fixed,$op,$tp,$firstobp,$wtime,$opr,$rent,1));
 
         //Добавляем Победителя к только что добавленной позиции из только что добавленной расценки
         $lastpricingid = $database->lastInsertId();
@@ -586,6 +596,8 @@ if(
         $addgiving->execute(array($give_date,$give_worker,$give_amount,$now_time,$give_source,$give_comment));
 
         echo $give_amount." р. выдано ".$give_worker." через ". $give_source ." .";
+
+        //Вернуть input_time, в общем списке выделить цветом только что добавленную выдачу . json надо!
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
