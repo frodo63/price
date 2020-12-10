@@ -309,15 +309,15 @@ if(
 }*/
 
 //ОБНОВЛЕНИЕ ПЛАТЕЖКИ из модуля 1С/////////////////////////////////////////////////
-if(isset($_POST['requestid']) &&
-    isset($_POST['payments_uid']) &&
-    isset($_POST['payments_requests_uid']) &&
-    isset($_POST['byersid']) &&
-    isset($_POST['onec_id']) &&
-    isset($_POST['dataver']) &&
-    isset($_POST['payed']) &&
-    isset($_POST['number']) &&
-    isset($_POST['sum'])
+if(isset($_POST['requestid']) &&/*есть*/
+    isset($_POST['payments_uid']) &&/*есть*/
+    isset($_POST['payments_requests_uid']) &&/*есть*/
+    isset($_POST['byersid']) &&/*есть*/
+    isset($_POST['onec_id']) &&/*есть*/
+    isset($_POST['dataver']) &&/*есть*/
+    isset($_POST['payed']) &&/*есть*/
+    isset($_POST['number']) &&/*есть*/
+    isset($_POST['sum'])/*есть*/
 ){
     $requestid = $_POST['requestid'];
     $payments_uid = $_POST['payments_uid'];
@@ -330,6 +330,7 @@ if(isset($_POST['requestid']) &&
     $sum = $_POST['sum'];
 
     $get_payment = $database->prepare("SELECT * FROM `payments` WHERE `payments_uid` = ? AND `payments_requests_uid` = ?");
+    $update_payments_requests_uid = $database->prepare("UPDATE `payments` SET `payments_requests_uid` = ? WHERE `payments_uid` = ? AND `requestid` = ?");
     $update_requestid = $database->prepare("UPDATE `payments` SET `requestid` = ? WHERE `payments_uid` = ? AND `payments_requests_uid` = ?");
     $update_byersid = $database->prepare("UPDATE `payments` SET `byersid` = ? WHERE `payments_uid` = ? AND `payments_requests_uid` = ?");
     $update_onec_id = $database->prepare("UPDATE `payments` SET `onec_id` = ? WHERE `payments_uid` = ? AND `payments_requests_uid` = ?");
@@ -340,8 +341,15 @@ if(isset($_POST['requestid']) &&
 
     try {
         $database->beginTransaction();
+
         $get_payment->execute(array($payments_uid, $payments_req_uid));
         $get_payment_fetched = $get_payment->fetch(PDO::FETCH_ASSOC);
+
+        //Нашел траблему. В платежках есть requrstid, Но payments_requests_uid не был заполнен.
+        //Надо сделать автозаполнение, если payments_requests_uid = пустой, то заполнить его из строки запроса ($payments_req_uid = $_POST['payments_requests_uid'];)
+        if(/*($get_payment_fetched['payments_requests_uid'] != $payments_req_uid) || */($get_payment_fetched['payments_requests_uid'] != "") || !$get_payment_fetched['payments_requests_uid']){
+            $update_payments_requests_uid->execute(array($payments_req_uid, $payments_uid, $requestid));
+        }
 
         //2. Сравниваем и сразу обновляем
         if($get_payment_fetched['requestid'] != $requestid){$update_requestid->execute(array($requestid,$payments_uid, $payments_req_uid));}
@@ -350,14 +358,15 @@ if(isset($_POST['requestid']) &&
         if($get_payment_fetched['payed'] != $payed){$update_payed->execute(array($payed,$payments_uid, $payments_req_uid));}
         if($get_payment_fetched['number'] != $number){$update_number->execute(array($number,$payments_uid, $payments_req_uid));}
         if($get_payment_fetched['sum'] != $sum){$update_sum->execute(array($sum,$payments_uid, $payments_req_uid));}
+
         //По-любому обновляем версию данных
         $update_dataver->execute(array($dataver,$payments_uid, $payments_req_uid));
 
         $database->commit();
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!
-        $database->rollback();
         print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+        $database->rollback();
     }
     
 

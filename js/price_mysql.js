@@ -179,7 +179,6 @@ $(document).ready(function(){
         //Изменение НДС к закупу
         $('#nds_zak').text(Number((zak/120*20).toFixed(2)));
 
-
         //Стираем переменнные
         zak=tzr=a=tp=op=firstobp=wt=wtr=opr=tpr=firstobpr=null;
         //Идет расчет цены
@@ -465,8 +464,13 @@ $(document).ready(function(){
         var clearpnar = firstoh/lprice*100;
         $('#clearpnar').text((clearpnar).toFixed(2) + ' %');
 
+        //Обновляем НДС к закупу
+        //var nds_zak = Number((lzak/120*20).toFixed(2));
+        //var nds_result = Number((lprice/120*20).toFixed(2));
+        var nds_to_pay = Number((Number((lprice/120*20).toFixed(2)) - Number((lzak/120*20).toFixed(2))).toFixed(2));
+
         //Расчет рентабельности
-        var lrentS = lnam/lprice*100;
+        var lrentS = (lnam-nds_to_pay)/lprice*100;
         $('#rent h1').text((lrentS).toFixed(3));
         //console.log('Функция fastPrice сработала, цена: '+lprice);
         if(isNaN(lprice) || isNaN(lrentS)){
@@ -510,8 +514,7 @@ $(document).ready(function(){
         var nds_result = Number($('#nds_result').text());
         $('#nds_to_pay').text(Number((nds_result - nds_zak).toFixed(2)));
         var nds_to_pay = Number($('#nds_to_pay').text());
-
-
+        $('#opr_result').text(Number((lnam - nds_to_pay).toFixed(2)));
 
         //Высчитываем грязный процент (отношение начисленного к цене)
         var clearp = ltpr/lprice*100;

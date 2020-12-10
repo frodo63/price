@@ -603,6 +603,8 @@ $(document).ready(function() {
                 $('html, body').animate({scrollTop: $('.byer_req_list .ga_widen').offset().top}, 1000);
         }
 
+
+
         if($('#' + thetab + ' .widen').length == 0)
         {
             $('html, body').animate({scrollTop: $('#' + thetab).offset().top}, 1000);

@@ -144,7 +144,7 @@ $pricecolor : #F0F0F0;
     font-weight: bold;
 }
 
-#zak, #kol, #tzr, #tzrknam, #tzrkpok, #rop, #rtp, #op, #tp, #obp, #firstobp, #wtime {
+#zak, #kol, #tzr, #tzrknam, #tzrkpok, #rop, #rtp, #op, #tp, #obp, #firstobp, #wtime, #tzrstore {
   width: 10vw;
   text-align: center;
   font-size:3vh;
@@ -187,19 +187,16 @@ $pricecolor : #F0F0F0;
 
 
 
-#obtzr, #obtzrknam, #obtzrkpok, #op+p, #tp+p, #obp+p, #marge, #margek, #obpr, #firstobp+p, #id, p#byer, p#seller, p#trade, #onhands, #cases p, #realop, #realtp, #firstoh, #realop, #realtp, #wtimeday, #clearp, #oh, #wtr, #clearpnar, #nds_zak, #nds_result, #nds_to_pay
+#obtzr, #obtzrknam, #obtzrkpok, #op+p, #tp+p, #obp+p, #marge, #margek, #obpr, #firstobp+p, #id, p#byer, p#seller, p#trade, #onhands, #cases p, #realop, #realtp, #firstoh, #realop, #realtp, #wtimeday, #clearp, #oh, #wtr, #clearpnar, #nds_zak, #nds_result, #nds_to_pay, #opr_result
 {
     display: inline;    
 }
-#nds_block{
-  position: absolute;
-  top: 29.7vh;
-  left: 52vw;
-  width: 33vw;
-  border-radius: 3px;
-  padding: 5px;
 
+#nds_zak, #nds_result {
+  font-size: 2vh;
 }
+
+
 
 #obnal, #margediv
 {
@@ -390,4 +387,8 @@ tr[id^="inside"] td {
 .savename {
     background-color: red;
     color: white;
+}
+
+#opr_result, #pr {
+  color: #1b5700;
 }

@@ -487,6 +487,12 @@ if(isset($_POST['table'])){
 
                     $result .="<input type='button' requestid =".$row['req_id']." value=♢ class='collapse' name =".$row['req_nameid'].">";
 
+                    //Решаем цвет рентабельности
+                    if(round($row['rent'], 2) < 10){$rent_color_class = 'red_rent';}
+                    if(round($row['rent'], 2) >= 10){$rent_color_class = 'yellow_rent';}
+                    if(round($row['rent'], 2) >= 15){$rent_color_class = 'green_rent';}
+                    if(round($row['rent'], 2) == 0){$rent_color_class = 'null_rent';}
+
                     if(count($get_executals_fetched) > 0){
                         //$result .="<br><input type='button' value='ТОРГ-12' class='show_executals'><div style='display: none;' class='req_executals'>";
                         foreach($get_executals_fetched as $exe){
@@ -500,7 +506,14 @@ if(isset($_POST['table'])){
                             unset($mysqldate);
                         }
                         $result .="</div>";
-                    }
+                    }else{
+                        //Решаем цвет рентабельности
+                        $rent_color_class = 'null_rent';
+                        if(count($get_paymentals_fetched) > 0){
+                            //Ждем реализации
+                            $result .="<span style='color: red'>Ждём реализацию.</span><br>";
+                        };
+                    };
 
                     if(count($get_paymentals_fetched) > 0){
                         //$result .="<input type='button' value='₽' class='show_paymentals'><div style='display: none;' class='req_paymentals'>";
@@ -514,7 +527,18 @@ if(isset($_POST['table'])){
                             unset($mysqldate);
                         }
                         $result .="</div>";
-                    }
+                    }else{
+                        //Решаем цвет рентабельности
+                        $rent_color_class = 'null_rent';
+                        if(count($get_executals_fetched) > 0){
+                            //Ждем оплаты
+                            $result .="<span style='color: red'>Ждём оплату.</span><br>";
+                        };
+                    };
+
+                    if(count($get_executals_fetched) > 0 && count($get_paymentals_fetched) > 0 && round($row['rent'], 2) == 0){
+                        $rent_color_class = 'needs_attention';
+                    };
 
                     /*Заголовок заказа////////////////////////////////////////////////////////////////////////////////////////////////*/
                     $phpdate = strtotime( $row['req_date'] );
@@ -522,24 +546,25 @@ if(isset($_POST['table'])){
                     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
                     $result .="<div class='contents' id=".$row['req_nameid'].">
-                <h3 class='req_header_".$row['req_id']."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму <span class='reqsumma'>".number_format($row['sum'],2,'.',' ')."&nbsp</span><br> Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h3/><br>
-                <input type='button' class='edit_options' value='Опции' requestid='".$row['req_id']."'>";
-                    //$result .="<input type='button' class='edit_1c_num' value='Номер в 1С и дата' requestid='".$row['req_id']."'>";
+                        <h3 class='req_header_".$row['req_id']."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму <span class='reqsumma'>".number_format($row['sum'],2,'.',' ')."&nbsp</span><br> Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h3/><br>
+                        <input type='button' class='edit_options' value='Опции' requestid='".$row['req_id']."'>";
+                        //$result .="<input type='button' class='edit_1c_num' value='Номер в 1С и дата' requestid='".$row['req_id']."'>";
                     $result .="<input type='button' value='Вернуть в Р-1' class='r1_show' requestid='".$row['req_id']."'>              
-                <input type='button' class='add_pos' value='+позиция'>
-                <div class='add-pos-inputs'>
-                <input type='text' class='trade' name='new_req_name' placeholder='Название позиции' size='50'>
-                <div class='sres'></div>
-                <input type='button' name =" . $row['req_id'] . " value='Добавить' class='addpos' database = '".$database[1]."'>
-            </div>
-            
-            <div class='positions'></div>
-            <div class='rentcount'></div>            
-            </td>
-                <td class = 'rent_whole'>".round($row['rent'], 2)."</td>
-                <td class = 'sum_whole'>" .number_format(round($row['sum'], 2), 2, '.', ' '). "</td>
-                <td class = 'req_buttons'>";
-                //<td class = 'req_buttons'><input type='button' requestid =" . $row['req_id'] . " value='R' class='edit' name =".$row['req_nameid'].">
+                        <input type='button' class='add_pos' value='+позиция'>
+                        <div class='add-pos-inputs'>
+                        <input type='text' class='trade' name='new_req_name' placeholder='Название позиции' size='50'>
+                        <div class='sres'></div>
+                        <input type='button' name =" . $row['req_id'] . " value='Добавить' class='addpos' database = '".$database[1]."'>
+                    </div>
+                    
+                    <div class='positions'></div>
+                    <div class='rentcount'></div>            
+                    </td>";
+
+                    $result .=" <td class = '" . $rent_color_class . " rent_whole'>".round($row['rent'], 2)."</td>
+                        <td class = 'sum_whole'>" .number_format(round($row['sum'], 2), 2, '.', ' '). "</td>
+                        <td class = 'req_buttons'>";
+                        //<td class = 'req_buttons'><input type='button' requestid =" . $row['req_id'] . " value='R' class='edit' name =".$row['req_nameid'].">
         $result .= "<input type='button' requestid =" . $row['req_id'] . " value='X' class='reqdelete' name =".$row['req_nameid']."></td></tr>";
                 }
             }
