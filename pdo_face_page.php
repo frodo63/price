@@ -78,6 +78,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         <li id='tab_search'><a href='#search'>Результаты поиска</a></li>
         <li id='tab_sync'><a href='#sync'>Синхронизация</a></li>
         <li id='tab_zp'><a href='#zp'>Зарплата</a></li>
+        <li id='tab_fr'><a href='#fr'>ФР</a></li>
       </ul>
   
       <div id='requests'>
@@ -238,6 +239,14 @@ echo "    <div id='sync'>
           <div id='zp'>
           <input type='button' class='show_list' value='РАСЧЕТ ЗАРПЛАТЫ⏎'><br><br>
           <div class='zp_list' worker></div>
+          </div>
+          
+          <div id='fr'>
+          <input type='button' class='show_list' value='Показать ФР⏎'><br><br>
+          <!--
+          Финансовый результат показывает, сколько за месяц заработано чистых денег.
+          -->
+          <div class='fr_list'></div>
           </div>
       
 </div>

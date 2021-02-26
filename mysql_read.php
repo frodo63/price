@@ -438,7 +438,7 @@ if(isset($_POST['table'])){
                                         b.byers_nameid AS b_nameid,
                                         b.name AS b_name
                                         FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
-                                        WHERE a.created BETWEEN '2019-01-01' AND '2020-12-31'
+                                        WHERE a.created BETWEEN '2019-01-01' AND '2030-12-31'
                                         ORDER BY req_date DESC");
                     $database[0]->beginTransaction();
                     $statement->execute();
@@ -984,6 +984,151 @@ if(isset($_POST['table'])){
             };
 
             $result .="</table>";
+
+            print $result;
+
+        } catch( PDOException $Exception ) {
+            // Note The Typecast To An Integer!
+            print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+        }
+    }
+    else if ($table == 'fr'){
+        try{
+
+            $result = "<h1>Финансовый результат помесячно</h1>";
+
+            $months = array(1 =>'Январь', 2 =>'Февраль', 3 =>'Март', 4 =>'Апрель', 5 =>'Март', 6 =>'Июнь', 7 =>'Июль', 8 =>'Август', 9 =>'Сентябрь', 10 =>'Октябрь', 11 =>'Ноябрь', 12 =>'Декабрь');
+            
+            $total_payments_sum = 0;
+            $total_theirs_sum = 0;
+            $total_our_sum = 0;
+            $total_nds_sum = 0;
+
+            $fr_payments = $pdo->prepare("
+SELECT 
+p.payments_requests_uid p_r_uid, 
+p.sum p_sum,
+p.number p_num, 
+p.payed p_date, 
+a.name bname,
+r.req_sum req_sum  
+FROM payments p
+LEFT JOIN byers b ON p.byersid=b.byers_id
+LEFT JOIN allnames a ON b.byers_nameid = a.nameid
+LEFT JOIN requests r ON p.requestid = r.requests_id
+WHERE MONTH(payed) = ? AND YEAR(payed) = ?");
+
+            $fr_pricing = $pdo->prepare("
+SELECT 
+nds_to_pay nds, 
+pr.kol kol, 
+pr.firstoh theirs, 
+pr.opr ours 
+FROM pricings pr
+    LEFT JOIN req_positions pos ON pr.pricingid=pos.winnerid
+    LEFT JOIN requests req ON req.requests_id=pos.requestid
+WHERE req.requests_uid=?");
+
+            foreach ($months as $key => $month_name)
+            {
+                $fr_payments->execute(array($key, '2021'));
+                $payments_fetched = $fr_payments->fetchAll(PDO::FETCH_ASSOC);
+
+                $result .= "<h2>".$month_name."</h2><br>";
+                /*Прежде чем рисовать красоту, надо сделать красивый массив многомерный*/
+                unset($payments_by_request);
+                $payments_by_request = array();
+                $total_payments_sum = 0;
+
+                foreach($payments_fetched as $pa_f){
+                    if( array_key_exists($pa_f['bname']." --- ".$pa_f['p_r_uid'] , $payments_by_request) ){
+                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['payments'][] = $pa_f['p_sum'] . " № " . $pa_f['p_num'] . " от " . $pa_f['p_date'];
+                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['payed'] += $pa_f['p_sum'];
+                    }
+                    else{
+                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]=array();
+                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['payments'] = array();
+                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['payments'][] = $pa_f['p_sum'] . " № " . $pa_f['p_num'] . " от " . $pa_f['p_date'];
+                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['sum'] = $pa_f['req_sum'];
+                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['payed'] = $pa_f['p_sum'];
+                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['uid'] = $pa_f['p_r_uid'];//??
+                    }
+
+                    $total_payments_sum += $pa_f['p_sum'];
+
+                }
+                foreach ($payments_by_request as $key => $value){
+                    $result .= "<br><span style='font-weight: bold'>".$key."</span><br>";
+                    $result .= "Сумма: ".$value['sum']."<br>";
+                    foreach ($value['payments'] as $p){
+                        $result .=$p."<br>";
+                    }
+
+                    $request_payed = 0;
+
+                    $result .= "Оплачено: ".$value['payed']."<br>";
+                    if (($value['sum'] > 0) && ($value['sum'] - $value['payed']) < 10){
+                        $result .= "<span class='green'>ОПЛАЧЕНО</span>";
+                        $request_payed = 1;
+                    }else{
+                        if($value['sum'] > 0){
+                            $result .= "<span class='red'>ДОЛГ ( ".($value['sum'] - $value['payed'])." )</span>";
+                        }else{
+                            $result .= "<span style='color: dodgerblue'>НЕТ СУММЫ</span>";
+                        }
+                    }
+
+
+
+                    $fr_pricing->execute(array($value['uid']));
+                    $fr_pricing_fetched = $fr_pricing->fetchAll(PDO::FETCH_ASSOC);
+
+                    $our_sum = 0;
+                    $nds_sum = 0;
+                    $theirs_sum = 0;
+
+
+
+                    foreach ($fr_pricing_fetched as $pricing){
+
+                        //По нашим цифрам надо: 1. Строго заполнять все суммы. 2. Высчитывать финрезультат из процента выполнения по сделке.
+                        // Дилерские выдавать лишь при 100%, а нашу прибыль можно считать уже после первой оплаты
+
+                        if ($value['sum']>0){
+                            $our_sum += ($pricing['ours'] - $pricing['nds'])*$pricing['kol']*$value['payed']/$value['sum'];
+                            $total_our_sum += ($pricing['ours'] - $pricing['nds'])*$pricing['kol']*$value['payed']/$value['sum'];
+
+                            $nds_sum += $pricing['nds']*$pricing['kol']*$value['payed']/$value['sum'];
+                            $total_nds_sum += $pricing['nds']*$pricing['kol']*$value['payed']/$value['sum'];
+                        }else{
+                            //ИСКЛЮЧИТЬ НУЛЕВУЮ СУММУ!!!
+                        }
+
+
+                        if($request_payed == 1){
+                            $theirs_sum += $pricing['theirs']*$pricing['kol'];
+                            $total_theirs_sum += $pricing['theirs']*$pricing['kol'];
+                        }
+
+                    }
+
+                    $result .= "<br><span style='font-weight: bold'>Результат по сделке: НДС: " . number_format(round($nds_sum,2),'2','.', ' '). ", НАШИ: <span style='color: green'>". number_format(round($our_sum,2),'2','.', ' ') ."</span>, НЕ НАШИ: <span style='color: red'>". number_format(round($theirs_sum,2),'2','.', ' ') . "</span></span><br><br>.";
+
+                }
+
+
+
+
+
+                $result .= "<br>Всего пришло денег: " . number_format(round($total_payments_sum,2),'2','.', ' ');
+                $result .= "<br>Из них Наши: " . number_format(round($total_our_sum,2),'2','.', ' ');
+                $result .= "<br>Вернуть НДС: " . number_format(round($total_nds_sum,2),'2','.', ' ');
+                $result .= "<br>Нужно отдать на дилерские: " . number_format(round($total_theirs_sum,2),'2','.', ' '). "<br><br>";
+
+                $total_payments_sum = 0;
+
+
+            };
 
             print $result;
 
