@@ -3,8 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="aebacd80-a44c-46e9-91ce-96f94f6c86c5" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.sass-cache/655069f97b10dfd4f9e7087ba948a0b7dcd44278/_mysql_styles.scssc" beforeDir="false" afterPath="$PROJECT_DIR$/.sass-cache/655069f97b10dfd4f9e7087ba948a0b7dcd44278/_mysql_styles.scssc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysql_read.php" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_read.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pdo_face_page.php" beforeDir="false" afterPath="$PROJECT_DIR$/pdo_face_page.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sass/_mysql_styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/sass/_mysql_styles.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,27 +57,6 @@
         <item name="prices@localhost" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="prices: schema" type="ebfa3cd1:MariaImplModel$Schema" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="prices@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="prices: schema" type="ebfa3cd1:MariaImplModel$Schema" />
-        <item name="byers: table" type="dbc44a63:MariaImplModel$Table" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="prices@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="prices: schema" type="ebfa3cd1:MariaImplModel$Schema" />
-        <item name="executes: table" type="dbc44a63:MariaImplModel$Table" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="prices@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="prices: schema" type="ebfa3cd1:MariaImplModel$Schema" />
-        <item name="payments: table" type="dbc44a63:MariaImplModel$Table" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
@@ -205,12 +187,17 @@
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="root:prices@localhost" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@653c9d39" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@41a820b8" type="9fbbdea:ServiceModel$ServiceNode" />
               </path>
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="root:prices@localhost" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@5f022bef" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@640cb516" type="9fbbdea:ServiceModel$ServiceNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="root:prices@localhost" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@62e627c9" type="9fbbdea:ServiceModel$ServiceNode" />
               </path>
             </expand>
             <select />
@@ -390,7 +377,8 @@
       <workItem from="1607607264095" duration="139000" />
       <workItem from="1607608731340" duration="92000" />
       <workItem from="1612424408083" duration="884000" />
-      <workItem from="1614330136815" duration="30215000" />
+      <workItem from="1614330136815" duration="30323000" />
+      <workItem from="1614759395930" duration="21376000" />
     </task>
     <servers />
   </component>
@@ -430,22 +418,22 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state width="1418" height="254" key="GridCell.Tab.0.bottom" timestamp="1614363595743">
+    <state width="1418" height="148" key="GridCell.Tab.0.bottom" timestamp="1614785833518">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1418" height="254" key="GridCell.Tab.0.bottom/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1614363595743" />
-    <state width="1418" height="254" key="GridCell.Tab.0.center" timestamp="1614363595742">
+    <state width="1418" height="148" key="GridCell.Tab.0.bottom/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1614785833518" />
+    <state width="1418" height="148" key="GridCell.Tab.0.center" timestamp="1614785833518">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1418" height="254" key="GridCell.Tab.0.center/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1614363595742" />
-    <state width="1418" height="254" key="GridCell.Tab.0.left" timestamp="1614363595742">
+    <state width="1418" height="148" key="GridCell.Tab.0.center/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1614785833518" />
+    <state width="1418" height="148" key="GridCell.Tab.0.left" timestamp="1614785833517">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1418" height="254" key="GridCell.Tab.0.left/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1614363595742" />
-    <state width="1418" height="254" key="GridCell.Tab.0.right" timestamp="1614363595743">
+    <state width="1418" height="148" key="GridCell.Tab.0.left/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1614785833517" />
+    <state width="1418" height="148" key="GridCell.Tab.0.right" timestamp="1614785833518">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1418" height="254" key="GridCell.Tab.0.right/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1614363595743" />
+    <state width="1418" height="148" key="GridCell.Tab.0.right/0.0.1680.1010/1680.0.1440.900@0.0.1680.1010" timestamp="1614785833518" />
     <state x="509" y="113" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1607509506121">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>

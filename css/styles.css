@@ -1743,6 +1743,21 @@ tr[pricingid] td {
   color: white;
 }
 
+/* line 1204, ../sass/_mysql_styles.scss */
+.fr_result {
+  width: 25vw;
+  position: fixed;
+  top: 35vh;
+  right: 4vw;
+  font-weight: 600;
+  font-size: 20px;
+  text-align: right;
+}
+/* line 1212, ../sass/_mysql_styles.scss */
+.fr_result span {
+  font-weight: 100;
+}
+
 /* line 1, ../sass/_price.scss */
 h2 {
   margin: 0;

@@ -995,9 +995,24 @@ if(isset($_POST['table'])){
     else if ($table == 'fr'){
         try{
 
-            $result = "<h1>Финансовый результат помесячно</h1>";
+            $result = "<h1>Финансовый результат помесячно</h1>
+            <div id='months'>                                                                                                               
+                  <ul>
+                    <li id='tab_1'><a href='#1'>Январь</a></li>
+                    <li id='tab_2'><a href='#2'>Февраль</a></li>
+                    <li id='tab_3'><a href='#3'>Март</a></li>
+                    <li id='tab_4'><a href='#4'>Апрель</a></li>
+                    <li id='tab_5'><a href='#5'>Май</a></li>
+                    <li id='tab_6'><a href='#6'>Июнь</a></li>
+                    <li id='tab_7'><a href='#7'>Июль</a></li>
+                    <li id='tab_8'><a href='#8'>Август</a></li>
+                    <li id='tab_9'><a href='#9'>Сентябрь</a></li>
+                    <li id='tab_10'><a href='#10'>Октябрь</a></li>
+                    <li id='tab_11'><a href='#11'>Ноябрь</a></li>
+                    <li id='tab_12'><a href='#12'>Декабрь</a></li>            
+                  </ul>";
 
-            $months = array(1 =>'Январь', 2 =>'Февраль', 3 =>'Март', 4 =>'Апрель', 5 =>'Март', 6 =>'Июнь', 7 =>'Июль', 8 =>'Август', 9 =>'Сентябрь', 10 =>'Октябрь', 11 =>'Ноябрь', 12 =>'Декабрь');
+            $months = array(1 =>'Январь', 2 =>'Февраль', 3 =>'Март', 4 =>'Апрель', 5 =>'Май', 6 =>'Июнь', 7 =>'Июль', 8 =>'Август', 9 =>'Сентябрь', 10 =>'Октябрь', 11 =>'Ноябрь', 12 =>'Декабрь');
             
             $total_payments_sum = 0;
             $total_theirs_sum = 0;
@@ -1011,12 +1026,19 @@ p.sum p_sum,
 p.number p_num, 
 p.payed p_date, 
 a.name bname,
-r.req_sum req_sum  
-FROM payments p
-LEFT JOIN byers b ON p.byersid=b.byers_id
+r.req_sum req_sum,
+r.1c_num 1c_num, 
+r.created created 
+FROM requests r
+LEFT JOIN byers b ON r.byersid=b.byers_id
 LEFT JOIN allnames a ON b.byers_nameid = a.nameid
-LEFT JOIN requests r ON p.requestid = r.requests_id
+LEFT JOIN payments p ON p.requestid = r.requests_id
 WHERE MONTH(payed) = ? AND YEAR(payed) = ?");
+
+            $fr_other_payments =  $pdo->prepare("
+SELECT * FROM payments p
+LEFT JOIN requests r ON r.requests_uid=p.payments_requests_uid
+WHERE p.payments_requests_uid=? AND p.payed <= ?");
 
             $fr_pricing = $pdo->prepare("
 SELECT 
@@ -1034,42 +1056,97 @@ WHERE req.requests_uid=?");
                 $fr_payments->execute(array($key, '2021'));
                 $payments_fetched = $fr_payments->fetchAll(PDO::FETCH_ASSOC);
 
-                $result .= "<h2>".$month_name."</h2><br>";
+                $result .= "<div id='".$key."'><h2>".$month_name."</h2><br>";
                 /*Прежде чем рисовать красоту, надо сделать красивый массив многомерный*/
                 unset($payments_by_request);
                 $payments_by_request = array();
                 $total_payments_sum = 0;
+                $total_our_sum = 0;
+                $total_nds_sum = 0;
+                $total_theirs_sum = 0;
 
                 foreach($payments_fetched as $pa_f){
+
                     if( array_key_exists($pa_f['bname']." --- ".$pa_f['p_r_uid'] , $payments_by_request) ){
-                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['payments'][] = $pa_f['p_sum'] . " № " . $pa_f['p_num'] . " от " . $pa_f['p_date'];
-                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['payed'] += $pa_f['p_sum'];
+                        //$payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['payments'][] = $pa_f['p_sum'] . " № " . $pa_f['p_num'] . " от " . $pa_f['p_date'];
+                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['1c_num'] = $pa_f['1c_num'];
+                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['bname'] = $pa_f['bname'];
+                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['created'] = $pa_f['created'];
+                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['p_r_uid'] = $pa_f['p_r_uid'];
+                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['payed'] = 0;
+                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['p_date'] = $pa_f['p_date'];
                     }
                     else{
                         $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]=array();
                         $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['payments'] = array();
-                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['payments'][] = $pa_f['p_sum'] . " № " . $pa_f['p_num'] . " от " . $pa_f['p_date'];
+                        //$payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['payments'][] = $pa_f['p_sum'] . " № " . $pa_f['p_num'] . " от " . $pa_f['p_date'];
                         $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['sum'] = $pa_f['req_sum'];
-                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['payed'] = $pa_f['p_sum'];
                         $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['uid'] = $pa_f['p_r_uid'];//??
+                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['1c_num'] = $pa_f['1c_num'];
+                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['bname'] = $pa_f['bname'];
+                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['created'] = $pa_f['created'];
+                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['p_r_uid'] = $pa_f['p_r_uid'];
+                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['payed'] = 0;
+                        $payments_by_request[$pa_f['bname']." --- ".$pa_f['p_r_uid']]['p_date'] = $pa_f['p_date'];
                     }
-
-                    $total_payments_sum += $pa_f['p_sum'];
-
                 }
-                foreach ($payments_by_request as $key => $value){
-                    $result .= "<br><span style='font-weight: bold'>".$key."</span><br>";
+
+                $n = 1;
+                foreach ($payments_by_request as $key_2 => $value){
+
+                    $fr_other_payments->execute(array($value['p_r_uid'], $value['p_date']));
+                    $fr_other_payments_fetched = $fr_other_payments->fetchAll(PDO::FETCH_ASSOC);
+                    foreach ($fr_other_payments_fetched as $pay){
+                        $value['payed'] += $pay['sum'];
+                        $value['payments'][] = $pay['sum'] . " № " . $pay['number'] . " от " . $pay['payed'];
+                    }
+                    $total_payments_sum += $pay['sum'];
+
+                    $phpdate = strtotime( $value['created'] );
+                    $created_formatted = date( 'd.m.y', $phpdate );
+
+                    $result .= "<br>".$n.". <span style='font-weight: bold'>".$value['bname']." --- ".$value['1c_num'].". от ".$created_formatted."</span><br>";
                     $result .= "Сумма: ".$value['sum']."<br>";
                     foreach ($value['payments'] as $p){
                         $result .=$p."<br>";
                     }
 
                     $request_payed = 0;
+                    $our_sum = 0;
+                    $nds_sum = 0;
+                    $theirs_sum = 0;
 
                     $result .= "Оплачено: ".$value['payed']."<br>";
-                    if (($value['sum'] > 0) && ($value['sum'] - $value['payed']) < 10){
+                    if ( ($value['sum'] > 0) && ($value['sum'] - $value['payed']) < 200 ){
                         $result .= "<span class='green'>ОПЛАЧЕНО</span>";
+                        if( ($value['sum'] - $value['payed']) > 5 ){
+                            $result .= "( ".($value['sum'] - $value['payed'])." )";
+                        }
+
                         $request_payed = 1;
+
+                        $fr_pricing->execute(array($value['uid']));
+                        $fr_pricing_fetched = $fr_pricing->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($fr_pricing_fetched as $pricing){
+                            //По нашим цифрам надо: 1. Строго заполнять все суммы. 2. Высчитывать финрезультат из процента выполнения по сделке.
+                            // Дилерские выдавать лишь при 100%, наша прибыль считается лишь после полной оплаты тоже. И НДС.
+                            if ($value['sum']>0){
+
+                                $our_sum += ($pricing['ours'] - $pricing['nds'])*$pricing['kol']*$value['payed']/$value['sum'];
+                                $total_our_sum += ($pricing['ours'] - $pricing['nds'])*$pricing['kol']*$value['payed']/$value['sum'];
+
+                                $nds_sum += $pricing['nds']*$pricing['kol']*$value['payed']/$value['sum'];
+                                $total_nds_sum += $pricing['nds']*$pricing['kol']*$value['payed']/$value['sum'];
+                            }else{
+                                //ИСКЛЮЧИТЬ НУЛЕВУЮ СУММУ!!!
+                            }
+                            if($request_payed == 1){
+                                $theirs_sum += $pricing['theirs']*$pricing['kol'];
+                                $total_theirs_sum += $pricing['theirs']*$pricing['kol'];
+                            }
+                        }
+
                     }else{
                         if($value['sum'] > 0){
                             $result .= "<span class='red'>ДОЛГ ( ".($value['sum'] - $value['payed'])." )</span>";
@@ -1078,56 +1155,22 @@ WHERE req.requests_uid=?");
                         }
                     }
 
-
-
-                    $fr_pricing->execute(array($value['uid']));
-                    $fr_pricing_fetched = $fr_pricing->fetchAll(PDO::FETCH_ASSOC);
-
-                    $our_sum = 0;
-                    $nds_sum = 0;
-                    $theirs_sum = 0;
-
-
-
-                    foreach ($fr_pricing_fetched as $pricing){
-
-                        //По нашим цифрам надо: 1. Строго заполнять все суммы. 2. Высчитывать финрезультат из процента выполнения по сделке.
-                        // Дилерские выдавать лишь при 100%, а нашу прибыль можно считать уже после первой оплаты
-
-                        if ($value['sum']>0){
-                            $our_sum += ($pricing['ours'] - $pricing['nds'])*$pricing['kol']*$value['payed']/$value['sum'];
-                            $total_our_sum += ($pricing['ours'] - $pricing['nds'])*$pricing['kol']*$value['payed']/$value['sum'];
-
-                            $nds_sum += $pricing['nds']*$pricing['kol']*$value['payed']/$value['sum'];
-                            $total_nds_sum += $pricing['nds']*$pricing['kol']*$value['payed']/$value['sum'];
-                        }else{
-                            //ИСКЛЮЧИТЬ НУЛЕВУЮ СУММУ!!!
-                        }
-
-
-                        if($request_payed == 1){
-                            $theirs_sum += $pricing['theirs']*$pricing['kol'];
-                            $total_theirs_sum += $pricing['theirs']*$pricing['kol'];
-                        }
-
-                    }
-
-                    $result .= "<br><span style='font-weight: bold'>Результат по сделке: НДС: " . number_format(round($nds_sum,2),'2','.', ' '). ", НАШИ: <span style='color: green'>". number_format(round($our_sum,2),'2','.', ' ') ."</span>, НЕ НАШИ: <span style='color: red'>". number_format(round($theirs_sum,2),'2','.', ' ') . "</span></span><br><br>.";
-
+                    $result .= "<br><span style='font-weight: bold'>Результат по сделке: 
+                НДС: " . number_format(round($nds_sum,2),'2','.', ' '). ", 
+                НАШИ: <span style='color: green'>". number_format(round($our_sum,2),'2','.', ' ') ."</span>, 
+                НЕ НАШИ: <span style='color: red'>". number_format(round($theirs_sum,2),'2','.', ' ') . "</span></span><br><br>";
+                $n++;
                 }
-
-
-
-
-
-                $result .= "<br>Всего пришло денег: " . number_format(round($total_payments_sum,2),'2','.', ' ');
-                $result .= "<br>Из них Наши: " . number_format(round($total_our_sum,2),'2','.', ' ');
-                $result .= "<br>Вернуть НДС: " . number_format(round($total_nds_sum,2),'2','.', ' ');
-                $result .= "<br>Нужно отдать на дилерские: " . number_format(round($total_theirs_sum,2),'2','.', ' '). "<br><br>";
-
+                $result .= "<div class='fr_result'><br><span>Всего пришло денег: </span>" . number_format(round($total_payments_sum,2),'2','.', ' ');
+                $result .= "<br><span>Из них Наши: </span>" . number_format(round($total_our_sum,2),'2','.', ' ');
+                $result .= "<br><span>Вернуть НДС: </span>" . number_format(round($total_nds_sum,2),'2','.', ' ');
+                $result .= "<br><span>Нужно отдать на дилерские: </span>" . number_format(round($total_theirs_sum,2),'2','.', ' '). "<br><br>";
+                $result .= "</div></div><script>
+                    $( '#months' ).tabs({
+                      active: '0'
+                    });
+                </script>";
                 $total_payments_sum = 0;
-
-
             };
 
             print $result;

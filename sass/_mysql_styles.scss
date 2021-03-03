@@ -1201,3 +1201,16 @@ tr[pricingid] td {border: 1px solid black}
 .green_rent{background-color: green; color: white;}
 .needs_attention{background-color: lightblue; color: white;}
 
+.fr_result{
+  width: 25vw;
+  position: fixed;
+  top: 35vh;
+  right: 4vw;
+  font-weight: 600;
+  font-size: 20px;
+  text-align: right;
+  span{
+    font-weight: 100;
+  }
+}
+

@@ -76,7 +76,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         <li id='tab_sellers'><a href='#sellers'>Поставщики</a></li>
         <li id='tab_trades'><a href='#trades'>Товары</a></li>        
         <li id='tab_search'><a href='#search'>Результаты поиска</a></li>
-        <li id='tab_sync'><a href='#sync'>Синхронизация</a></li>
+        <!--<li id='tab_sync'><a href='#sync'>Синхронизация</a></li>-->
         <li id='tab_zp'><a href='#zp'>Зарплата</a></li>
         <li id='tab_fr'><a href='#fr'>ФР</a></li>
       </ul>
@@ -206,7 +206,8 @@ echo"       <!--Добавить Платежку -->
           <div class='search_list'></div>
       </div>";
       
-echo "    <div id='sync'>
+echo "    <!--
+<div id='sync'>
             <div class='sync_list'>
               <p>Синхронизировать: </p>              
               <input type='button' id='sync_byers' value='Покупателей ЛТК' database='ltk'>
@@ -235,7 +236,7 @@ echo "    <div id='sync'>
               
               <div id='sync_info'></div>          
             </div>
-          </div>
+          </div>-->
           <div id='zp'>
           <input type='button' class='show_list' value='РАСЧЕТ ЗАРПЛАТЫ⏎'><br><br>
           <div class='zp_list' worker></div>
