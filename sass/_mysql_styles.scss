@@ -979,6 +979,9 @@ tr[pricingid] td {border: 1px solid black}
 }
 
 .green {background-color: green; color: white}
+.green-text {color: green}
+.orange-text {color: darkorange}
+.red-text {color: red}
 .lightgreen {background-color: lightgreen; color: black}
 .yellow {background-color: yellow; color: black}
 .lightblue {background-color: lightblue; color: blue}
@@ -1199,13 +1202,13 @@ tr[pricingid] td {border: 1px solid black}
 .red_rent{background-color: red; color: white;}
 .yellow_rent{background-color: yellow; color: black;}
 .green_rent{background-color: green; color: white;}
-.needs_attention{background-color: lightblue; color: white;}
+.needs_attention{background-color: lightblue; color: black;}
 
 .fr_result{
   width: 25vw;
   position: fixed;
-  top: 35vh;
-  right: 4vw;
+  top: 37vh;
+  right: 3vw;
   font-weight: 600;
   font-size: 20px;
   text-align: right;
@@ -1213,4 +1216,19 @@ tr[pricingid] td {border: 1px solid black}
     font-weight: 100;
   }
 }
+#months .ui-tabs-panel{
+  min-height: 100px;
+}
+
+.razbivka {
+  width: 500px;
+  position: fixed;
+  top: 410px;
+  right: 45px;
+  background: white;
+  display: none;
+  font-size: 18px;
+  text-align: initial;
+}
+
 

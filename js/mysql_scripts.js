@@ -644,7 +644,8 @@ $(document).ready(function(){
                     /*Скроллимся к только что открытой завяке*/
                     var e = $('.ga_widen').offset().top;
                     console.log(e);
-                    $('html, body').animate({scrollTop: e}, 1000);
+                    //$('html, body').animate({scrollTop: e}, 1000);
+                    window.scrollTo(0, 0);
                     /**/
                     $(event.target).switchClass('w','x').val('X');//Кнопочка
                     $(event.target).next('span').css({'font-size' : 30});//Увеличивается шрифт
@@ -1915,6 +1916,17 @@ $(document).ready(function(){
     $(document).off('click.s_h').on('click.s_h', '.header_give, .header_count', function (event) {
         console.log('clicked');
         $(event.target).next('div').slideToggle();
+    });
+
+    //Отображение/сокрытие менюшек добавления Начислений и Выдач
+    $(document).off('mouseover.razbivka').on('mouseover.razbivka', '.razbivka_green', function (event) {
+        console.log('1');
+        $(event.target).next('div').slideToggle();
+    });
+
+    $(document).off('mouseleave.razbivka').on('mouseleave.razbivka', '.razbivka', function (event) {
+        console.log('2');
+        $(event.target).slideToggle();
     });
 
 

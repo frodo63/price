@@ -546,7 +546,9 @@ if(isset($_POST['table'])){
                     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
                     $result .="<div class='contents' id=".$row['req_nameid'].">
-                        <h3 class='req_header_".$row['req_id']."'>Заказ от <span class='date'>".$mysqldate."</span> на сумму <span class='reqsumma'>".number_format($row['sum'],2,'.',' ')."&nbsp</span><br> Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h3/><br>
+                        <h3 class='req_header_".$row['req_id']."'>
+                        ".$row['b_name']."<br>
+                        Заказ от <span class='date'>".$mysqldate."</span> на сумму <span class='reqsumma'>".number_format($row['sum'],2,'.',' ')."&nbsp</span><br> Номер в 1С: <span class='1c_num'>".$row['1c_num']."</span> <h3/><br>
                         <input type='button' class='edit_options' value='Опции' requestid='".$row['req_id']."'>";
                         //$result .="<input type='button' class='edit_1c_num' value='Номер в 1С и дата' requestid='".$row['req_id']."'>";
                     $result .="<input type='button' value='Вернуть в Р-1' class='r1_show' requestid='".$row['req_id']."'>              
@@ -1020,25 +1022,34 @@ if(isset($_POST['table'])){
             $total_nds_sum = 0;
 
             $fr_payments = $pdo->prepare("
-SELECT 
-p.payments_requests_uid p_r_uid, 
-p.sum p_sum,
-p.number p_num, 
-p.payed p_date, 
-a.name bname,
-r.req_sum req_sum,
-r.1c_num 1c_num, 
-r.created created 
+SELECT
+    p.payments_requests_uid p_r_uid,
+    p.sum p_sum,
+    p.number p_num,
+    p.payed p_date,
+    ex.executed ex_date,
+    ex.sum ex_sum,
+    ex.execute_1c_num ex_num,
+    a.name bname,
+    r.req_sum req_sum,
+    r.1c_num 1c_num,
+    r.created created
 FROM requests r
-LEFT JOIN byers b ON r.byersid=b.byers_id
-LEFT JOIN allnames a ON b.byers_nameid = a.nameid
-LEFT JOIN payments p ON p.requestid = r.requests_id
-WHERE MONTH(payed) = ? AND YEAR(payed) = ?");
+         LEFT JOIN byers b ON r.byersid=b.byers_id
+         LEFT JOIN allnames a ON b.byers_nameid = a.nameid
+         LEFT JOIN payments p ON p.requestid = r.requests_id
+         LEFT JOIN executes ex ON r.requests_uid = ex.requests_uid
+WHERE MONTH(payed) = ? AND MONTH(executed) <= ? AND YEAR(executed) <= ? AND YEAR(payed) = ? AND `payments_requests_uid` IS NOT NULL ORDER BY ex_date ASC");
 
             $fr_other_payments =  $pdo->prepare("
 SELECT * FROM payments p
 LEFT JOIN requests r ON r.requests_uid=p.payments_requests_uid
 WHERE p.payments_requests_uid=? AND p.payed <= ?");
+
+            $fr_other_executes =  $pdo->prepare("
+SELECT * FROM executes ex
+LEFT JOIN requests r ON r.requests_uid=ex.requests_uid
+WHERE requests_uid=?");
 
             $fr_pricing = $pdo->prepare("
 SELECT 
@@ -1050,11 +1061,17 @@ FROM pricings pr
     LEFT JOIN req_positions pos ON pr.pricingid=pos.winnerid
     LEFT JOIN requests req ON req.requests_id=pos.requestid
 WHERE req.requests_uid=?");
+            $fr_executes_per_month = $pdo->prepare("SELECT sum FROM executes WHERE MONTH(executed) = ? AND YEAR(executed) = ?");
+            $fr_purchases_per_month = $pdo->prepare("SELECT sum FROM purchases WHERE MONTH(incdoc_date) = ? AND YEAR(incdoc_date) = ?");
 
             foreach ($months as $key => $month_name)
             {
-                $fr_payments->execute(array($key, '2021'));
+                $fr_payments->execute(array($key, $key, '2021', '2021'));
+                $fr_executes_per_month->execute(array($key, '2021'));
+                $fr_purchases_per_month->execute(array($key, '2021'));
                 $payments_fetched = $fr_payments->fetchAll(PDO::FETCH_ASSOC);
+                $fr_executes_per_month_fetched = $fr_executes_per_month->fetchAll(PDO::FETCH_ASSOC);
+                $fr_purchases_per_month_fetched = $fr_purchases_per_month->fetchAll(PDO::FETCH_ASSOC);
 
                 $result .= "<div id='".$key."'><h2>".$month_name."</h2><br>";
                 /*Прежде чем рисовать красоту, надо сделать красивый массив многомерный*/
@@ -1064,6 +1081,8 @@ WHERE req.requests_uid=?");
                 $total_our_sum = 0;
                 $total_nds_sum = 0;
                 $total_theirs_sum = 0;
+                $total_executes_per_month = 0;
+                $total_purchases_per_month = 0;
 
                 foreach($payments_fetched as $pa_f){
 
@@ -1091,7 +1110,14 @@ WHERE req.requests_uid=?");
                     }
                 }
 
+                /*print ("<h1>НОВЫЙ МЕСЯЦ</h1><pre>");
+                print_r($payments_by_request);
+                print ("<h2>НОВЫЙ МЕСЯЦ Закончился</h2></pre>");*/
+
                 $n = 1;
+
+                unset($razbivka);
+                $razbivka = array();
                 foreach ($payments_by_request as $key_2 => $value){
 
                     $fr_other_payments->execute(array($value['p_r_uid'], $value['p_date']));
@@ -1159,12 +1185,35 @@ WHERE req.requests_uid=?");
                 НДС: " . number_format(round($nds_sum,2),'2','.', ' '). ", 
                 НАШИ: <span style='color: green'>". number_format(round($our_sum,2),'2','.', ' ') ."</span>, 
                 НЕ НАШИ: <span style='color: red'>". number_format(round($theirs_sum,2),'2','.', ' ') . "</span></span><br><br>";
+
+                if(array_key_exists($value['bname'] , $razbivka)) {
+                    $razbivka[$value['bname']] += round($our_sum,2);
+                }else{
+                    $razbivka[$value['bname']] = round($our_sum,2);
+                }
+
+
                 $n++;
                 }
+                foreach ($fr_executes_per_month_fetched as $exec){
+                    $total_executes_per_month = $total_executes_per_month + $exec['sum'];
+                }
+                foreach ($fr_purchases_per_month_fetched as $purch){
+                    $total_purchases_per_month = $total_purchases_per_month + $purch['sum'];
+                }
                 $result .= "<div class='fr_result'><br><span>Всего пришло денег: </span>" . number_format(round($total_payments_sum,2),'2','.', ' ');
-                $result .= "<br><span>Из них Наши: </span>" . number_format(round($total_our_sum,2),'2','.', ' ');
-                $result .= "<br><span>Вернуть НДС: </span>" . number_format(round($total_nds_sum,2),'2','.', ' ');
-                $result .= "<br><span>Нужно отдать на дилерские: </span>" . number_format(round($total_theirs_sum,2),'2','.', ' '). "<br><br>";
+                $result .= "<br><span>Продаж: </span>" . number_format(round($total_executes_per_month,2),'2','.', ' ');
+                $result .= "<br><span>Закупок: </span>" . number_format(round($total_purchases_per_month,2),'2','.', ' ');
+
+                $result .= "<br><span>Из них Наши: </span><span class='green-text razbivka_green'>" . number_format(round($total_our_sum,2),'2','.', ' ')."</span>";
+                $result .= "<div class='razbivka'>";
+                //Наименования и суммы
+                foreach ($razbivka as $key => $value){
+                    $result .= $key." -- <span class='green-text'>".$value."</span></br>";
+                }
+                $result .= "</div>";
+                $result .= "<br><span>Вернуть НДС: </span><span class='orange-text'>" . number_format(round($total_nds_sum,2),'2','.', ' ')."</span>";
+                $result .= "<br><span>Нужно отдать на дилерские: </span><span class='red-text'>" . number_format(round($total_theirs_sum,2),'2','.', ' '). "</span><br><br>";
                 $result .= "</div></div><script>
                     $( '#months' ).tabs({
                       active: '0'
