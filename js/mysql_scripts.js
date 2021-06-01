@@ -645,7 +645,11 @@ $(document).ready(function(){
                     var e = $('.ga_widen').offset().top;
                     console.log(e);
                     //$('html, body').animate({scrollTop: e}, 1000);
-                    window.scrollTo(0, 0);
+                    if($('#pricingwindow').is(":visible")){
+                        window.scrollTo(0, 99 * window.innerHeight/100);
+                    }else{
+                        window.scrollTo(0, 0);
+                    }
                     /**/
                     $(event.target).switchClass('w','x').val('X');//Кнопочка
                     $(event.target).next('span').css({'font-size' : 30});//Увеличивается шрифт
@@ -757,8 +761,10 @@ $(document).ready(function(){
         $('#button_add_payment').attr('requestid',''+$(event.target).attr('requestid')+'');//Добавляем в кнопку
     });
 
+    //Появление окна добавления выдачи
     $(document).off('click.comegiveaway').on('click.comegiveaway', '.add_giveaway', function () {
         if (!$('#add_giveaway').hasClass('come_here')){$('#add_giveaway').addClass('come_here', 1000);}
+        $('#add_giveaway_date').focus();
         console.log('Из большого скрипта');
         $('#add_giveaway>input[name=1]').val('');//Стираем все данные
         $('#add_giveaway>input[name=2]').val('');//Стираем все данные
@@ -1352,16 +1358,10 @@ $(document).ready(function(){
             });
         }
 
-        //Обновляем список - под вопросом пока что
-        /*$.ajax({
-            url: 'mysql_giveaways.php',
-            method: 'POST',
-            data: {the_byer:byersid},
-            success: function (data3) {
-                //Вставляем данные аякса
-                $('.ga_byer_requests[ga_byer='+byersid+']').html(data3);
-            }
-        });*/
+        //Обновляем список
+        //Имитируем клик на нужном годе
+        $('.refresh_r1_byer[value='+year+']').trigger('click.ga_req_refresh');
+        $('.close_add_g').trigger('click.gogiveaway');
 
     });
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1910,6 +1910,24 @@ $(document).ready(function(){
     $(document).off('change.go_next').on('change.go_next', '.zp_count_worker, .zp_count_month, .zp_give_worker, .zp_give_source', function (event) {
         /*Данные для заполнения выдачи*/
         $(event.target).next().focus();
+    });
+
+    //авто изменение года привязки выдачи при изменении даты
+    $(document).off('change.ga_date').on('change.ga_date', '#add_giveaway_date', function (event) {
+       var theyear = $(event.target).val().substr(0, 4);
+       console.log(theyear);
+        if(theyear == '2018' || theyear == '2019' || theyear == '2020' || theyear == '2021'){
+            $('#add_giveaway_year').val(theyear);
+            $('#add_giveaway_sum').focus();
+        }
+    });
+
+    //Нажание ENTER при вводе суммы выдачи
+    $(document).off('keyup.ga_sum').on('keyup.ga_sum', '#add_giveaway_sum', function (event) {
+        if(event.which === 13){
+            $('#button_add_giveaway').trigger('click.add_giveaway');
+            /*Как-то закрыть список результатов поиска*/
+        }
     });
 
     //Отображение/сокрытие менюшек добавления Начислений и Выдач

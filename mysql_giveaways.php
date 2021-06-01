@@ -36,7 +36,7 @@ if (isset($_POST['the_byer']) && isset($_POST['year'])){
 <input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2021'>
 <br><br>";
         echo "<br><span class='ga_requests_period'><b>Заявки за ".$the_year." год:</b></span><br><br>";
-        echo "<table><thead><tr><th>Дата</th><th>Номер заказа в 1С</th><th></th><th>База</th><th>Накладная</th><th>Сумма заявки</th><th>Начислено</th><th>Статус заявки</th></tr></thead><tbody>";
+        echo "<table><thead><tr><th>Дата</th><th>Заказ в 1С</th><th></th><th>База</th><th>Накладная</th><th>Сумма</th><th>Начислено</th><th>Статус заявки</th></tr></thead><tbody>";
 
     }catch( PDOException $e ) {$pdo->rollback();print "Error!: " . $e->getMessage() . "<br/>" . (int)$e->getCode( );}
 
@@ -130,7 +130,8 @@ GROUP BY 1c_num");*/
                         $mysqldate = date( 'd.m.y', $phpdate );
                         /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
-                        $result .="<span style='color: green'>".$exe['execute_1c_num']." - ".$exe['sum']." от ".$mysqldate."</span><br>";
+                        $str = $exe['execute_1c_num'] * 1;
+                        $result .="<span style='color: green'>№ ".$str." - ".$exe['sum']." от ".$mysqldate."</span><br>";
                         unset($mysqldate);
                     }
                 };
@@ -160,18 +161,19 @@ GROUP BY 1c_num");*/
                 unset($rc);
 
                 //Выводим сумму заявки
-                $result.="<td class='sum_req_r1'>".round($row['req_sum'],2)."</td>";
+                $result.="<td class='sum_req_r1'>".number_format($row['req_sum'], 2, ',', ' ')."</td>";
+                //$result.="<td class='sum_req_r1'>".round($row['req_sum'],2)."</td>";
                 $total_sum += round($row['req_sum'],2);
 
 
-                //Начисления к выдаче берутся только если по заказ полностью оплачен
+                //Начисления к выдаче берутся только если по заказ полностью оплачен (и ?отгружен?)
                 if ($req_pay_ostatok <= 0){
                     //Выводим сумму начислений по заявке и зачисляем начисление в общую суму начислений
-                    $result.="<td class='count_req_r1 green_letters'>".round($req_count,2)."</td>";
+                    $result.="<td class='count_req_r1 green_letters'>".number_format($req_count, 2, ',', ' ')."</td>";
                     $total_count += round($req_count,2);
                 }else{
                     //Выводим сумму начислений по заявке и НЕ зачисляем начисление в общую суму начислений
-                    $result.="<td class='count_req_r1 red_letters'>".round($req_count,2)."</td>";
+                    $result.="<td class='count_req_r1 red_letters'>".number_format($req_count, 2, ',', ' ')."</td>";
                 }
 
                 /*УСЛОВИЯ ПО СТАТУСУ ЗАКАЗА*/
@@ -233,11 +235,10 @@ GROUP BY 1c_num");*/
     echo "</tbody></table>";
     echo "<br>";
 
+    echo "<br>";
     $total_give = 0;//Отдано
-
-
     echo "<br><br><span><b>Выдачи за ".$the_year." год:</b></span><br><br>";
-    echo "<table class='ga_give_list'><thead><th>Дата выдачи</th><th>Год привязки</th><th>Сумма выдачи</th><th>Комментарий</th><th>Опции</th></thead><tbody>";
+    echo "<table class='ga_give_list'><thead><th>Дата выдачи</th><th>Год привязки</th><th>Сумма выдачи</th><th>Остаток долга</th><th>Комментарий</th><th>Опции</th></thead><tbody>";
 
     foreach ($dbs_array as $database){
         //Запросы общие
@@ -246,7 +247,6 @@ GROUP BY 1c_num");*/
 
         try {
             /*Расчет общего количества выдач*/
-
             $database[0]->beginTransaction();
 
             echo "<input type='button' database = '".$database[1]."' byersid='".$database[4]."' value='+Выдача в базу ".$database[3]."' class='add_giveaway'>";
@@ -264,6 +264,7 @@ GROUP BY 1c_num");*/
             //Рисуем список выдач
             if(count($year_giveaways_fetched)>0){echo "<tr><td>из базы ".$database[3]."</td><td></td><td></td><td></td><td></td></tr>";}
 
+            $current_debt = $total_count;
             foreach ($year_giveaways_fetched as $give){
                 echo "<tr giveaways_id='".$give['giveaways_id']."'>";
                 $phpdate = strtotime( $give['given_away'] );
@@ -271,7 +272,9 @@ GROUP BY 1c_num");*/
 
                 echo "<td>".$mysqldate."</td>";
                 echo "<td>".$give['year_given']."</td>";
-                echo "<td>".$give['giveaway_sum']."</td>";
+                echo "<td>".number_format($give['giveaway_sum'], 2, ',', ' ')."</td>";
+                $current_debt -= $give['giveaway_sum'];
+                echo "<td>".number_format($current_debt, 2, ',', ' ')."</td>";
                 echo "<td>".$give['comment']."</td>";
                 echo "<td><input type='button' value='E' byersid='".$database[4]."' database='".$database[1]."' class='editgiveaway' g_id='".$give['giveaways_id']."'>
             <input class='delgiveaway' database='".$database[1]."' type='button' value='X' give_id='".$give['giveaways_id']."'></td>";
@@ -280,6 +283,10 @@ GROUP BY 1c_num");*/
         }catch( PDOException $e ) {$database[0]->rollback();print "Error!: " . $e->getMessage() . "<br/>" . (int)$e->getCode( );}
     }
     echo "</tbody></table>";
+
+    //РАСЧЕТ ДОЛГА НА ОПРЕДЕЛЕННУЮ ДАТУ
+
+    //КОНЕЦ РАСЧЕТА ДОЛГА НА ОПРЕДЕЛЕННУЮ ДАТУ
 
     //Выводим СУММУ ДОЛГА и СУММУ ВЫДАННОГО
     //ВСЕГО НАЧИСЛЕНО:
