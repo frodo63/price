@@ -32,7 +32,6 @@ $(document).ready(function() {
         });
 
     });
-
     //Выдачи
     $(document).off('click.comeeditgiveaway').on('click.comeeditgiveaway', '.editgiveaway', function (event) {
         var byersid = $(event.target).attr('byersid');
@@ -63,4 +62,36 @@ $(document).ready(function() {
             }
         });
     });
+    //Реализации
+    $(document).off('click.comeeditexecute').on('click.comeeditexecute', '.editexecute', function (event) {
+        return false;
+        /*var reqid = $(event.target).attr('req_id');
+        var exec_id = $(event.target).attr('exec_id');
+        var db = $(event.target).attr('database');
+
+        $('#add_payment').toggleClass('come_here', 1000);
+        console.log('Из большого скрипта');
+        $('#add_payment input[name=1]').val('');//Стираем все данные
+        $('#add_payment input[name=2]').val('');//Стираем все данные
+        $('#add_payment input[name=3]').val('');//Стираем все данные
+
+        $('#button_add_payment').attr('requestid',''+reqid+'');//Добавляем в кнопку
+        $('#button_add_payment').attr('paymentid',''+payid+'');//Добавляем в кнопку
+        $('#button_add_payment').attr('database',''+db+'');//Добавляем в кнопку
+
+        //Аякс в базу для значений
+        $.ajax({
+            url: 'mysql_read.php',
+            method: 'POST',
+            dataType: 'json',
+            cache: false,
+            data: {pay_reqid:reqid,pay_id:payid, db:db},
+            success: function (data) {
+                $('#add_payment input[name=1]').val(data.payed);//Стираем все данные
+                $('#add_payment input[name=2]').val(data.number);//Стираем все данные
+                $('#add_payment input[name=3]').val(data.sum);//Стираем все данные
+            }
+        });
+
+    */});
 });

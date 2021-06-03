@@ -727,7 +727,7 @@ $(document).ready(function(){
         $('tr[ga_request]').not('tr[ga_request='+the_request+']').hide();
         $(event.target).parents('.ga_byer_requests').addClass('ga_shrinken');
         $(event.target).parent().addClass('ga_widen');
-        $('.ga_c_payments, .ga_c_giveaways, .ga_c_positions').addClass('min-h');//Правила для трех папок по высоте
+        $('.ga_c_payments, .r1_hide, .ga_c_positions').addClass('min-h');//Правила для трех папок по высоте
 
 
 
@@ -741,6 +741,7 @@ $(document).ready(function(){
             success: function (data) {
                 $('.ga_contents[ga_request='+the_request+'] .ga_c_payments').html(data.data1);
                 $('.ga_contents[ga_request='+the_request+'] .ga_c_positions').html(data.data2);
+                $('.ga_contents[ga_request='+the_request+'] .ga_c_executes').html(data.data3);
                 $('.ga_contents[ga_request='+the_request+'] .ga_options').html(data.data4);
             }
         });
@@ -1180,11 +1181,11 @@ $(document).ready(function(){
             //console.log(2);
             $(event.target).switchClass('ready','not_ready');
             $(event.target).siblings('.ready_comment').text('Не число.Уберите пробелы и буквы.База их не любит.').switchClass('ok','not-ok');
-        }else if(p_sum<0){
+        }/*else if(p_sum<0){//УБРАЛ запрет на отрицательную выдачу. ДЛЯ КОРРЕКТИРОВКИ ДОЛГА
             //console.log(3);
             $(event.target).switchClass('ready','not_ready');
             $(event.target).siblings('.ready_comment').text('Сумма <= 0').switchClass('ok','not-ok');
-        }else if(p_sum=0){
+        }*/else if(p_sum=0){
             if($(event.target).attr('id') == 'add_payment_sum' || $(event.target).attr('id') == 'add_giveaway_sum'){
                 console.log('ПЛатежка и выдача с нулевой суммой? О_о');
             }
@@ -1813,11 +1814,13 @@ $(document).ready(function(){
 
     });
 
-    $(document).off('click.show_hr1').on('click.show_hr1', '.green, .lightgreen, .yellow, .lightblue, .red, .pink', function(event){
+    $(document).off('click.show_hr1').on('click.show_hr1', '.green, .lightgreen, .yellow, .lightblue, .red, .pink, .peach, toggle_event_list.darkorange, .darkseagreen, .lightpink', function(event){
         $(event.target).children('input').toggle();
     });
 
-    $(document).off('click.r1span').on('click.r1span', '.green span, .lightgreen span, .yellow span, .lightblue span, .red span, .pink span', function(event){
+
+
+    $(document).off('click.r1span').on('click.r1span', '.green span, .lightgreen span, .yellow span, .lightblue span, .red span, .pink span, .peach span, .darkorange span, .darkseagreen span, .lightpink span', function(event){
         $(event.target).next('input').trigger('click.show_hr1');
     });
 
@@ -1942,11 +1945,24 @@ $(document).ready(function(){
         $(event.target).next('div').slideToggle();
     });
 
+    $(document).off('click.event_list').on('click.event_list', '.toggle_event_list', function (event) {
+        console.log(+1);
+        var parent = $(event.target).parents('table.order_events_track');
+        var child = parent.find('.req_events_for_take');
+        child.slideToggle();
+    });
+
+
     $(document).off('mouseleave.razbivka').on('mouseleave.razbivka', '.razbivka', function (event) {
         console.log('2');
         $(event.target).slideToggle();
     });
 
+
+
+    /*$(document).off('scroll.razbivka').on('scroll.razbivka', 'html', function (event) {
+        console.log($("i.fa-refresh").offset().top);
+    });*/
 
 
 

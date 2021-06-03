@@ -196,6 +196,40 @@ $(document).ready(function() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+    //Удаление реализации из позиции. id берется из атрибута таргета.
+    $(document).off('click.execdel').on('click.execdel', '.delexecute', function (event) {
+        return false;
+        /*var delpaymentid = $(event.target).attr("pay_id"); //id расценки
+        var delpaymentrequest = $(event.target).attr("req_id"); //id расценки
+        console.log(delpaymentid+" "+delpaymentrequest);
+        if (confirm("Удалить платежку ?")) {
+            $.ajax({
+                url: 'mysql_delete.php',
+                method: 'POST',
+                data: {delpaymentid:delpaymentid},
+                success: function(){
+                    $('#editmsg').css("display", "block"). delay(2000).slideUp(300).html("Платежка "+ delpaymentid +" удалена.");
+                },
+                complete: function() {
+                    $.ajax({
+                        url: 'mysql_giveaways.php',
+                        method: 'POST',
+                        dataType: 'json',
+                        cache: false,
+                        data: {the_request:delpaymentrequest},
+                        success: function (data) {
+                            $('.ga_contents[ga_request='+delpaymentrequest+'] .ga_c_payments').html(data.data1);
+                            $('.ga_contents[ga_request='+delpaymentrequest+'] .ga_c_positions').html(data.data2);
+                            $('.ga_contents[ga_request='+delpaymentrequest+'] .ga_c_giveaways').html(data.data3);
+                        }
+                    });
+                }
+            });
+        } else { alert("Фух... Понадобится еще.") }
+        return true;
+    */});
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     //Удаление выдачи из позиции. id берется из атрибута таргета.
     $(document).off('click.givedel').on('click.givedel', '.delgiveaway', function (event) {
         var delgiveawayid = $(event.target).attr("give_id"); //id расценки
