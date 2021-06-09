@@ -48,19 +48,29 @@ $(document).ready(function(){
         var diff = differ(rent,rent_in);
         var pace;
         var op = lop;
-        if(diff <= 0.1 || tick >= 150){
+
+        //diff должна быть больше нуля
+        if(diff <= 0.01 || tick >= 150){
             console.log(1);
             //Обновить данные актуальные по цене из изменения нашего процента и цены
-            $('#op').val(op).trigger('change.op');
-            if(tick >= 150){console.log('over 150')}
-            return false;
+            if(rent >= rent_in){
+                $('#op').val(op);
+                $('#op').trigger('change.op');
+                if(tick >= 150){console.log('over 150')}
+                return false;
+            }else{
+                pace = 0.01;console.log(diff+' шаг = 0.01 Почти всё');//Добивка
+            }
+
         }
-        else if(diff > 0.1 && diff < 1 ){pace = 0.1;console.log(diff+' шаг = 0.1');}
-        else if(diff > 1 && diff < 2 ){pace = 0.2;console.log(diff+' шаг = 0.2');}
-        else if(diff > 2 && diff < 5 ){pace = 1;console.log(diff+' шаг = 1');}
-        else if(diff > 5 && diff < 10 ){pace = 2;console.log(diff+' шаг = 2');}
-        else if(diff > 10 && diff < 50 ){pace = 5;console.log(diff+' шаг = 5');}
-        else if(diff > 50 && diff < 100 ){pace = 10;console.log(diff+' шаг = 10');}
+        else if(diff > 0.01 && diff < 0.05 ){pace = 0.04;console.log(diff+' шаг = 0.04');}
+        else if(diff > 0.05 && diff < 0.1 ){pace = 0.15;console.log(diff+' шаг = 0.15');}
+        else if(diff > 0.1 && diff < 1 ){pace = 0.4;console.log(diff+' шаг = 0.4');}
+        else if(diff > 1 && diff < 2 ){pace = 0.8;console.log(diff+' шаг = 0.8');}
+        else if(diff > 2 && diff < 5 ){pace = 1.5;console.log(diff+' шаг = 1.5');}
+        else if(diff > 5 && diff < 10 ){pace = 3;console.log(diff+' шаг = 3');}
+        else if(diff > 10 && diff < 50 ){pace = 6;console.log(diff+' шаг = 6');}
+        else if(diff > 50 && diff < 100 ){pace = 12;console.log(diff+' шаг = 12');}
 
         if (rent > rent_in){console.log('больше');op = op - pace;}
         if (rent < rent_in){console.log('меньше');op = op + pace;}
@@ -74,7 +84,6 @@ $(document).ready(function(){
         }else{
             //console.log('recursion starts');
             console.log('Итерация:'+f[2]+', Рентабельность: '+f[1]);
-            //console.log('Итерация:'+f[2]+', Цена: '+f[0]);
             compareFastRents(f[2],f[1],rent_in,op,lzak,ltzr,ltp,ltpr,wt,firstoh,callback);
         }
     }
@@ -112,23 +121,42 @@ $(document).ready(function(){
     //Задать цену быстрой функцией - РАБОТАЕТ
     $('#pr_in').off('change.fastprice').on('change.fastprice', function () {
         //console.log('Inside changefast.price');
+        //Нужно все переменные обновить и только потом посчитать rek op
         var price = Number(Number($('#pr').val()).toFixed(3));
         var price_in = Number(Number($('#pr_in').val()).toFixed(3));
         var lzak = Number($('#zak').val());
         var ltzr = Number($('#tzr').text());
         var lwt = Number($('#wtr').text());
-        var lnam = Number($('#opr').text());
-        var lim = Number($('#tpr').text());
         var ltp = Number(Number($('#tp').val()).toFixed(2));
-        var ltpr = Number((Number($('#tpr').text())).toFixed(2));
         var wt = Number(Number($('#wtime').val()).toFixed(2));
         var lop = Number(Number($('#op').val()).toFixed(2));
-        var firstoh = Number(Number($('#firstoh').val()).toFixed(2));
-        var tick = 0;
+        var a = lzak+ltzr;
+        var firstobp = Number($('#firstobp').val());
+
+        //Изменение отсрочкорублей
+        $('#wtr').text(Number((a*0.0125*wt).toFixed(2)));
+        lwt = Number(Number($('#wtr').text()).toFixed(2));
+
+        //Изменение проценторублей
+        $('#opr').text(Number(((a+lwt)*lop/100).toFixed(2)));
+
+        var opr = Number($('#opr').text());
+        //console.log('zak+kol ='+a+', wtr = '+wtr+', op='+op+'. opr ='+opr);
+
+        //Изменение еноторублей
+        $('#tpr').text(Number(((a+lwt+opr)*ltp/100).toFixed(2)));
+        var tpr = Number(Number($('#tpr').text()).toFixed(2));
+
+        //Изменение обналорублей
+        $('#firstobpr').text(Number((tpr*firstobp/100).toFixed(2)));
+
+        //Изменение НА РУКИ
+        $('#firstoh').val(Number((tpr - tpr*firstobp/100).toFixed(2)));
+
+        //Изменение НДС к закупу
+        $('#nds_zak').text(Number((lzak/120*20).toFixed(2)));
+
         //Функция вызывается только если некоторые переменные не undefined
-
-        var recommended_lop = 100/(100+ltp) * (price_in*100/(lzak+ltzr+lwt) - 100 - ltp);
-
         if(
             typeof price == 'undefined' || typeof price_in == 'undefined' || typeof lop == 'undefined' ||
             price === '' || price_in === '' || lop === '' ||
@@ -137,10 +165,55 @@ $(document).ready(function(){
             alert("Данных недостаточно");
             return false;
         }else{
-              //compareFastPrices(tick,price,price_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh, fastPrice);
-              $('#op').val(Number(recommended_lop.toFixed(2))).trigger('change.op');
-              $('#op').focus();
-              console.log('Рекоммендованная наценка: '+recommended_lop);
+            //compareFastPrices(tick,price,price_in,lop,lzak,ltzr,ltp,ltpr,wt,firstoh, fastPrice);
+            var recommended_lop = 100/(100+ltp) * (price_in*100/(lzak+ltzr+lwt) - 100 - ltp);
+            $('#op').val(Number(recommended_lop.toFixed(2)));
+            //$('#op').trigger('change_for_fast_price.op');
+            givePrice();
+            //После поулчения цены сравниваем с искомой.
+            //Если искомая результат меньше искомой, делаем одну итерацию вверх
+            var new_price = Number($('#pr').val());
+            var new_diff = price_in - new_price;
+            if(new_diff < 0){
+                //Надо отрезать
+                console.log('new_price ('+new_price+') больше искомой price_in ('+price_in+')');
+                console.log('погрешность :'+new_diff);
+            }else{
+                //Надо сделать одну итерацию вверх
+                console.log('new_price ('+new_price+') меньше искомой price_in ('+price_in+')');
+                console.log('погрешность :'+new_diff);
+                if (Math.floor(price_in) === Math.floor(new_price)){
+                    //Целые части совпадают
+                    console.log('Целые части совпадают');
+                }else{
+                    //Целые части не совпадают
+                    console.log('Целые части не совпадают');
+                    //Вот тут надо сделать 1 итерацию вверх
+                    console.log('ДО : '+$('#pr').val());
+                    recommended_lop = recommended_lop + 0.01;
+                    $('#op').val(Number(recommended_lop.toFixed(2)));
+                    givePrice();
+                    console.log('ПОСЛЕ : '+$('#pr').val());
+                }
+            }
+
+            //В любом случае, убираем или нет, десятичные части:
+            if (Math.floor(price_in) === price_in){
+                //Искомая цену у нас без десятичных знаков
+                console.log('Надо отрезать копейки');
+                $('#cut_kops').trigger('click');
+            }else{
+                //Искомая цену у нас с десятичными знаками, приводим итоговую цену к двум знакам
+                console.log('Копейки должны быть');
+                var numb = $('#pr').val()*1;
+                $('#pr').val(numb.toFixed(2)*1);
+            }
+
+            $('#op').focus();
+            console.log(recommended_lop+' = 100/(100 + '+ltp+') * ('+price_in+' * 100/('+lzak+' + '+ltzr+' + '+lwt+') - 100 - '+ltp+')');
+
+            //Стираем переменнные
+            price = price_in = lzak = ltzr = lwt =ltp = wt = lop = a = firstobp = lwt = opr = tpr = null;
         }
     });
     /*////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
@@ -156,6 +229,7 @@ $(document).ready(function(){
         var firstobp = Number($('#firstobp').val());
         var wt = Number(Number($('#wtime').val()).toFixed(2));
 
+        console.log('Изменен закуп');
 
         //Изменение отсрочкорублей
         $('#wtr').text(Number((a*0.0125*wt).toFixed(2)));
@@ -304,7 +378,6 @@ $(document).ready(function(){
 
         //Изменение проценторублей
         $('#opr').text(Number(((a+wtr)*op/100).toFixed(2)));
-        var opr = Number($('#opr').text());
 
         //Изменение еноторублей
         $('#tpr').text(Number(((a+wtr+(a+wtr)*op/100)*tp/100).toFixed(2)));
@@ -328,7 +401,15 @@ $(document).ready(function(){
             givePrice();
         })
     });
-    function changeOp(callback){
+
+    //ИЗМЕНЕНИЕ НАШЕГО ПРОЦЕНТА ДЛЯ БЫСТРОГО РАСЧЕТА
+    /*$('#op').off('change_for_fast_price.op').on('change_for_fast_price.op', function(){
+        changeOpForFastPrice(function(){
+            givePrice();
+        })
+    });
+
+    function changeOpForFastPrice(callback){
         //console.log('Изменился наш процент');
         //Переменные
         var zak = Number(Number($('#zak').val()).toFixed(3));      //Закупочная цена (на шт)
@@ -338,7 +419,13 @@ $(document).ready(function(){
         var op = Number(Number($('#op').val()).toFixed(3));        //Наша наценка (в формате десятичных 3 знаков)
         var firstobp = Number($('#firstobp').val());
         var wt = Number(Number($('#wtime').val()).toFixed(2));
+
+
+
+        //Изменение отсрочкорублей
+        $('#wtr').text(Number((a*0.0125*wt).toFixed(2)));
         var wtr = Number(Number($('#wtr').text()).toFixed(2));
+        //console.log('Отсрочкорубли изменены!!!');
 
         //Изменение проценторублей
         $('#opr').text(Number(((a+wtr)*op/100).toFixed(2)));
@@ -352,10 +439,55 @@ $(document).ready(function(){
 
         //Изменение обналорублей
         $('#firstobpr').text(Number((tpr*firstobp/100).toFixed(2)));
-        var firstobpr =  Number($('#firstobpr').text());
 
         //Изменение НА РУКИ
         $('#firstoh').val(Number((tpr - tpr*firstobp/100).toFixed(2)));
+
+        //Изменение НДС к закупу
+        $('#nds_zak').text(Number((zak/120*20).toFixed(2)));
+
+        var recommended_lop = 100/(100+ltp) * (price_in*100/(lzak+ltzr+lwt) - 100 - ltp);
+
+        //Стираем переменнные
+        zak=tzr=a=tp=op=firstobp=wt=wtr=opr=tpr=firstobpr=null;
+        //Идет расчет цены
+        callback();
+    }*/
+
+    function changeOp(callback){
+        //console.log('Изменился наш процент');
+        //Переменные
+        var zak = Number(Number($('#zak').val()).toFixed(3));      //Закупочная цена (на шт)
+        var tzr = Number(Number($('#tzr').text()).toFixed(3));      //Транспортные (на шт)
+        var a = zak+tzr;                                           //Сумма Закупа и ТЗР для формулы
+        var tp = Number(Number($('#tp').val()).toFixed(3));        //Ненаша наценка (в формате десятичных 3 знаков)
+        var op = Number(Number($('#op').val()).toFixed(3));        //Наша наценка (в формате десятичных 3 знаков)
+        var firstobp = Number($('#firstobp').val());
+        var wt = Number(Number($('#wtime').val()).toFixed(2));
+
+        //Изменение отсрочкорублей
+        $('#wtr').text(Number((a*0.0125*wt).toFixed(2)));
+        var wtr = Number(Number($('#wtr').text()).toFixed(2));
+        //console.log('Отсрочкорубли изменены!!!');
+
+        //Изменение проценторублей
+        $('#opr').text(Number(((a+wtr)*op/100).toFixed(2)));
+
+        var opr = Number($('#opr').text());
+        //console.log('zak+kol ='+a+', wtr = '+wtr+', op='+op+'. opr ='+opr);
+
+        //Изменение еноторублей
+        $('#tpr').text(Number(((a+wtr+opr)*tp/100).toFixed(2)));
+        var tpr = Number(Number($('#tpr').text()).toFixed(2));
+
+        //Изменение обналорублей
+        $('#firstobpr').text(Number((tpr*firstobp/100).toFixed(2)));
+
+        //Изменение НА РУКИ
+        $('#firstoh').val(Number((tpr - tpr*firstobp/100).toFixed(2)));
+
+        //Изменение НДС к закупу
+        $('#nds_zak').text(Number((zak/120*20).toFixed(2)));
 
         //Стираем переменнные
         zak=tzr=a=tp=op=firstobp=wt=wtr=opr=tpr=firstobpr=null;
@@ -374,6 +506,11 @@ $(document).ready(function(){
         var firstobp = Number($('#firstobp').val());
         var wt = Number(Number($('#wtime').val()).toFixed(2));
         var wtr = Number(Number($('#wtr').text()).toFixed(2));
+
+        console.log('Изменен енотопроцент');
+        //Изменение отсрочкорублей
+        $('#wtr').text(Number((a*0.0125*wt).toFixed(2)));
+        wtr = Number(Number($('#wtr').text()).toFixed(2));
 
         //Изменение еноторублей
         $('#tpr').text(Number(((a+wtr+(a+wtr)*op/100)*tp/100).toFixed(2)));
@@ -405,6 +542,10 @@ $(document).ready(function(){
         var firstobp = Number($('#firstobp').val());
         var wt = Number(Number($('#wtime').val()).toFixed(2));
         var wtr = Number(Number($('#wtr').text()).toFixed(2));
+
+        //Изменение отсрочкорублей
+        $('#wtr').text(Number((a*0.0125*wt).toFixed(2)));
+        wtr = Number(Number($('#wtr').text()).toFixed(2));
 
         //Изменение еноторублей
         $('#tpr').text(Number(((a+wtr+(a+wtr)*op/100)*tp/100).toFixed(2)));

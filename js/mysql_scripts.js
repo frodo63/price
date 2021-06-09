@@ -661,6 +661,9 @@ $(document).ready(function(){
                     $('.byer_req_list>li[byerid]').css('display', 'none');
                     $('.byer_req_list>li[byerid='+the_byer+']').css('display', 'block');
 
+                    //Выделяем цветом выбранный год
+                    $('.refresh_r1_byer[value='+year+']').addClass('green');
+
                 }
             });
         }
@@ -686,6 +689,7 @@ $(document).ready(function(){
             success: function (data) {
                 $('.ga_byer_requests[ga_byer=' + thebyer + ']').html(data);
                 $('.ga_byer_requests[ga_byer=' + thebyer + ']').attr('year',year);
+                $('.refresh_r1_byer[value='+year+']').addClass('green');
             }
          })
 
@@ -715,6 +719,7 @@ $(document).ready(function(){
                 data: {the_byer: the_byer, year:the_year},
                 success: function (data) {
                     $('.ga_byer_requests[ga_byer=' + the_byer + ']').html(data);
+                    $('.refresh_r1_byer[value='+the_year+']').addClass('green');
                 }
             });
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1175,12 +1180,20 @@ $(document).ready(function(){
 
         if(p_sum_str.indexOf(',') >= 0){
             //console.log(1);
-            $(event.target).switchClass('ready','not_ready');
-            $(event.target).siblings('.ready_comment').text('Замените запятую на точку. База иначе не поймет.').switchClass('ok','not-ok');
+            //$(event.target).switchClass('ready','not_ready');
+            //$(event.target).siblings('.ready_comment').text('Замените запятую на точку. База иначе не поймет.').switchClass('ok','not-ok');
+            $(event.target).val(p_sum_str.replace(",", "."));
+            $(event.target).siblings('.ready_comment').text('Заменил запятую на точку.');
+            $(event.target).trigger('keyup.check_ga');
+        }else if(p_sum_str.indexOf(' ') >= 0){
+            //console.log(2);
+            $(event.target).val(p_sum_str.replace(" ", ""));
+            $(event.target).siblings('.ready_comment').text('Убрал пробел.');
+            $(event.target).trigger('keyup.check_ga');
         }else if(isNaN(p_sum)){
             //console.log(2);
             $(event.target).switchClass('ready','not_ready');
-            $(event.target).siblings('.ready_comment').text('Не число.Уберите пробелы и буквы.База их не любит.').switchClass('ok','not-ok');
+            $(event.target).siblings('.ready_comment').text('Не число.Уберите буквы.База их не любит.').switchClass('ok','not-ok');
         }/*else if(p_sum<0){//УБРАЛ запрет на отрицательную выдачу. ДЛЯ КОРРЕКТИРОВКИ ДОЛГА
             //console.log(3);
             $(event.target).switchClass('ready','not_ready');

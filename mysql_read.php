@@ -438,7 +438,7 @@ if(isset($_POST['table'])){
                                         b.byers_nameid AS b_nameid,
                                         b.name AS b_name
                                         FROM (SELECT * FROM requests LEFT JOIN allnames ON requests.requests_nameid=allnames.nameid)AS a LEFT JOIN (SELECT * FROM byers LEFT JOIN allnames ON byers.byers_nameid=allnames.nameid) AS b ON b.byers_id=a.byersid  
-                                        WHERE a.created BETWEEN '2019-01-01' AND '2030-12-31'
+                                        WHERE a.created BETWEEN '2021-01-01' AND '2030-12-31'
                                         ORDER BY req_date DESC");
                     $database[0]->beginTransaction();
                     $statement->execute();
@@ -598,7 +598,7 @@ if(isset($_POST['table'])){
             /*ОПЦИИ ДАТЫ*/
 
             //Сейчс скрипт берет всех покупателей из базы
-            $statement = $pdo->prepare("SELECT byers.byers_id AS b_id,byers.byers_nameid AS b_nid,allnames.name AS b_name FROM `byers` LEFT JOIN `allnames` ON byers.byers_nameid=allnames.nameid WHERE (byers.ov_tp > 0 OR byers.ov_tp <> NULL) ORDER BY b_name");
+            $statement = $pdo->prepare("SELECT byers.byers_id AS b_id,byers.byers_nameid AS b_nid,allnames.name AS b_name, byers.debt_total AS debt_total FROM `byers` LEFT JOIN `allnames` ON byers.byers_nameid=allnames.nameid WHERE (byers.ov_tp > 0 OR byers.ov_tp <> NULL) ORDER BY b_name");
             $gotrequests = $pdo->prepare("SELECT requests_id FROM requests WHERE (requests.byersid = ? AND requests.r1_hidden = 0)");
             $gotrequests_ip = $pdoip->prepare("SELECT requests_id FROM requests WHERE (requests.byersid = ? AND requests.r1_hidden = 0)");
             //Нужно из byersid ltk получить byersid ip
@@ -623,9 +623,14 @@ if(isset($_POST['table'])){
                 $gotsome = $gotrequests->fetchall(PDO::FETCH_ASSOC);
                 if(count($gotsome)>0 || count($gotsome_ip)>0){
 
-                    $result .= "<li byerid =" . $row['b_id'] . "><input type='button' name =" . $row['b_nid'] . " ga_byer =" . $row['b_id'] . " value='♢' class='collapse_ga_byer w'>
-                                <span class='name'>" . $row['b_name'] . "</span>
-                                <div class='ga_byer_requests' ga_byer ='" . $row['b_id'] . "' year></div>
+                    $result .= "<li byerid =" . $row['b_id'] . "><input type='button' name =" . $row['b_nid'] ." ga_byer =" . $row['b_id'] . " value='♢' class='collapse_ga_byer w'>
+                                <span class='name'>" . $row['b_name'] . "</span>";
+                    if($row['debt_total'] > 0){
+                        $result.= " <span class='debt_result' style='color: darkred; font-weight: bold'>".number_format($row['debt_total'], 2, ',', ' ')."</span>";
+                    }else{
+                        $result.= " <span class='debt_result' style='color: darkgreen; font-weight: bold'>".number_format($row['debt_total'], 2, ',', ' ')."</span>";
+                    };
+                    $result .= "<div class='ga_byer_requests' ga_byer ='" . $row['b_id'] . "' year></div>
                             </li>";
                 }
             }

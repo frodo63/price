@@ -29,7 +29,7 @@ if (isset($_POST['the_byer']) && isset($_POST['year'])){
         $the_byer = $_POST['the_byer'];
         //Нужно из $the_byer получить $the_byer_ip и положить оба значения в [4] массива $dbs_array
         $getbyersidip = $pdo->prepare("SELECT prices_ip.byers.byers_id as byersid_ip FROM prices.byers LEFT JOIN prices_ip.byers ON prices.byers.ip_uid = prices_ip.byers.byers_uid WHERE prices.byers.byers_id = ?");
-        $getbyersinfo = $pdo->prepare("SELECT b.ov_firstobp, b.ov_tp, b.ov_wt, b.comment, b.debt_2018, b.debt_2019, b.debt_2020, b.debt_2021, b.debt_2022 FROM prices.byers b WHERE b.byers_id = ?");
+        $getbyersinfo = $pdo->prepare("SELECT b.ov_firstobp, b.ov_tp, b.ov_wt, b.comment, b.debt_2018, b.debt_2019, b.debt_2020, b.debt_2021, b.debt_2022, b.debt_2023, b.debt_total FROM prices.byers b WHERE b.byers_id = ?");
         $getpayments_allyear = $pdo->prepare("SELECT p.payed, p.number, p.sum, r.1c_num  FROM prices.payments p LEFT JOIN requests r ON p.requestid = r.requests_id WHERE p.byersid = ? AND p.payed BETWEEN ? AND ? ORDER BY payed ASC");
         $getbyersidip->execute(array($the_byer));
         $getbyersidip_fetched = $getbyersidip->fetch(PDO::FETCH_ASSOC);
@@ -78,11 +78,12 @@ if (isset($_POST['the_byer']) && isset($_POST['year'])){
         /*echo "<input byer ='".$the_byer."' class='refresh_r1_byer single' type='button' value='ОБНОВИТЬ'>";*/
         echo "<i byer ='".$the_byer."' class='fa fa-refresh refresh_r1_byer single'></i>";
         echo "<br>
-<input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2018'>
-<input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2019'>
-<input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2020'>
-<input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2021'>
-<input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2022'>
+        <input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2018'>
+        <input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2019'>
+        <input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2020'>
+        <input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2021'>
+        <input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2022'>
+        <input class='refresh_r1_byer' ga_byer ='".$the_byer."'  type='button' value='2023'>
 <br><br>";
 
 
@@ -118,6 +119,9 @@ if (isset($_POST['the_byer']) && isset($_POST['year'])){
                 break;
             case '2022':
                 $last_year_debt = $getbyersinfo_fetched['debt_2018'] + $getbyersinfo_fetched['debt_2019'] + $getbyersinfo_fetched['debt_2020'] + $getbyersinfo_fetched['debt_2021'];
+                break;
+            case '2023':
+                $last_year_debt = $getbyersinfo_fetched['debt_2018'] + $getbyersinfo_fetched['debt_2019'] + $getbyersinfo_fetched['debt_2020'] + $getbyersinfo_fetched['debt_2021'] + $getbyersinfo_fetched['debt_2022'];
                 break;
         }
         echo "<span><b>Долг на начало года :  ".number_format($last_year_debt, 2, ',', ' ')." руб.</b></span><br><br><br><br>";
@@ -585,20 +589,20 @@ GROUP BY requests_id ORDER BY created ASC");
         case '2018':
             $text_2018 = number_format($total_togive, 2, ',', ' ');
             $debt_finish_line = "(2018) :".$text_2018;
-            $total_debt = $total_togive;
+            $total_debt = $total_togive + $getbyersinfo_fetched['debt_2019'] + $getbyersinfo_fetched['debt_2020'] + $getbyersinfo_fetched['debt_2021'] + $getbyersinfo_fetched['debt_2022'] + $getbyersinfo_fetched['debt_2023'];
             break;
         case '2019':
             $text_2018 = number_format($getbyersinfo_fetched['debt_2018'], 2, ',', ' ');
             $text_2019 = number_format($total_togive, 2, ',', ' ');
             $debt_finish_line = "(2018 + 2019) :".$text_2018." + ".$text_2019;
-            $total_debt = $getbyersinfo_fetched['debt_2018'] + $total_togive;
+            $total_debt = $getbyersinfo_fetched['debt_2018'] + $total_togive + $getbyersinfo_fetched['debt_2020'] + $getbyersinfo_fetched['debt_2021'] + $getbyersinfo_fetched['debt_2022'] + $getbyersinfo_fetched['debt_2023'];
             break;
         case '2020':
             $text_2018 = number_format($getbyersinfo_fetched['debt_2018'], 2, ',', ' ');
             $text_2019 = number_format($getbyersinfo_fetched['debt_2019'], 2, ',', ' ');
             $text_2020 = number_format($total_togive, 2, ',', ' ');
             $debt_finish_line = "(2018 + 2019 + 2020) :".$text_2018." + ".$text_2019." + ".$text_2020;
-            $total_debt = $getbyersinfo_fetched['debt_2018'] + $getbyersinfo_fetched['debt_2019'] + $total_togive;
+            $total_debt = $getbyersinfo_fetched['debt_2018'] + $getbyersinfo_fetched['debt_2019'] + $total_togive + $getbyersinfo_fetched['debt_2021'] + $getbyersinfo_fetched['debt_2022'] + $getbyersinfo_fetched['debt_2023'];
             break;
         case '2021':
             $text_2018 = number_format($getbyersinfo_fetched['debt_2018'], 2, ',', ' ');
@@ -606,23 +610,32 @@ GROUP BY requests_id ORDER BY created ASC");
             $text_2020 = number_format($getbyersinfo_fetched['debt_2020'], 2, ',', ' ');
             $text_2021 = number_format($total_togive, 2, ',', ' ');
             $debt_finish_line = "(2018 + 2019 + 2020 + 2021) :".$text_2018." + ".$text_2019." + ".$text_2020." + ".$text_2021;
-            $total_debt = $getbyersinfo_fetched['debt_2018'] + $getbyersinfo_fetched['debt_2019'] + $getbyersinfo_fetched['debt_2020'] + $total_togive;
+            $total_debt = $getbyersinfo_fetched['debt_2018'] + $getbyersinfo_fetched['debt_2019'] + $getbyersinfo_fetched['debt_2020'] + $total_togive + $getbyersinfo_fetched['debt_2022'] + $getbyersinfo_fetched['debt_2023'] ;
             break;
         case '2022':
+        $text_2018 = number_format($getbyersinfo_fetched['debt_2018'], 2, ',', ' ');
+        $text_2019 = number_format($getbyersinfo_fetched['debt_2019'], 2, ',', ' ');
+        $text_2020 = number_format($getbyersinfo_fetched['debt_2020'], 2, ',', ' ');
+        $text_2021 = number_format($getbyersinfo_fetched['debt_2021'], 2, ',', ' ');
+        $text_2022 = number_format($total_togive, 2, ',', ' ');
+        $debt_finish_line = "(2018 + 2019 + 2020 + 2021 + 2022) :".$text_2018." + ".$text_2019." + ".$text_2020." + ".$text_2021." + ".$text_2022;
+        $total_debt = $getbyersinfo_fetched['debt_2018'] + $getbyersinfo_fetched['debt_2019'] + $getbyersinfo_fetched['debt_2020'] + $getbyersinfo_fetched['debt_2021']  + $total_togive + $getbyersinfo_fetched['debt_2023'];
+        break;
+        case '2023':
             $text_2018 = number_format($getbyersinfo_fetched['debt_2018'], 2, ',', ' ');
             $text_2019 = number_format($getbyersinfo_fetched['debt_2019'], 2, ',', ' ');
             $text_2020 = number_format($getbyersinfo_fetched['debt_2020'], 2, ',', ' ');
             $text_2021 = number_format($getbyersinfo_fetched['debt_2021'], 2, ',', ' ');
-            $text_2022 = number_format($total_togive, 2, ',', ' ');
-            $debt_finish_line = "(2018 + 2019 + 2020 + 2021 + 2022) :".$text_2018." + ".$text_2019." + ".$text_2020." + ".$text_2021." + ".$text_2022;
-            $total_debt = $getbyersinfo_fetched['debt_2018'] + $getbyersinfo_fetched['debt_2019'] + $getbyersinfo_fetched['debt_2020'] + $getbyersinfo_fetched['debt_2021']  + $total_togive;
+            $text_2022 = number_format($getbyersinfo_fetched['debt_2022'], 2, ',', ' ');
+            $text_2023 = number_format($total_togive, 2, ',', ' ');
+            $debt_finish_line = "(2018 + 2019 + 2020 + 2021 + 2022 + 2023) :".$text_2018." + ".$text_2019." + ".$text_2020." + ".$text_2021." + ".$text_2022." + ".$text_2023;
+            $total_debt = $getbyersinfo_fetched['debt_2018'] + $getbyersinfo_fetched['debt_2019'] + $getbyersinfo_fetched['debt_2020'] + $getbyersinfo_fetched['debt_2021']  + $getbyersinfo_fetched['debt_2022'] + $total_togive;
             break;
     }
     echo "<h2>ОСТАЛОСЬ ВЫДАТЬ за текущий год: ".number_format($total_togive, 2, ',', ' ') ."</h2>";
     echo "<h2>ОБЩИЙ ДОЛГ : ".$debt_finish_line." = ". number_format($total_debt, 2, ',', ' ') ."</h2>";
 
     //После подсчета общего долга занести результат общего долга по году в базу к данному покупателю
-
     switch($the_year)
     {
         case '2018':
@@ -660,10 +673,18 @@ GROUP BY requests_id ORDER BY created ASC");
             $debt_2021 = $getbyersinfo_fetched['debt_2021'];
             $debt_2022 =  $total_togive;
             break;
+        case '2023':
+            $debt_2018 = $getbyersinfo_fetched['debt_2018'];
+            $debt_2019 = $getbyersinfo_fetched['debt_2019'];
+            $debt_2020 = $getbyersinfo_fetched['debt_2020'];
+            $debt_2021 = $getbyersinfo_fetched['debt_2021'];
+            $debt_2022 = $getbyersinfo_fetched['debt_2022'];
+            $debt_2023 =  $total_togive;
+            break;
     }
-    $refreshbyersdebt = $pdo->prepare("UPDATE prices.byers SET `debt_2018` = ?, `debt_2019` = ?, `debt_2020` = ?, `debt_2021` = ?, `debt_2022` = ?  WHERE prices.byers.byers_id = ?");
+    $refreshbyersdebt = $pdo->prepare("UPDATE prices.byers SET `debt_2018` = ?, `debt_2019` = ?, `debt_2020` = ?, `debt_2021` = ?, `debt_2022` = ?, `debt_total`= ?  WHERE prices.byers.byers_id = ?");
     $dbs_array[0][0]->beginTransaction();
-    $refreshbyersdebt->execute(array($debt_2018,$debt_2019,$debt_2020,$debt_2021,$debt_2022,$the_byer));
+    $refreshbyersdebt->execute(array($debt_2018,$debt_2019,$debt_2020,$debt_2021,$debt_2022,$total_debt,$the_byer));
     $dbs_array[0][0]->commit();
 
 
