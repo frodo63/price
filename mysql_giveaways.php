@@ -454,7 +454,7 @@ GROUP BY requests_id ORDER BY created ASC");
     echo "<br>";
     $total_give = 0;//Отдано
     echo "<br><br><span><b>Выдачи за ".$the_year." год:</b></span><br><br>";
-    echo "<table class='ga_give_list'><thead><th>Дата выдачи</th><th>Год привязки</th><th>Сумма выдачи</th><th>Остаток долга</th><th>Комментарий</th><th>Опции</th></thead><tbody>";
+    echo "<table class='ga_give_list'><thead><th>Дата выдачи</th><th>Год привязки</th><th>Сумма выдачи</th><!--<th>Остаток долга</th>--><th>Комментарий</th><th>Опции</th></thead><tbody>";
 
     foreach ($dbs_array as $database){
         //Запросы общие
@@ -487,7 +487,7 @@ GROUP BY requests_id ORDER BY created ASC");
             $total_give += $req_give;//Отдано всего (в обеих базах)
 
             //Рисуем список выдач
-            if(count($year_giveaways_fetched)>0){echo "<tr><td>из базы ".$database[3]."</td><td></td><td></td><td></td><td></td></tr>";}
+            if(count($year_giveaways_fetched)>0){echo "<tr><td>из базы ".$database[3]."</td><!--<td></td>--><td></td><td></td><td></td></tr>";}
 
             $current_debt = $total_count;
             foreach ($year_giveaways_fetched as $give){
@@ -499,7 +499,7 @@ GROUP BY requests_id ORDER BY created ASC");
                 echo "<td>".$give['year_given']."</td>";
                 echo "<td>".number_format($give['giveaway_sum'], 2, ',', ' ')."</td>";
                 $current_debt -= $give['giveaway_sum'];
-                echo "<td>".number_format($current_debt, 2, ',', ' ')."</td>";
+                /*echo "<td>".number_format($current_debt, 2, ',', ' ')."</td>";*/
                 echo "<td>".$give['comment']."</td>";
                 echo "<td><input type='button' value='E' byersid='".$database[4]."' database='".$database[1]."' class='editgiveaway' g_id='".$give['giveaways_id']."'>
             <input class='delgiveaway' database='".$database[1]."' type='button' value='X' give_id='".$give['giveaways_id']."'></td>";
@@ -613,14 +613,14 @@ GROUP BY requests_id ORDER BY created ASC");
             $total_debt = $getbyersinfo_fetched['debt_2018'] + $getbyersinfo_fetched['debt_2019'] + $getbyersinfo_fetched['debt_2020'] + $total_togive + $getbyersinfo_fetched['debt_2022'] + $getbyersinfo_fetched['debt_2023'] ;
             break;
         case '2022':
-        $text_2018 = number_format($getbyersinfo_fetched['debt_2018'], 2, ',', ' ');
-        $text_2019 = number_format($getbyersinfo_fetched['debt_2019'], 2, ',', ' ');
-        $text_2020 = number_format($getbyersinfo_fetched['debt_2020'], 2, ',', ' ');
-        $text_2021 = number_format($getbyersinfo_fetched['debt_2021'], 2, ',', ' ');
-        $text_2022 = number_format($total_togive, 2, ',', ' ');
-        $debt_finish_line = "(2018 + 2019 + 2020 + 2021 + 2022) :".$text_2018." + ".$text_2019." + ".$text_2020." + ".$text_2021." + ".$text_2022;
-        $total_debt = $getbyersinfo_fetched['debt_2018'] + $getbyersinfo_fetched['debt_2019'] + $getbyersinfo_fetched['debt_2020'] + $getbyersinfo_fetched['debt_2021']  + $total_togive + $getbyersinfo_fetched['debt_2023'];
-        break;
+            $text_2018 = number_format($getbyersinfo_fetched['debt_2018'], 2, ',', ' ');
+            $text_2019 = number_format($getbyersinfo_fetched['debt_2019'], 2, ',', ' ');
+            $text_2020 = number_format($getbyersinfo_fetched['debt_2020'], 2, ',', ' ');
+            $text_2021 = number_format($getbyersinfo_fetched['debt_2021'], 2, ',', ' ');
+            $text_2022 = number_format($total_togive, 2, ',', ' ');
+            $debt_finish_line = "(2018 + 2019 + 2020 + 2021 + 2022) :".$text_2018." + ".$text_2019." + ".$text_2020." + ".$text_2021." + ".$text_2022;
+            $total_debt = $getbyersinfo_fetched['debt_2018'] + $getbyersinfo_fetched['debt_2019'] + $getbyersinfo_fetched['debt_2020'] + $getbyersinfo_fetched['debt_2021']  + $total_togive + $getbyersinfo_fetched['debt_2023'];
+            break;
         case '2023':
             $text_2018 = number_format($getbyersinfo_fetched['debt_2018'], 2, ',', ' ');
             $text_2019 = number_format($getbyersinfo_fetched['debt_2019'], 2, ',', ' ');

@@ -376,7 +376,8 @@ if(isset($_POST['requestid']) &&
     isset($_POST['dataver']) &&
     isset($_POST['payed']) &&
     isset($_POST['number']) &&
-    isset($_POST['sum'])
+    isset($_POST['sum']) &&
+    isset($_POST['comment'])
 ){
     if($_POST['requestid'] == "NONE"){
         //Если не указан заказ, то надо просто добавить платежку, без заказа
@@ -392,11 +393,12 @@ if(isset($_POST['requestid']) &&
     $payed = $_POST['payed'];
     $number = $_POST['number'];
     $sum = $_POST['sum'];
+    $comment = $_POST['comment'];
 
     /**//////////////////////////////////////////////////////////////
 
     try {
-        $statement = $database->prepare("INSERT INTO `payments`(`requestid`,`payments_requests_uid`,`payments_uid`,`byersid`,`onec_id`,`dataver`,`payed`,`number`,`sum`) VALUES(?,?,?,?,?,?,?,?,?)");
+        $statement = $database->prepare("INSERT INTO `payments`(`requestid`,`payments_requests_uid`,`payments_uid`,`byersid`,`onec_id`,`dataver`,`payed`,`number`,`sum`,`comment`) VALUES(?,?,?,?,?,?,?,?,?,?)");
 
         $check_duplicates = $database->prepare("SELECT * FROM `payments` WHERE `payments_uid` = ? AND `payments_requests_uid`=?");
         $delete_duplicates = $database->prepare("DELETE FROM `payments` WHERE payments_id = ?");
@@ -410,6 +412,7 @@ if(isset($_POST['requestid']) &&
         $statement->bindParam(7, $payed);
         $statement->bindParam(8, $number);
         $statement->bindParam(9, $sum);
+        $statement->bindParam(10, $comment);
 
 
         $database->beginTransaction();
@@ -421,7 +424,6 @@ if(isset($_POST['requestid']) &&
             $statement->execute();
             $database->commit();
         }
-
 
     } catch( PDOException $Exception ) {
         // Note The Typecast To An Integer!

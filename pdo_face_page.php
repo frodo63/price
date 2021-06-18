@@ -165,7 +165,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
 echo"
 
 <div id='givaways'>
-<input type='button' class='show_list' value='РАСЧЕТЫ⏎'><br><br>";
+<input type='button' class='show_list' value='ОБНОВИТЬ P-1 ⏎'><br><br>";
          
 echo"       <!--Добавить Платежку -->  
               <div id='add_payment'>
@@ -368,6 +368,22 @@ echo "    <!--
               
 
 <input type='button' value='▲' id='go_up'>";
+
+
+/*$comment = "ЕНОТ-3500 Рандомный текст платежа";
+$ga_sum_start = mb_strpos($comment, 'НОТ-') + 4;
+$ga_sum_end = mb_strpos($comment, ' ', $ga_sum_start);
+$ga_sum = mb_substr ( $comment , $ga_sum_start, $ga_sum_end - $ga_sum_start);
+
+echo "<div style='width: 500px; height: 100px; padding: 10px; position: relative; left: 50px'><br>";
+echo $comment;
+echo "<br>";
+echo $ga_sum_start;
+echo "<br>";
+echo $ga_sum_end;
+echo "<br>";
+echo $ga_sum;
+echo "</div>";*/
 
 echo"
 <script src='js/jquery.js'></script>

@@ -598,7 +598,7 @@ if(isset($_POST['table'])){
             /*ОПЦИИ ДАТЫ*/
 
             //Сейчс скрипт берет всех покупателей из базы
-            $statement = $pdo->prepare("SELECT byers.byers_id AS b_id,byers.byers_nameid AS b_nid,allnames.name AS b_name, byers.debt_total AS debt_total FROM `byers` LEFT JOIN `allnames` ON byers.byers_nameid=allnames.nameid WHERE (byers.ov_tp > 0 OR byers.ov_tp <> NULL) ORDER BY b_name");
+            $statement = $pdo->prepare("SELECT byers.byers_id AS b_id,byers.byers_nameid AS b_nid,allnames.name AS b_name, byers.debt_total AS debt_total FROM `byers` LEFT JOIN `allnames` ON byers.byers_nameid=allnames.nameid WHERE (byers.ov_tp > 0 OR byers.ov_tp <> NULL) ORDER BY debt_total DESC");
             $gotrequests = $pdo->prepare("SELECT requests_id FROM requests WHERE (requests.byersid = ? AND requests.r1_hidden = 0)");
             $gotrequests_ip = $pdoip->prepare("SELECT requests_id FROM requests WHERE (requests.byersid = ? AND requests.r1_hidden = 0)");
             //Нужно из byersid ltk получить byersid ip
@@ -816,7 +816,7 @@ if(isset($_POST['table'])){
             <div class='add_zp_count'>                
             
             <select class='zp_count_year'>
-              <option>2020</option>
+              <!--<option>2020</option>-->
               <option>2021</option>
             </select>
             
@@ -849,8 +849,7 @@ if(isset($_POST['table'])){
             </select>
             
             <input type='number' class='zp_count_amount' style='text-align: center' placeholder='Сумма'>
-            <input type='button' value='Начислить' id='add_zp_count'>
-            
+            <input type='button' value='Начислить' id='add_zp_count'>          
             
             
             </div>";
@@ -878,7 +877,7 @@ if(isset($_POST['table'])){
               <option>Касса</option>              
             </select>
             
-            <input class='zp_give_date' type='date'size='1' value='2020-01-01'>
+            <input class='zp_give_date' type='date'size='1' value='2021-01-01'>
             
             <!--<select class='zp_count_year'>
               <option>2020</option>
@@ -934,8 +933,8 @@ if(isset($_POST['table'])){
             $workers = ['Марина', 'Сергей', 'Дмитрий', 'Тимур', 'Ирина', 'Милана', 'Литовкин', 'Проценты Сергей', 'Гагарина', 'Павлова'];
             $months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
 
-            $zp_counts = $pdo->prepare("SELECT * FROM zp_count WHERE worker = ?");
-            $zp_gives = $pdo->prepare("SELECT * FROM zp_give WHERE worker = ? ORDER BY given ASC");
+            $zp_counts = $pdo->prepare("SELECT * FROM zp_count WHERE worker = ? AND year = '2021'");
+            $zp_gives = $pdo->prepare("SELECT * FROM zp_give WHERE worker = ?  AND date('Y', strtotime(given)) = '2021' ORDER BY given ASC");
 
             foreach ($workers as $worker)
             {

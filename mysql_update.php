@@ -317,6 +317,7 @@ if(isset($_POST['requestid']) &&/*есть*/
     isset($_POST['dataver']) &&/*есть*/
     isset($_POST['payed']) &&/*есть*/
     isset($_POST['number']) &&/*есть*/
+    isset($_POST['comment']) &&/*есть*/
     isset($_POST['sum'])/*есть*/
 ){
     $requestid = $_POST['requestid'];
@@ -328,6 +329,7 @@ if(isset($_POST['requestid']) &&/*есть*/
     $payed = $_POST['payed'];
     $number = $_POST['number'];
     $sum = $_POST['sum'];
+    $comment = $_POST['comment'];
 
     $get_payment = $database->prepare("SELECT * FROM `payments` WHERE `payments_uid` = ? AND `payments_requests_uid` = ?");
     $update_payments_requests_uid = $database->prepare("UPDATE `payments` SET `payments_requests_uid` = ? WHERE `payments_uid` = ? AND `requestid` = ?");
@@ -338,6 +340,7 @@ if(isset($_POST['requestid']) &&/*есть*/
     $update_payed = $database->prepare("UPDATE `payments` SET `payed` = ? WHERE `payments_uid` = ? AND `payments_requests_uid` = ?");
     $update_number = $database->prepare("UPDATE `payments` SET `number` = ? WHERE `payments_uid` = ? AND `payments_requests_uid` = ?");
     $update_sum = $database->prepare("UPDATE `payments` SET `sum` = ? WHERE `payments_uid` = ? AND `payments_requests_uid` = ?");
+    $update_comment = $database->prepare("UPDATE `payments` SET `comment` = ? WHERE `payments_uid` = ? AND `payments_requests_uid` = ?");
 
     try {
         $database->beginTransaction();
@@ -358,19 +361,137 @@ if(isset($_POST['requestid']) &&/*есть*/
         if($get_payment_fetched['payed'] != $payed){$update_payed->execute(array($payed,$payments_uid, $payments_req_uid));}
         if($get_payment_fetched['number'] != $number){$update_number->execute(array($number,$payments_uid, $payments_req_uid));}
         if($get_payment_fetched['sum'] != $sum){$update_sum->execute(array($sum,$payments_uid, $payments_req_uid));}
+        if($get_payment_fetched['comment'] != $comment){$update_comment->execute(array($comment,$payments_uid, $payments_req_uid));}
 
         //По-любому обновляем версию данных
         $update_dataver->execute(array($dataver,$payments_uid, $payments_req_uid));
-
         $database->commit();
-    } catch( PDOException $Exception ) {
-        // Note The Typecast To An Integer!
-        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
-        $database->rollback();
-    }
-    
 
-    echo "Получилось! Обновлена платежка  на сумму $sum в заявку $requestid.";
+        //Проверяем Коммент на наличие секретного слова
+        if (strpos($comment, 'ЕНОТ:') !== false) {
+            //Надо добавить выдачу, уникальную, с УИДом платежки
+
+            $add_giveaway = $database->prepare("INSERT INTO `giveaways`(`byersid`,`given_away`,`comment`,`giveaway_sum`,`year_given`,`comment_payments_uid`,`comment_payments_comment`) VALUES(?,?,?,?,?,?,?)");
+            $check_payments_giveaways = $database->prepare("SELECT `given_away`, `giveaway_sum`, `comment_payments_comment`, `comment_payments_uid` FROM `giveaways` WHERE comment_payments_uid = ? ORDER BY `given_away` ASC");
+            $update_ga_sum = $database->prepare("UPDATE `giveaways` SET `giveaway_sum` = ? WHERE `comment_payments_uid` = ? AND `given_away` = ?");
+
+                //А что делать, если выдач несколько?
+                //Заносить несколько сумм через запятую. Формат: "ЕНОТ 500, 300, 900 ////"
+
+            //Создаем массив из выдач
+            $ga_sum_start = mb_strpos($comment, 'ЕНОТ:')+5;
+            $ga_sum_end = mb_strpos($comment, '////', $ga_sum_start);
+            $ga_sum = mb_substr( $comment , $ga_sum_start, $ga_sum_end - $ga_sum_start);
+            /*$ga_s = preg_split("/^[0-9]+$/", $ga_sum, 0, PREG_SPLIT_NO_EMPTY );*/
+            $ga_s = explode( ' ', $ga_sum );
+            $ga_s = array_filter($ga_s);
+            $ga_s = array_values($ga_s);
+
+            //Перед добавлением надо бы сделать проверку. Отбираем по $payments_uid
+            //Ищем уже имующиеся по этой платежке выдачи
+            $check_payments_giveaways->execute(array($payments_uid));
+            $check_payments_giveaways_fetched = $check_payments_giveaways->fetchAll(PDO::FETCH_ASSOC);
+
+            if(count($check_payments_giveaways_fetched) > 0){
+                //Надо чето сравнить. Надо понять, есть че обновить, или че ваще хз.В комменте хранятся только суммы.
+                //Даты хранятся в программе. Там же суммы и сохраненные комменты.
+                //$ga_s <=> $check_payments_giveaways_fetched;
+                echo "Вот так выглядят выдачи сейчас: ".PHP_EOL;
+                print_r($ga_s);
+                echo PHP_EOL;
+
+                echo "А вот история: ".PHP_EOL;
+                print_r($check_payments_giveaways_fetched);
+                echo PHP_EOL;
+
+                echo "Сравниваем: ".PHP_EOL;
+
+                foreach($ga_s as $key => $g_s){
+                    echo "[ ".$key." ]".PHP_EOL;
+                    if(array_key_exists($key, $check_payments_giveaways_fetched)){
+                        //Значит выдача такая есть, но еще надо проверить сумму.
+                        echo "Выдача подтверждается".PHP_EOL;
+                        echo "В базе: ".$g_s.PHP_EOL;
+                        echo "В программе: ".$check_payments_giveaways_fetched[$key]['giveaway_sum'].PHP_EOL;
+
+                        if($g_s != $check_payments_giveaways_fetched[$key]['giveaway_sum']){
+                            //Выдача есть, но сумма не совпадает.
+                            //Нужно изменить коммент в платежке
+                            echo "Выдача была изменена".PHP_EOL;
+                            //Обновляем существующую выдачу
+                            try {
+                                $database->beginTransaction();
+                                $update_ga_sum->execute(array(
+                                        $g_s,
+                                        $check_payments_giveaways_fetched[$key]['comment_payments_uid'],
+                                        $check_payments_giveaways_fetched[$key]['given_away']
+                                    ));
+                                $database->commit();
+                                echo "Измненили выдачу. Было: ".$check_payments_giveaways_fetched[$key]['giveaway_sum'].", стало: ". $g_s.PHP_EOL;
+                            }catch( PDOException $Exception ) {
+                                print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+                                $database->rollback();
+                            }
+
+                        }
+                    }else{
+                        try{
+                            //Такой выдачи нет, добавляем
+                            echo "Сравнили и увидели, что такой выдачи нет, добавляем новую на сумму ".$g_s." датой ".date("Y-m-d").PHP_EOL;
+                            $ga_given_away = date("Y-m-d");
+                            $ga_year_given = date("Y", strtotime($payed));
+
+                            $add_giveaway->bindParam(1, $byersid);
+                            $add_giveaway->bindParam(2, $ga_given_away);
+                            $add_giveaway->bindParam(3, $comment);
+
+                            $add_giveaway->bindParam(4, $g_s);
+                            $add_giveaway->bindParam(5, $ga_year_given);
+                            $add_giveaway->bindParam(6, $payments_uid);
+                            $add_giveaway->bindParam(7, $comment);
+
+                            $database->beginTransaction();
+                            $add_giveaway->execute();
+                            $database->commit();
+                        }catch( PDOException $Exception ) {
+                            print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+                            $database->rollback();
+                        }
+                    }
+                }
+            }else{
+                try{
+                    //Добавляем просто
+                    $ga_given_away = date("Y-m-d");
+                    $ga_year_given = date("Y", strtotime($payed));
+                    foreach($ga_s as $key => $g_s){
+                        $add_giveaway->bindParam(1, $byersid);
+                        $add_giveaway->bindParam(2, $ga_given_away);
+                        $add_giveaway->bindParam(3, $comment);
+
+                        $add_giveaway->bindParam(4, $g_s);
+                        $add_giveaway->bindParam(5, $ga_year_given);
+                        $add_giveaway->bindParam(6, $payments_uid);
+                        $add_giveaway->bindParam(7, $comment);
+
+                        $database->beginTransaction();
+                        $add_giveaway->execute();
+                        echo "Ни одной выдачи еще нет. ".PHP_EOL."Просто добавляем выдачу на сумму ".$g_s." датой ".date("Y-m-d") . PHP_EOL;
+                        $database->commit();
+                    }
+                }catch( PDOException $Exception ) {
+                print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+                $database->rollback();
+            }
+    }
+}
+} catch( PDOException $Exception ) {
+// Note The Typecast To An Integer!
+print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+$database->rollback();
+}
+
+echo "Получилось! Обновлена платежка  на сумму $sum в заявку $requestid.";
 
 };
 //////////////////////////////////////////////////////////////////////
@@ -378,59 +499,59 @@ if(isset($_POST['requestid']) &&/*есть*/
 //Добавление расценки в МОДУЛЕ ВЫГРУЗКИ ДАННЫХ
 
 /*if(
-    isset($_POST['1с_positionid']) &&
-    isset($_POST['1с_tradeid']) &&
-    isset($_POST['1с_byer']) &&
-    isset($_POST['1с_kol']) &&
-    isset($_POST['1с_price'])
+isset($_POST['1с_positionid']) &&
+isset($_POST['1с_tradeid']) &&
+isset($_POST['1с_byer']) &&
+isset($_POST['1с_kol']) &&
+isset($_POST['1с_price'])
 ){
-    //Переменные для добавления расценки
-    $positionid = $_POST['1с_positionid'];//ID последнрей добавленной позиции
-    $tradeid = $_POST['1с_tradeid'];
-    $sellerid = 0;
-    $zak = 0;
-    $kol = $_POST['1с_kol'];
-    $price = $_POST['1с_price'];
-    $byer = $_POST['1с_byer'];
-    $fixed = 0;
-    $opr = 0;
-    $rent = 0;
+//Переменные для добавления расценки
+$positionid = $_POST['1с_positionid'];//ID последнрей добавленной позиции
+$tradeid = $_POST['1с_tradeid'];
+$sellerid = 0;
+$zak = 0;
+$kol = $_POST['1с_kol'];
+$price = $_POST['1с_price'];
+$byer = $_POST['1с_byer'];
+$fixed = 0;
+$opr = 0;
+$rent = 0;
 
-    //Надо сделать запрос для опций
-    $op = 21;
+//Надо сделать запрос для опций
+$op = 21;
 
-    try{
-        $database->beginTransaction();
+try{
+$database->beginTransaction();
 
-        $getoptions = $database->prepare("SELECT `ov_tp`,`ov_firstobp`,`ov_wt` FROM byers WHERE `byers_id` = ?");
-        $getoptions->execute(array($byer));
+$getoptions = $database->prepare("SELECT `ov_tp`,`ov_firstobp`,`ov_wt` FROM byers WHERE `byers_id` = ?");
+$getoptions->execute(array($byer));
 
-        $getoptions_fetched = $getoptions->fetch(PDO::FETCH_ASSOC);
+$getoptions_fetched = $getoptions->fetch(PDO::FETCH_ASSOC);
 
-        $tp = $getoptions_fetched['ov_tp'];
-        $firstobp = $getoptions_fetched['ov_firstobp'];
-        $wtime = $getoptions_fetched['ov_wt'];
+$tp = $getoptions_fetched['ov_tp'];
+$firstobp = $getoptions_fetched['ov_firstobp'];
+$wtime = $getoptions_fetched['ov_wt'];
 
-        $addpricing = $database->prepare("INSERT INTO `pricings`(`positionid`,`tradeid`,`sellerid`,`zak`,`kol`,`price`,`fixed`,`op`,`tp`,`firstobp`,`wtime`,`opr`,`rent`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
-        $addpricing->execute(array($positionid,$tradeid,$sellerid,$zak,$kol,$price,$fixed,$op,$tp,$firstobp,$wtime,$opr,$rent));
+$addpricing = $database->prepare("INSERT INTO `pricings`(`positionid`,`tradeid`,`sellerid`,`zak`,`kol`,`price`,`fixed`,`op`,`tp`,`firstobp`,`wtime`,`opr`,`rent`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)");
+$addpricing->execute(array($positionid,$tradeid,$sellerid,$zak,$kol,$price,$fixed,$op,$tp,$firstobp,$wtime,$opr,$rent));
 
-        //Добавляем Победителя к только что добавленной позиции из только что добавленной расценки
-        $lastpricingid = $database->lastInsertId();
+//Добавляем Победителя к только что добавленной позиции из только что добавленной расценки
+$lastpricingid = $database->lastInsertId();
 
-        echo "Расценка № " . $lastpricingid . " добавлена";
+echo "Расценка № " . $lastpricingid . " добавлена";
 
-        $addwinner = $database->prepare("UPDATE req_positions SET winnerid = ? WHERE req_positionid = ?");
-        $addwinner->execute(array($lastpricingid,$positionid));
+$addwinner = $database->prepare("UPDATE req_positions SET winnerid = ? WHERE req_positionid = ?");
+$addwinner->execute(array($lastpricingid,$positionid));
 
-        echo "Победитель назначен";
+echo "Победитель назначен";
 
-        $database->commit();
+$database->commit();
 
-    } catch( PDOException $Exception ) {
-        // Note The Typecast To An Integer!
-        $database->rollback();
-        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
-    }
+} catch( PDOException $Exception ) {
+// Note The Typecast To An Integer!
+$database->rollback();
+print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+}
 }*/
 
 //Обновление закупки в модуле 1С/////////////////////////////////////////////////

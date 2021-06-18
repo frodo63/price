@@ -696,7 +696,7 @@ $(document).ready(function() {
         $('#cases p,#obtzr,#tzr,#obtzrknam,#obtzrkpok,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
         $('#pricingwindow').attr({positionid: '-', pricingid: '-', preditposid:'-', byerid:'-', requestid:'-', database:'-'});
         $('#byer_name').text('');
-        $('#nds_result, #nds_zak, #nds_to_pay').text('');
+        $('#nds_result, #nds_zak, #nds_to_pay, #orp_result').text('');
         $('.history').html('');
         $('.history_knam').html('');
         $('.history_kpok').html('');
@@ -756,6 +756,13 @@ $(document).ready(function() {
             $('#tp').val(json.tp);
             $('#firstobp').val(json.firstobp);
             $('#opr').text(json.opr);
+            var op_r = Number($('#opr').text());
+            var nds_to_pay = Number($('#nds_to_pay').text());
+            var op_r_result = Number((op_r - nds_to_pay).toFixed(2));
+            console.log(op_r);
+            console.log(nds_to_pay);
+            console.log(op_r_result);
+            $('#opr_result').text(op_r_result);
             $('#tpr').text(json.tpr);
             $('#firstoh').val(json.firstoh);
             $('#clearp').text(json.clearp);
