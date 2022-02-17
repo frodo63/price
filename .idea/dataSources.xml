@@ -29,5 +29,11 @@
         <property name="yearIsDateType" value="false" />
       </driver-properties>
     </data-source>
+    <data-source source="LOCAL" name="nalogs" uuid="d24d94cb-4e5f-4632-8ad0-b0c02b34331b">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$USER_HOME$/PycharmProjects/napomni/sqlite_python.db</jdbc-url>
+    </data-source>
   </component>
 </project>

@@ -169,7 +169,7 @@ if(isset($_POST['mail_array'])
             ),
             "15" => array(
                 "header" => "СОЖ",
-                "columns" => array('Наименование','Описание','Операции','Металлы','Концентрация'),
+                "columns" => array('Наименование','Операции','Описание','Металлы','Концентрация'),
                 "table" => "metalworking_soges"
             ),
             "16" => array(
@@ -235,11 +235,12 @@ if(isset($_POST['mail_array'])
                 }
                 //РИСУЕМ ШАПКУ ТАБЛИЦЫ
                 if(isset($columns) && $table != 'tails' && $table != 'express_kp'){
-                    $result.="<table style='border-collapse: collapse'><thead><tr>";
+                    $result.="<table style='border-collapse: collapse'><tr>";
                     foreach ($columns as $column){
-                        $result.="<th class='table_header' style='border: 1px solid black'>".$column."</th>";
+                        /*$result.="<!--<td class='table_header' style='border: 1px solid black'>".$column."</td>-->";*/
+                        $result.="<td style='border: 1px solid black'>".$column."</td>";
                     }
-                    $result.="</tr></thead><tbody>";
+                    $result.="</tr>";
                     unset($columns);
                 }
 
@@ -259,7 +260,7 @@ if(isset($_POST['mail_array'])
                         || $table == 'food_specliqs'
                         || $table == 'general_greases_silicone'
                     ){
-                        $result.="<tr><td style='font-size: 20px; border: 1px solid black; text-align: center' colspan='6'>".$brand."</td></tr>";
+                        $result.="<tr><td style='font-size: 20px; border: 1px solid black; text-align: center' colspan='4'>".$brand."</td></tr>";
                     }
 
                     foreach($query_fetched as $index=>$kp_entry){
@@ -280,8 +281,8 @@ if(isset($_POST['mail_array'])
                         if($table == "metalworking_soges"){
                             $result.="<tr>
                         <td style='font-weight: bold; width: 15%; border: 1px solid black'>".$kp_entry['name']."</td>
-                        <td style='border: 1px solid black'>".$kp_entry['description']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['operations']."</td>
+                        <td style='border: 1px solid black'>".$kp_entry['description']."</td>                        
                         <td style='border: 1px solid black'>".$kp_entry['metal_types']."</td>
                         <td style='border: 1px solid black'>".$kp_entry['concentration']."</td>";
                         }
@@ -348,7 +349,7 @@ if(isset($_POST['mail_array'])
                     }
                 }
                 if ($table != 'tails'){
-                    $result.="</tbody></table>";
+                    $result.="</table>";
                 }
             }
         }

@@ -13,7 +13,7 @@ p {
 
 #price label {
   font-size: 2vh;
-  font-family: sans-serif;
+  font-family: "Times New Roman";
 }
 
 #price h2 {
@@ -24,10 +24,10 @@ p {
 
 #pr, #rent h1, #obpr {
   font-size: 3vh;
-  font-family: sans-serif;
+  font-family: "Times New Roman";
 }
 
-#clearp, #obtzrknam, #obtzrkpok, #firstobp, #margek, #rop, #rtp, #nds_to_pay {
+#clearp, #obtzrknam, #obtzrkpok, #firstobp, #margek, #rop, #rtp, #nds_to_pay, #pribil_to_pay {
     color: red;
 }
 
@@ -39,8 +39,8 @@ $pricecolor : #F0F0F0;
 
 #rent{
   position: absolute;
-  top: 11.7vh;
-  right: 14.1vw;
+  top: 24.7vh;
+  right: 0.9vw;
   width: 12vw;
   border-radius: 3px;
   padding:5px;
@@ -73,8 +73,8 @@ $pricecolor : #F0F0F0;
 #result
 {
   position: absolute;
-  top: 11.7vh;
-  left: 52vw;
+  top: 24.7vh;
+  left: 64.4vw;
   width: 20vw;
   border-radius: 3px;
   padding: 5px;
@@ -144,8 +144,8 @@ $pricecolor : #F0F0F0;
     font-weight: bold;
 }
 
-#zak, #kol, #tzr, #tzrknam, #tzrkpok, #rop, #rtp, #op, #tp, #obp, #firstobp, #wtime, #tzrstore {
-  width: 10vw;
+#zak, #kol, #tzr, #tzrknam, #tzrkpok, #rop, #rtp, #op, #tp, #obp, #firstobp, #wtime, #tzrstore, #firstoh {
+  width: 8vw;
   text-align: center;
   font-size:3vh;
 }
@@ -187,12 +187,14 @@ $pricecolor : #F0F0F0;
 
 
 
-#obtzr, #obtzrknam, #obtzrkpok, #op+p, #tp+p, #obp+p, #marge, #margek, #obpr, #firstobp+p, #id, p#byer, p#seller, p#trade, #onhands, #cases p, #realop, #realtp, #firstoh, #realop, #realtp, #wtimeday, #clearp, #oh, #wtr, #clearpnar, #nds_zak, #nds_result, #nds_to_pay, #opr_result
+#obtzr, #obtzrknam, #obtzrkpok, #op+p, #tp+p, #obp+p, #marge, #margek, #obpr, #firstobp+p, #id, p#byer, p#seller, p#trade, #onhands, #cases p, #realop, #realtp, #firstoh, #realop, #realtp, #wtimeday, #clearp, #oh, #wtr, #clearpnar, #nds_zak, #nds_result, #nds_to_pay, #opr_result, #pribil_to_pay, #pribil_dohod, #pribil_rashod
 {
     display: inline;    
 }
 
-#nds_zak, #nds_result {
+
+
+#nds_zak, #nds_result, #pribil_dohod, #pribil_rashod {
   font-size: 2vh;
 }
 
@@ -229,8 +231,8 @@ $pricecolor : #F0F0F0;
     position: absolute;
     width: 25vw;
     height: 35vh;
-    top: 63vh;
-    right: 3vw;
+    top: 64vh;
+    right: 11vw;
     font-size: 3vh;
 }
 

@@ -373,17 +373,19 @@ if(isset($_POST['requestid']) &&/*есть*/
 
             $add_giveaway = $database->prepare("INSERT INTO `giveaways`(`byersid`,`given_away`,`comment`,`giveaway_sum`,`year_given`,`comment_payments_uid`,`comment_payments_comment`) VALUES(?,?,?,?,?,?,?)");
             $check_payments_giveaways = $database->prepare("SELECT `given_away`, `giveaway_sum`, `comment_payments_comment`, `comment_payments_uid` FROM `giveaways` WHERE comment_payments_uid = ? ORDER BY `given_away` ASC");
-            $update_ga_sum = $database->prepare("UPDATE `giveaways` SET `giveaway_sum` = ? WHERE `comment_payments_uid` = ? AND `given_away` = ?");
+            $update_ga_sum = $database->prepare("UPDATE `giveaways` SET `giveaway_sum` = ? WHERE `comment_payments_uid` = ? AND `given_away` = ? AND `giveaway_sum` = ?");
+            $update_ga_comment = $database->prepare("UPDATE `giveaways` SET `comment_payments_comment` = ?, `comment` = ? WHERE `comment_payments_uid` = ? AND `given_away` = ? AND `giveaway_sum` = ?");
+            $delete_ga = $database->prepare("DELETE FROM `giveaways` WHERE `comment_payments_uid` = ? AND `given_away` = ? AND `giveaway_sum` = ?");
 
                 //А что делать, если выдач несколько?
-                //Заносить несколько сумм через запятую. Формат: "ЕНОТ 500, 300, 900 ////"
+                //Заносить несколько сумм через запятую. Формат: "ЕНОТ: 500/300/900 :)"
 
             //Создаем массив из выдач
             $ga_sum_start = mb_strpos($comment, 'ЕНОТ:')+5;
-            $ga_sum_end = mb_strpos($comment, '////', $ga_sum_start);
+            $ga_sum_end = mb_strpos($comment, ':)', $ga_sum_start);
             $ga_sum = mb_substr( $comment , $ga_sum_start, $ga_sum_end - $ga_sum_start);
             /*$ga_s = preg_split("/^[0-9]+$/", $ga_sum, 0, PREG_SPLIT_NO_EMPTY );*/
-            $ga_s = explode( ' ', $ga_sum );
+            $ga_s = explode( '/', $ga_sum );
             $ga_s = array_filter($ga_s);
             $ga_s = array_values($ga_s);
 
@@ -392,6 +394,8 @@ if(isset($_POST['requestid']) &&/*есть*/
             $check_payments_giveaways->execute(array($payments_uid));
             $check_payments_giveaways_fetched = $check_payments_giveaways->fetchAll(PDO::FETCH_ASSOC);
 
+            //Если в программе выдачи есть, мы сравниваем и обновляем.
+            //Если их там нет - просто добавляем
             if(count($check_payments_giveaways_fetched) > 0){
                 //Надо чето сравнить. Надо понять, есть че обновить, или че ваще хз.В комменте хранятся только суммы.
                 //Даты хранятся в программе. Там же суммы и сохраненные комменты.
@@ -414,26 +418,43 @@ if(isset($_POST['requestid']) &&/*есть*/
                         echo "В базе: ".$g_s.PHP_EOL;
                         echo "В программе: ".$check_payments_giveaways_fetched[$key]['giveaway_sum'].PHP_EOL;
 
-                        if($g_s != $check_payments_giveaways_fetched[$key]['giveaway_sum']){
+                        $g_s =$g_s*1;
+                        $g_s =number_format($g_s, 2, '.', '');
+                        $ga_from_prices_sum =number_format($check_payments_giveaways_fetched[$key]['giveaway_sum'], 2, '.', '');
+                        if($g_s != $ga_from_prices_sum){
                             //Выдача есть, но сумма не совпадает.
                             //Нужно изменить коммент в платежке
                             echo "Выдача была изменена".PHP_EOL;
                             //Обновляем существующую выдачу
                             try {
                                 $database->beginTransaction();
+
+                                //Изменили сумму, надо и коммент изменить
+                                $update_ga_comment->execute(array(
+                                    $comment,
+                                    $comment,
+                                    $payments_uid, $check_payments_giveaways_fetched[$key]['given_away'],
+                                    $check_payments_giveaways_fetched[$key]['giveaway_sum']
+                                ));
+
                                 $update_ga_sum->execute(array(
-                                        $g_s,
-                                        $check_payments_giveaways_fetched[$key]['comment_payments_uid'],
-                                        $check_payments_giveaways_fetched[$key]['given_away']
-                                    ));
+                                    $g_s,
+                                    $check_payments_giveaways_fetched[$key]['comment_payments_uid'],
+                                    $check_payments_giveaways_fetched[$key]['given_away'],
+                                    $check_payments_giveaways_fetched[$key]['giveaway_sum']
+                                ));
+
+
                                 $database->commit();
-                                echo "Измненили выдачу. Было: ".$check_payments_giveaways_fetched[$key]['giveaway_sum'].", стало: ". $g_s.PHP_EOL;
+                                echo "Измненили выдачу. Было: ".$ga_from_prices_sum.", стало: ". $g_s.PHP_EOL;
+                                echo "И коммент изменили".PHP_EOL;
                             }catch( PDOException $Exception ) {
                                 print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
                                 $database->rollback();
                             }
 
                         }
+                        unset($check_payments_giveaways_fetched[$key]);
                     }else{
                         try{
                             //Такой выдачи нет, добавляем
@@ -482,17 +503,41 @@ if(isset($_POST['requestid']) &&/*есть*/
                 }catch( PDOException $Exception ) {
                 print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
                 $database->rollback();
+                }
             }
+            //А если их в программе больше, чем в комменте платежки - мы из программы удаляем получается лишние выдачи:
+            if (count($check_payments_giveaways_fetched) > count($ga_s)){
+                $ga_differ = count($check_payments_giveaways_fetched) - count($ga_s);//Вот сколько выдач надо удалить
+
+
+                //Понять, какие выдачи точно удаляем.
+                echo "А вот эти будем удалять: ".PHP_EOL;
+                print_r($check_payments_giveaways_fetched);
+
+                foreach($check_payments_giveaways_fetched as $ga_to_delete){
+                    try{
+                        $database->beginTransaction();
+                        $delete_ga->execute(array(
+                            $ga_to_delete['comment_payments_uid'],
+                            $ga_to_delete['given_away'],
+                            $ga_to_delete['giveaway_sum']
+                        ));
+                        $database->commit();
+                        echo"Удалена выдача от ".$ga_to_delete['given_away']." на сумму ".$ga_to_delete['giveaway_sum'].PHP_EOL;
+                    }catch( PDOException $Exception ) {
+                        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+                        $database->rollback();
+                    }
+                }
+            }
+        }
+    }catch( PDOException $Exception ) {
+        // Note The Typecast To An Integer!
+        print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
+        $database->rollback();
     }
-}
-} catch( PDOException $Exception ) {
-// Note The Typecast To An Integer!
-print "Error!: " . $Exception->getMessage() . "<br/>" . (int)$Exception->getCode( );
-$database->rollback();
-}
 
-echo "Получилось! Обновлена платежка  на сумму $sum в заявку $requestid.";
-
+    echo "Получилось! Обновлена платежка  на сумму $sum в заявку $requestid.";
 };
 //////////////////////////////////////////////////////////////////////
 

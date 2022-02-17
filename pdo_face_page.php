@@ -15,15 +15,23 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         <input id='button_history_seller' type='button' value='?'><label for='seller'>Поставщик:</label><input seller_id = 'blank' autocomplete='off' type='text' name='seller' id='seller' placeholder='Введите поставщика' size='70'/><div class='sres'></div><br />
         <label for='zakup'>ЗАКУП ЗА 1 ШТ:</label><input type='number' name='zak' id='zak' min='1' step='0.01'/> руб.<br><br>
         <label for='kol'>Кол-во:</label> <input type='number' name='kol' id='kol'  min='1'/><br><br><br>
-        <label for='tzrknam'>Довезти 1шт ДО НАС:</label><input id='button_history_tzrknam' type='button' value='?'><span id='spacer1'></span><input type='number' name='tzrknam' id='tzrknam'  min='0' step='1'/> руб. &nbsp&nbsp&nbspС обналом:&nbsp<p id='obtzrknam'></p> руб.<br />
-        <label for='tzrkpok'>Довезти 1шт ДО <span id='byer_name'></span>:</label><input id='button_history_tzrkpok' type='button' value='?'><span id='spacer2'></span><input type='number' name='tzrkpok' id='tzrkpok'  min='0' step='1'/> руб. &nbsp&nbsp&nbspС обналом:&nbsp<p id='obtzrkpok'></p> руб.<br />
+        <label for='tzrknam'>ТЗР:</label><input id='button_history_tzrknam' type='button' value='?'><span id='spacer2'></span><input type='number' name='tzrknam' id='tzrknam'  min='0' step='1'/>
+        <label><input type='radio' name='radio_nds' value='nds'>С НДС</label>
+        <label><input type='radio' name='radio_nds' value='nonds'>БЕЗ НДС</label>
+        <label><input type='radio' name='radio_nds' value='cash'>НАЛ</label>
+ 
+         руб. &nbsp&nbspС обналом:&nbsp<p id='obtzrknam'></p> руб.
+        
+        <br>
+        
+        <label for='tzrkpok'>Доставка до <span id='byer_name'></span>:</label><input id='button_history_tzrkpok' type='button' value='?'><span id='spacer2'></span><input type='number' name='tzrkpok' id='tzrkpok'  min='0' step='1'/> руб. &nbsp&nbsp&nbspС обналом:&nbsp<p id='obtzrkpok'></p> руб.<br />
         <label for='tzrstore'>Хранение : </label><span id='spacer2'></span><input type='number' name='tzrstore' id='tzrstore'  min='0' step='1'/> руб.<br />
         
         <label for='tzr'>ТЗР на ШТУКЕ:</label> <span id='tzr'></span> руб.<br /><br />
         <input type='button' value='Кем возили' id='button_history_transports'><br />
         <div id='fcount'>
             <label for='wtime'>ОТСРОЧКА:</label><span id='spacer3'></span><input type='number' size='2' name='wtime' id='wtime'  min='0' step='0.03'/> мес. <p id='wtimeday'></p> дней.&nbsp(От поставщика + От покупателя)&nbsp<span id='wtr'></span>.руб<br />           
-            <label for='op'>НАШ ПРОЦЕНТ:</label><span id='spacer4'></span><input type='number' size='4' name='op' id='op'  min='0.01' step='0.01'/>% / <p id='opr'></p> - <p id='nds_to_pay'></p> (<p id='nds_result'></p> (НДС прод.) - <p id='nds_zak'></p> (НДС зак.) ) = <p id='opr_result'></p> руб.<br />
+            <label for='op'>НАШ ПРОЦЕНТ:</label><span id='spacer4'></span><input type='number' size='4' name='op' id='op'  min='0.01' step='0.01'/>% / <p id='opr'></p> - <p id='nds_to_pay'></p> (<p id='nds_result'></p> (НДС прод.) - <p id='nds_zak'></p> (НДС зак.) ) - <p id='pribil_to_pay'></p> (<p id='pribil_dohod'></p> (доходы) - <p id='pribil_rashod'></p> (расходы) * 0.2) = <p id='opr_result'></p> руб.<br />
             <label for='tp'>ЕНОТ:</label><span id='spacer5'></span><input type='number' size='2' name='tp' id='tp'  min='0' step='0.01'/>% / <p id='tpr'></p> руб.(<p id='clearp'></p>&nbspот цены) НА РУКИ : <input id='firstoh' type='number' step='0.01' min='0'></input> руб.(<p id='clearpnar'></p>&nbspот цены) <br/>
             <label for='firstobp'>ОБНАЛ:</label><span id='spacer6'></span><input type='number' size='2' name='firstobp' id='firstobp'  min='0' step='0.1'/>% / <p id='firstobpr'></p> руб.<br />
         </div>

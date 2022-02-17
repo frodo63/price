@@ -153,8 +153,8 @@ $(document).ready(function(){
         //Изменение НА РУКИ
         $('#firstoh').val(Number((tpr - tpr*firstobp/100).toFixed(2)));
 
-        //Изменение НДС к закупу
-        $('#nds_zak').text(Number((lzak/120*20).toFixed(2)));
+        //Изменение расчета налога на прибыль
+
 
         //Функция вызывается только если некоторые переменные не undefined
         if(
@@ -251,7 +251,7 @@ $(document).ready(function(){
         $('#firstoh').val(Number((tpr - tpr*firstobp/100).toFixed(2)));
 
         //Изменение НДС к закупу
-        $('#nds_zak').text(Number((zak/120*20).toFixed(2)));
+        //$('#nds_zak').text(Number((zak/120*20).toFixed(2)));
 
         //Стираем переменнные
         zak=tzr=a=tp=op=firstobp=wt=wtr=opr=tpr=firstobpr=null;
@@ -402,6 +402,10 @@ $(document).ready(function(){
         })
     });
 
+    $('input[name="radio_nds"]').off('change.tzr_nds').on('change.tzr_nds', function(){
+        givePrice();
+    });
+
     //ИЗМЕНЕНИЕ НАШЕГО ПРОЦЕНТА ДЛЯ БЫСТРОГО РАСЧЕТА
     /*$('#op').off('change_for_fast_price.op').on('change_for_fast_price.op', function(){
         changeOpForFastPrice(function(){
@@ -487,10 +491,10 @@ $(document).ready(function(){
         $('#firstoh').val(Number((tpr - tpr*firstobp/100).toFixed(2)));
 
         //Изменение НДС к закупу
-        $('#nds_zak').text(Number((zak/120*20).toFixed(2)));
+        //$('#nds_zak').text(Number((zak/120*20).toFixed(2)));
 
         //Стираем переменнные
-        zak=tzr=a=tp=op=firstobp=wt=wtr=opr=tpr=firstobpr=null;
+        zak=tzr=a=tp=op=firstobp=wt=wtr=opr=tpr=null;
         //Идет расчет цены
         callback();
     }
@@ -627,6 +631,7 @@ $(document).ready(function(){
         var lzak = Number($('#zak').val());                         //Закупочная цена (за 1 единицу товара)
         var lkol = Number($('#kol').val());                         //Количество товара
         var ltzr = Number($('#tzr').text());                         //Транспортные (на 1 шт товара)
+        var tzrstore = Number($('#tzrstore').text());                         //Хранание (на 1 шт товара)
         var ltp = Number(Number($('#tp').val()).toFixed(2));        //Ненаша наценка (в формате десятичных двух знаков)
         var ltpr = Number((Number($('#tpr').text())).toFixed(2));
         var wt = Number(Number($('#wtime').val()).toFixed(2));      //Отсрочка платежа, в месяцах, нужна при расчете рентабельности
@@ -648,14 +653,61 @@ $(document).ready(function(){
         //Даем цену
         $('#pr').val((lprice).toFixed(3));
 
+        //Свич для типа НДС на ТЗР влияет на оба налога
+        var radio_nds = $('input[name="radio_nds"]:checked').val();
+        var pribil_rashod = 0;
+        var rashod_tooltip = '';
+        var nds_zak_tooltip = '';
+        var tzr_nds = 0;
+
+        console.log(radio_nds);
+        switch (radio_nds) {
+            case 'nds':
+                pribil_rashod = lzak/1.2+ltzr/1.2;
+                rashod_tooltip = lzak + ' / 1.2 + '+ ltzr + ' / 1.2' + '=' + (lzak/1.2).toFixed(0) + '+' + (ltzr/1.2).toFixed(0) + '=' + (lzak/1.2+ltzr/1.2).toFixed(0);
+                tzr_nds = ltzr/120*20;
+                nds_zak_tooltip = lzak + '/120*20 + ' + ltzr + '/120*20 = ' + (lzak/120*20).toFixed(0) + '+' + (ltzr/120*20).toFixed(0) + '=' + (lzak/120*20 + ltzr/120*20).toFixed(0);
+                break;
+            case 'nonds':
+                pribil_rashod = lzak/1.2+ltzr;
+                rashod_tooltip = lzak + ' / 1.2 + '+ ltzr + '=' + (lzak/1.2).toFixed(0) + '+' + ltzr + '=' +(lzak/1.2+ltzr).toFixed(0);
+                break;
+            case 'cash':
+                pribil_rashod = lzak/1.2;
+                rashod_tooltip = lzak + ' / 1.2 ' + ' = ' + (lzak/1.2).toFixed(0);
+                break;
+            default:
+                //по умолчанию - C НДС
+                pribil_rashod = lzak/1.2+ltzr/1.2;
+                rashod_tooltip = lzak + ' / 1.2 + '+ ltzr + ' / 1.2' + '=' + (lzak/1.2).toFixed(0) + '+' + (ltzr/1.2).toFixed(0) + '=' + (lzak/1.2+ltzr/1.2).toFixed(0);
+                tzr_nds = ltzr/120*20;
+                break;
+        }
+
         //Обновляем НДС к закупу
-        $('#nds_zak').text(Number((lzak/120*20).toFixed(2)));
+        $('#nds_zak').text(Number((lzak/120*20 + tzr_nds).toFixed(0)));
         var nds_zak = Number($('#nds_zak').text());
-        $('#nds_result').text(Number((lprice/120*20).toFixed(2)));
+        $('#nds_zak').prop('title', nds_zak_tooltip).tooltip;
+
+        $('#nds_result').text(Number((lprice/120*20).toFixed(0)));
         var nds_result = Number($('#nds_result').text());
-        $('#nds_to_pay').text(Number((nds_result - nds_zak).toFixed(2)));
+        $('#nds_to_pay').text(Number((nds_result - nds_zak).toFixed(0)));
         var nds_to_pay = Number($('#nds_to_pay').text());
-        $('#opr_result').text(Number((lnam - nds_to_pay).toFixed(2)));
+
+        //Обновляем налог на прибыль
+        var pribil_dohod = lprice/1.2; //Цена без НДС
+        $('#pribil_dohod').text(Number((pribil_dohod).toFixed(0)));//Доход
+
+        $('#pribil_rashod').text(Number((pribil_rashod).toFixed(0)));//Расход
+        //TOOLTIP
+        $('#pribil_rashod').prop('title', rashod_tooltip).tooltip;
+
+        $('#pribil_to_pay').text(Number((0.2*(pribil_dohod - pribil_rashod)).toFixed(0)));
+        var pribil_to_pay = Number($('#pribil_to_pay').text());
+        var pribil_to_pay_tooltip = (pribil_dohod-pribil_rashod).toFixed(0) + ' * 0.2 = ' + pribil_to_pay;
+        $('#pribil_to_pay').prop('title', pribil_to_pay_tooltip).tooltip;
+
+        $('#opr_result').text(Number((lnam - nds_to_pay - pribil_to_pay).toFixed(0)));
 
         //Высчитываем грязный процент (отношение начисленного к цене)
         var clearp = ltpr/lprice*100;
@@ -668,23 +720,24 @@ $(document).ready(function(){
 
         //Расчет рентабельности
         //var opr = Number((Number($('#opr').text())).toFixed(2));
-        var lrentS = (lnam - nds_to_pay)/lprice*100;
+        var lrentS = (lnam - nds_to_pay - pribil_to_pay)/lprice*100;
         $('#rent h1').text((lrentS).toFixed(3));
         //console.log('Проверка расчета рентабельности. Наше: '+lnam+'. Цена: '+lprice+'. Рентабельность: '+lrentS+'.');
         //console.log('Отношение наших к цене: '+lnam/lprice);
 
         //Разбили прайстекст на составляющие
-        var pricetext = '<p>Цена: <b>' + (lprice).toFixed(2) + '</b> При расчете :<br>' +
-            //Нам чистыми на 1 шт
-            'НАМ: '+
-            (lnam).toFixed(2) + ' руб. за шт.' + '<br>/<br>' +
-            //НЕ наш процент
-            'НЕ НАМ: '+
-            //Им чистыми за 1 шт
-            (lim).toFixed(2) + 'руб. за шт.' +
-            '<br>Чистыми : ' + (clearpnar).toFixed(3) + ' %' +
-            '<br> На руки: ' + (Number((lim).toFixed(2)) - firstobpr).toFixed(2) + ' руб. с 1 шт.' +
-            '<br>При рентабельности: ' + (lrentS).toFixed(3) + ' % ' +
+        var pricetext =
+            '<p><b>Рентабельность: </b></p>' + (lrentS).toFixed(2) + ' % <br>' +
+            '<p><b>Цена: </b>&emsp;&emsp;&emsp;&emsp;&emsp;' + (lprice).toFixed(2) + 'руб.<br>'+
+            //Расход
+            '<br><b>Расходы: </b>&emsp;&emsp;&emsp;&emsp;' + (nds_to_pay+lzak+ltzr+tzrstore+nds_to_pay+pribil_to_pay).toFixed(0) +
+            '<br>&emsp;<b>Закуп: </b>' + (lzak).toFixed(0) +
+            '<br>&emsp;<b>Транспортные: </b>' + (ltzr).toFixed(0) +
+            '<br>&emsp;<b>Хранение: </b>' + (tzrstore).toFixed(0) +
+            '<br>&emsp;<b>ЕНОТ: </b>' + (ltpr).toFixed(0) +
+            '<br>&emsp;<b>НДС к уплате: </b>' + (nds_to_pay).toFixed(0) +
+            '<br>&emsp;<b>Налог на прибыль: </b>' + (pribil_to_pay).toFixed(0) +
+
             '<br><input type="button" name="cut_kops" id="cut_kops" value="Отрезать копейки" />' +
             '<br><input type="button" name="save" id="save" value="Сохранить этот результат" />';
         $('#cases').html(pricetext);
@@ -722,6 +775,9 @@ $(document).ready(function(){
                     '&nds_zak=' + Number($('#nds_zak').text()) +
                     '&nds_result=' + Number($('#nds_result').text()) +
                     '&nds_to_pay=' + Number($('#nds_to_pay').text()) +
+                    '&pribil_to_pay=' + Number($('#pribil_to_pay').text()) +
+                    '&pribil_dohod=' + Number($('#pribil_dohod').text()) +
+                    '&pribil_rashod=' + Number($('#pribil_rashod').text()) +
                     '&tzrknam=' + Number($('#tzrknam').val()) +
                     '&tzrkpok=' + Number($('#tzrkpok').val()) +
                     '&op=' + Number(Number($('#op').val()).toFixed(2)) +

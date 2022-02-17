@@ -1930,7 +1930,7 @@ p {
 /* line 14, ../sass/_price.scss */
 #price label {
   font-size: 2vh;
-  font-family: sans-serif;
+  font-family: "Times New Roman";
 }
 
 /* line 19, ../sass/_price.scss */
@@ -1943,11 +1943,11 @@ p {
 /* line 25, ../sass/_price.scss */
 #pr, #rent h1, #obpr {
   font-size: 3vh;
-  font-family: sans-serif;
+  font-family: "Times New Roman";
 }
 
 /* line 30, ../sass/_price.scss */
-#clearp, #obtzrknam, #obtzrkpok, #firstobp, #margek, #rop, #rtp, #nds_to_pay {
+#clearp, #obtzrknam, #obtzrkpok, #firstobp, #margek, #rop, #rtp, #nds_to_pay, #pribil_to_pay {
   color: red;
 }
 
@@ -1959,8 +1959,8 @@ p {
 /* line 40, ../sass/_price.scss */
 #rent {
   position: absolute;
-  top: 11.7vh;
-  right: 14.1vw;
+  top: 24.7vh;
+  right: 0.9vw;
   width: 12vw;
   border-radius: 3px;
   padding: 5px;
@@ -1995,8 +1995,8 @@ p {
 /* line 73, ../sass/_price.scss */
 #result {
   position: absolute;
-  top: 11.7vh;
-  left: 52vw;
+  top: 24.7vh;
+  left: 64.4vw;
   width: 20vw;
   border-radius: 3px;
   padding: 5px;
@@ -2073,8 +2073,8 @@ p {
 }
 
 /* line 147, ../sass/_price.scss */
-#zak, #kol, #tzr, #tzrknam, #tzrkpok, #rop, #rtp, #op, #tp, #obp, #firstobp, #wtime, #tzrstore {
-  width: 10vw;
+#zak, #kol, #tzr, #tzrknam, #tzrkpok, #rop, #rtp, #op, #tp, #obp, #firstobp, #wtime, #tzrstore, #firstoh {
+  width: 8vw;
   text-align: center;
   font-size: 3vh;
 }
@@ -2123,16 +2123,16 @@ p {
   }
 }
 /* line 190, ../sass/_price.scss */
-#obtzr, #obtzrknam, #obtzrkpok, #op + p, #tp + p, #obp + p, #marge, #margek, #obpr, #firstobp + p, #id, p#byer, p#seller, p#trade, #onhands, #cases p, #realop, #realtp, #firstoh, #realop, #realtp, #wtimeday, #clearp, #oh, #wtr, #clearpnar, #nds_zak, #nds_result, #nds_to_pay, #opr_result {
+#obtzr, #obtzrknam, #obtzrkpok, #op + p, #tp + p, #obp + p, #marge, #margek, #obpr, #firstobp + p, #id, p#byer, p#seller, p#trade, #onhands, #cases p, #realop, #realtp, #firstoh, #realop, #realtp, #wtimeday, #clearp, #oh, #wtr, #clearpnar, #nds_zak, #nds_result, #nds_to_pay, #opr_result, #pribil_to_pay, #pribil_dohod, #pribil_rashod {
   display: inline;
 }
 
-/* line 195, ../sass/_price.scss */
-#nds_zak, #nds_result {
+/* line 197, ../sass/_price.scss */
+#nds_zak, #nds_result, #pribil_dohod, #pribil_rashod {
   font-size: 2vh;
 }
 
-/* line 201, ../sass/_price.scss */
+/* line 203, ../sass/_price.scss */
 #obnal, #margediv {
   display: none;
   padding: 1vh;
@@ -2142,7 +2142,7 @@ p {
 {
     border: solid 1px green;
 }*/
-/* line 212, ../sass/_price.scss */
+/* line 214, ../sass/_price.scss */
 #go {
   position: absolute;
   top: 10vh;
@@ -2152,7 +2152,7 @@ p {
   width: 15vw;
 }
 
-/* line 221, ../sass/_price.scss */
+/* line 223, ../sass/_price.scss */
 #archive, #create {
   position: absolute;
   top: 1vh;
@@ -2160,52 +2160,52 @@ p {
   font-size: 4vh;
 }
 
-/* line 228, ../sass/_price.scss */
+/* line 230, ../sass/_price.scss */
 #cases {
   position: absolute;
   width: 25vw;
   height: 35vh;
-  top: 63vh;
-  right: 3vw;
+  top: 64vh;
+  right: 11vw;
   font-size: 3vh;
 }
 
-/* line 237, ../sass/_price.scss */
+/* line 239, ../sass/_price.scss */
 #spacer1, #spacer2, #spacer3, #spacer4, #spacer5, #spacer6 {
   display: inline-block;
 }
 
-/* line 240, ../sass/_price.scss */
+/* line 242, ../sass/_price.scss */
 #spacer1 {
   width: 4vw;
 }
 
-/* line 241, ../sass/_price.scss */
+/* line 243, ../sass/_price.scss */
 #spacer2 {
   width: 2vw;
 }
 
-/* line 242, ../sass/_price.scss */
+/* line 244, ../sass/_price.scss */
 #spacer3 {
   width: 12vw;
 }
 
-/* line 243, ../sass/_price.scss */
+/* line 245, ../sass/_price.scss */
 #spacer4 {
   width: 9.5vw;
 }
 
-/* line 244, ../sass/_price.scss */
+/* line 246, ../sass/_price.scss */
 #spacer5 {
   width: 15vw;
 }
 
-/* line 245, ../sass/_price.scss */
+/* line 247, ../sass/_price.scss */
 #spacer6 {
   width: 14vw;
 }
 
-/* line 247, ../sass/_price.scss */
+/* line 249, ../sass/_price.scss */
 #cases input {
   font-size: 3vh;
 }
@@ -2258,7 +2258,7 @@ th {
     color: white;
 }*/
 /*╨а╨Р╨Ч╨Ь╨Х╨а ╨б╨Р╨Ь╨Ю╨У╨Ю ╨Ю╨Ъ╨Э╨Р*/
-/* line 304, ../sass/_price.scss */
+/* line 306, ../sass/_price.scss */
 #editp, #copyp {
   position: relative;
   height: 0vh;
@@ -2266,7 +2266,7 @@ th {
 }
 
 /*╨Ю╨╜╤Д╨╛╤А╨╝╨░╤Ж╨╕╨╛╨╜╨╜╨╛╨╡ ╨╛╨║╨╛╤И╨║╨╛*/
-/* line 311, ../sass/_price.scss */
+/* line 313, ../sass/_price.scss */
 #msg {
   position: fixed;
   top: 85vh;
@@ -2279,23 +2279,23 @@ th {
   text-align: center;
 }
 
-/* line 321, ../sass/_price.scss */
+/* line 323, ../sass/_price.scss */
 #msg p {
   background: green;
   color: white;
 }
 
-/* line 327, ../sass/_price.scss */
+/* line 329, ../sass/_price.scss */
 #editmsg p, #copymsg p, #hide {
   background-color: green;
 }
 
-/* line 330, ../sass/_price.scss */
+/* line 332, ../sass/_price.scss */
 #editmsg, #copymsg, #hide {
   background-color: green;
 }
 
-/* line 334, ../sass/_price.scss */
+/* line 336, ../sass/_price.scss */
 #hide {
   cursor: pointer;
   position: absolute;
@@ -2311,51 +2311,51 @@ th {
 }
 
 /*╨Т╨╡╤Й╨╕, ╤Б╨┐╨╡╤Ж╨╕╤Д╨╕╤З╨╡╤Б╨║╨╕╨╡ ╨┤╨╗╤П add_request*/
-/* line 359, ../sass/_price.scss */
+/* line 361, ../sass/_price.scss */
 #go_request {
   font-size: 10vh;
 }
 
-/* line 364, ../sass/_price.scss */
+/* line 366, ../sass/_price.scss */
 tr[id^="inside"] {
   display: none;
 }
 
-/* line 368, ../sass/_price.scss */
+/* line 370, ../sass/_price.scss */
 tr[id^="inside"] td:hover {
   background-color: black;
   color: white;
   border: 1px solid white;
 }
 
-/* line 374, ../sass/_price.scss */
+/* line 376, ../sass/_price.scss */
 tr[id^="inside"] td input {
   display: inline;
   vertical-align: top;
 }
 
-/* line 379, ../sass/_price.scss */
+/* line 381, ../sass/_price.scss */
 tr[id^="inside"] td {
   text-align: left;
 }
 
-/* line 383, ../sass/_price.scss */
+/* line 385, ../sass/_price.scss */
 #creating {
   display: none;
 }
 
-/* line 387, ../sass/_price.scss */
+/* line 389, ../sass/_price.scss */
 .savename {
   background-color: red;
   color: white;
 }
 
-/* line 392, ../sass/_price.scss */
+/* line 394, ../sass/_price.scss */
 #opr_result, #pr {
   color: #1b5700;
 }
 
-/* line 395, ../sass/_price.scss */
+/* line 397, ../sass/_price.scss */
 .result_track {
   font-size: 30px;
 }
