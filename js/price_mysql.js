@@ -402,8 +402,11 @@ $(document).ready(function(){
         })
     });
 
+    //Переключение НДС на ТЗР
     $('input[name="radio_nds"]').off('change.tzr_nds').on('change.tzr_nds', function(){
-        givePrice();
+        changeOp(function(){
+            givePrice();
+        })
     });
 
     //ИЗМЕНЕНИЕ НАШЕГО ПРОЦЕНТА ДЛЯ БЫСТРОГО РАСЧЕТА
@@ -591,6 +594,7 @@ $(document).ready(function(){
     });
     //Для быстрого расчета
     function fastPrice(tick,lzak,ltzr,ltp,ltpr,wt,lop,firstoh){
+        //TODO ИСПРАВИТЬ С РАСЧЕТОМ НАЛОГОВ!!!!
         //Расчет цены
         var la = (lzak + ltzr);
         var lwt = la*0.0125*wt;
@@ -720,15 +724,17 @@ $(document).ready(function(){
 
         //Расчет рентабельности
         //var opr = Number((Number($('#opr').text())).toFixed(2));
+        var rent_tooltip = '';
         var lrentS = (lnam - nds_to_pay - pribil_to_pay)/lprice*100;
-        $('#rent h1').text((lrentS).toFixed(3));
+        rent_tooltip = '(' + lnam.toFixed(0) + '(наценка) -' + nds_to_pay.toFixed(0) + '(НДС) -' + pribil_to_pay.toFixed(0) + '(Налог на прибыль)) / ' + lprice.toFixed(0) + '(Цена) * 100';
+        $('#rent h1').text((lrentS).toFixed(3)).prop('title', rent_tooltip).tooltip;
         //console.log('Проверка расчета рентабельности. Наше: '+lnam+'. Цена: '+lprice+'. Рентабельность: '+lrentS+'.');
         //console.log('Отношение наших к цене: '+lnam/lprice);
 
         //Разбили прайстекст на составляющие
         var pricetext =
-            '<p><b>Рентабельность: </b></p>' + (lrentS).toFixed(2) + ' % <br>' +
-            '<p><b>Цена: </b>&emsp;&emsp;&emsp;&emsp;&emsp;' + (lprice).toFixed(2) + 'руб.<br>'+
+            '<p><b>Рентабельность: </b>' + (lrentS).toFixed(2) + ' % <br>' +
+            '<b>Цена: </b>&emsp;&emsp;&emsp;&emsp;&emsp;' + (lprice).toFixed(2) + 'руб.<br>'+
             //Расход
             '<br><b>Расходы: </b>&emsp;&emsp;&emsp;&emsp;' + (nds_to_pay+lzak+ltzr+tzrstore+nds_to_pay+pribil_to_pay).toFixed(0) +
             '<br>&emsp;<b>Закуп: </b>' + (lzak).toFixed(0) +
@@ -738,7 +744,7 @@ $(document).ready(function(){
             '<br>&emsp;<b>НДС к уплате: </b>' + (nds_to_pay).toFixed(0) +
             '<br>&emsp;<b>Налог на прибыль: </b>' + (pribil_to_pay).toFixed(0) +
 
-            '<br><input type="button" name="cut_kops" id="cut_kops" value="Отрезать копейки" />' +
+            '</p><br><input type="button" name="cut_kops" id="cut_kops" value="Отрезать копейки" />' +
             '<br><input type="button" name="save" id="save" value="Сохранить этот результат" />';
         $('#cases').html(pricetext);
         pricetext = null;

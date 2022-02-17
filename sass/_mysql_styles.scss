@@ -1102,19 +1102,21 @@ tr[pricingid] td {border: 1px solid black}
       &:first-child{width:30%; text-align: left}
       &:nth-child(2){width:70%; text-align: right}
       border: 1px solid grey;
-      font-size: 2.5vh;
+      font-size: 2vh;
     }
   }
   display: none;
   position: absolute;
   right: 0.9vw;
-  top: 25vh;
+  top: 24.3vh;
   text-align: right;
-  font-size: 2.5vh;
+  font-size: 2vh;
   padding: 5px;
   border-radius: 5px;
   width: 12vw;
   background: #F0F0F0;
+  height: 9.4vw;
+  max-height: 9.4vw;
 }
 
 

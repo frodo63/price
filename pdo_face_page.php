@@ -31,7 +31,7 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         <input type='button' value='Кем возили' id='button_history_transports'><br />
         <div id='fcount'>
             <label for='wtime'>ОТСРОЧКА:</label><span id='spacer3'></span><input type='number' size='2' name='wtime' id='wtime'  min='0' step='0.03'/> мес. <p id='wtimeday'></p> дней.&nbsp(От поставщика + От покупателя)&nbsp<span id='wtr'></span>.руб<br />           
-            <label for='op'>НАШ ПРОЦЕНТ:</label><span id='spacer4'></span><input type='number' size='4' name='op' id='op'  min='0.01' step='0.01'/>% / <p id='opr'></p> - <p id='nds_to_pay'></p> (<p id='nds_result'></p> (НДС прод.) - <p id='nds_zak'></p> (НДС зак.) ) - <p id='pribil_to_pay'></p> (<p id='pribil_dohod'></p> (доходы) - <p id='pribil_rashod'></p> (расходы) * 0.2) = <p id='opr_result'></p> руб.<br />
+            <label for='op'>НАШ ПРОЦЕНТ:</label><span id='spacer4'></span><input type='number' size='4' name='op' id='op'  min='0.01' step='0.01'/>% / <p id='opr'></p> - <p id='nds_to_pay'></p> (<p id='nds_result'></p> (НДС прод.) - <p id='nds_zak' class='tooltipable'></p> (НДС зак.) ) - <p id='pribil_to_pay' class='tooltipable'></p> (<p id='pribil_dohod'></p> (доходы) - <p id='pribil_rashod' class='tooltipable'></p> (расходы) * 0.2) = <p id='opr_result'></p> руб.<br />
             <label for='tp'>ЕНОТ:</label><span id='spacer5'></span><input type='number' size='2' name='tp' id='tp'  min='0' step='0.01'/>% / <p id='tpr'></p> руб.(<p id='clearp'></p>&nbspот цены) НА РУКИ : <input id='firstoh' type='number' step='0.01' min='0'></input> руб.(<p id='clearpnar'></p>&nbspот цены) <br/>
             <label for='firstobp'>ОБНАЛ:</label><span id='spacer6'></span><input type='number' size='2' name='firstobp' id='firstobp'  min='0' step='0.1'/>% / <p id='firstobpr'></p> руб.<br />
         </div>
@@ -47,14 +47,14 @@ echo "<div id='pricingwindow' positionid='-' pricingid='-' preditposid='-' byeri
         </div><br />
         </div>
         <div id='result'>
-        <h2>Итоговая цена:</h2><br><br><input type='number' name='price' id='pr' value='0' min='0' step='0.001'/><input type='number' id='pr_in' value='0' min='0' step='0.01' placeholder='Задать'/>
+        <h2>Итоговая цена:</h2><input type='number' name='price' id='pr' value='0' min='0' step='0.001'/><input type='number' id='pr_in' value='0' min='0' step='0.01' placeholder='Задать'/>
         <br>        
         </div>
         
         <input id='button_history' hist_byer='' hist_trade='' type='button' value='Почем расценивали раньше(данные из программы)'>
         <input id='button_exec_trade_history' hist_trade='' type='button' value='Почем продавали раньше(данные из 1С)'>
         <div id='rent'>
-        <h2>Рентабельность:</h2><br><br><h1>0</h1><input id='rent_in' type='number' value='0' min='0' step='0.01' size='2'  placeholder='Задать' ></div>      
+        <h2>Рентабельность:</h2><br><br><h1 class='tooltipable'>0</h1><input id='rent_in' type='number' value='0' min='0' step='0.01' size='2'  placeholder='Задать' ></div>      
         <div class='history'></div>
         <div class='history_knam'></div>
         <div class='history_kpok'></div>

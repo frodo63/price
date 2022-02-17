@@ -39,13 +39,14 @@ $pricecolor : #F0F0F0;
 
 #rent{
   position: absolute;
-  top: 24.7vh;
-  right: 0.9vw;
+  top: 24.3vh;
+  right: 13.7vw;
   width: 12vw;
-  border-radius: 3px;
+  border-radius: 5px;
   padding:5px;
   background: $pricecolor;
-  height: 17vh;
+  height: 9.4vw;
+  max-height: 9.4vw;
   input{
     text-align: center;
   }
@@ -73,13 +74,13 @@ $pricecolor : #F0F0F0;
 #result
 {
   position: absolute;
-  top: 24.7vh;
-  left: 64.4vw;
+  top: 11.7vh;
+  right: 13.7vw;
   width: 20vw;
-  border-radius: 3px;
+  border-radius: 5px;
   padding: 5px;
-  background: $pricecolor;
-  height: 17vh;
+  background: #F0F0F0;
+  height: 6vw;
   #pr,#pr_in{
     width: 18vw;
     font-weight: bold;
@@ -248,6 +249,11 @@ $pricecolor : #F0F0F0;
 
 #cases input {
     font-size: 3vh;
+}
+
+.tooltipable{
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 

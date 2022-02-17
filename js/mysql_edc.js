@@ -611,10 +611,11 @@ $(document).ready(function() {
         $('#button_exec_trade_history').attr({hist_trade: '-'});
         $('#pricingwindow input[type="number"]').val('');
         $('#pricingwindow input[type="text"]').text('');
-        $('#cases p,#obtzr,#tzr,#obtzrknam,#obtzrkpok,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
+        $('#pribil_to_pay, #pribil_dohod, #pribil_rashod, #opr_result, #cases p,#obtzr,#tzr,#obtzrknam,#obtzrkpok,#rent h1,#tpr,#opr,#firstoh,#clearp,#marge,#margek,#realop,#realtp,#oh,#wtr,#wtimeday,#firstobpr,#clearpnar').text('');
         $('#pricingwindow').attr({positionid: '-', pricingid: '-', preditposid:'-', byerid:'-', requestid:'-', database:'-'});
         $('#byer_name').text('');
         $('.history').html('');
+        $('.tooltipable').prop('title', '');
         $('.history_knam').html('');
         $('.history_kpok').html('');
         $('#byer_info').html('');
